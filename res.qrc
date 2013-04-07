@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/no_image_double.png</file>
+        <file>resources/icons/apply.png</file>
+        <file>resources/icons/add.png</file>
+        <file>resources/icons/undo.png</file>
+        <file>resources/icons/back.png</file>
+        <file>resources/icons/edit.png</file>
+        <file>resources/icons/Database.png</file>
+        <file>resources/no_image.png</file>
+        <file>resources/icons/delete.png</file>
+    </qresource>
+</RCC>
