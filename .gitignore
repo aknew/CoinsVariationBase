@@ -1,4 +1,3 @@
-*.pro.user*
-*.sqlite
+*.pro.user*s
 android/bin*
 CoinsBase.base/images
