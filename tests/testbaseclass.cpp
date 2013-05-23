@@ -26,6 +26,8 @@ void TestBaseClass::testBase(){
 
     QSqlQuery query=QSqlQuery(db);
 
+    query.exec("PRAGMA foreign_keys = ON;");
+
     bool flag;
 
     flag=query.exec("INSERT INTO TypesView  (nominal, metal, firstYear, lastYear, edge, issue, avers, revers, weigth,  comment)"

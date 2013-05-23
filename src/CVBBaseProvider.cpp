@@ -13,6 +13,10 @@ CVBBaseProvider::CVBBaseProvider(QString pathPath, QObject *parent) :
         qDebug() << "Cannot open database:" << db.lastError();
     }
 
+    //enable foreign key
+    QSqlQuery query=QSqlQuery(db);
+    query.exec("PRAGMA foreign_keys = ON;");
+
     this->parse();
 }
 
