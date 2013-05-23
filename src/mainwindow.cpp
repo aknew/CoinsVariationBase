@@ -76,19 +76,19 @@ void MainWindow::showError(QString str){
 void MainWindow::addNavBar(){
     //FIXME nen yflj crhsdfnm
     navBar->clear();
-    QAction *action=navBar->addAction(QIcon("://resources/icons/back.png"),tr(kBACK_BUTTON));
+    QAction *action=navBar->addAction(QIcon(":///icons/back.png"),tr(kBACK_BUTTON));
     action->setObjectName(kBACK_BUTTON);
     connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
 #if !defined(Q_OS_ANDROID)
-    action=navBar->addAction(QIcon("://resources/icons/edit.png"),tr(kEDIT_BUTTON));
+    action=navBar->addAction(QIcon(":///icons/edit.png"),tr(kEDIT_BUTTON));
     action->setObjectName(kEDIT_BUTTON);
     connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
 
-    action=navBar->addAction(QIcon("://resources/icons/add.png"),tr(kNEW_BUTTON));
+    action=navBar->addAction(QIcon(":///icons/add.png"),tr(kNEW_BUTTON));
     action->setObjectName(kNEW_BUTTON);
     connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
 
-    action=navBar->addAction(QIcon("://resources/icons/delete.png"),tr(kDELETE_BUTTON));
+    action=navBar->addAction(QIcon(":///icons/delete.png"),tr(kDELETE_BUTTON));
     action->setObjectName(kDELETE_BUTTON);
     connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
 
@@ -103,7 +103,7 @@ void MainWindow::addNavBar(){
     }
 
     QToolButton* toolButton = new QToolButton();
-    toolButton->setIcon(QIcon("://resources/icons/Database.png"));
+    toolButton->setIcon(QIcon(":///icons/Database.png"));
     toolButton->setMenu(menu);
     toolButton->setPopupMode(QToolButton::InstantPopup);
     navBar->addWidget(toolButton);
@@ -514,11 +514,11 @@ QVariant MainWindow::imageRightClick(const QString& id, int x, int y, bool edita
 void MainWindow::dataChanged(){
 
     navBar->clear();
-    QAction *action=navBar->addAction(QIcon("://resources/icons/undo.png"),tr(kUNDO_CHANGES_BUTTON));
+    QAction *action=navBar->addAction(QIcon(":///icons/undo.png"),tr(kUNDO_CHANGES_BUTTON));
     action->setObjectName(kUNDO_CHANGES_BUTTON);
     connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
 
-    action=navBar->addAction(QIcon("://resources/icons/apply.png"),tr(kAPPLY_CHANGES_BUTTON));
+    action=navBar->addAction(QIcon(":///icons/apply.png"),tr(kAPPLY_CHANGES_BUTTON));
     action->setObjectName(kAPPLY_CHANGES_BUTTON);
     connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
 

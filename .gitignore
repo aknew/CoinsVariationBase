@@ -1,3 +1,4 @@
 *.pro.user*s
 android/bin*
 CoinsBase.base/images
+bin/*

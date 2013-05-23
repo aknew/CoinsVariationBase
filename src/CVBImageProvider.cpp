@@ -17,9 +17,9 @@ QPixmap CVBImageProvider::requestPixmap(const QString& id, QSize* size, const QS
 
     if (result.isNull()){
         if (requestedSize.width()/((float)requestedSize.height())>1.5)
-            result=QPixmap("://resources/no_image_double.png");
+            result=QPixmap("://no_image_double.png");
         else
-           result=QPixmap("://resources/no_image.png");
+           result=QPixmap("://no_image.png");
     }
 
     return result;
