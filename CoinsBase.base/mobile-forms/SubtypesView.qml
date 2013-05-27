@@ -24,7 +24,7 @@ Rectangle {
             property real detailsOpacity: 0
 
             width: listView.width
-            height: topLayout.height+topLayout.y*2
+            height: Math.max(100,topLayout.height+10)
 
             MouseArea {
                 anchors.fill: parent
@@ -47,8 +47,7 @@ Rectangle {
             Column {
 
                 id: topLayout
-                x: 10
-                y: 10
+                anchors.centerIn: parent
                 width: parent.width
                 StyledText{
                     mainText: year + "  " + mintmark

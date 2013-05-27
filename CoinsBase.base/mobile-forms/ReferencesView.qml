@@ -27,7 +27,7 @@ Rectangle {
             property real detailsOpacity: 0
 
             width: listView.width
-            height: topLayout.height+topLayout.y*2
+            height: Math.max(100,topLayout.height+10)
 
             // A simple rounded rectangle for the background
             Rectangle {
@@ -43,9 +43,8 @@ Rectangle {
             Column {
 
                 id: topLayout
-                x: 10
-                y: 10
-                width: listView.width
+                anchors.centerIn: parent
+                width: listView.width-10
                 Text {
                     text: reduction + " № " + number + " " + rarity
                 }

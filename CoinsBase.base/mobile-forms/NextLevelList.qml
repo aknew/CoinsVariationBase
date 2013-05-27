@@ -2,7 +2,7 @@ import QtQuick 1.1
 
 Rectangle {
     width: parent.width
-    height: 120
+    height: 300
     ListView {
         clip: true
         id: listView1
@@ -14,14 +14,14 @@ Rectangle {
         id: nextLevelDelegate
         Item {
             width: parent.width
-            height: 40
+            height: 100
             Rectangle {
                 id: background2
                 x: 2
                 y: 2
                 width: parent.width - x * 2
                 height: parent.height - y * 2
-                color: "lightgray"
+                color: (index % 2) ? "lightgray" : "white"
                 border.color: "gray"
                 radius: 5
             }

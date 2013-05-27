@@ -15,7 +15,7 @@ FocusScope {
         font.pixelSize: 16
         font.bold: true
     }
-    TextEdit {
+    Text {
         id: input
         width: parent.width
         anchors.top: titleText.bottom

@@ -24,7 +24,7 @@ Rectangle {
             property real detailsOpacity: 0
 
             width: listView.width
-            height: background.height+background.y*2
+            height: Math.max(100,description_txt.height+10)
 
             MouseArea {
                 anchors.fill: parent
@@ -35,10 +35,7 @@ Rectangle {
 
             Rectangle {
                 id: background
-                x: 2
-                y: 2
-                width: parent.width - x * 2
-                height: description_txt.height+10
+                anchors.fill: parent
                 color: (index % 2) ? "lightgray" : "white"
                 border.color: "gray"
                 radius: 5
@@ -49,6 +46,7 @@ Rectangle {
                     text:description
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    wrapMode: Text.Wrap
                 }
             }
          }

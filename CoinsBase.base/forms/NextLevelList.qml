@@ -23,7 +23,7 @@ Rectangle {
                 y: 2
                 width: parent.width - x * 2
                 height: parent.height - y * 2
-                color: "lightgray"
+                color: (index % 2) ? "lightgray" : "white"
                 border.color: "gray"
                 radius: 5
             }
