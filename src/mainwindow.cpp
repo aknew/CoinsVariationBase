@@ -25,6 +25,13 @@ MainWindow::MainWindow(QWidget *parent)
     QString basePath;
     QSettings settings("settings.ini",QSettings::IniFormat);
     settings.setIniCodec("windows-1251");
+
+#if defined(Q_OS_ANDROID)
+    useMobileForms=settings.value("global/useMobileForms","true").toBool();
+#else
+    useMobileForms=settings.value("global/useMobileForms","false").toBool();
+#endif
+
     basePath=settings.value("global/base","").toString();
 
     if (basePath.isEmpty()){
@@ -79,36 +86,38 @@ void MainWindow::addNavBar(){
     QAction *action=navBar->addAction(QIcon(":///icons/back.png"),tr(kBACK_BUTTON));
     action->setObjectName(kBACK_BUTTON);
     connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
-#if !defined(Q_OS_ANDROID)
-    action=navBar->addAction(QIcon(":///icons/edit.png"),tr(kEDIT_BUTTON));
-    action->setObjectName(kEDIT_BUTTON);
-    connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
 
-    action=navBar->addAction(QIcon(":///icons/add.png"),tr(kNEW_BUTTON));
-    action->setObjectName(kNEW_BUTTON);
-    connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
+    if (!useMobileForms){
 
-    action=navBar->addAction(QIcon(":///icons/delete.png"),tr(kDELETE_BUTTON));
-    action->setObjectName(kDELETE_BUTTON);
-    connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
-
-    QMenu *menu = new QMenu();
-
-    for (int i=0; i<baseProvider->systemTables.count(); ++i){
-        action=new QAction(baseProvider->systemTables.at(i),this);
-        //FIXME Надо бы убрать жесткую связку через строку, да и вообще этот кусок грязноват
-        action->setObjectName(baseProvider->systemTables.at(i));
+        action=navBar->addAction(QIcon(":///icons/edit.png"),tr(kEDIT_BUTTON));
+        action->setObjectName(kEDIT_BUTTON);
         connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
-        menu->addAction(action);
+
+        action=navBar->addAction(QIcon(":///icons/add.png"),tr(kNEW_BUTTON));
+        action->setObjectName(kNEW_BUTTON);
+        connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
+
+        action=navBar->addAction(QIcon(":///icons/delete.png"),tr(kDELETE_BUTTON));
+        action->setObjectName(kDELETE_BUTTON);
+        connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
+
+        QMenu *menu = new QMenu();
+
+        for (int i=0; i<baseProvider->systemTables.count(); ++i){
+            action=new QAction(baseProvider->systemTables.at(i),this);
+            //FIXME Надо бы убрать жесткую связку через строку, да и вообще этот кусок грязноват
+            action->setObjectName(baseProvider->systemTables.at(i));
+            connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
+            menu->addAction(action);
+        }
+
+        QToolButton* toolButton = new QToolButton();
+        toolButton->setIcon(QIcon(":///icons/Database.png"));
+        toolButton->setMenu(menu);
+        toolButton->setPopupMode(QToolButton::InstantPopup);
+        navBar->addWidget(toolButton);
+
     }
-
-    QToolButton* toolButton = new QToolButton();
-    toolButton->setIcon(QIcon(":///icons/Database.png"));
-    toolButton->setMenu(menu);
-    toolButton->setPopupMode(QToolButton::InstantPopup);
-    navBar->addWidget(toolButton);
-
-#endif
     //navBar->setVisible(stackedWidget->count()>1);
 }
 
@@ -146,11 +155,7 @@ QVariant MainWindow::listForName(const QString& name){
 void MainWindow::newTableWidget(){
 #ifndef QTableViewUsing
 
-#if defined(Q_OS_ANDROID)
-    QString str=baseProvider->basePath+"mobile-forms/";
-#else
-    QString str=baseProvider->basePath+"forms/";
-#endif
+    QString str=baseProvider->basePath+(useMobileForms?"mobile-forms/":"forms/");
 
     if (baseProvider->currentNode()->listFormName.isEmpty()){
         //в xml не было указания на конкретную форму, пробуем собрать ее на месте
@@ -189,11 +194,7 @@ void MainWindow::fullInfo(int index){
     CVBSqlRelationalTableModel *listModel=baseProvider->currentNode()->model;
     listModel->selectedRow=index;
 
-#if defined(Q_OS_ANDROID)
-    QString str=baseProvider->basePath+"mobile-forms/";
-#else
-    QString str=baseProvider->basePath+"forms/";
-#endif
+    QString str=baseProvider->basePath+(useMobileForms?"mobile-forms/":"forms/");
 
     if (baseProvider->currentNode()->fullFormName.isEmpty()){
         //в xml не было указания на конкретную форму, пробуем собрать ее на месте

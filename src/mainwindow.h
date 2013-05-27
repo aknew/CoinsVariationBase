@@ -58,6 +58,7 @@ class MainWindow : public QMainWindow
     QStack<kCurrentWidget> currentWidgetType;
     QToolBar *navBar;
     bool newRowInsertion;
+    bool useMobileForms;
 
 public:
 
