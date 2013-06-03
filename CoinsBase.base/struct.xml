@@ -48,14 +48,14 @@
    <node name="variantAvers">
     <listForm name="AversReversList"/>
     <fullForm name="AversReversFullInfo"/>
-    <childNode2 name="VariantsView" relation1="value" relation2="avers"/>
+    <childNode2 name="VariantsView" relation1="description" relation2="avers"/>
     <pictDelegate column="4"/>
    </node>
 
    <node name="variantRevers">
     <listForm name="AversReversList"/>
     <fullForm name="AversReversFullInfo"/>
-      <childNode2 name="VariantsView" relation1="value" relation2="revers"/>
+      <childNode2 name="VariantsView" relation1="description" relation2="revers"/>
       <pictDelegate column="4"/>
     </node>
 
