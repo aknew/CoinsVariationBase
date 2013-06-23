@@ -31,7 +31,7 @@
     <listForm name="AversReversList"/>
     <fullForm name="AversReversFullInfo"/>
     <rowParamNames name="typeID"/>
-    <childNode2 name="SubtypesView" relation1="description" relation2="revers"/>
+    <childNode name="SubtypesView" relation="ReversID"/>
     <childNode name="variantRevers" relation="revID"/>
     <pictDelegate column="3"/>
   </node>
@@ -39,7 +39,7 @@
    <node name="SubtypesAvers">
     <listForm name="AversReversList"/>
     <fullForm name="AversReversFullInfo"/>
-    <childNode2 name="SubtypesView" relation1="description" relation2="avers"/>
+    <childNode name="SubtypesView" relation="AversID"/>
     <childNode name="variantAvers" relation="avID"/>
     <rowParamNames name="typeID"/>
     <pictDelegate column="3"/>
@@ -48,14 +48,14 @@
    <node name="variantAvers">
     <listForm name="AversReversList"/>
     <fullForm name="AversReversFullInfo"/>
-    <childNode2 name="VariantsView" relation1="description" relation2="avers"/>
+    <childNode name="VariantsView" relation="AversID"/>
     <pictDelegate column="4"/>
    </node>
 
    <node name="variantRevers">
     <listForm name="AversReversList"/>
     <fullForm name="AversReversFullInfo"/>
-      <childNode2 name="VariantsView" relation1="description" relation2="revers"/>
+      <childNode name="VariantsView" relation="ReversID"/>
       <pictDelegate column="4"/>
     </node>
 
