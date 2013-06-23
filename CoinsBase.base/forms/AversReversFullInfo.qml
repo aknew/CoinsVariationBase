@@ -8,13 +8,15 @@ Rectangle {
         clip: true
         anchors.fill:parent
         contentHeight: contentColumn.height+nextlevel.height
+        ImageWithFullScreen{
+            id: picture
+            pict:selectedItem.pict
+        }
         Column {
             id: contentColumn
+            y: picture.height
             width: parent.width
             enabled: false
-            ImageWithFullScreen{
-                pict:selectedItem.pict
-            }
             Input {
                 id: inp_Description
                 anchors.fill: parent.widths
@@ -31,13 +33,14 @@ Rectangle {
         }
         NextLevelList {
             id:nextlevel
-            y: contentColumn.childrenRect.height+2
+            anchors.top: contentColumn.bottom
         }
     }
     states: State {
                     name: "editable";
                     PropertyChanges { target: contentColumn; enabled:true }
                     PropertyChanges { target: nextlevel; visible:false }
+                    PropertyChanges { target: picture; editing:true}
                 }
 
     function collectData() {
