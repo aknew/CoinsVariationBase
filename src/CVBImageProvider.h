@@ -1,9 +1,9 @@
 #ifndef CVBIMAGEPROVIDER_H
 #define CVBIMAGEPROVIDER_H
 
-#include <QDeclarativeImageProvider>
+#include <QtQuick/QQuickImageProvider>
 
-class CVBImageProvider : public QDeclarativeImageProvider
+class CVBImageProvider : public QQuickImageProvider
 {
 public:
     CVBImageProvider( ImageType type);

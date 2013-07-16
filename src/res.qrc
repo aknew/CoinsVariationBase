@@ -9,5 +9,6 @@
         <file alias="icons/Database.png">../resources/icons/Database.png</file>
         <file alias="no_image.png">../resources/no_image.png</file>
         <file alias="icons/delete.png">../resources/icons/delete.png</file>
+        <file>MainWindow.qml</file>
     </qresource>
 </RCC>

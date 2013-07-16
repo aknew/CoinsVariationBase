@@ -1,23 +1,39 @@
-#ifdef HAVE_QT5
-
-#include <QtWidgets/QApplication>
-
-#else
-
-#include <QtGui/QApplication>
-
-#endif
-
+#include <QtGui/QGuiApplication>
+#include <QtQml>
+#include <QtQuick/QQuickView>
+#include <QtCore/QString>
 #include <QtCore/QUrl>
-#include "mainwindow.h"
+#include "CVBController.h"
+
+static QObject *cvbApiObjectSingleton(QQmlEngine *engine, QJSEngine *scriptEngine)
+{
+    Q_UNUSED(engine)
+    Q_UNUSED(scriptEngine)
+
+    CVBController *api = new CVBController();
+    return api;
+}
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    qmlRegisterSingletonType<CVBController>("CVB.api", 1, 0, "CVBApi", cvbApiObjectSingleton);
 
-    MainWindow mainWindow;
-    //mainWindow.setOrientation(MainWindow::ScreenOrientationAuto); //FIXME - qt 5.0.0 error
-    mainWindow.showExpanded();
+    QGuiApplication app(argc, argv);
+    QQmlApplicationEngine engine(QUrl("qrc:/MainWindow.qml"));
+    QObject *topLevel = engine.rootObjects().value(0);
+    QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
+    if ( !window ) {
+        qWarning("Error: Your root item has to be a Window.");
+        return -1;
+    }
+    window->show();
+    CVBController *cvbAPI =qobject_cast<CVBController *>(cvbApiObjectSingleton(NULL, NULL));
 
-    return a.exec();
+    QQuickItem *item = window->contentItem();
+    item = item->childItems().first()->childItems().at(1); //ApplicationWindow content area
+    item = item->childItems().first(); // StackView is single subitem of contentarea in my qml
+    cvbAPI->stackView = item;
+
+    cvbAPI->start();
+    return app.exec();
 }

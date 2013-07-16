@@ -1,7 +1,7 @@
 #include "CVBImageProvider.h"
 #include <QDebug>
 
-CVBImageProvider::CVBImageProvider(ImageType type): QDeclarativeImageProvider(type)
+CVBImageProvider::CVBImageProvider(ImageType type): QQuickImageProvider(type)
 {
 }
 

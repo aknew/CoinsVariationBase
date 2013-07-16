@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql xml declarative
+QT       += core gui sql xml qml quick
 
 greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets
@@ -16,25 +16,19 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    delegatedtableview.cpp \
-    comboboxdelegate.cpp \
-    picturedelegate.cpp \
-    comboboxdescription.cpp \
     CVBImageProvider.cpp \
     CVBSqlNode.cpp \
     CVBSqlRelationalTableModel.cpp \
-    CVBBaseProvider.cpp
+    CVBBaseProvider.cpp \
+    CVBController.cpp \
+    comboboxdescription.cpp
 
-HEADERS  += mainwindow.h \
-    delegatedtableview.h \
-    comboboxdelegate.h \
-    picturedelegate.h \
-    comboboxdescription.h \
-    CVBImageProvider.h \
+HEADERS  += CVBImageProvider.h \
     CVBSqlNode.h \
     CVBBaseProvider.h \
-    CVBSqlRelationalTableModel.h
+    CVBSqlRelationalTableModel.h \
+    CVBController.h \
+    comboboxdescription.h
 
 FORMS +=
 
@@ -71,7 +65,8 @@ OTHER_FILES += \
     android/res/drawable-hdpi/icon.png \
     android/res/drawable/icon.png \
     android/res/drawable/logo.png \
-    android/AndroidManifest.xml
+    android/AndroidManifest.xml \
+    MainWindow.qml
 
 RESOURCES += \
     res.qrc
