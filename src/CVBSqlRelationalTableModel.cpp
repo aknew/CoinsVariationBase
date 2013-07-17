@@ -13,9 +13,6 @@ void CVBSqlRelationalTableModel::applyRoles()
             roles[Qt::UserRole + i + 1] = QVariant(role).toByteArray();
             qDebug()<<this->headerData(i, Qt::Horizontal);
     }
-#ifndef HAVE_QT5
-    setRoleNames(roles);
-#endif
 }
 
 QVariant CVBSqlRelationalTableModel::data(const QModelIndex &index, int role= Qt::DisplayRole ) const{

@@ -21,11 +21,9 @@ public:
     void applyRoles();
     void removeCurrentItem();
     int selectedRow;
-#ifdef HAVE_QT5
 
 virtual QHash<int, QByteArray> roleNames() const{return roles;}
 
-#endif
 
 private:
     int count;

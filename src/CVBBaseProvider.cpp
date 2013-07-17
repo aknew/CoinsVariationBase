@@ -1,5 +1,4 @@
 #include "CVBBaseProvider.h"
-#include <QMessageBox>
 #include <QtXml>
 
 CVBBaseProvider::CVBBaseProvider(QString pathPath, QObject *parent) :
