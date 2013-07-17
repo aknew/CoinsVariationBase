@@ -5,10 +5,19 @@
 CVBBaseProvider::CVBBaseProvider(QString pathPath, QObject *parent) :
     QObject(parent)
 {
+/*
+    *FIXME: name basePath is legacy - in very old version it was only db file, all struct was hardcoded and tables were
+    *shown into QTableView. pathPath is typo. There is no any reasons using it now
+
+*/
+    if (pathPath.startsWith("file:///")){
+        pathPath.remove("file:///");
+    }
+    basePath=pathPath.append("/");
+    pathPath.append("base.sqlite");
+
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(pathPath);
-    basePath=pathPath.section('/',0,-2)+"/";
-    qDebug()<<basePath;
     if (!db.open()) {
         qDebug() << "Cannot open database:" << db.lastError();
     }
@@ -227,7 +236,7 @@ QByteArray CVBBaseProvider::attachForId(QString id){
 
 void CVBBaseProvider::parse(){
 
-    QString filename=basePath+"/struct.xml";
+    QString filename=basePath+"struct.xml";
 
     qDebug()<<"parser start - ok";
 

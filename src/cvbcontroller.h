@@ -49,6 +49,7 @@ class CVBController : public QObject
        CVBController(QObject *parent = 0)
            : QObject(parent)
        {
+           baseProvider = NULL;
        }
 
        ~CVBController() {}
@@ -61,6 +62,7 @@ class CVBController : public QObject
        void addViewToStack(const QQuickView *view);
        QQuickView *newDeclarativeView();
        QQuickItem *stackView;
+       QQuickWindow *applicationWindow;
 
    public slots:
        //взаимодействие с baseProvider
@@ -80,6 +82,8 @@ class CVBController : public QObject
 
        //попытка вызвать диалог и загрузить в нем новую картинку, если все хорошо - вернется ее ссылка, если нет - -1
        Q_INVOKABLE QVariant loadNewImage();
+
+       Q_INVOKABLE void openBase(QString basePath);
 
 };
 

@@ -10,7 +10,12 @@ static QObject *cvbApiObjectSingleton(QQmlEngine *engine, QJSEngine *scriptEngin
     Q_UNUSED(engine)
     Q_UNUSED(scriptEngine)
 
-    CVBController *api = new CVBController();
+    static CVBController *api = NULL;
+
+    if (api == NULL){
+        api = new CVBController();
+    }
+
     return api;
 }
 
@@ -27,8 +32,12 @@ int main(int argc, char *argv[])
         return -1;
     }
     window->show();
+
     CVBController *cvbAPI =qobject_cast<CVBController *>(cvbApiObjectSingleton(NULL, NULL));
 
+    cvbAPI->applicationWindow = window;
+
+    //TODO: may be rigth way is find by name (QObject *rect = object->findChild<QObject*>("rect");)
     QQuickItem *item = window->contentItem();
     item = item->childItems().first()->childItems().at(1); //ApplicationWindow content area
     item = item->childItems().first(); // StackView is single subitem of contentarea in my qml

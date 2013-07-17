@@ -15,21 +15,32 @@ void CVBController::start(){
     basePath=settings.value("global/base","").toString();
 
     if (basePath.isEmpty()){
-
-//#if defined(Q_OS_ANDROID)
-//        basePath="/sdcard/CoinsBase.base/base.sqlite";  //FIXME QFileDialog doesn't working good in necessitas alpha 4.1
-//#else
-//        QFileDialog *dialog=new QFileDialog(parent,tr("Select file"),QString(),tr("sqlite databases files (*.sqlite)"));
-//        if (dialog->exec()){
-//            QStringList filenames=dialog->selectedFiles();
-//            if (filenames.count()!=0){
-//                basePath=filenames.at(0);
-//                settings.setValue("global/base",basePath);
-//            }
-//        }
-//#endif
+        QMetaObject::invokeMethod(this->applicationWindow,
+                                  "openBase"
+                                  );
     }
-    //TODO check that something was selected
+    else {
+        this->openBase(basePath);
+    }
+
+}
+
+void CVBController::openBase(QString basePath){
+
+
+    QSettings settings("settings.ini",QSettings::IniFormat);
+    settings.setIniCodec("windows-1251");
+    //TODO: Extract settings keys as string constant
+    settings.setValue("global/base",QVariant(basePath));
+
+    if (baseProvider) {
+        /*
+         This will be dropping any base specifics, but now we can't load another base so this if is empty
+         */
+
+        delete baseProvider;
+    }
+
     baseProvider=new CVBBaseProvider(basePath,this);
 
     this->connect(baseProvider,SIGNAL(removeCurrentWidget()),this,SLOT(removeWidgetFromStack()));
