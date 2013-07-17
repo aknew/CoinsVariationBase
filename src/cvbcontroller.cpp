@@ -51,7 +51,6 @@ void CVBController::openBase(QString basePath){
     imageProvider->imageFolder=baseProvider->basePath+"images/";
 
     baseProvider->startLevel();
-    this->initShortcuts();
 }
 
 void CVBController::showError(QString str){
@@ -81,8 +80,6 @@ QVariant CVBController::listForName(const QString& name){
 }
 
 void CVBController::newTableWidget(){
-#ifndef QTableViewUsing
-
     QString str=baseProvider->basePath+(useMobileForms?"mobile-forms/":"forms/");
 
     if (baseProvider->currentNode()->listFormName.isEmpty()){
@@ -104,7 +101,6 @@ void CVBController::newTableWidget(){
         currentWidgetType.push(QMLListWithoutEditing);
     }
     else
-#endif
     {
         /*
         //файла с формой нет, будет задействованна стандартная табличка
@@ -172,56 +168,6 @@ QQuickView *CVBController::newDeclarativeView(){
     w->engine()->addImageProvider(QLatin1String("imageProvider"),imageProvider);
     w->rootContext()->setContextProperty("window",this);
     return w;
-}
-
-
-//Работа с кнопками
-
-void CVBController::initShortcuts(){
-/*
-    //Новая запись
-    QShortcut *shotcutNewType=new QShortcut(this);
-    shotcutNewType->setKey(QKeySequence("Ctrl+N"));
-    shotcutNewType->setObjectName("newRow");
-    this->connect(shotcutNewType,SIGNAL(activated()),this,SLOT(buttonPressed()));
-
-    shotcutNewType=new QShortcut(this);
-    shotcutNewType->setKey(QKeySequence("Ctrl+S"));
-    shotcutNewType->setObjectName("save");
-    this->connect(shotcutNewType,SIGNAL(activated()),this,SLOT(buttonPressed()));
-
-
-    //Вернуться на предыдущий уровень
-    QShortcut *shotcutPreviousLevel=new QShortcut(this);
-    shotcutPreviousLevel->setKey(QKeySequence("Ctrl+Backspace"));
-    shotcutPreviousLevel->setObjectName("back");
-    this->connect(shotcutPreviousLevel,SIGNAL(activated()),this,SLOT(buttonPressed()));
-    */
-}
-
-void CVBController::buttonPressed(){
-    QString senderName=QObject::sender()->objectName();
-    int buttonIndex=INT_MIN;
-    if (senderName==kBACK_BUTTON)
-        buttonIndex=backButtonIndex;
-    else if (senderName==kNEW_BUTTON)
-        buttonIndex=newButtonIndex;
-    else if (senderName==kEDIT_BUTTON)
-        buttonIndex=editButtonIndex;
-    else if (senderName==kAPPLY_CHANGES_BUTTON)
-        buttonIndex=applyButtonIndex;
-    else if (senderName==kUNDO_CHANGES_BUTTON)
-        buttonIndex=undoButtonIndex;
-    else if (senderName==kDELETE_BUTTON)
-        buttonIndex=deleteButtonIndex;
-    else{
-        //FIXME Надо бы убрать жесткую связку через строку, да и вообще этот кусок грязноват
-        baseProvider->loadSystemTables(senderName);
-        return;
-    }
-    qDebug()<<senderName<<" "<<buttonIndex;
-    this->buttonPressed(buttonIndex);
-    qDebug()<<senderName<<" "<<buttonIndex;
 }
 
 void CVBController::buttonPressed(int index){
