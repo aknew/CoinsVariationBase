@@ -67,10 +67,23 @@ void CVBController::addViewToStack(const QQuickView* view){
 }
 
 void CVBController::removeWidgetFromStack(){
+
+    int previousItemNumber = this->stackView->childItems().count()-2;
+
+    QQuickItem *previousItem = this->stackView->childItems().at(previousItemNumber);
+
     QMetaObject::invokeMethod(this->stackView,
-                              "pop"
+                              "pop",
+                              Q_ARG(QVariant,QVariant::fromValue(previousItem))
                               );
     currentWidgetType.pop();
+}
+
+QQuickItem * CVBController::currentItem(){
+
+    QVariant returnedValue=this->stackView->property("currentItem");
+
+    return returnedValue.value<QQuickItem *>();
 }
 
 //Загрузка различных страниц
@@ -173,122 +186,103 @@ QQuickView *CVBController::newDeclarativeView(){
 void CVBController::buttonPressed(int index){
 
     qDebug()<<index;
-//    if(index<0){
-//        //что- то из предопредопределенных кнопок
-//        switch (index) {
-//        case backButtonIndex:{
-//            if (currentWidgetType.top()==FullForm||currentWidgetType.top()==FullScreenImage)
-//                this->removeWidgetFromStack();
-//            else {
-//                baseProvider->previousLevel();
-//                if (currentWidgetType.top()!=TableForm){
-//                    QWidget *wgt=stackedWidget->currentWidget();
-//                    QQuickView *w=qobject_cast<QQuickView*>(wgt);
-//                    w->setSource(w->source());
-//                }
-//            }
-//            break;
-//        case newButtonIndex:{
-//                newRowInsertion=true;
-//                if (currentWidgetType.top()==TableForm){
-//                    baseProvider->insertNewRow();
-//                    QWidget *wgt=stackedWidget->currentWidget();
-//                    DelegatedTableView *w=qobject_cast<DelegatedTableView*>(wgt);
-//                    if (w) {
-//                        w->selectRow(w->model()->rowCount()-1);
-//                        dataChanged();
-//                    }
-//                    return;
-//                }
+    if(index<0){
+        //что- то из предопредопределенных кнопок
+        switch (index) {
+        case backButtonIndex:{
+            if (currentWidgetType.top()==FullForm||currentWidgetType.top()==FullScreenImage)
+                this->removeWidgetFromStack();
+            //FIXME: need update table view - we can change it into FullForm, maybe rewrite this part with switch
+            else {
+                baseProvider->previousLevel();
+            }
+            break;
 
-//                CVBSqlRelationalTableModel *model = baseProvider->currentNode()->model;
-//                model->selectedRow=model->rowCount();
-//                if (currentWidgetType.top()==QMLListWithoutEditing){
-//                    this->fullInfo(model->selectedRow);
-//                    QWidget *wgt=stackedWidget->currentWidget();
-//                    QQuickView *w=qobject_cast<QQuickView*>(wgt);
-//                    w->rootObject()->setProperty("state","editable");
-//                }
-//                else{
-//                    QWidget *wgt=stackedWidget->currentWidget();
-//                    QQuickView *w=qobject_cast<QQuickView*>(wgt);
-//                    w->rootContext()->setContextProperty("selectedItem",model->selectedItem());
-//                    w->setSource(w->source());
-//                    w->rootObject()->setProperty("state","editable");
-//                }
-//                dataChanged();
-//                break;
+        case newButtonIndex:{
+                newRowInsertion=true;
+                if (currentWidgetType.top()==TableForm){
+                    //                    baseProvider->insertNewRow();
+                    //                    QWidget *wgt=stackedWidget->currentWidget();
+                    //                    DelegatedTableView *w=qobject_cast<DelegatedTableView*>(wgt);
+                    //                    if (w) {
+                    //                        w->selectRow(w->model()->rowCount()-1);
+                    //                        dataChanged();
+                    //                    }
+                    return;
+                }
 
-//            }
-//        case editButtonIndex:{
-//                QWidget *wgt=stackedWidget->currentWidget();
-//                QQuickView *w=qobject_cast<QQuickView*>(wgt);
-//                w->rootObject()->setProperty("state","editable");
-//                dataChanged();
-//                break;
-//            }
-//        case applyButtonIndex:{
+                CVBSqlRelationalTableModel *model = baseProvider->currentNode()->model;
+                model->selectedRow=model->rowCount();
+                if (currentWidgetType.top()==QMLListWithoutEditing){
+                    this->fullInfo(model->selectedRow);
+                    this->currentItem()->setProperty("state","editable");
+                }
+                else{
+                    QQuickItem *item = this->currentItem();
+                    item->setProperty("selectedItem",model->selectedItem());
+                    //w->setSource(w->source()); //FIXME: this was reload data in view
+                    item->setProperty("state","editable");
+                }
+                dataChanged();
+                break;
 
-//                if (currentWidgetType.top()==TableForm){
-//                    baseProvider->submitNewRow();
-//                    this->addNavBar();
-//                    newRowInsertion=false;
-//                    return;
-//                }
+            }
+            case editButtonIndex:{
+                this->currentItem()->setProperty("state","editable");
+                dataChanged();
+                break;
+            }
+            case applyButtonIndex:{
 
-//                QWidget *wgt=stackedWidget->currentWidget();
-//                QQuickView *w=qobject_cast<QQuickView*>(wgt);
-//                if (w){
-//                    qDebug()<<"try get property from qml \n";
-//                    QVariant returnedValue;
+                if (currentWidgetType.top()==TableForm){
+                    baseProvider->submitNewRow();
+                    newRowInsertion=false;
+                    return;
+                }
+                qDebug()<<"try get property from qml \n";
+                QVariant returnedValue;
 
-//                    QMetaObject::invokeMethod(w->rootObject(), "collectData",
-//                                Q_RETURN_ARG(QVariant, returnedValue));
+                QMetaObject::invokeMethod(this->currentItem(), "collectData",
+                                          Q_RETURN_ARG(QVariant, returnedValue));
 
-//                    QVariantMap returnedMap=returnedValue.toMap();
+                QVariantMap returnedMap=returnedValue.toMap();
 
-//                    if (!returnedMap.isEmpty()) {
+                if (!returnedMap.isEmpty()) {
 
-//                        qDebug()<<returnedMap;
+                    qDebug()<<returnedMap;
 
-//                        if (newRowInsertion){
-//                            baseProvider->addForeignKeyToMap(returnedMap);
-//                        }
+                    if (newRowInsertion){
+                        baseProvider->addForeignKeyToMap(returnedMap);
+                    }
 
-//                        baseProvider->currentNode()->model->setSelectedItem(returnedMap);
-//                    }
-//                    w->rootObject()->setProperty("state","");
-//                    this->addNavBar();
-//                }
-//                newRowInsertion=false;
-//                break;
+                    baseProvider->currentNode()->model->setSelectedItem(returnedMap);
+                }
+                this->currentItem()->setProperty("state","");
+                newRowInsertion=false;
+                break;
 
-//            }
-//            case undoButtonIndex:{
-//                if (currentWidgetType.top()==TableForm){
-//                    baseProvider->currentNode()->model->revertAll();
-//                    this->addNavBar();
-//                    return;
-//                }
+            }
+            case undoButtonIndex:{
+                if (currentWidgetType.top()==TableForm){
+                    baseProvider->currentNode()->model->revertAll();
+                    return;
+                }
 
-//                if (newRowInsertion){
-//                    this->removeWidgetFromStack();
-//                }
-//                else{
-//                        QWidget *wgt=stackedWidget->currentWidget();
-//                        QQuickView *w=qobject_cast<QQuickView*>(wgt);
-//                        w->rootObject()->setProperty("state","");
-//                        w->setSource(w->source());//FIXME drop changes - looks wrong
-//                }
-//                baseProvider->currentNode()->model->revertAll();
-//                newRowInsertion=false;
-//                this->addNavBar();
-//                break;
+                if (newRowInsertion){
+                    this->removeWidgetFromStack();
+                }
+                else{
+                    this->currentItem()->setProperty("state","");
+                    //w->setSource(w->source());//FIXME drop changes - looks wrong
+                }
+                baseProvider->currentNode()->model->revertAll();
+                newRowInsertion=false;
+                break;
 
-//                }
-//        }
-//        case deleteButtonIndex:{
-//            if (currentWidgetType.top()==TableForm){
+            }
+        }
+        case deleteButtonIndex:{
+            if (currentWidgetType.top()==TableForm){
 //                QWidget *wgt=stackedWidget->currentWidget();
 //                DelegatedTableView *w=qobject_cast<DelegatedTableView*>(wgt);
 //                if (w) {
@@ -302,18 +296,19 @@ void CVBController::buttonPressed(int index){
 //                    model->removeRows(list.at(0).row(),list.count());
 //                    model->submitAll();
 //                }
-//            }
-//            else {
-//                baseProvider->deleteCurrentRow();
-//                this->removeWidgetFromStack();
-//            }
-//            break;
-//        }
-//        default:
-//            this->showError(tr("Not imlemented yet"));
-//        }
-//        return;
-//    }
+            }
+            else {
+                baseProvider->deleteCurrentRow();
+                this->removeWidgetFromStack();
+            }
+            break;
+        }
+        default:
+            this->showError(tr("Not imlemented yet"));
+        }
+        return;
+    }
+    qDebug()<<"this is not predefined button";
     baseProvider->pressedButton(index);
 }
 

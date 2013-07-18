@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql xml qml quick
+QT       += core gui sql xml qml quick widgets
 
 TARGET = CoinsVariationBase
 TEMPLATE = app

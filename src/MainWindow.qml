@@ -9,26 +9,19 @@ ApplicationWindow {
     toolBar: ToolBar {
         RowLayout {
             ToolButton {
-                iconName: "back"
-                iconSource: "/icons/back.png";
-                text: "back";
+                action:actionBack
             }
             ToolButton {
-                iconSource: "/icons/edit.png";
-                text: "edit";
+                action: actionEdit;
             }
             ToolButton {
-                iconName: "add"
-                iconSource: "/icons/add.png";
-                text: "add";
+                action: actionAdd
             }
             ToolButton {
-                iconSource: "/icons/delete.png";
-                text: "delete";
+                action: actionDelete
             }
             ToolButton {
-                iconSource: "/icons/Database.png";
-                text: "systemTables";
+                action: systemTables
             }
         }
     }
@@ -59,4 +52,47 @@ ApplicationWindow {
     function openBase(){
         openBaseDialog.open();
     }
+/*
+       enum kButtonI{
+           backButtonIndex=-1,
+           newButtonIndex=-2,
+           deleteButtonIndex=-3,
+           applyButtonIndex=-4,
+           undoButtonIndex=-5,
+           editButtonIndex=-6
+       };
+  */
+    Action {
+        id: actionBack
+        iconName: "back"
+        iconSource: "/icons/back.png";
+        text: "back";
+        onTriggered: CVBApi.buttonPressed(-1);
+    }
+    Action {
+        id: actionEdit
+        iconSource: "/icons/edit.png";
+        text: "edit";
+        onTriggered: CVBApi.buttonPressed(-6);
+    }
+    Action {
+        id: actionAdd
+        iconName: "add"
+        iconSource: "/icons/add.png";
+        text: "add";
+        onTriggered: CVBApi.buttonPressed(-2);
+    }
+    Action {
+        id: actionDelete
+        iconSource: "/icons/delete.png";
+        text: "delete";
+        onTriggered: CVBApi.buttonPressed(-3);
+    }
+    Action {
+        id: systemTables
+        iconSource: "/icons/Database.png";
+        text: "systemTables";
+        //onTriggered: CVBApi.buttonPressed(-1);
+    }
+
 }

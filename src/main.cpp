@@ -4,6 +4,7 @@
 #include <QtCore/QString>
 #include <QtCore/QUrl>
 #include "CVBController.h"
+#include <QtWidgets/QApplication>
 
 static QObject *cvbApiObjectSingleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
@@ -23,7 +24,7 @@ int main(int argc, char *argv[])
 {
     qmlRegisterSingletonType<CVBController>("CVB.api", 1, 0, "CVBApi", cvbApiObjectSingleton);
 
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
     QQmlApplicationEngine engine(QUrl("qrc:/MainWindow.qml"));
     QObject *topLevel = engine.rootObjects().value(0);
     QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);

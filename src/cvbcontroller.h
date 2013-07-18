@@ -40,6 +40,7 @@ class CVBController : public QObject
        QQuickView *newDeclarativeView();
        QQuickItem *stackView;
        QQuickWindow *applicationWindow;
+       QQuickItem *currentItem();
 
        //  константы-кнопки, не входящие в список переходов (назад, новая запись, удалить и т.п.)
        enum kButtonI{
