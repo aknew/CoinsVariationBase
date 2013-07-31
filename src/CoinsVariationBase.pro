@@ -16,14 +16,16 @@ SOURCES += main.cpp\
     CVBSqlRelationalTableModel.cpp \
     CVBBaseProvider.cpp \
     CVBController.cpp \
-    comboboxdescription.cpp
+    comboboxdescription.cpp \
+    CVBUtils.cpp
 
 HEADERS  += CVBImageProvider.h \
     CVBSqlNode.h \
     CVBBaseProvider.h \
     CVBSqlRelationalTableModel.h \
     CVBController.h \
-    comboboxdescription.h
+    comboboxdescription.h \
+    CVBUtils.h
 
 FORMS +=
 
