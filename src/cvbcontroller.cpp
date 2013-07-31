@@ -1,5 +1,9 @@
 #include "CVBController.h"
- #include <QQmlContext>
+#include "CVBUtils.h"
+#include <QQmlContext>
+#include <QtWidgets/QApplication>
+#include <QClipboard>
+
 
 void CVBController::start(){
     QString basePath;
@@ -312,73 +316,36 @@ void CVBController::buttonPressed(int index){
     baseProvider->pressedButton(index);
 }
 
-QVariant CVBController::loadNewImage(){
-//    QString str=QFileDialog::getOpenFileName(0,tr("Switch picture"),QString());//,"*.jpg");
-//    if (!str.isEmpty()){
-//        QFile file(str);
-
-//        if (file.open(QIODevice::ReadOnly)){
-
-//            QByteArray byteArray = file.readAll();
-
-//            return QVariant(baseProvider->idForAttach(byteArray));
-//        }
-//    }
-
-    return QVariant(-1);
-}
-
-//Всплывающие меню
-
-QVariant CVBController::imageRightClick(const QString& id, int x, int y, bool editable=false){
+QVariant CVBController::loadNewImage(QString imagePath = NULL){
 
     QVariant returnVar = QVariant("-1");
-//    QMenu myMenu;
-//    //FIXME make string constants
-//    if (editable) {
-//        myMenu.addAction(tr("Load image from disk"));
-//        myMenu.addAction(tr("Paste image from clipboard"));
-//    }
-//    else {
-//        myMenu.addAction(tr("Save image to disk"));
-//        myMenu.addAction(tr("Copy image to clipboard"));
-//    }
+    if (!imagePath.isEmpty()){
 
-//    QAction* selectedItem = myMenu.exec(QPoint(x,y));
-//    if (selectedItem)
-//    {
-//        if (selectedItem->text()==tr("Save image to disk")){
-//            QString str=QFileDialog::getSaveFileName(0,tr("Switch place for saving"),QString(),"*.jpg");
-//            if (!str.isEmpty()){
+        CVBFromQmlFilePath(&imagePath);
 
-//                if ( !str.contains(".jpg", Qt::CaseInsensitive) )
-//                    str.append(".jpg");
+        QFile file(imagePath);
 
-//                QPixmap pix=imageProvider->requestPixmap(id,NULL,QSize());
-//                pix.save(str);
-//            }
-//        }
-//        else if (selectedItem->text()==tr("Copy image to clipboard")) {
-//            QClipboard *clipboard = QApplication::clipboard();
-//            clipboard->setPixmap(imageProvider->requestPixmap(id,NULL,QSize()));
-//        } else if (selectedItem->text()==tr("Load image from disk")){
-//            returnVar=this->loadNewImage();
-//        }
-//        else if (selectedItem->text()==tr("Paste image from clipboard")){
-//            QClipboard *clipboard = QApplication::clipboard();
-//            QPixmap pix=clipboard->pixmap();
-//            if (!pix.isNull()){
+        if (file.open(QIODevice::ReadOnly)){
 
-//                QByteArray bArray;
-//                QBuffer buffer( &bArray );
-//                buffer.open( QIODevice::WriteOnly );
-//                pix.save( &buffer, "JPG" );
+            QByteArray byteArray = file.readAll();
 
-//                returnVar=QVariant(baseProvider->idForAttach(bArray));
-//            }
+            returnVar = QVariant(baseProvider->idForAttach(byteArray));
+        }
+    }
+    else {
+        QClipboard *clipboard = QApplication::clipboard();
+        QPixmap pix = clipboard->pixmap();
+        if (!pix.isNull()){
 
-//        }
-//    }
+            QByteArray bArray;
+            QBuffer buffer( &bArray );
+            buffer.open( QIODevice::WriteOnly );
+            pix.save( &buffer, "JPG" );
+
+            returnVar=QVariant(baseProvider->idForAttach(bArray));
+        }
+    }
+
     return returnVar;
 }
 

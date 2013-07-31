@@ -62,12 +62,12 @@ class CVBController : public QObject
        Q_INVOKABLE void buttonPressed(int index);
        Q_INVOKABLE void fullInfo(int index);
        Q_INVOKABLE void showFullScreenImage(QString imgSource);
-       Q_INVOKABLE QVariant imageRightClick(const QString& id, int x, int y, bool editable);
        Q_INVOKABLE void dataChanged();
        Q_INVOKABLE QVariant listForName(const QString& name);
 
        //попытка вызвать диалог и загрузить в нем новую картинку, если все хорошо - вернется ее ссылка, если нет - -1
-       Q_INVOKABLE QVariant loadNewImage();
+       //этот же метод вставит картикну из буфера обмена если ему передать imagePath=NULL (значение по умолчанию)
+       Q_INVOKABLE QVariant loadNewImage(QString imagePath);
 
        Q_INVOKABLE void openBase(QString basePath);
 
