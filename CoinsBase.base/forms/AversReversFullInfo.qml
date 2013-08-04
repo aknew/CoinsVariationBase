@@ -46,7 +46,8 @@ Rectangle {
     function collectData() {
         var returnedMap = {
             description:inp_Description.text,
-            comment:txt_comment.text
+            comment:txt_comment.text,
+            pict: picture.pict,
         }
         return returnedMap
     }
