@@ -6,12 +6,18 @@ import CVB.api 1.0
 Image {
 
     FileDialog {
-        id: openImageDialog
+        id: imageDialog
+        property bool isOpenDialog: true;
         modality: Qt.WindowModal
-        title: "Choose an image"
-        selectExisting: true
+        title: isOpenDialog?"Choose an image":"Where to save"
+        selectExisting: isOpenDialog
         onAccepted: {
             console.log("Accepted: " + fileUrls[0])
+            if (!isOpenDialog){
+                CVBApi.saveImage(img.pict,fileUrls[0]);
+                return;
+            }
+
             var newID = CVBApi.loadNewImage(fileUrls[0])
             if (newID !== "-1") {
                 console.log("new image load - SUCCESS")
@@ -29,21 +35,40 @@ Image {
 
         MenuItem {
             text: "Open"
-            shortcut: "Ctrl+O"
             onTriggered: {
-                openImageDialog.open();
+                imageDialog.isOpenDialog = true;
+                imageDialog.open();
             }
         }
 
         MenuItem {
             text: "Paste"
-            shortcut: "Ctrl+V"
             onTriggered: {
                 var newID = CVBApi.loadNewImage(null)
                 if (newID !== "-1") {
                     console.log("new image paste - SUCCESS")
                     img.pict = newID
                 }
+            }
+        }
+    }
+
+    Menu {
+        id: saveMenu
+        title: "saveMenu"
+
+        MenuItem {
+            text: "Save to file"
+            onTriggered: {
+                imageDialog.isOpenDialog = false;
+                imageDialog.open();
+            }
+        }
+
+        MenuItem {
+            text: "Copy to clipboard"
+            onTriggered: {
+                CVBApi.saveImage(img.pict,null)
             }
         }
     }
@@ -66,12 +91,12 @@ Image {
                 if (mouse.button === Qt.RightButton) {
                     insertMenu.popup()
                 } else {
-                    openImageDialog.open();
+                    imageDialog.isOpenDialog = true;
+                    imageDialog.open();
                 }
             } else {
                 if (mouse.button === Qt.RightButton) {
-                    window.imageRightClick(pict, mouse.x + img.x,
-                                           mouse.y + img.y, editing)
+                    saveMenu.popup()
                 } else
                     window.showFullScreenImage(img.source)
             }

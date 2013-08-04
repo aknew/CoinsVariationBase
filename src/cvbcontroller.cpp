@@ -349,6 +349,23 @@ QVariant CVBController::loadNewImage(QString imagePath = NULL){
     return returnVar;
 }
 
+void CVBController::saveImage(QString imageId, QString imagePath = NULL){
+
+    QSize size=QSize();
+    QImage img = imageProvider->requestImage(imageId,&size,size);
+
+    if (!imagePath.isEmpty()){
+
+        CVBFromQmlFilePath(&imagePath);
+
+        img.save(imagePath);
+    }
+    else {
+        QClipboard *clipboard = QApplication::clipboard();
+        clipboard->setImage(img);
+    }
+}
+
 //работа с сохранением данных
 
 void CVBController::dataChanged(){

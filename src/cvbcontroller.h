@@ -68,6 +68,7 @@ class CVBController : public QObject
        //попытка вызвать диалог и загрузить в нем новую картинку, если все хорошо - вернется ее ссылка, если нет - -1
        //этот же метод вставит картикну из буфера обмена если ему передать imagePath=NULL (значение по умолчанию)
        Q_INVOKABLE QVariant loadNewImage(QString imagePath);
+       Q_INVOKABLE void saveImage(QString imageId, QString imagePath);
 
        Q_INVOKABLE void openBase(QString basePath);
 
