@@ -12,7 +12,6 @@ struct CVBSqlNode{
     CVBSqlRelationalTableModel *model;//модель-ссылка на таблицу
     QVector <QString> rowParamNames;
     QMap<QString, QString> childNodes;//идентификаторы узлов, на которые можно перейти от текущего и поле, по которому они связаны
-    QMap<QString, QPair <QString, QString > > childNodes2;// то же, но связь не с id, а с произвольным полем текущей таблицы
     QVector< QPair<int,QString> > comboDelegates;
     int pictDelegate;
     int defaultSortColumn;

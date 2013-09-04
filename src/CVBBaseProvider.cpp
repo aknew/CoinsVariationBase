@@ -1,5 +1,4 @@
 #include "CVBBaseProvider.h"
-#include <QtXml>
 #include "CVBUtils.h"
 
 CVBBaseProvider::CVBBaseProvider(QString pathPath, QObject *parent) :
@@ -107,7 +106,6 @@ void CVBBaseProvider::loadSystemTables(const QString &name){
 
 QStringList CVBBaseProvider::buttonIDs(){
     QStringList buttonIDs=currentNode()->childNodes.keys();
-    buttonIDs.append(currentNode()->childNodes2.keys());
 
     return buttonIDs;
 }
@@ -127,15 +125,6 @@ void CVBBaseProvider::pressedButton(int index){
             QString str1="%1=%2";
             node->model->setFilter(str1.arg(str).arg(id.value().toString()));
             ids.insert(str,id.value().toString());
-        }
-        else{
-           QPair <QString, QString > relation=currentNode->childNodes2.value(buttonID);
-           if (relation.first!=""){
-               QSqlRecord record=currentNode->model->record(rowIndex);
-               QSqlField id=record.field(relation.first);
-               QString str1="\"%1\"=\"%2\"";
-               node->model->setFilter(str1.arg(relation.second).arg(id.value().toString().replace("\"","\"\"")));//Экранируем кавычки
-           }
         }
         node->model->select();
         qDebug()<<node->model->filter();
@@ -234,110 +223,122 @@ QByteArray CVBBaseProvider::attachForId(QString id){
 
 void CVBBaseProvider::parse(){
 
-    QString filename=basePath+"struct.xml";
+    QString filename=basePath+"struct.json";
 
     qDebug()<<"parser start - ok";
-
-    QDomDocument doc("mydocument");
      QFile file(filename);
      if (!file.open(QIODevice::ReadOnly)){
-         qDebug() << "Cannot open xml";
+         qDebug() << "Cannot open json";
          exit(-1);
      }
-     if (!doc.setContent(&file)) {
-         qDebug() << "!doc.setContent(&file)";
-         file.close();
-         exit(-2);
-     }
+     QString jsonData = file.readAll();
      file.close();
 
-     // print out the element names of all elements that are direct children
-     // of the outermost element.
-     QDomElement docElem = doc.documentElement();
-     startTable =docElem.attribute("startTable");
-     QDomNode n = docElem.firstChild();
-     while(!n.isNull()) {
-         QDomElement e = n.toElement(); // try to convert the node to an element.
-         if(!e.isNull() && e.tagName()=="node") {
-             CVBSqlNode *node=new CVBSqlNode();
-             node->tableName=e.attribute("name");
-             //FIXME Cтоит создавать модели только тогда, когда они нужны и выгружать потом
-             node->model=new CVBSqlRelationalTableModel(this,db);
-             node->model->setTable(node->tableName);
-             node->model->applyRoles();
+     QJsonDocument sd = QJsonDocument::fromJson(jsonData.toUtf8());
 
-             node->defaultSortColumn=e.attribute("defaultSortColumn","-1").toInt();
-
-             bool isSystem=e.attribute("isSystem","0").toInt();
-
-             if (isSystem){
-                 systemTables.append(node->tableName);
-             }
-
-             QDomNode n1 = n.firstChild();
-             while(!n1.isNull()) {
-                 QDomElement e1 = n1.toElement(); // try to convert the node to an element.
-                 if(!e1.isNull()) {
-                     if (e1.tagName()=="mainChild"){
-                         node->mainChild=e1.attribute("name");
-                     }
-                     else if (e1.tagName()=="childNode"){
-                         node->childNodes.insert(e1.attribute("name"),e1.attribute("relation"));
-                     }
-                     else if (e1.tagName()=="childNode2"){
-                         node->childNodes2.insert(e1.attribute("name"),QPair<QString, QString>(e1.attribute("relation1"),e1.attribute("relation2")));
-                     }else if (e1.tagName()=="comboDelegate"){
-                         node->comboDelegates.push_back(QPair <int, QString>(
-                                                            e1.attribute("column","-1").toInt(),
-                                                            e1.attribute("dict","-1")
-                                                           ));
-                     }else if (e1.tagName()=="rowParamNames"){
-                         node->rowParamNames.push_back(e1.attribute("name"));
-                     }else if (e1.tagName()=="pictDelegate"){
-                         node->pictDelegate=e1.attribute("column","-1").toInt();
-                     }else if (e1.tagName()=="widths"){
-
-                         QStringList widths=e1.text().split(' ');
-
-                         node->columnWidth=new QVector<float>;
-                         for (int i=0;i<widths.count();++i){
-                             node->columnWidth->push_back(widths.at(i).toFloat());
-                         }
-
-                     }else if (e1.tagName()=="height"){
-                         node->height=e1.text().toFloat();
-                     }else if (e1.tagName()=="fullForm"){
-                         node->fullFormName = e1.attribute("name","");
-                     }else if (e1.tagName()=="listForm"){
-                         node->listFormName = e1.attribute("name","");
-                     }
-                 }
-                 n1 = n1.nextSibling();
-             }
-
-             nodeMap.insert(node->tableName,node);
-         }
-         else {
-             if(!e.isNull() && e.tagName()=="comboBoxes") {
-                 QDomNode n1 = n.firstChild();
-                 while(!n1.isNull()) {
-                     QDomElement e1 = n1.toElement(); // try to convert the node to an element.
-                     if(!e1.isNull()) {
-                         ComboBoxDescription desc;
-                         desc.query=e1.attribute("query","");
-
-                         QString param=e1.attribute("param","");
-                         if (!param.isEmpty())
-                             desc.params.push_back(param);
-                         comboBoxes[e1.attribute("name","")]=desc;
-                     }
-                     n1 = n1.nextSibling();
-                 }
-
-             }
-         }
-         n = n.nextSibling();
+     if (sd.isNull()){
+         qDebug() << "Wrong file format";
+         exit(-1);
      }
+     QJsonObject baseStruct = sd.object();
+     qDebug() << baseStruct.value(QString("name"));
+
+     startTable = baseStruct.value("startTable").toString();
+
+     QJsonArray nodes = baseStruct.value("nodes").toArray();
+
+     foreach (QJsonValue value,nodes) {
+         QJsonObject obj=value.toObject();
+
+         CVBSqlNode *node=new CVBSqlNode();
+         node->tableName=obj.value("name").toString();
+         //FIXME Cтоит создавать модели только тогда, когда они нужны и выгружать потом
+         node->model=new CVBSqlRelationalTableModel(this,db);
+         node->model->setTable(node->tableName);
+         node->model->applyRoles();
+
+         node->defaultSortColumn=obj.value("defaultSortColumn").toString("-1").toInt();
+
+         bool isSystem=obj.value("isSystem").toBool();
+
+         if (isSystem){
+             systemTables.append(node->tableName);
+         }
+
+         node->mainChild = obj.value("mainChild").toString(); //FIXME: Unused parameter of node
+
+         QJsonArray childNodes = obj.value("childNode").toArray();
+         foreach (QJsonValue value,childNodes) {
+             QJsonObject obj=value.toObject();
+             node->childNodes.insert(
+                         obj.value("name").toString(),
+                         obj.value("relation").toString()
+                         );
+         }
+
+         QJsonArray comboDelegates = obj.value("comboDelegate").toArray();
+         foreach (QJsonValue value,comboDelegates) {
+             QJsonObject obj=value.toObject();
+             node->comboDelegates.push_back(QPair <int, QString>(
+                                                obj.value("column").toString("-1").toInt(),
+                                                obj.value("dict").toString()
+                                                )
+                                            );
+         }
+
+         QJsonValue rowParameters = obj.value("rowParamNames");// FIXME: древний костыль, надо исправить, а может при изменении структуры базы и сам уйдет
+         if (rowParameters.isArray()){
+             foreach (QJsonValue value,rowParameters.toArray()) {
+                 QJsonObject obj=value.toObject();
+                 node->rowParamNames.push_back(obj.value("name").toString());
+             }
+         }
+         else{
+             QJsonObject obj=rowParameters.toObject();
+             node->rowParamNames.push_back(obj.value("name").toString());
+         }
+
+         node->pictDelegate=obj.value("pictDelegate").toString("-1").toInt();
+
+         QJsonValue value=obj.value("widths");
+
+         if (!value.isNull()){
+            //XXX Скорее всего вся группа уйдет при дальнейшем улучшении кода
+
+             QStringList widths=value.toString().split(' ');
+
+             node->columnWidth=new QVector<float>;
+             for (int i=0;i<widths.count();++i){
+                 node->columnWidth->push_back(widths.at(i).toFloat());
+             }
+         }
+
+         node->height = obj.value("height").toDouble();
+
+         node->fullFormName = obj.value("fullForm").toString();
+
+         node->listFormName = obj.value("listForm").toString();
+
+         nodeMap.insert(node->tableName,node);
+     }
+
+     nodes = baseStruct.value("comboBoxes").toArray();
+
+     foreach (QJsonValue value,nodes) {
+
+         QJsonObject obj=value.toObject();
+
+         ComboBoxDescription desc;
+
+         desc.query=obj.value("query").toString();
+
+         QString param=obj.value("param").toString();
+         if (!param.isEmpty())
+             desc.params.push_back(param);
+         comboBoxes[obj.value("name").toString()]=desc;
+     }
+
      qDebug()<<nodeMap.keys();
+     qDebug()<<comboBoxes.keys();
      qDebug()<<"parser end - ok";
 }

@@ -1,0 +1,311 @@
+{
+    "name": "Монеты Российской Империи",
+    "startTable": "TypesView",
+    "nodes": [
+      {
+        "name": "TypesView",
+        "defaultSortColumn": "3",
+        "mainChild": "SubtypesView" ,
+        "childNode": [
+          {
+            "name": "SubtypesView",
+            "relation": "typeID"
+          },
+          {
+            "name": "SubtypesAvers",
+            "relation": "typeID"
+          },
+          {
+            "name": "SubtypesRevers",
+            "relation": "typeID"
+          }
+        ],
+        "comboDelegate": [
+          {
+            "column": "1",
+            "dict": "nominals"
+          },
+          {
+            "column": "2",
+            "dict": "metals"
+          },
+          {
+            "column": "5",
+            "dict": "edges"
+          },
+          {
+            "column": "6",
+            "dict": "issues"
+          }
+        ]
+      },
+      {
+        "name": "SubtypesView",
+        "defaultSortColumn": "2",
+        "rowParamNames": { "name": "typeID" },
+        "mainChild": "VariantsView",
+        "childNode": [
+          {
+            "name": "VariantsView",
+            "relation": "stID"
+          },
+          {
+            "name": "subtypeReferencesView",
+            "relation": "stID"
+          },
+          {
+            "name": "CurrentCoinsView",
+            "relation": "stID"
+          }
+        ],
+        "comboDelegate": [
+          {
+            "column": "4",
+            "dict": "mintYard"
+          },
+          {
+            "column": "6",
+            "dict": "edges"
+          },
+          {
+            "column": "7",
+            "dict": "aversSub"
+          },
+          {
+            "column": "8",
+            "dict": "reversSub"
+          }
+        ],
+        "pictDelegate":"9",
+        "widths": "50 50 50 75 150 150 150 200 200 400 75 200",
+        "height": "200"
+      },
+      {
+        "name": "SubtypesRevers",
+        "listForm":"AversReversList",
+        "fullForm":"AversReversFullInfo",
+        "rowParamNames": { "name": "typeID" },
+        "childNode": [
+          {
+            "name": "SubtypesView",
+            "relation": "ReversID"
+          },
+          {
+            "name": "variantRevers",
+            "relation": "revID"
+          }
+        ],
+        "pictDelegate":"3"
+      },
+      {
+        "name": "SubtypesAvers",
+        "listForm":"AversReversList",
+        "fullForm":"AversReversFullInfo",
+        "childNode": [
+          {
+            "name": "SubtypesView",
+            "relation": "AversID"
+          },
+          {
+            "name": "variantAvers",
+            "relation": "avID"
+          }
+        ],
+        "rowParamNames": { "name": "typeID" },
+        "pictDelegate":"3"
+      },
+      {
+        "name": "variantAvers",
+        "listForm":"AversReversList",
+        "fullForm":"AversReversFullInfo",
+        "childNode": {
+          "name": "VariantsView",
+          "relation": "AversID"
+        },
+        "pictDelegate": "4"
+      },
+      {
+        "name": "variantRevers",
+        "listForm":"AversReversList",
+        "fullForm":"AversReversFullInfo",
+        "childNode": {
+          "name": "VariantsView",
+          "relation": "ReversID"
+        },
+        "pictDelegate":"4"
+      },
+      {
+        "name": "VariantsView",
+        "rowParamNames": { "name": "stID" },
+        "mainChild": "CurrentCoinsView",
+        "childNode": [
+          {
+            "name": "CurrentCoinsView",
+            "relation": "varID"
+          },
+          {
+            "name": "variantReferencesView",
+            "relation": "varID"
+          }
+        ],
+        "comboDelegate": [
+          {
+            "column": "3",
+            "dict": "aversVar"
+          },
+          {
+            "column": "4",
+            "dict": "reversVar"
+          },
+          {
+            "column": "6",
+            "dict": "mintYard"
+          },
+          {
+            "column": "5",
+            "dict": "edges"
+          }
+        ],
+        "pictDelegate":"2",
+        "widths": "50 50 400 150 150 75 200",
+        "height": "200"
+      },
+      {
+        "name": "CurrentCoinsView",
+        "mainChild": "CoinHistory" ,
+        "childNode": [
+          {
+            "name": "CoinPicture",
+            "relation": "coin"
+          },
+          {
+            "name": "CoinHistory",
+            "relation": "coin"
+          }
+        ],
+        "rowParamNames": [
+          { "name": "stID" },
+          { "name": "varID" }
+        ],
+        "comboDelegate": {
+          "column": "5",
+          "dict": "statuses"
+        },
+        "pictDelegate":"3",
+        "widths": "50 50 50 400 150 150 100",
+        "height": "200"
+      },
+      {
+        "name": "subtypeReferencesView",
+        "listForm": { "name": "ReferencesView" },
+        "rowParamNames": { "name": "stID" },
+        "childNode": { "name": "SourcesList" },
+        "comboDelegate": {
+          "column": "1",
+          "dict": "sourceList"
+        }
+      },
+      {
+        "name": "variantReferencesView",
+        "listForm": { "name": "ReferencesView" },
+        "rowParamNames": { "name": "varID" },
+        "childNode": { "name": "SourcesList" },
+        "comboDelegate": {
+          "column": "1",
+          "dict": "sourceList"
+        }
+      },
+      { "name": "SourcesList" },
+      {
+        "name": "CoinHistory",
+        "rowParamNames": { "name": "coin" }
+      },
+      {
+        "name": "CoinPicture",
+        "rowParamNames": { "name": "coin" },
+        "pictDelegate":"1"
+      },
+      {
+        "name": "attachStorage",
+        "isSystem": "1",
+        "pictDelegate":"1",
+        "widths": "200 400 200",
+        "height": "200"
+      },
+      {
+        "name": "nominals",
+        "isSystem": "1"
+      },
+      {
+        "name": "metals",
+        "isSystem": "1"
+      },
+      {
+        "name": "issues",
+        "isSystem": "1"
+      },
+      {
+        "name": "edges",
+        "isSystem": "1"
+      },
+      {
+        "name": "statuses",
+        "isSystem": "1"
+      },
+      {
+        "name": "MintYard",
+        "isSystem": "1"
+      }
+    ],
+    "comboBoxes": [
+        {
+          "query": "select value from nominals order by value",
+          "name": "nominals"
+        },
+        {
+          "query": "select value from metals order by value",
+          "name": "metals"
+        },
+        {
+          "query": "select value from issues order by value",
+          "name": "issues"
+        },
+        {
+          "query": "select value from edges order by value",
+          "name": "edges"
+        },
+        {
+          "query": "select value from statuses",
+          "name": "statuses"
+        },
+        {
+          "query": "select value from MintYard",
+          "name": "MintYard"
+        },
+        {
+          "query": "select reduction from SourcesList order by reduction",
+          "name": "sourceList"
+        },
+        {
+          "query": "select description from SubtypesAvers where typeID=%1",
+          "name": "SubtypesAvers",
+          "param": "typeID"
+        },
+        {
+          "query": "select description from SubtypesRevers where typeID=%1",
+          "name": "SubtypesRevers",
+          "param": "typeID"
+        },
+        {
+          "query": "select description from variantAvers where typeID=%1",
+          "name": "variantAvers",
+          "param": "TypesView.id"
+        },
+        {
+          "query": "select description from variantRevers where typeID=%1",
+          "name": "variantRevers",
+          "param": "TypesView.id"
+        }
+      ]
+  }
+}
