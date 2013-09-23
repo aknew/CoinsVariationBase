@@ -247,8 +247,8 @@ void CVBBaseProvider::parse(){
 
      QJsonArray nodes = baseStruct.value("nodes").toArray();
 
-     foreach (QJsonValue value,nodes) {
-         QJsonObject obj=value.toObject();
+     foreach (QJsonValue value1,nodes) {
+         QJsonObject obj=value1.toObject();
 
          CVBSqlNode *node=new CVBSqlNode();
          node->tableName=obj.value("name").toString();
@@ -268,8 +268,8 @@ void CVBBaseProvider::parse(){
          node->mainChild = obj.value("mainChild").toString(); //FIXME: Unused parameter of node
 
          QJsonArray childNodes = obj.value("childNode").toArray();
-         foreach (QJsonValue value,childNodes) {
-             QJsonObject obj=value.toObject();
+         foreach (QJsonValue value1,childNodes) {
+             QJsonObject obj=value1.toObject();
              node->childNodes.insert(
                          obj.value("name").toString(),
                          obj.value("relation").toString()
