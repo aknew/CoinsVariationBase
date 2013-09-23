@@ -38,10 +38,6 @@ int main(int argc, char *argv[])
 
     cvbAPI->applicationWindow = window;
 
-    //TODO: may be rigth way is find by name (QObject *rect = object->findChild<QObject*>("rect");)
-//    QQuickItem *item = window->contentItem();
-//    item = item->childItems().first()->childItems().at(1); //ApplicationWindow content area
-//    item = item->childItems().first(); // StackView is single subitem of contentarea in my qml
     QQuickItem *item= window->findChild<QQuickItem*>("tablesStack");
     cvbAPI->stackView = item;
 
