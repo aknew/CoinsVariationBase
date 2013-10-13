@@ -118,20 +118,24 @@
         "name": "variantAvers",
         "listForm":"AversReversList",
         "fullForm":"AversReversFullInfo",
-        "childNode": {
+        "childNode":[
+        {
           "name": "VariantsView",
           "relation": "AversID"
-        },
+        }
+        ],
         "pictDelegate": "4"
       },
       {
         "name": "variantRevers",
         "listForm":"AversReversList",
         "fullForm":"AversReversFullInfo",
-        "childNode": {
+        "childNode": [
+        {
           "name": "VariantsView",
           "relation": "ReversID"
-        },
+        }
+        ],
         "pictDelegate":"4"
       },
       {
@@ -197,7 +201,7 @@
       },
       {
         "name": "subtypeReferencesView",
-        "listForm": { "name": "ReferencesView" },
+        "listForm": "ReferencesView",
         "rowParamNames": { "name": "stID" },
         "childNode": { "name": "SourcesList" },
         "comboDelegate": {
@@ -207,7 +211,7 @@
       },
       {
         "name": "variantReferencesView",
-        "listForm": { "name": "ReferencesView" },
+        "listForm": "ReferencesView",
         "rowParamNames": { "name": "varID" },
         "childNode": { "name": "SourcesList" },
         "comboDelegate": {
