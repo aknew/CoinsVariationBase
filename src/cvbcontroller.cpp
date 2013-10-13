@@ -2,6 +2,7 @@
 #include "CVBUtils.h"
 #include <QQmlContext>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QMessageBox>
 #include <QClipboard>
 
 
@@ -58,7 +59,7 @@ void CVBController::openBase(QString basePath){
 }
 
 void CVBController::showError(QString str){
-
+    QMessageBox::critical(NULL, "", str);
 }
 
 void CVBController::addViewToStack(const QQuickView* view){
