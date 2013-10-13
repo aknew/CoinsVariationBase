@@ -8,11 +8,14 @@ void CVBSqlRelationalTableModel::applyRoles()
 {
     roles.clear();
     qDebug()<<"\n"<<this->tableName();
+    QStringList fields;
     for (int i = 0; i < this->columnCount(); i++) {
             QString role=this->headerData(i, Qt::Horizontal).toString();
             roles[Qt::UserRole + i + 1] = QVariant(role).toByteArray();
             qDebug()<<this->headerData(i, Qt::Horizontal);
+            fields.append(role);
     }
+    fieldList=QVariant(fields);
 }
 
 QVariant CVBSqlRelationalTableModel::data(const QModelIndex &index, int role= Qt::DisplayRole ) const{

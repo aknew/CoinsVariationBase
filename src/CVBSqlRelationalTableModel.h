@@ -16,6 +16,7 @@ signals:
 public:
     Q_INVOKABLE virtual QVariant data(const QModelIndex &index, int role) const;
     QVariantMap selectedItem();
+    QVariant fieldList;
     void setSelectedItem(const QVariantMap &map);
     CVBSqlRelationalTableModel(QObject *parent, QSqlDatabase _db):QSqlRelationalTableModel(parent,_db){this->setEditStrategy(QSqlTableModel::OnManualSubmit);}
     void applyRoles();

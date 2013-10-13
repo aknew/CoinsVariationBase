@@ -41,6 +41,8 @@ int main(int argc, char *argv[])
     QQuickItem *item= window->findChild<QQuickItem*>("tablesStack");
     cvbAPI->stackView = item;
 
+    cvbAPI->engine = &engine;
+
     cvbAPI->start();
     return app.exec();
 }

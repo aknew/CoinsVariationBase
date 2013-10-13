@@ -9,64 +9,64 @@ ApplicationWindow {
     toolBar: ToolBar {
         id: windowToolbar
         states: State {
-                        name: "editable";
-                        PropertyChanges {
-                            target: toolbuttonBack
-                            visible:false
-                        }
-                        PropertyChanges {
-                            target: actionBack
-                            enabled:false
-                        }
-                        PropertyChanges {
-                            target: toolbuttonEdit
-                            visible:false
-                        }
-                        PropertyChanges {
-                            target: actionEdit
-                            enabled:false
-                        }
-                        PropertyChanges {
-                            target: toolbuttonAdd
-                            visible:false
-                        }
-                        PropertyChanges {
-                            target: actionAdd
-                            enabled:false
-                        }
-                        PropertyChanges {
-                            target: toolbuttonDelete
-                            visible:false
-                        }
-                        PropertyChanges {
-                            target: actionDelete
-                            enabled:false
-                        }
-                        PropertyChanges {
-                            target: toolbuttonSystemTables
-                            visible:false
-                        }
-                        PropertyChanges {
-                            target: systemTables
-                            enabled:false
-                        }
-                        PropertyChanges {
-                            target: toolbuttonUndo
-                            visible:true
-                        }
-                        PropertyChanges {
-                            target: actionUndo
-                            enabled:true
-                        }
-                        PropertyChanges {
-                            target: toolbuttonApply
-                            visible:true
-                        }
-                        PropertyChanges {
-                            target: actionApply
-                            enabled:true
-                        }
-                    }
+            name: "editable"
+            PropertyChanges {
+                target: toolbuttonBack
+                visible: false
+            }
+            PropertyChanges {
+                target: actionBack
+                enabled: false
+            }
+            PropertyChanges {
+                target: toolbuttonEdit
+                visible: false
+            }
+            PropertyChanges {
+                target: actionEdit
+                enabled: false
+            }
+            PropertyChanges {
+                target: toolbuttonAdd
+                visible: false
+            }
+            PropertyChanges {
+                target: actionAdd
+                enabled: false
+            }
+            PropertyChanges {
+                target: toolbuttonDelete
+                visible: false
+            }
+            PropertyChanges {
+                target: actionDelete
+                enabled: false
+            }
+            PropertyChanges {
+                target: toolbuttonSystemTables
+                visible: false
+            }
+            PropertyChanges {
+                target: systemTables
+                enabled: false
+            }
+            PropertyChanges {
+                target: toolbuttonUndo
+                visible: true
+            }
+            PropertyChanges {
+                target: actionUndo
+                enabled: true
+            }
+            PropertyChanges {
+                target: toolbuttonApply
+                visible: true
+            }
+            PropertyChanges {
+                target: actionApply
+                enabled: true
+            }
+        }
         RowLayout {
             ToolButton {
                 id: toolbuttonBack
@@ -77,25 +77,25 @@ ApplicationWindow {
                 action: actionEdit
             }
             ToolButton {
-                id:toolbuttonAdd
+                id: toolbuttonAdd
                 action: actionAdd
             }
             ToolButton {
-                id:toolbuttonDelete
+                id: toolbuttonDelete
                 action: actionDelete
             }
             ToolButton {
-                id:toolbuttonSystemTables
+                id: toolbuttonSystemTables
                 action: systemTables
             }
             ToolButton {
-                id:toolbuttonApply
+                id: toolbuttonApply
                 enabled: false
                 visible: false
                 action: actionApply
             }
             ToolButton {
-                id:toolbuttonUndo
+                id: toolbuttonUndo
                 enabled: false
                 visible: false
                 action: actionUndo
@@ -130,8 +130,46 @@ ApplicationWindow {
     function openBase() {
         openBaseDialog.open()
     }
-//FIXME this file should contain all work with gui, calling CVBApi occurs because I deside don't mix migration to
-// QtQuick.Controls and refactoring in one stage
+
+    function createListForm() {
+        var qmlString = "import QtQuick 2.0; import CVB.api 1.0; Rectangle { id: mainRect; ";
+        qmlString += "ListView { id: listView; anchors.fill: parent; delegate: delegate; model: currentModel }";
+        qmlString += "Component { id: delegate;";
+        qmlString += "Item { id: recipe; width: listView.width; height: Math.max(100,topLayout.height+10);";
+        qmlString += "Rectangle {x: 2; y: 2; width: parent.width - x * 2; height: parent.height - y * 2; color: (index % 2) ? \"lightgray\" : \"white\"; border.color: \"gray\"; radius: 5}";
+
+        qmlString += "Column { id: topLayout; anchors.centerIn: parent; width: listView.width-10;";
+
+        var fieldList=CVBApi.fieldsForListView();
+        for (var i = 0; i < fieldList.length; ++i){
+
+            var field=fieldList[i];
+            qmlString +="Text { text: \"<b>\"+";
+            qmlString += "\""+field+"\"";
+            qmlString +="+\":</b>\"+";
+            qmlString +=field+";";
+
+            qmlString +=" width: parent.width; wrapMode: Text.Wrap; visible: text.length > 0;}";
+        }
+
+        qmlString += "}" //Column {
+        qmlString += "}" //Item {
+        qmlString += "}" //Component {
+        qmlString += "}" // mainRect
+        console.log(qmlString)
+        var listForm = Qt.createQmlObject(qmlString, tablesStack, "dynamicList")
+        tablesStack.push(listForm)
+    }
+
+    function createFullInfoForm() {
+        var fullInfoForm = Qt.createQmlObject(
+                    'import QtQuick 2.0; Rectangle {color: "blue"; width: 20; height: 20}',
+                    tablesStack, "dynamicFullInfoForm")
+        tablesStack.push(fullInfoForm)
+    }
+
+    //FIXME this file should contain all work with gui, calling CVBApi occurs because I deside don't mix migration to
+    // QtQuick.Controls and refactoring in one stage
     Action {
         id: actionBack
         iconName: "back"
@@ -145,8 +183,8 @@ ApplicationWindow {
         iconSource: "/icons/edit.png"
         text: "edit"
         onTriggered: {
-            windowToolbar.state = "editable";
-            CVBApi.buttonPressed(-6);
+            windowToolbar.state = "editable"
+            CVBApi.buttonPressed(-6)
         }
     }
     Action {
@@ -155,8 +193,8 @@ ApplicationWindow {
         iconSource: "/icons/add.png"
         text: "add"
         onTriggered: {
-            windowToolbar.state = "editable";
-            CVBApi.buttonPressed(-2);
+            windowToolbar.state = "editable"
+            CVBApi.buttonPressed(-2)
         }
     }
     Action {
@@ -175,8 +213,8 @@ ApplicationWindow {
         id: actionApply
         iconSource: "/icons/apply.png"
         text: "apply"
-        onTriggered:{
-            windowToolbar.state = "";
+        onTriggered: {
+            windowToolbar.state = ""
             CVBApi.buttonPressed(-4)
         }
     }
@@ -184,9 +222,9 @@ ApplicationWindow {
         id: actionUndo
         iconSource: "/icons/undo.png"
         text: "undo"
-        onTriggered:{
-            windowToolbar.state = "";
-            CVBApi.buttonPressed(-5);
+        onTriggered: {
+            windowToolbar.state = ""
+            CVBApi.buttonPressed(-5)
         }
     }
 }

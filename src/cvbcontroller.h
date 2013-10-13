@@ -3,6 +3,7 @@
 
 #include <QtQuick/QQuickItem>
 #include <QtQuick/QQuickView>
+#include <QtQml>
 #include "CVBBaseProvider.h"
 #include "CVBImageProvider.h"
 
@@ -42,6 +43,8 @@ class CVBController : public QObject
        QQuickWindow *applicationWindow;
        QQuickItem *currentItem();
 
+       QQmlApplicationEngine *engine;
+
        //  константы-кнопки, не входящие в список переходов (назад, новая запись, удалить и т.п.)
        enum kButtonI{
            backButtonIndex=-1,
@@ -64,6 +67,8 @@ class CVBController : public QObject
        Q_INVOKABLE void showFullScreenImage(QString imgSource);
        Q_INVOKABLE void dataChanged();
        Q_INVOKABLE QVariant listForName(const QString& name);
+       Q_INVOKABLE QVariant fieldsForListView();
+       QAbstractItemModel *currentModel();
 
        //попытка вызвать диалог и загрузить в нем новую картинку, если все хорошо - вернется ее ссылка, если нет - -1
        //этот же метод вставит картикну из буфера обмена если ему передать imagePath=NULL (значение по умолчанию)

@@ -96,6 +96,14 @@ QVariant CVBController::listForName(const QString& name){
     return QVariant(baseProvider->listForID(name));
 }
 
+QVariant CVBController::fieldsForListView(){
+    return baseProvider->currentNode()->model->fieldList;
+}
+
+QAbstractItemModel *CVBController::currentModel() {
+    return baseProvider->currentNode()->model;
+}
+
 void CVBController::newTableWidget(){
     QString str=baseProvider->basePath+(useMobileForms?"mobile-forms/":"forms/");
 
@@ -115,19 +123,17 @@ void CVBController::newTableWidget(){
         w->setSource(QUrl::fromLocalFile(str));
 
         this->addViewToStack(w);
-        currentWidgetType.push(QMLListWithoutEditing);
     }
     else
     {
-        /*
-        //файла с формой нет, будет задействованна стандартная табличка
-        DelegatedTableView *newTableView= new DelegatedTableView();
-        newTableView->setBaseProvider(baseProvider);
-        this->addViewToStack(newTableView);
-        currentWidgetType.push(TableForm);
-        QObject::connect(newTableView->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(dataChanged()));
-        */
+
+        this->engine->rootContext()->setContextProperty("currentModel", baseProvider->currentNode()->model);
+        QMetaObject::invokeMethod(this->applicationWindow,
+                                  "createListForm"
+                                  );
     }
+
+    currentWidgetType.push(QMLListWithoutEditing);
 }
 
 void CVBController::fullInfo(int index){
@@ -163,8 +169,9 @@ void CVBController::fullInfo(int index){
         currentWidgetType.push(FullForm);
     }
     else {
-        qDebug()<<QString::fromUtf8("файла с формой полной информации нет, потом здесь будет загрузка диалога выбора следующего уровня");
-        return;
+        QMetaObject::invokeMethod(this->applicationWindow,
+                                  "createFullInfoForm"
+                                  );
     }
 }
 
