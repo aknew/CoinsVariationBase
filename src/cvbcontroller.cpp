@@ -366,7 +366,12 @@ void CVBController::saveImage(QString imageId, QString imagePath = NULL){
 
         CVBFromQmlFilePath(&imagePath);
 
-        img.save(imagePath);
+        bool flag = img.save(imagePath);
+
+        if (!flag){
+            //try add .jpg and save
+            img.save(imagePath.append(".jpg"));
+        }
     }
     else {
         QClipboard *clipboard = QApplication::clipboard();
