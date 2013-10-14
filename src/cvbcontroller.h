@@ -9,16 +9,13 @@
 
 enum kCurrentWidget{
     QMLListWithoutEditing,
-    EditableQMLList,
     FullForm,
-    TableForm,
     FullScreenImage
 };
 
 class CVBController : public QObject
 {
     Q_OBJECT
-    //Q_PROPERTY (int someProperty READ someProperty WRITE setSomeProperty NOTIFY somePropertyChanged)
     CVBBaseProvider *baseProvider;
     CVBImageProvider *imageProvider;
     QStack<kCurrentWidget> currentWidgetType;
@@ -65,7 +62,6 @@ class CVBController : public QObject
        Q_INVOKABLE void buttonPressed(int index);
        Q_INVOKABLE void fullInfo(int index);
        Q_INVOKABLE void showFullScreenImage(QString imgSource);
-       Q_INVOKABLE void dataChanged();
        Q_INVOKABLE QVariant listForName(const QString& name);
        Q_INVOKABLE QVariant fieldsForListView();
        QAbstractItemModel *currentModel();

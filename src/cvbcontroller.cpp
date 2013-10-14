@@ -212,17 +212,6 @@ void CVBController::buttonPressed(int index){
 
         case newButtonIndex:{
                 newRowInsertion=true;
-                if (currentWidgetType.top()==TableForm){
-                    //                    baseProvider->insertNewRow();
-                    //                    QWidget *wgt=stackedWidget->currentWidget();
-                    //                    DelegatedTableView *w=qobject_cast<DelegatedTableView*>(wgt);
-                    //                    if (w) {
-                    //                        w->selectRow(w->model()->rowCount()-1);
-                    //                        dataChanged();
-                    //                    }
-                    return;
-                }
-
                 CVBSqlRelationalTableModel *model = baseProvider->currentNode()->model;
                 model->selectedRow=model->rowCount();
                 if (currentWidgetType.top()==QMLListWithoutEditing){
@@ -232,25 +221,16 @@ void CVBController::buttonPressed(int index){
                 else{
                     QQuickItem *item = this->currentItem();
                     item->setProperty("selectedItem",model->selectedItem());
-                    //w->setSource(w->source()); //FIXME: this was reload data in view
                     item->setProperty("state","editable");
                 }
-                dataChanged();
                 break;
 
             }
             case editButtonIndex:{
                 this->currentItem()->setProperty("state","editable");
-                dataChanged();
                 break;
             }
             case applyButtonIndex:{
-
-                if (currentWidgetType.top()==TableForm){
-                    baseProvider->submitNewRow();
-                    newRowInsertion=false;
-                    return;
-                }
                 qDebug()<<"try get property from qml \n";
                 QVariant returnedValue;
 
@@ -275,17 +255,11 @@ void CVBController::buttonPressed(int index){
 
             }
             case undoButtonIndex:{
-                if (currentWidgetType.top()==TableForm){
-                    baseProvider->currentNode()->model->revertAll();
-                    return;
-                }
-
                 if (newRowInsertion){
                     this->removeWidgetFromStack();
                 }
                 else{
                     this->currentItem()->setProperty("state","");
-                    //w->setSource(w->source());//FIXME drop changes - looks wrong
                 }
                 baseProvider->currentNode()->model->revertAll();
                 newRowInsertion=false;
@@ -294,25 +268,8 @@ void CVBController::buttonPressed(int index){
             }
         }
         case deleteButtonIndex:{
-            if (currentWidgetType.top()==TableForm){
-//                QWidget *wgt=stackedWidget->currentWidget();
-//                DelegatedTableView *w=qobject_cast<DelegatedTableView*>(wgt);
-//                if (w) {
-//                    CVBSqlRelationalTableModel *model=baseProvider->currentNode()->model;
-//                    QModelIndexList list=w->selectionModel()->selectedRows();
-//                    if (list.isEmpty()){
-//                        this->showError(tr("Selection need"));
-//                        break;
-//                    }
-//                    qDebug()<<list;
-//                    model->removeRows(list.at(0).row(),list.count());
-//                    model->submitAll();
-//                }
-            }
-            else {
-                baseProvider->deleteCurrentRow();
-                this->removeWidgetFromStack();
-            }
+            baseProvider->deleteCurrentRow();
+            this->removeWidgetFromStack();
             break;
         }
         default:
@@ -377,19 +334,4 @@ void CVBController::saveImage(QString imageId, QString imagePath = NULL){
         QClipboard *clipboard = QApplication::clipboard();
         clipboard->setImage(img);
     }
-}
-
-//работа с сохранением данных
-
-void CVBController::dataChanged(){
-
-//    navBar->clear();
-//    QAction *action=navBar->addAction(QIcon(":///icons/undo.png"),tr(kUNDO_CHANGES_BUTTON));
-//    action->setObjectName(kUNDO_CHANGES_BUTTON);
-//    connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
-
-//    action=navBar->addAction(QIcon(":///icons/apply.png"),tr(kAPPLY_CHANGES_BUTTON));
-//    action->setObjectName(kAPPLY_CHANGES_BUTTON);
-//    connect(action,SIGNAL(triggered()),this,SLOT(buttonPressed()));
-
 }
