@@ -134,27 +134,6 @@ void CVBBaseProvider::pressedButton(int index){
     }
 }
 
-void CVBBaseProvider::insertNewRow(){
-     CVBSqlNode *currentNode=nodeStack.top();
-     CVBSqlRelationalTableModel *model=nodeStack.top()->model;
-     qDebug()<<model->rowCount();
-     bool flag=model->insertRow(model->rowCount());
-     if (!flag){
-
-         qDebug()<<model->lastError();
-     }
-     QSqlRecord record=model->record(model->rowCount()-1);
-     for (int i=0;i<currentNode->rowParamNames.count();++i){
-         QString str=ids.value(currentNode->rowParamNames.at(i));
-         record.setValue(currentNode->rowParamNames.at(i),str);
-     }
-     qDebug()<<record;
-     model->setRecord(model->rowCount()-1,record);
-     model->selectedRow=model->rowCount()-1;
-     qDebug()<<model->selectedRow<<model->rowCount()-1;
-     qDebug()<<model->rowCount();
-}
-
 void CVBBaseProvider::addForeignKeyToMap(QVariantMap &map){
     qDebug()<<map;
     CVBSqlNode *currentNode=nodeStack.top();
@@ -163,17 +142,6 @@ void CVBBaseProvider::addForeignKeyToMap(QVariantMap &map){
         map[currentNode->rowParamNames.at(i)]=str;
     }
     qDebug()<<"after addForeignKeyToMap "<<map;
-}
-
-
-
-void CVBBaseProvider::submitNewRow(){
-    //FIXME can't insert new row in Qt 5.0.0
-    CVBSqlNode *currentNode=nodeStack.top();
-    QSqlRecord record=currentNode->model->record(currentNode->model->rowCount()-1);
-    qDebug()<<record;
-    if (!currentNode->model->submitAll())
-        emit getError(currentNode->model->lastError().text());
 }
 
 void CVBBaseProvider::deleteCurrentRow(){

@@ -45,8 +45,6 @@ signals:
 
 public slots:
     void previousLevel();
-    void insertNewRow();
-    void submitNewRow();
 
     void loadSystemTables(const QString &name);
 
