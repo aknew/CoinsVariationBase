@@ -98,7 +98,7 @@ QVariant CVBController::listForName(const QString& name){
 }
 
 QVariant CVBController::fieldsForListView(){
-    return baseProvider->currentNode()->model->fieldList;
+    return baseProvider->currentNode()->getListViewFields();
 }
 
 QAbstractItemModel *CVBController::currentModel() {

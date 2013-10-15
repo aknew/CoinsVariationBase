@@ -20,6 +20,10 @@ struct CVBSqlNode{
     QString mainChild;//FIXME вопрос нужен ли он
     QString listFormName;
     QString fullFormName;
+
+    QStringList *listViewFields;
+
+    QVariant getListViewFields();
 };
 
 #endif // CVBSQLNODE_H

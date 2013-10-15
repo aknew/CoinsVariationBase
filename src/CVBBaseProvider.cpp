@@ -287,6 +287,13 @@ void CVBBaseProvider::parse(){
 
          node->listFormName = obj.value("listForm").toString();
 
+         QJsonValue listViewFields = obj.value("listViewFields");
+         if (listViewFields.isArray()){
+             node->listViewFields = new QStringList();
+             foreach (QJsonValue value,listViewFields.toArray()) {
+                 node->listViewFields->append(value.toString());
+             }
+         }
          nodeMap.insert(node->tableName,node);
      }
 

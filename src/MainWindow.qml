@@ -137,7 +137,7 @@ ApplicationWindow {
         qmlString += "Component { id: delegate;";
         qmlString += "Item { id: recipe; width: listView.width; height: Math.max(100,topLayout.height+10);";
         qmlString += "Rectangle {x: 2; y: 2; width: parent.width - x * 2; height: parent.height - y * 2; color: (index % 2) ? \"lightgray\" : \"white\"; border.color: \"gray\"; radius: 5}";
-
+        qmlString += "MouseArea {anchors.fill: parent; onClicked: { CVBApi.fullInfo(index);} }";
         qmlString += "Column { id: topLayout; anchors.centerIn: parent; width: listView.width-10;";
 
         var fieldList=CVBApi.fieldsForListView();
