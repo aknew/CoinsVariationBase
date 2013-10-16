@@ -42,7 +42,7 @@
       {
         "name": "SubtypesView",
         "defaultSortColumn": "2",
-        "listViewFields":["avers","revers","edge"],
+        "listViewFields":["year","mintmark","avers","revers","edge"],
         "rowParamNames": { "name": "typeID" },
         "mainChild": "VariantsView",
         "childNode": [
