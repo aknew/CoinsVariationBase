@@ -15,6 +15,7 @@ struct CVBSqlNode{
     QVector< QPair<int,QString> > comboDelegates;
     int pictDelegate;
     int defaultSortColumn;
+    //fixme: удали высоту и ширину колонок втаблице - он больше не используется
     float height;
     QVector <float> *columnWidth;
     QString mainChild;//FIXME вопрос нужен ли он
