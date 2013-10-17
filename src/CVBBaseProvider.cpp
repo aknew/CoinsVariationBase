@@ -268,21 +268,6 @@ void CVBBaseProvider::parse(){
 
          node->pictDelegate=obj.value("pictDelegate").toString("-1").toInt();
 
-         QJsonValue value=obj.value("widths");
-
-         if (!value.isNull()){
-            //XXX Скорее всего вся группа уйдет при дальнейшем улучшении кода
-
-             QStringList widths=value.toString().split(' ');
-
-             node->columnWidth=new QVector<float>;
-             for (int i=0;i<widths.count();++i){
-                 node->columnWidth->push_back(widths.at(i).toFloat());
-             }
-         }
-
-         node->height = obj.value("height").toDouble();
-
          node->fullFormName = obj.value("fullForm").toString();
 
          node->listFormName = obj.value("listForm").toString();

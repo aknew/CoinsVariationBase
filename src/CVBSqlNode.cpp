@@ -2,8 +2,6 @@
 
 CVBSqlNode::CVBSqlNode(){
     pictDelegate=-1;
-    height=-1;
-    columnWidth=NULL;
     mainChild="";
     listViewFields=NULL;
 }
