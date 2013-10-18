@@ -81,7 +81,7 @@
       },
       {
         "name": "SubtypesRevers",
-        "listForm":"AversReversList",
+        "listViewFields":["description"],
         "fullForm":"AversReversFullInfo",
         "rowParamNames": { "name": "typeID" },
         "childNode": [
@@ -98,7 +98,7 @@
       },
       {
         "name": "SubtypesAvers",
-        "listForm":"AversReversList",
+        "listViewFields":["description"],
         "fullForm":"AversReversFullInfo",
         "childNode": [
           {
@@ -115,7 +115,7 @@
       },
       {
         "name": "variantAvers",
-        "listForm":"AversReversList",
+        "listViewFields":["description"],
         "fullForm":"AversReversFullInfo",
         "childNode":[
         {
@@ -127,7 +127,7 @@
       },
       {
         "name": "variantRevers",
-        "listForm":"AversReversList",
+        "listViewFields":["description"],
         "fullForm":"AversReversFullInfo",
         "childNode": [
         {
@@ -140,6 +140,7 @@
       {
         "name": "VariantsView",
         "rowParamNames": { "name": "stID" },
+        "listViewFields":["avers","revers","edge"],
         "mainChild": "CurrentCoinsView",
         "childNode": [
           {

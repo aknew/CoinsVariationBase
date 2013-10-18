@@ -144,12 +144,23 @@ ApplicationWindow {
         for (var i = 0; i < fieldList.length; ++i){
 
             var field=fieldList[i];
-            qmlString +="Text { text: \"<b>\"+";
-            qmlString += "\""+field+"\"";
-            qmlString +="+\":</b>\"+";
+            qmlString +="Text { text:";
+
+
+
+            var fieldTitleLength = 0;
+
+            if (fieldList.length !== 1) {
+                // add field name only if we have more then 1 field
+                qmlString += " \"<b>\"+";
+                qmlString += "\""+field+"\"";
+                qmlString +="+\":</b>\"+";
+                fieldTitleLength=field.length+8;
+            }
+
             qmlString +=field+";";
 
-            qmlString +=" width: parent.width; wrapMode: Text.Wrap; visible: text.length > 0;}";
+            qmlString +=" width: parent.width; wrapMode: Text.Wrap; visible: text.length >"+fieldTitleLength +";}";
         }
 
         qmlString += "}" //Column {
