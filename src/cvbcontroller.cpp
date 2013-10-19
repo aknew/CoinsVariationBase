@@ -51,11 +51,16 @@ void CVBController::openBase(QString basePath){
     this->connect(baseProvider,SIGNAL(removeCurrentWidget()),this,SLOT(removeWidgetFromStack()));
     this->connect(baseProvider,SIGNAL(newTableWidget()),this,SLOT(newTableWidget()));
     this->connect(baseProvider,SIGNAL(getError(QString)),this,SLOT(showError(QString)));
+    this->connect(baseProvider,SIGNAL(currentNodeWasChanged()),this,SLOT(currentNodeWasChanged()));
 
     imageProvider= new CVBImageProvider(QQuickImageProvider::Pixmap);
     imageProvider->imageFolder=baseProvider->basePath+"images/";
 
     baseProvider->startLevel();
+}
+
+void CVBController::currentNodeWasChanged(){
+    this->engine->rootContext()->setContextProperty("currentModel", baseProvider->currentNode()->model);
 }
 
 void CVBController::showError(QString str){
@@ -127,8 +132,6 @@ void CVBController::newTableWidget(){
     }
     else
     {
-
-        this->engine->rootContext()->setContextProperty("currentModel", baseProvider->currentNode()->model);
         QMetaObject::invokeMethod(this->applicationWindow,
                                   "createListForm"
                                   );

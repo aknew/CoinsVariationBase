@@ -39,6 +39,8 @@ public:
     void deleteCurrentRow();
 
 signals:
+    void currentNodeWasChanged();
+    //TODO: check that all this signals are realy needs
     void newTableWidget();
     void removeCurrentWidget();
     void getError(QString description);

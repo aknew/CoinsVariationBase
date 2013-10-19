@@ -57,6 +57,7 @@ class CVBController : public QObject
        void newTableWidget();
        void removeWidgetFromStack();
        void showError(QString str);
+       void currentNodeWasChanged();
 
        //взаимодействие с qml
        Q_INVOKABLE void buttonPressed(int index);
