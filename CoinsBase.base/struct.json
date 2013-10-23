@@ -59,25 +59,32 @@
             "relation": "stID"
           }
         ],
-        "comboDelegate": [
+        "delegates": [
           {
             "column": "4",
+            "type": "combo",
             "dict": "mintYard"
           },
           {
             "column": "6",
+            "type": "combo",
             "dict": "edges"
           },
           {
             "column": "7",
+            "type": "combo",
             "dict": "aversSub"
           },
           {
             "column": "8",
+            "type": "combo",
             "dict": "reversSub"
+          },
+          {
+            "column": "9",
+            "type": "picture"
           }
-        ],
-        "pictDelegate":"9"
+        ]
       },
       {
         "name": "SubtypesRevers",

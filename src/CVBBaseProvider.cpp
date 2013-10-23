@@ -248,14 +248,18 @@ void CVBBaseProvider::parse(){
                          );
          }
 
-         QJsonArray comboDelegates = obj.value("comboDelegate").toArray();
-         foreach (QJsonValue value,comboDelegates) {
+         QJsonArray delegates = obj.value("delegates").toArray();
+         foreach (QJsonValue value,delegates) {
              QJsonObject obj=value.toObject();
-             node->comboDelegates.push_back(QPair <int, QString>(
-                                                obj.value("column").toString("-1").toInt(),
-                                                obj.value("dict").toString()
-                                                )
-                                            );
+
+             const QString kField = "column";
+             QString delegateColumn = obj.value(kField).toString();
+
+             QVariantMap delegateDescription = obj.toVariantMap();
+
+             delegateDescription.remove(kField);
+
+             node->delegates[delegateColumn] = delegateDescription;
          }
 
          QJsonValue rowParameters = obj.value("rowParamNames");// FIXME: древний костыль, надо исправить, а может при изменении структуры базы и сам уйдет
@@ -269,8 +273,6 @@ void CVBBaseProvider::parse(){
              QJsonObject obj=rowParameters.toObject();
              node->rowParamNames.push_back(obj.value("name").toString());
          }
-
-         node->pictDelegate=obj.value("pictDelegate").toString("-1").toInt();
 
          node->fullFormName = obj.value("fullForm").toString();
 
@@ -305,4 +307,8 @@ void CVBBaseProvider::parse(){
      qDebug()<<nodeMap.keys();
      qDebug()<<comboBoxes.keys();
      qDebug()<<"parser end - ok";
+
+     CVBSqlNode *node=nodeMap["SubtypesView"];
+
+     qDebug()<<node->delegates;
 }
