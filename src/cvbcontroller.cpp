@@ -56,6 +56,8 @@ void CVBController::openBase(QString basePath){
     imageProvider= new CVBImageProvider(QQuickImageProvider::Pixmap);
     imageProvider->imageFolder=baseProvider->basePath+"images/";
 
+    engine->addImageProvider(QLatin1String("imageProvider"),imageProvider);
+
     baseProvider->startLevel();
 }
 
@@ -108,6 +110,14 @@ QVariant CVBController::fieldsForListView(){
 
 QAbstractItemModel *CVBController::currentModel() {
     return baseProvider->currentNode()->model;
+}
+QVariantMap CVBController::delegatesList(){
+    return baseProvider->currentNode()->delegates;
+}
+
+QVariantMap CVBController::selectedItem(){
+    //FIXME: need rename
+    return baseProvider->currentNode()->model->selectedItem();
 }
 
 void CVBController::newTableWidget(){

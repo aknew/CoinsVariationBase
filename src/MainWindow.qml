@@ -173,9 +173,38 @@ ApplicationWindow {
     }
 
     function createFullInfoForm() {
-        var fullInfoForm = Qt.createQmlObject(
-                    'import QtQuick 2.0; Rectangle {color: "blue"; width: 20; height: 20}',
-                    tablesStack, "dynamicFullInfoForm")
+
+        var qmlString = "import QtQuick 2.0; import CVB.api 1.0; Rectangle { id: mainRect;";
+        qmlString += "Flickable {clip: true; anchors.fill:parent;";
+        qmlString += "contentHeight: contentColumn.height;";
+        qmlString += "Column {id: contentColumn;y: picture.height;width: parent.width;enabled: false;";
+        var selectedItem = CVBApi.selectedItem();
+        var delegatesList = CVBApi.delegatesList();
+        for (var field in selectedItem){
+            //FIXME: need add not show system fields
+            var delegate = delegatesList[field];
+            if (delegate){
+                switch (delegate["type"]){
+                case "picture":
+                    qmlString+="ImageWithFullScreen{ pict: \""+selectedItem[field]+"\"}";
+                    break;
+                case "combo":
+                    qmlString+="TitledInput {title: \""+field+"\";";
+                    qmlString+="anchors.fill: parent.widths; text: \""+selectedItem[field]+"\";";
+                    qmlString+="model: CVBApi.listForName(\""+delegate["dict"]+"\");z:15}";
+                    break;
+                }
+            }
+            else{
+                qmlString+="Input {anchors.fill: parent.widths; text:  \""+selectedItem[field]+"\";title: \""+field+"\"}";
+            }
+
+        }
+        qmlString += "}" //Column {
+        qmlString += "}" //Flickable {
+        qmlString += "}" // mainRect
+        console.log(qmlString)
+        var fullInfoForm = Qt.createQmlObject(qmlString,tablesStack, "dynamicFullInfoForm");
         tablesStack.push(fullInfoForm)
     }
 

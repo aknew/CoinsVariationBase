@@ -61,27 +61,27 @@
         ],
         "delegates": [
           {
-            "column": "4",
+            "column": "mintYard",
             "type": "combo",
             "dict": "mintYard"
           },
           {
-            "column": "6",
+            "column": "edge",
             "type": "combo",
             "dict": "edges"
           },
           {
-            "column": "7",
+            "column": "avers",
             "type": "combo",
-            "dict": "aversSub"
+            "dict": "SubtypesAvers"
           },
           {
-            "column": "8",
+            "column": "revers",
             "type": "combo",
-            "dict": "reversSub"
+            "dict": "SubtypesRevers"
           },
           {
-            "column": "9",
+            "column": "pict",
             "type": "picture"
           }
         ]

@@ -10,5 +10,14 @@
         <file alias="no_image.png">../resources/no_image.png</file>
         <file alias="icons/delete.png">../resources/icons/delete.png</file>
         <file>MainWindow.qml</file>
+        <file>ComboBox.qml</file>
+        <file>ComboTextEdit.qml</file>
+        <file>ImageWithFullScreen.qml</file>
+        <file>Input.qml</file>
+        <file>NextLevelList.qml</file>
+        <file>StyledText.qml</file>
+        <file>StyledTextInput.qml</file>
+        <file>TitledInput.qml</file>
+        <file>qmldir</file>
     </qresource>
 </RCC>
