@@ -120,6 +120,10 @@ QVariantMap CVBController::selectedItem(){
     return baseProvider->currentNode()->model->selectedItem();
 }
 
+QStringList CVBController::nextLevelList(){
+    return baseProvider->buttonIDs();
+}
+
 void CVBController::newTableWidget(){
     QString str=baseProvider->basePath+(useMobileForms?"mobile-forms/":"forms/");
 
@@ -180,13 +184,13 @@ void CVBController::fullInfo(int index){
         w->setSource(QUrl::fromLocalFile(str));
 
         this->addViewToStack(w);
-        currentWidgetType.push(FullForm);
     }
     else {
         QMetaObject::invokeMethod(this->applicationWindow,
                                   "createFullInfoForm"
                                   );
     }
+    currentWidgetType.push(FullForm);
 }
 
 void CVBController::showFullScreenImage(QString imgSource){

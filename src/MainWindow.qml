@@ -176,7 +176,7 @@ ApplicationWindow {
 
         var qmlString = "import QtQuick 2.0; import CVB.api 1.0; Rectangle { id: mainRect;";
         qmlString += "Flickable {clip: true; anchors.fill:parent;";
-        qmlString += "contentHeight: contentColumn.height;";
+        qmlString += "contentHeight: nextlevel.y+nextlevel.height;";
         qmlString += "Column {id: contentColumn;y: picture.height;width: parent.width;enabled: false;";
         var selectedItem = CVBApi.selectedItem();
         var delegatesList = CVBApi.delegatesList();
@@ -201,6 +201,7 @@ ApplicationWindow {
 
         }
         qmlString += "}" //Column {
+        qmlString += "NextLevelList { id:nextlevel; y: contentColumn.childrenRect.height+contentColumn.y }";
         qmlString += "}" //Flickable {
         qmlString += "}" // mainRect
         console.log(qmlString)
