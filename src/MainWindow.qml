@@ -209,6 +209,12 @@ ApplicationWindow {
         tablesStack.push(fullInfoForm)
     }
 
+    function loadForm(formName){
+        console.log("try load form with name "+formName);
+        var newForm = Qt.createComponent(formName);
+        tablesStack.push(newForm);
+    }
+
     //FIXME this file should contain all work with gui, calling CVBApi occurs because I deside don't mix migration to
     // QtQuick.Controls and refactoring in one stage
     Action {

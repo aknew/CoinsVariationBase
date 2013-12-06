@@ -58,6 +58,8 @@ void CVBController::openBase(QString basePath){
 
     engine->addImageProvider(QLatin1String("imageProvider"),imageProvider);
 
+    engine->rootContext()->setContextProperty("window",this);
+
     baseProvider->startLevel();
 }
 
@@ -136,13 +138,13 @@ void CVBController::newTableWidget(){
     }
 
     if (QFile::exists(str)){
-
-        QQuickView *w=newDeclarativeView();
-        w->setResizeMode(QQuickView::SizeRootObjectToView);
-        w->rootContext()->setContextProperty("myModel", baseProvider->currentNode()->model);
-        w->setSource(QUrl::fromLocalFile(str));
-
-        this->addViewToStack(w);
+        //fixme: currentmodel == mymodel
+        this->engine->rootContext()->setContextProperty("myModel", baseProvider->currentNode()->model);
+        str = QString("file:///%1").arg(str);
+        QMetaObject::invokeMethod(this->applicationWindow,
+                                  "loadForm",
+                                  Q_ARG(QVariant,str)
+                                  );
     }
     else
     {
@@ -173,17 +175,16 @@ void CVBController::fullInfo(int index){
 
     if (QFile::exists(str)){
 
-        QQuickView *w=newDeclarativeView();
+        str = QString("file:///%1").arg(str);
 
-        w->setResizeMode(QQuickView::SizeRootObjectToView);
-        w->rootContext()->setContextProperty("myModel", listModel);
-        w->rootContext()->setContextProperty("nextLevelList", QVariant::fromValue(baseProvider->buttonIDs()));
+        engine->rootContext()->setContextProperty("myModel", listModel);
+        engine->rootContext()->setContextProperty("nextLevelList", QVariant::fromValue(baseProvider->buttonIDs()));
+        engine->rootContext()->setContextProperty("selectedItem",listModel->selectedItem());
 
-        w->rootContext()->setContextProperty("selectedItem",listModel->selectedItem());
-
-        w->setSource(QUrl::fromLocalFile(str));
-
-        this->addViewToStack(w);
+        QMetaObject::invokeMethod(this->applicationWindow,
+                                  "loadForm",
+                                  Q_ARG(QVariant,str)
+                                  );
     }
     else {
         QMetaObject::invokeMethod(this->applicationWindow,
