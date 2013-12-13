@@ -178,6 +178,8 @@ ApplicationWindow {
         qmlString += "Flickable {clip: true; anchors.fill:parent;";
         qmlString += "contentHeight: nextlevel.y+nextlevel.height;";
         qmlString += "Column {id: contentColumn;y: picture.height;width: parent.width;enabled: false;";
+        var collectDataString ="function collectData() { var returnedMap = {"
+
         var selectedItem = CVBApi.selectedItem();
         var delegatesList = CVBApi.delegatesList();
         for (var field in selectedItem){
@@ -186,23 +188,37 @@ ApplicationWindow {
             if (delegate){
                 switch (delegate["type"]){
                 case "picture":
-                    qmlString+="ImageWithFullScreen{ pict: \""+selectedItem[field]+"\"}";
+                    qmlString+="ImageWithFullScreen{ id: field_"+field+"; pict: \""+selectedItem[field]+"\"}";
+                    collectDataString+=field+": field_"+field+".pict,";
                     break;
                 case "combo":
-                    qmlString+="TitledInput {title: \""+field+"\";";
+                    qmlString+="TitledInput {id: field_"+field+"; title: \""+field+"\";";
                     qmlString+="anchors.fill: parent.widths; text: \""+selectedItem[field]+"\";";
                     qmlString+="model: CVBApi.listForName(\""+delegate["dict"]+"\");z:15}";
+                    collectDataString+=field+": field_"+field+".text,";
                     break;
                 }
             }
             else{
-                qmlString+="Input {anchors.fill: parent.widths; text:  \""+selectedItem[field]+"\";title: \""+field+"\"}";
+                qmlString+="Input {id: field_"+field+"; anchors.fill: parent.widths; text:  \""+selectedItem[field]+"\";title: \""+field+"\"}";
+                collectDataString+=field+": field_"+field+".text,";
             }
 
         }
         qmlString += "}" //Column {
         qmlString += "NextLevelList { id:nextlevel; y: contentColumn.childrenRect.height+contentColumn.y }";
         qmlString += "}" //Flickable {
+
+        qmlString += "states: State { name: \"editable\";";
+        qmlString += "PropertyChanges { target: contentColumn; enabled:true }";
+        qmlString += "PropertyChanges { target: nextlevel; visible:false }";
+        //qmlString += "PropertyChanges { target: picture; editing:true}";
+        qmlString += "}";
+
+        collectDataString = collectDataString.substring(0,collectDataString.length-1);
+        collectDataString+="}; return returnedMap }";
+        qmlString += collectDataString;
+
         qmlString += "}" // mainRect
         console.log(qmlString)
         var fullInfoForm = Qt.createQmlObject(qmlString,tablesStack, "dynamicFullInfoForm");
