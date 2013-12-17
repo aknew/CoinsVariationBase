@@ -132,35 +132,34 @@ ApplicationWindow {
     }
 
     function createListForm() {
-        var qmlString = "import QtQuick 2.0; import CVB.api 1.0; Rectangle { id: mainRect; ";
-        qmlString += "ListView { id: listView; anchors.fill: parent; delegate: delegate; model: currentModel }";
-        qmlString += "Component { id: delegate;";
-        qmlString += "Item { id: recipe; width: listView.width; height: Math.max(100,topLayout.height+10);";
-        qmlString += "Rectangle {x: 2; y: 2; width: parent.width - x * 2; height: parent.height - y * 2; color: (index % 2) ? \"lightgray\" : \"white\"; border.color: \"gray\"; radius: 5}";
-        qmlString += "MouseArea {anchors.fill: parent; onClicked: { CVBApi.fullInfo(index);} }";
-        qmlString += "Column { id: topLayout; anchors.centerIn: parent; width: listView.width-10;";
+        var qmlString = "import QtQuick 2.0; import CVB.api 1.0; Rectangle { id: mainRect; "
+        qmlString += "ListView { id: listView; anchors.fill: parent; delegate: delegate; model: currentModel }"
+        qmlString += "Component { id: delegate;"
+        qmlString += "Item { id: recipe; width: listView.width; height: Math.max(100,topLayout.height+10);"
+        qmlString += "Rectangle {x: 2; y: 2; width: parent.width - x * 2; height: parent.height - y * 2; color: (index % 2) ? \"lightgray\" : \"white\"; border.color: \"gray\"; radius: 5}"
+        qmlString += "MouseArea {anchors.fill: parent; onClicked: { CVBApi.fullInfo(index);} }"
+        qmlString += "Column { id: topLayout; anchors.centerIn: parent; width: listView.width-10;"
 
-        var fieldList=CVBApi.fieldsForListView();
-        for (var i = 0; i < fieldList.length; ++i){
+        var fieldList = CVBApi.fieldsForListView()
+        for (var i = 0; i < fieldList.length; ++i) {
 
-            var field=fieldList[i];
-            qmlString +="Text { text:";
+            var field = fieldList[i]
+            qmlString += "Text { text:"
 
-
-
-            var fieldTitleLength = 0;
+            var fieldTitleLength = 0
 
             if (fieldList.length !== 1) {
                 // add field name only if we have more then 1 field
-                qmlString += " \"<b>\"+";
-                qmlString += "\""+field+"\"";
-                qmlString +="+\":</b>\"+";
-                fieldTitleLength=field.length+8;
+                qmlString += " \"<b>\"+"
+                qmlString += "\"" + field + "\""
+                qmlString += "+\":</b>\"+"
+                fieldTitleLength = field.length + 8
             }
 
-            qmlString +=field+";";
+            qmlString += field + ";"
 
-            qmlString +=" width: parent.width; wrapMode: Text.Wrap; visible: text.length >"+fieldTitleLength +";}";
+            qmlString += " width: parent.width; wrapMode: Text.Wrap; visible: text.length >"
+                    + fieldTitleLength + ";}"
         }
 
         qmlString += "}" //Column {
@@ -174,64 +173,68 @@ ApplicationWindow {
 
     function createFullInfoForm() {
 
+        var qmlString = "import QtQuick 2.0; import CVB.api 1.0; Rectangle { id: mainRect;"
+        qmlString += "Flickable {clip: true; anchors.fill:parent;"
+        qmlString += "contentHeight: nextlevel.y+nextlevel.height;"
+        qmlString += "Column {id: contentColumn;y: picture.height;width: parent.width;"
 
-        var qmlString = "import QtQuick 2.0; import CVB.api 1.0; Rectangle { id: mainRect;";
-        qmlString += "Flickable {clip: true; anchors.fill:parent;";
-        qmlString += "contentHeight: nextlevel.y+nextlevel.height;";
-        qmlString += "Column {id: contentColumn;y: picture.height;width: parent.width;";
+        var collectDataString = "function collectData() { var returnedMap = {"
 
+        var stateEditableString = "states: State { name: \"editable\";"
 
-        var collectDataString ="function collectData() { var returnedMap = {"
-
-        var stateEditableString = "states: State { name: \"editable\";";
-
-        var selectedItem = CVBApi.selectedItem();
-        var delegatesList = CVBApi.delegatesList();
-        for (var field in selectedItem){
+        var selectedItem = CVBApi.selectedItem()
+        var delegatesList = CVBApi.delegatesList()
+        for (var field in selectedItem) {
             //FIXME: need add not show system fields
-            var delegate = delegatesList[field];
-            var fieldType = delegate?delegate["type"]:undefined;
-                switch (fieldType){
-                case "picture":
-                    qmlString+="ImageWithFullScreen{ id: field_"+field+"; pict: \""+selectedItem[field]+"\"; editing:false}";
-                    collectDataString+=field+": field_"+field+".pict,";
-                    stateEditableString += "PropertyChanges { target:field_"+field+";editing:true }";
-                    break;
-                case "combo":
-                    qmlString+="TitledInput {id: field_"+field+"; title: \""+field+"\";";
-                    qmlString+="anchors.fill: parent.widths; text: \""+selectedItem[field]+"\";";
-                    qmlString+="model: CVBApi.listForName(\""+delegate["dict"]+"\");z:15; enabled:false}";
-                    collectDataString+=field+": field_"+field+".text,";
-                    stateEditableString += "PropertyChanges { target:field_"+field+";enabled:true }";
-                    break;
-               default:
-                qmlString+="Input {id: field_"+field+"; anchors.fill: parent.widths; text:  \""+selectedItem[field]+"\";title: \""+field+"\"; enabled:false}";
-                collectDataString+=field+": field_"+field+".text,";
-                stateEditableString += "PropertyChanges { target:field_"+field+";enabled:true }";
+            var delegate = delegatesList[field]
+            var fieldType = delegate ? delegate["type"] : undefined
+            switch (fieldType) {
+            case "picture":
+                qmlString += "ImageWithFullScreen{ id: field_" + field
+                        + "; pict: \"" + selectedItem[field] + "\"; editing:false}"
+                collectDataString += field + ": field_" + field + ".pict,"
+                stateEditableString += "PropertyChanges { target:field_" + field + ";editing:true }"
+                break
+            case "combo":
+                qmlString += "TitledInput {id: field_" + field + "; title: \"" + field + "\";"
+                qmlString += "anchors.fill: parent.widths; text: \"" + selectedItem[field] + "\";"
+                qmlString += "model: CVBApi.listForName(\"" + delegate["dict"]
+                        + "\");z:15; enabled:false}"
+                collectDataString += field + ": field_" + field + ".text,"
+                stateEditableString += "PropertyChanges { target:field_" + field + ";enabled:true }"
+                break
+            default:
+                qmlString += "Input {id: field_" + field
+                        + "; anchors.fill: parent.widths; text:  \"" + selectedItem[field]
+                        + "\";title: \"" + field + "\"; enabled:false}"
+                collectDataString += field + ": field_" + field + ".text,"
+                stateEditableString += "PropertyChanges { target:field_" + field + ";enabled:true }"
             }
         }
         qmlString += "}" //Column {
-        qmlString += "NextLevelList { id:nextlevel; y: contentColumn.childrenRect.height+contentColumn.y }";
+        qmlString += "NextLevelList { id:nextlevel; y: contentColumn.childrenRect.height+contentColumn.y }"
         qmlString += "}" //Flickable {
 
-        stateEditableString += "PropertyChanges { target: nextlevel; visible:false }";
-        stateEditableString += "}";
-        qmlString += stateEditableString;
+        stateEditableString += "PropertyChanges { target: nextlevel; visible:false }"
+        stateEditableString += "}"
+        qmlString += stateEditableString
 
-        collectDataString = collectDataString.substring(0,collectDataString.length-1);
-        collectDataString+="}; return returnedMap }";
-        qmlString += collectDataString;
+        collectDataString = collectDataString.substring(
+                    0, collectDataString.length - 1)
+        collectDataString += "}; return returnedMap }"
+        qmlString += collectDataString
 
         qmlString += "}" // mainRect
         console.log(qmlString)
-        var fullInfoForm = Qt.createQmlObject(qmlString,tablesStack, "dynamicFullInfoForm");
+        var fullInfoForm = Qt.createQmlObject(qmlString, tablesStack,
+                                              "dynamicFullInfoForm")
         tablesStack.push(fullInfoForm)
     }
 
-    function loadForm(formName){
-        console.log("try load form with name "+formName);
-        var newForm = Qt.createComponent(formName);
-        tablesStack.push(newForm);
+    function loadForm(formName) {
+        console.log("try load form with name " + formName)
+        var newForm = Qt.createComponent(formName)
+        tablesStack.push(newForm)
     }
 
     //FIXME this file should contain all work with gui, calling CVBApi occurs because I deside don't mix migration to
