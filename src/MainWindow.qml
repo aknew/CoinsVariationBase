@@ -190,8 +190,8 @@ ApplicationWindow {
         for (var field in selectedItem){
             //FIXME: need add not show system fields
             var delegate = delegatesList[field];
-            if (delegate){
-                switch (delegate["type"]){
+            var fieldType = delegate?delegate["type"]:undefined;
+                switch (fieldType){
                 case "picture":
                     qmlString+="ImageWithFullScreen{ id: field_"+field+"; pict: \""+selectedItem[field]+"\"; editing:false}";
                     collectDataString+=field+": field_"+field+".pict,";
@@ -204,9 +204,7 @@ ApplicationWindow {
                     collectDataString+=field+": field_"+field+".text,";
                     stateEditableString += "PropertyChanges { target:field_"+field+";enabled:true }";
                     break;
-                }
-            }
-            else{
+               default:
                 qmlString+="Input {id: field_"+field+"; anchors.fill: parent.widths; text:  \""+selectedItem[field]+"\";title: \""+field+"\"; enabled:false}";
                 collectDataString+=field+": field_"+field+".text,";
                 stateEditableString += "PropertyChanges { target:field_"+field+";enabled:true }";
