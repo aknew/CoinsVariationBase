@@ -183,12 +183,12 @@ ApplicationWindow {
         var stateEditableString = "states: State { name: \"editable\";"
 
         var selectedItem = CVBApi.selectedItem()
-        var delegatesList = CVBApi.delegatesList()
-        for (var field in selectedItem) {
-            //FIXME: need add not show system fields
-            var delegate = delegatesList[field]
-            var fieldType = delegate ? delegate["type"] : undefined
-            switch (fieldType) {
+        var fullFormFields = CVBApi.fullFormFields();
+
+        for (var i = 0; i < fullFormFields.length; ++i) {
+            var fieldStruct = fullFormFields[i];
+            var field = fieldStruct["name"];
+            switch (fieldStruct["type"]) {
             case "picture":
                 qmlString += "ImageWithFullScreen{ id: field_" + field
                         + "; pict: \"" + selectedItem[field] + "\"; editing:false}"
@@ -198,7 +198,7 @@ ApplicationWindow {
             case "combo":
                 qmlString += "TitledInput {id: field_" + field + "; title: \"" + field + "\";"
                 qmlString += "anchors.fill: parent.widths; text: \"" + selectedItem[field] + "\";"
-                qmlString += "model: CVBApi.listForName(\"" + delegate["dict"]
+                qmlString += "model: CVBApi.listForName(\"" + fieldStruct["dict"]
                         + "\");z:15; enabled:false}"
                 collectDataString += field + ": field_" + field + ".text,"
                 stateEditableString += "PropertyChanges { target:field_" + field + ";enabled:true }"
@@ -225,7 +225,7 @@ ApplicationWindow {
         qmlString += collectDataString
 
         qmlString += "}" // mainRect
-        console.log(qmlString)
+        //console.log(qmlString)
         var fullInfoForm = Qt.createQmlObject(qmlString, tablesStack,
                                               "dynamicFullInfoForm")
         tablesStack.push(fullInfoForm)

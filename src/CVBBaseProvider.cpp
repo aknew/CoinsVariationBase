@@ -248,19 +248,8 @@ void CVBBaseProvider::parse(){
                          );
          }
 
-         QJsonArray delegates = obj.value("delegates").toArray();
-         foreach (QJsonValue value,delegates) {
-             QJsonObject obj=value.toObject();
 
-             const QString kField = "column";
-             QString delegateColumn = obj.value(kField).toString();
-
-             QVariantMap delegateDescription = obj.toVariantMap();
-
-             delegateDescription.remove(kField);
-
-             node->delegates[delegateColumn] = delegateDescription;
-         }
+         node->fullFormFields = obj.value("fullFormFields").toVariant();
 
          QJsonValue rowParameters = obj.value("rowParamNames");// FIXME: древний костыль, надо исправить, а может при изменении структуры базы и сам уйдет
          if (rowParameters.isArray()){
@@ -310,5 +299,5 @@ void CVBBaseProvider::parse(){
 
      CVBSqlNode *node=nodeMap["SubtypesView"];
 
-     qDebug()<<node->delegates;
+     qDebug()<<node->fullFormFields;
 }

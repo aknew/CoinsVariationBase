@@ -59,30 +59,45 @@
             "relation": "stID"
           }
         ],
-        "delegates": [
+        "fullFormFields": [
           {
-            "column": "mintYard",
+            "name": "year"
+          },
+          {
+            "name": "mintmark"
+          },
+          {
+            "name": "MintYard",
             "type": "combo",
             "dict": "mintYard"
           },
           {
-            "column": "edge",
-            "type": "combo",
-            "dict": "edges"
-          },
-          {
-            "column": "avers",
+            "name": "avers",
             "type": "combo",
             "dict": "SubtypesAvers"
           },
           {
-            "column": "revers",
+            "name": "revers",
             "type": "combo",
             "dict": "SubtypesRevers"
           },
           {
-            "column": "pict",
+            "name": "edge",
+            "type": "combo",
+            "dict": "edges"
+          },
+          {
+            "name": "pict",
             "type": "picture"
+          },
+          {
+            "name": "comment"
+          },
+          {
+            "name": "mintage"
+          },
+          {
+            "name": "price"
           }
         ]
       },

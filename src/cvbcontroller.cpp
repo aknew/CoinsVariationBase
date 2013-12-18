@@ -113,8 +113,8 @@ QVariant CVBController::fieldsForListView(){
 QAbstractItemModel *CVBController::currentModel() {
     return baseProvider->currentNode()->model;
 }
-QVariantMap CVBController::delegatesList(){
-    return baseProvider->currentNode()->delegates;
+QVariant CVBController::fullFormFields(){
+    return baseProvider->currentNode()->fullFormFields;
 }
 
 QVariantMap CVBController::selectedItem(){

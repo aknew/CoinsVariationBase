@@ -16,7 +16,7 @@ struct CVBSqlNode{
     QString mainChild;//FIXME вопрос нужен ли он
     QString listFormName;
     QString fullFormName;
-    QVariantMap delegates;
+    QVariant fullFormFields;
 
     QStringList *listViewFields;
 
