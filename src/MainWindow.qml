@@ -132,7 +132,7 @@ ApplicationWindow {
     }
 
     function createListForm() {
-        var qmlString = "import QtQuick 2.0; import CVB.api 1.0; Rectangle { id: mainRect; "
+        var qmlString = "import QtQuick 2.0; import CVB.api 1.0; import CVBControls 1.0; Rectangle { id: mainRect; "
         qmlString += "ListView { id: listView; anchors.fill: parent; delegate: delegate; model: currentModel }"
         qmlString += "Component { id: delegate;"
         qmlString += "Item { id: recipe; width: listView.width; height: Math.max(100,topLayout.height+10);"
@@ -173,7 +173,7 @@ ApplicationWindow {
 
     function createFullInfoForm() {
 
-        var qmlString = "import QtQuick 2.0; import CVB.api 1.0; Rectangle { id: mainRect;"
+        var qmlString = "import QtQuick 2.0; import CVB.api 1.0; import CVBControls 1.0; Rectangle { id: mainRect;"
         qmlString += "Flickable {clip: true; anchors.fill:parent;"
         qmlString += "contentHeight: nextlevel.y+nextlevel.height;"
         qmlString += "Column {id: contentColumn;y: picture.height;width: parent.width;"

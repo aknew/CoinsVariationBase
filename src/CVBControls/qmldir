@@ -1,0 +1,9 @@
+module CVBControls
+Input 1.0 Input.qml
+NextLevelList 1.0 NextLevelList.qml
+ImageWithFullScreen 1.0 ImageWithFullScreen.qml
+StyledText 1.0 StyledText.qml
+TitledInput 1.0 TitledInput.qml
+ComboBox 1.0 ComboBox.qml
+ComboTextEdit 1.0 ComboTextEdit.qml
+StyledTextInput 1.0 StyledTextInput.qml

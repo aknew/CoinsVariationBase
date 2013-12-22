@@ -10,14 +10,15 @@
         <file alias="no_image.png">../resources/no_image.png</file>
         <file alias="icons/delete.png">../resources/icons/delete.png</file>
         <file>MainWindow.qml</file>
-        <file>ComboBox.qml</file>
-        <file>ComboTextEdit.qml</file>
-        <file>ImageWithFullScreen.qml</file>
-        <file>Input.qml</file>
-        <file>NextLevelList.qml</file>
-        <file>StyledText.qml</file>
-        <file>StyledTextInput.qml</file>
-        <file>TitledInput.qml</file>
-        <file>qmldir</file>
+        <file>CVBControls/ComboBox.qml</file>
+        <file>CVBControls/ComboTextEdit.qml</file>
+        <file>CVBControls/ImageWithFullScreen.qml</file>
+        <file>CVBControls/Input.qml</file>
+        <file>CVBControls/NextLevelList.qml</file>
+        <file>CVBControls/qmldir</file>
+        <file>CVBControls/StyledText.qml</file>
+        <file>CVBControls/StyledTextInput.qml</file>
+        <file>CVBControls/TitledInput.qml</file>
+        <file>CVBControls/BigImage.qml</file>
     </qresource>
 </RCC>

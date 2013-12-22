@@ -1,7 +1,7 @@
 import QtQuick 2.0
+import CVBControls 1.0
 
 
-//Похоже они идентичны с SubtypesView, надо будет попробовать вставить его суда
 Rectangle {
     id: mainRect
     ListView {

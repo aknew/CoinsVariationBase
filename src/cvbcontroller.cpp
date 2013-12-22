@@ -198,7 +198,7 @@ void CVBController::showFullScreenImage(QString imgSource){
 
     QQuickView *w=newDeclarativeView();
     w->rootContext()->setContextProperty("imgSource",imgSource);
-    w->setSource(QUrl::fromLocalFile(baseProvider->basePath+"forms/BigImage.qml"));
+    w->setSource(QUrl::fromLocalFile("qrc:/CVBControls/BigImage.qml"));
 
     this->addViewToStack(w);
     currentWidgetType.push(FullScreenImage);

@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     QQmlApplicationEngine engine(QUrl("qrc:/MainWindow.qml"));
+    engine.addImportPath("qrc:/");
     QObject *topLevel = engine.rootObjects().value(0);
     QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
     if ( !window ) {
