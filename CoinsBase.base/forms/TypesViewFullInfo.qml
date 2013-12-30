@@ -44,7 +44,7 @@ Rectangle {
         TitledInput {
             z:14
             id: txt_metal
-            title: "Металл: "
+            title: qsTr("Metal: ")
             text: selectedItem.metal
             model: window.listForName("metals");
         }
@@ -52,20 +52,20 @@ Rectangle {
         TitledInput {
             z:13
             id: txt_issue
-            title: "Выпуск: "
+            title: qsTr("Issue: ")
             text: selectedItem.issue
             model: window.listForName("issues");
         }
         Input {
             id: txt_avers
             anchors.fill: parent.widths
-            title: "Аверс:"
+            title: qsTr("Avers:")
             text: selectedItem.avers
         }
         Input {
             id: txt_revers
             anchors.fill: parent.widths
-            title: "Реверс:"
+            title: qsTr("Revers:")
             text: selectedItem.revers
         }
         TitledInput {

@@ -1,5 +1,6 @@
 #include "CVBController.h"
 #include "CVBUtils.h"
+#include "CVBTranslator.h"
 #include <QQmlContext>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMessageBox>
@@ -46,6 +47,8 @@ void CVBController::openBase(QString basePath){
         delete baseProvider;
     }
 
+    CVBFromQmlFilePath(&basePath);
+    basePath=basePath.append("/");
     baseProvider=new CVBBaseProvider(basePath,this);
 
     this->connect(baseProvider,SIGNAL(removeCurrentWidget()),this,SLOT(removeWidgetFromStack()));
@@ -59,6 +62,17 @@ void CVBController::openBase(QString basePath){
     engine->addImageProvider(QLatin1String("imageProvider"),imageProvider);
 
     engine->rootContext()->setContextProperty("window",this);
+
+    QString locale = QLocale::system().name();
+    QString filename = QString("languages/") + locale+".json";
+
+    static CVBTranslator translator;
+    if( translator.load(filename, basePath) ){
+        QApplication::instance()->installTranslator(&translator);
+        //QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
+        qDebug() << "Translation file loaded" << filename;
+    } else
+        qDebug() << "Translation file not loaded:" << filename << "  dir:"<<basePath;
 
     baseProvider->startLevel();
 }

@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     CVBBaseProvider.cpp \
     CVBController.cpp \
     comboboxdescription.cpp \
-    CVBUtils.cpp
+    CVBUtils.cpp \
+    CVBTranslator.cpp
 
 HEADERS  += CVBImageProvider.h \
     CVBSqlNode.h \
@@ -25,7 +26,8 @@ HEADERS  += CVBImageProvider.h \
     CVBSqlRelationalTableModel.h \
     CVBController.h \
     comboboxdescription.h \
-    CVBUtils.h
+    CVBUtils.h \
+    CVBTranslator.h
 
 OTHER_FILES += \
     MainWindow.qml \

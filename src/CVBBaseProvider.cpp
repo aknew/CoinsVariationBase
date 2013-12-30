@@ -1,5 +1,4 @@
 #include "CVBBaseProvider.h"
-#include "CVBUtils.h"
 
 CVBBaseProvider::CVBBaseProvider(QString pathPath, QObject *parent) :
     QObject(parent)
@@ -9,8 +8,7 @@ CVBBaseProvider::CVBBaseProvider(QString pathPath, QObject *parent) :
     *shown into QTableView. pathPath is typo. There is no any reasons using it now
 
 */
-    CVBFromQmlFilePath(&pathPath);
-    basePath=pathPath.append("/");
+    basePath = pathPath;
     pathPath.append("base.sqlite");
 
     db = QSqlDatabase::addDatabase("QSQLITE");

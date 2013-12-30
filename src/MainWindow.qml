@@ -151,7 +151,7 @@ ApplicationWindow {
             if (fieldList.length !== 1) {
                 // add field name only if we have more then 1 field
                 qmlString += " \"<b>\"+"
-                qmlString += "\"" + field + "\""
+                qmlString += "qsTr(\"" + field + "\")"
                 qmlString += "+\":</b>\"+"
                 fieldTitleLength = field.length + 8
             }
@@ -196,7 +196,7 @@ ApplicationWindow {
                 stateEditableString += "PropertyChanges { target:field_" + field + ";editing:true }"
                 break
             case "combo":
-                qmlString += "TitledInput {id: field_" + field + "; title: \"" + field + "\";"
+                qmlString += "TitledInput {id: field_" + field + "; title: qsTr(\"" + field + "\");"
                 qmlString += "anchors.fill: parent.widths; text: \"" + selectedItem[field] + "\";"
                 qmlString += "model: CVBApi.listForName(\"" + fieldStruct["dict"]
                         + "\");z:15; enabled:false}"
@@ -206,7 +206,7 @@ ApplicationWindow {
             default:
                 qmlString += "Input {id: field_" + field
                         + "; anchors.fill: parent.widths; text:  \"" + selectedItem[field]
-                        + "\";title: \"" + field + "\"; enabled:false}"
+                        + "\";title: qsTr(\"" + field + "\"); enabled:false}"
                 collectDataString += field + ": field_" + field + ".text,"
                 stateEditableString += "PropertyChanges { target:field_" + field + ";enabled:true }"
             }

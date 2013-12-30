@@ -57,11 +57,11 @@ Rectangle {
                     font.bold: true
                 }
                 StyledText{
-                    title:  "Металл: "
+                    title:  qsTr("Metal: ")
                     mainText: metal
                 }
                 StyledText{
-                    title: "Выпуск: "
+                    title: qsTr("Issue: ")
                     mainText: issue
                 }
             }
