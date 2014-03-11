@@ -1,7 +1,6 @@
 #include "CVBSqlNode.h"
 
 CVBSqlNode::CVBSqlNode(){
-    mainChild="";
     listViewFields=NULL;
 }
 

@@ -248,13 +248,13 @@ void CVBController::buttonPressed(int index){
                 model->selectedRow=model->rowCount();
                 if (currentWidgetType.top()==QMLListWithoutEditing){
                     this->fullInfo(model->selectedRow);
-                    this->currentItem()->setProperty("state","editable");
                 }
                 else{
                     QQuickItem *item = this->currentItem();
                     item->setProperty("selectedItem",model->selectedItem());
-                    item->setProperty("state","editable");
                 }
+
+                this->currentItem()->setProperty("state","editable");
                 break;
 
             }

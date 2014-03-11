@@ -4,8 +4,6 @@
     "nodes": [
       {
         "name": "TypesView",
-        "defaultSortColumn": "3",
-        "mainChild": "SubtypesView" ,
         "childNode": [
           {
             "name": "SubtypesView",
@@ -41,10 +39,8 @@
       },
       {
         "name": "SubtypesView",
-        "defaultSortColumn": "2",
         "listViewFields":["year","mintmark","avers","revers","edge"],
         "rowParamNames": { "name": "typeID" },
-        "mainChild": "VariantsView",
         "childNode": [
           {
             "name": "VariantsView",
@@ -163,7 +159,6 @@
         "name": "VariantsView",
         "rowParamNames": { "name": "stID" },
         "listViewFields":["avers","revers","edge"],
-        "mainChild": "CurrentCoinsView",
         "childNode": [
           {
             "name": "CurrentCoinsView",
@@ -196,7 +191,6 @@
       },
       {
         "name": "CurrentCoinsView",
-        "mainChild": "CoinHistory" ,
         "childNode": [
           {
             "name": "CoinPicture",

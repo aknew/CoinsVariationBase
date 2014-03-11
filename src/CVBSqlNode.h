@@ -12,8 +12,6 @@ struct CVBSqlNode{
     CVBSqlRelationalTableModel *model;//модель-ссылка на таблицу
     QVector <QString> rowParamNames;
     QMap<QString, QString> childNodes;//идентификаторы узлов, на которые можно перейти от текущего и поле, по которому они связаны
-    int defaultSortColumn;
-    QString mainChild;//FIXME вопрос нужен ли он
     QString listFormName;
     QString fullFormName;
     QVariant fullFormFields;

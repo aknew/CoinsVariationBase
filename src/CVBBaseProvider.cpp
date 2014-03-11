@@ -227,15 +227,11 @@ void CVBBaseProvider::parse(){
          node->model->setTable(node->tableName);
          node->model->applyRoles();
 
-         node->defaultSortColumn=obj.value("defaultSortColumn").toString("-1").toInt();
-
          bool isSystem=obj.value("isSystem").toBool();
 
          if (isSystem){
              systemTables.append(node->tableName);
          }
-
-         node->mainChild = obj.value("mainChild").toString(); //FIXME: Unused parameter of node
 
          QJsonArray childNodes = obj.value("childNode").toArray();
          foreach (QJsonValue value1,childNodes) {
