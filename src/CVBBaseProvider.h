@@ -37,6 +37,7 @@ public:
     QStringList listForID(const QString &name);
     void addForeignKeyToMap(QVariantMap &map);
     void deleteCurrentRow();
+    QAbstractItemModel *getModelWithName(const QString& name);
 
 signals:
     void currentNodeWasChanged();

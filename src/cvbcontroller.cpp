@@ -127,6 +127,11 @@ QVariant CVBController::fieldsForListView(){
 QAbstractItemModel *CVBController::currentModel() {
     return baseProvider->currentNode()->model;
 }
+
+QObject* CVBController::getModelWithName(const QString& name){
+    return baseProvider->getModelWithName(name);
+}
+
 QVariant CVBController::fullFormFields(){
     return baseProvider->currentNode()->fullFormFields;
 }
