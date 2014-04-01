@@ -124,7 +124,7 @@ QVariant CVBController::fieldsForListView(){
     return baseProvider->currentNode()->getListViewFields();
 }
 
-QAbstractItemModel *CVBController::currentModel() {
+QObject *CVBController::currentModel() {
     return baseProvider->currentNode()->model;
 }
 
@@ -157,8 +157,6 @@ void CVBController::newTableWidget(){
     }
 
     if (QFile::exists(str)){
-        //fixme: currentmodel == mymodel
-        this->engine->rootContext()->setContextProperty("myModel", baseProvider->currentNode()->model);
         str = QString("file:///%1").arg(str);
         QMetaObject::invokeMethod(this->applicationWindow,
                                   "loadForm",

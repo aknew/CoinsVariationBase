@@ -65,7 +65,7 @@ class CVBController : public QObject
        Q_INVOKABLE void showFullScreenImage(QString imgSource);
        Q_INVOKABLE QVariant listForName(const QString& name);
        Q_INVOKABLE QVariant fieldsForListView();
-       QAbstractItemModel *currentModel();
+       QObject *currentModel();
        Q_INVOKABLE QObject* getModelWithName(const QString& name);
 
        //попытка вызвать диалог и загрузить в нем новую картинку, если все хорошо - вернется ее ссылка, если нет - -1

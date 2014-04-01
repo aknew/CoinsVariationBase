@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import CVBControls 1.0
+import CVB.api 1.0
 
 Rectangle {
     id: mainRect
@@ -10,7 +11,7 @@ Rectangle {
         id: listView
         anchors.fill: parent
         delegate: delegate
-        model: myModel
+        model: CVBApi.currentModel()
     }
 
     Component {
