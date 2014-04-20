@@ -81,11 +81,11 @@ end;
 CREATE TRIGGER TypesUpdate instead of update on TypesView
 begin
 	insert or ignore into nominals(value) values (new.nominal);
-        insert or ignore into issues(value) values (new.issue);
+    insert or ignore into issues(value) values (new.issue);
 	insert or ignore into metals(value) values (new.metal);
 	insert or ignore into edges(value) values (new.edge);
 -- XXX: честно говоря, мне не нравится эта череда insert'ов, но как сделать по другому я не знаю
-       	update Types set nominal=(select id from nominals where value=new.nominal) where Types.ID=old.id;
+    update Types set nominal=(select id from nominals where value=new.nominal) where Types.ID=old.id;
 	update Types set metal=(select id from metals where value=new.metal) where Types.ID=old.id;
 	update Types set firstYear=new.firstYear where Types.ID=old.id;
 	update Types set lastYear=new.lastYear where Types.ID=old.id;
@@ -120,11 +120,54 @@ CREATE TABLE [Variaties] (
   [price] REAL
  );
 
+CREATE VIEW "VariatiesView" AS 
+	SELECT 
+		typeID, 
+		Variaties.id as id, 
+		year, 
+		mintmark,
+		Mint.value as mint,
+		edges.value as edge,
+		price
+	FROM Variaties left join Mint on Variaties.Mint=Mint.id
+				   left join edges on edge=edges.id;
+
+CREATE TRIGGER VariatiesViewDelete instead of delete on VariatiesView
+begin
+	delete from Variaties where id=old.id;
+end;
+
+CREATE TRIGGER VariatiesViewInsert instead of insert on VariatiesView
+begin
+	insert or ignore into edges(value) values (new.edge);
+    insert or ignore into Mint(value) values (new.Mint);
+	insert into Variaties(typeID, year, mintmark, mint, edge, price ) values(
+			new.typeID,
+			new.year, 
+			new.mintmark,
+			(select id from Mint where value=new.Mint),
+			(select id from edges where value=new.edge), 
+			new.price
+	);
+end;
+
+CREATE TRIGGER VariatiesView instead of update on VariatiesView
+begin
+	insert or ignore into edges(value) values (new.edge);
+    insert or ignore into Mint(value) values (new.Mint);
+    update Variaties set typeID=new.typeID where id=new.typeID;
+    update Variaties set year=new.year where id=new.year;
+    update Variaties set mintmark=new.mintmark where id=new.mintmark;
+	update Variaties set Mint=(select id from Mint where value=new.Mint) where id=new.id;
+	update Variaties set edge=(select id from edges where value=new.edge) where id=new.id;
+	update Variaties set price=new.price where id=new.price;
+end;
+
 
 --- atributes of concrete variaty
 
 CREATE TABLE [attributes] (
-	varID INTEGER NOT NULL,
+	varID INTEGER NOT NULL CONSTRAINT [varAttributeFK] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE,
 	type INTEGER NOT NULL,
 	attributeName TEXT NOT NULL,
 	attributeValue TEXT NOT NULL,
@@ -196,20 +239,19 @@ CREATE TABLE [ConcreteCoins] (
   [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
   [varID] INTEGER NOT NULL CONSTRAINT [ccVariaties] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE,
   [condition] INTEGER,
-  [status] INTEGER NOT NULL DEFAULT 1, 
-  [pict] TEXT);
+  [status] INTEGER NOT NULL DEFAULT 1
+  );
 COMMIT;
 
 CREATE VIEW "ConcreteCoinsView" AS 
 	select 
 		Concretecoins.id,
 		varID,
-		pict,
 		conditions.value as condition,
 		statuses.value as status
 	from (ConcreteCoins left join conditions on condition=conditions.id), statuses where status=statuses.id;
 
-CREATE TRIGGER ConcreteCoinsdelete instead of delete on ConcreteCoinsView
+CREATE TRIGGER ConcreteCoinsDelete instead of delete on ConcreteCoinsView
 begin
 	delete from ConcreteCoins where id=old.id;
 end;
@@ -218,21 +260,19 @@ CREATE TRIGGER ConcreteCoinsInsert instead of insert on ConcreteCoinsView
 begin
 	insert or ignore into statuses(value) values (new.status);
         insert or ignore into conditions(value) values (new.condition);
-	insert into ConcreteCoins(varID,varID,condition,status,pict ) values(
+	insert into ConcreteCoins(varID,condition,status) values(
 			new.varID,
 			(select id from conditions where value=new.condition),
-			(select id from statuses where value=new.status),
-			new.pict
+			(select id from statuses where value=new.status)
 	);
 end;
 
 CREATE TRIGGER ConcreteCoinsUpdate instead of update on ConcreteCoinsView
 begin
 	insert or ignore into statuses(value) values (new.status);
-        insert or ignore into conditions(value) values (new.condition);
+    insert or ignore into conditions(value) values (new.condition);
 	update ConcreteCoins set condition=(select id from conditions where value=new.condition) where id=new.id;
 	update ConcreteCoins set status=(select id from statuses where value=new.status) where id=new.id;
-	update ConcreteCoins set pict=new.pict where id=new.id;
 end;
 
 --- history of the coin
