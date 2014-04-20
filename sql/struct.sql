@@ -34,7 +34,7 @@ CREATE TABLE "Types" (
 	"avers" TEXT,
 	"revers" TEXT,
 	"weigth" REAL,
-	"comment" TEXT,"issue" INTEGER NOT NULL  DEFAULT (1) ,
+	"issue" INTEGER NOT NULL  DEFAULT (1) ,
 	"edge" INTEGER NOT NULL  DEFAULT (0),
 	CONSTRAINT coinsTypeUnique UNIQUE (nominal, metal, avers, revers, weigth),
 	CONSTRAINT ctnominal FOREIGN KEY (nominal) references nominals(id),
@@ -54,8 +54,7 @@ CREATE VIEW "TypesView" AS
 		issues.value as issue,
 		avers,
 		revers,
-		weigth, 
-		comment
+		weigth
 
 		FROM Types left join nominals on nominal=nominals.id
 					left join metals on metal=metals.id
@@ -68,14 +67,14 @@ begin
         insert or ignore into issues(value) values (new.issue);
 	insert or ignore into metals(value) values (new.metal);
 	insert or ignore into edges(value) values (new.edge);
-	insert into Types(nominal,metal,firstYear,lastYear,edge, issue,avers,revers,weigth,comment) 
+	insert into Types(nominal,metal,firstYear,lastYear,edge, issue,avers,revers,weigth) 
 		values(
 			(select id from nominals where value=new.nominal), 
 			(select id from metals where value=new.metal), 
 			new.firstYear,new.lastYear,
 			(select id from edges where value=new.edge), 
 			(select id from issues where value=new.issue), 
-			new.avers,new.revers,new.weigth,new.comment
+			new.avers,new.revers,new.weigth
 	);
 end;
 
@@ -95,7 +94,6 @@ begin
 	update Types set avers=new.avers where Types.ID=old.id;
 	update Types set revers=new.revers where Types.ID=old.id;
 	update Types set weigth=new.weigth where Types.ID=old.id;
-	update Types set comment=new.comment where Types.ID=old.id;
 end;
 
 CREATE TRIGGER Typesdelete instead of delete on TypesView
@@ -142,7 +140,7 @@ CREATE TABLE "SourcesList" (
 	"comment" TEXT
 );
 
-CREATE TABLE [subtypeReferences] (
+CREATE TABLE [varReferences] (
   [varID] INTEGER NOT NULL CONSTRAINT [stRefFK] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
   [srid] INTEGER NOT NULL CONSTRAINT [stRefSL] REFERENCES [SourcesList]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
   [number] TEXT NOT NULL, 
@@ -150,23 +148,24 @@ CREATE TABLE [subtypeReferences] (
   [comment] TEXT, 
   CONSTRAINT [coinsSubUnique] UNIQUE([varID], [srid], [number]));
 
-CREATE VIEW "subtypeReferencesView" AS 
+CREATE VIEW "varReferencesView" AS 
 	SELECT 
 		varID, 
 		reduction, 
 		number, 
 		rarity,
-		subtypeReferences."comment"
-	FROM subtypeReferences, SourcesList where subtypeReferences.srid=SourcesList.id;
+		varReferences."comment"
+	FROM varReferences, SourcesList where varReferences.srid=SourcesList.id;
 
-CREATE TRIGGER subtypeReferencessdelete instead of delete on subtypeReferencesView
+CREATE TRIGGER varReferencesDelete instead of delete on varReferencesView
 begin
-	delete from subtypeReferences where srid=(select id from SourcesList where reduction=old.reduction) and varID=old.varID;	
+	delete from varReferences where srid=(select id from SourcesList where reduction=old.reduction) and varID=old.varID;	
 end;
-CREATE TRIGGER subtypeReferencessinsert instead of insert on subtypeReferencesView
+
+CREATE TRIGGER varReferencesUnsert instead of insert on varReferencesView
 begin
 	insert or ignore into SourcesList(reduction) values (new.reduction);
-	insert into subtypeReferences (varID,srid,number,rarity,comment) values(
+	insert into varReferences (varID,srid,number,rarity,comment) values(
 			new.varID,
 			(select id from SourcesList where reduction=new.reduction), 
 			new.number,
@@ -175,10 +174,10 @@ begin
 	);
 end;
 
-CREATE TRIGGER subtypeReferencessupdate instead of update on subtypeReferencesView
+CREATE TRIGGER varReferencesUpdate instead of update on varReferencesView
 begin
-	delete from subtypeReferencesView where reduction=old.reduction and varID=old.varID;
-	insert into subtypeReferencesView (varID,reduction,number,rarity, comment) values(new.varID,new.reduction,new.number,new.rarity, new.comment);	
+	delete from varReferencesView where reduction=old.reduction and varID=old.varID;
+	insert into varReferencesView (varID,reduction,number,rarity, comment) values(new.varID,new.reduction,new.number,new.rarity, new.comment);	
 end;
 
 --- conctrete coins - collection, exchange and archive of interesting coins
@@ -196,8 +195,7 @@ CREATE TABLE "statuses" (
 CREATE TABLE [ConcreteCoins] (
   [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
   [varID] INTEGER NOT NULL CONSTRAINT [ccVariaties] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE,
-  [condition] INTEGER, 
-  [otherInfo] TEXT, 
+  [condition] INTEGER,
   [status] INTEGER NOT NULL DEFAULT 1, 
   [pict] TEXT);
 COMMIT;
@@ -208,23 +206,22 @@ CREATE VIEW "ConcreteCoinsView" AS
 		varID,
 		pict,
 		conditions.value as condition,
-		statuses.value as status,
-		otherInfo 
+		statuses.value as status
 	from (ConcreteCoins left join conditions on condition=conditions.id), statuses where status=statuses.id;
 
 CREATE TRIGGER ConcreteCoinsdelete instead of delete on ConcreteCoinsView
 begin
 	delete from ConcreteCoins where id=old.id;
 end;
+
 CREATE TRIGGER ConcreteCoinsInsert instead of insert on ConcreteCoinsView
 begin
 	insert or ignore into statuses(value) values (new.status);
         insert or ignore into conditions(value) values (new.condition);
-	insert into ConcreteCoins(varID,varID,condition,status,otherInfo,pict ) values(
+	insert into ConcreteCoins(varID,varID,condition,status,pict ) values(
 			new.varID,
 			(select id from conditions where value=new.condition),
 			(select id from statuses where value=new.status),
-			new.otherInfo,
 			new.pict
 	);
 end;
@@ -235,7 +232,6 @@ begin
         insert or ignore into conditions(value) values (new.condition);
 	update ConcreteCoins set condition=(select id from conditions where value=new.condition) where id=new.id;
 	update ConcreteCoins set status=(select id from statuses where value=new.status) where id=new.id;
-        update ConcreteCoins set otherInfo=new.otherInfo where id=new.id;
 	update ConcreteCoins set pict=new.pict where id=new.id;
 end;
 
@@ -248,9 +244,8 @@ CREATE TABLE [CoinHistory] (
   [date] TEXT, 
   [price] TEXT, 
   [hyperlink] TEXT, 
-  [startprice] TEXT, 
+  [startPrice] TEXT, 
   [currency] , 
   [seller] TEXT, 
   [buyer] TEXT, 
   [blitz] REAL);
-
