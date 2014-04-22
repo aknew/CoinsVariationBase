@@ -9,14 +9,23 @@ TestBaseClass::TestBaseClass(QObject *parent) :
 
 }
 
-void TestBaseClass::testBase(){
-    //base structure and logic, there is no any C++ code tests here, only sql
+void TestBaseClass::initTestCase(){
 
     QFile::remove(TEST_BASE);
 
     //create new empty base, using sqlite3 console app from http://www.sqlite.org (or system in Mac or Ubuntu) cause qt driver can't execute multistatement query
-    QString str=QString("sqlite3 %1 \".read struct.sql\"").arg(TEST_BASE);
-    system(str.toAscii());
+    //In windows you also can use cygwin sqlite3
+    //QString str=QString("sqlite3 %1 \".read struct.sql\"").arg(TEST_BASE);
+     //HOTFIX: I cant copy sql script during build, so I use this hotfix
+    QString str=QString("sqlite3 %1 \".read ../sql/struct.sql\"").arg(TEST_BASE);
+    int result = system(str.toLatin1());
+    if (result != 0){
+        QFAIL("SOmething wrong during create new db file with struct.sql");
+    }
+}
+
+void TestBaseClass::testBase(){
+    //base structure and logic, there is no any C++ code tests here, only sql
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(TEST_BASE);
@@ -32,7 +41,7 @@ void TestBaseClass::testBase(){
 
     flag=query.exec("INSERT INTO TypesView  (nominal, metal, firstYear, lastYear, edge, issue, avers, revers, weigth,  comment)"
                "VALUES (\"1 rouble\", \"Silver\",\"1700\",\"1800\",\"Gladkij\",\"regular\",\"Double head eagle\","
-               "\"Label 'ONE ROUBLE' in two strings fnd year as third string\",10.5,\"this is test record\");");
+               "\"Label 'ONE ROUBLE' in two strings fnd year as third string\",10.5);");
 
     if(!flag){
         QFAIL(query.lastError().text().toLocal8Bit());

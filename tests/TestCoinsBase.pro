@@ -21,13 +21,12 @@ SOURCES += main.cpp \
 HEADERS += \
     testbaseclass.h
 
-OTHER_FILES += \
-    ../sql/struct.sql
+OTHER_FILES +=
 
 ## Define what files are 'extra_libs' and where to put them
 sqlStruct.files = "../sql/struct.sql"
 
-sqlStruct.path = "C:\Users\U940\Documents\GitHub\CoinsVariationBase\bin\TestCoinsBase-build-Desktop_4_8_4"
+sqlStruct.path = "$$OUT_PWD"
 
 ## Tell qmake to add the moving of them to the 'install' target
 INSTALLS += sqlStruct
