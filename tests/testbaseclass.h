@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QTest>
+#include <QtSql>
 
 class TestBaseClass : public QObject
 {
@@ -11,8 +12,18 @@ public:
     explicit TestBaseClass(QObject *parent = 0);
     
 private slots:
-    void testBase();
+    void testTypeInsertion();
+    void testVariantInsertion();
+    void testVarianDeletion();
+    void testTypeDeletion();
     void initTestCase();
+
+private:
+    bool flag;
+
+    QSqlQuery query;
+
+    QSqlDatabase db;
     
 };
 
