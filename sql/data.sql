@@ -62,3 +62,16 @@ INSERT INTO "SourcesList" VALUES(20,'Ильин-Толстой',NULL,NULL);
 INSERT INTO "SourcesList" VALUES(25,'Биткин 2003',NULL,NULL);
 INSERT INTO "SourcesList" VALUES(37,'Конрос-Базовый',NULL,NULL);
 INSERT INTO "SourcesList" VALUES(38,'Чижов','С.И. Чижов Описанiе варiантовъ некоторыхъ типовъ русскихъ монетъ последнихъ двухъ столетiй. М:, Типография О.О. Гербека - 1904',NULL);
+INSERT INTO "SourcesList" VALUES(39,'Руководство ЦФН',NULL,NULL);
+
+INSERT INTO "Variaties" VALUES(8,1,1730,NULL,'Московский Красный двор',NULL,NULL);
+
+INSERT INTO "varReferences" VALUES(1,39,'1730,1','монета встречается реже',NULL);
+
+INSERT INTO "attributes" VALUES(1,1,'Орел','образца 1730');
+INSERT INTO "attributes" VALUES(1,1,'Ости','в крыльях');
+INSERT INTO "attributes" VALUES(1,1,'Кресты на малых коронах','обычные');
+INSERT INTO "attributes" VALUES(1,1,'Крест державы','простой');
+INSERT INTO "attributes" VALUES(1,2,'Шаблон','1');
+INSERT INTO "attributes" VALUES(1,2,'Листья внизу','пальмовые');
+INSERT INTO "attributes" VALUES(1,2,'Арабески','однозавитковые');
