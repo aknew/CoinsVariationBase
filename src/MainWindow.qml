@@ -188,16 +188,21 @@ ApplicationWindow {
         for (var i = 0; i < fullFormFields.length; ++i) {
             var fieldStruct = fullFormFields[i];
             var field = fieldStruct["name"];
+            var field_value = selectedItem[field];
+
+            if ( typeof field_value == 'string')
+                field_value = field_value.replace(/"/g, '\\"');
+
             switch (fieldStruct["type"]) {
             case "picture":
                 qmlString += "ImageWithFullScreen{ id: field_" + field
-                        + "; pict: \"" + selectedItem[field] + "\"; editing:false}"
+                        + "; pict: \"" + field_value + "\"; editing:false}"
                 collectDataString += field + ": field_" + field + ".pict,"
                 stateEditableString += "PropertyChanges { target:field_" + field + ";editing:true }"
                 break
             case "combo":
                 qmlString += "TitledInput {id: field_" + field + "; title: qsTr(\"" + field + "\");"
-                qmlString += "anchors.fill: parent.widths; text: \"" + selectedItem[field] + "\";"
+                qmlString += "anchors.fill: parent.widths; text: \"" + field_value + "\";"
                 qmlString += "model: CVBApi.listForName(\"" + fieldStruct["dict"]
                         + "\");z:15; enabled:false}"
                 collectDataString += field + ": field_" + field + ".text,"
@@ -205,7 +210,7 @@ ApplicationWindow {
                 break
             default:
                 qmlString += "Input {id: field_" + field
-                        + "; anchors.fill: parent.widths; text:  \"" + selectedItem[field]
+                        + "; anchors.fill: parent.widths; text:  \"" + field_value
                         + "\";title: qsTr(\"" + field + "\"); enabled:false}"
                 collectDataString += field + ": field_" + field + ".text,"
                 stateEditableString += "PropertyChanges { target:field_" + field + ";enabled:true }"

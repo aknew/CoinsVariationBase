@@ -38,10 +38,7 @@ QVariantMap CVBSqlRelationalTableModel::selectedItem(){
     QVariantMap myMap;
     QSqlRecord record=this->record(selectedRow);
 
-    //const QVariant defValue=QVariant("");
     for (int i=0;i<record.count();++i){
-       // QVariant var=record.field(i).value();
-       // myMap[record.fieldName(i)]=var.isValid()?var:defValue;//fixing invalide QVariant for empty fields
         myMap[record.fieldName(i)]=record.field(i).value();
     }
     return myMap;
