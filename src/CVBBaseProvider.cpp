@@ -260,9 +260,6 @@ void CVBBaseProvider::parse(){
                          );
          }
 
-
-         node->fullFormFields = obj.value("fullFormFields").toVariant();
-
          QJsonValue rowParameters = obj.value("rowParamNames");// FIXME: древний костыль, надо исправить, а может при изменении структуры базы и сам уйдет
          if (rowParameters.isArray()){
              foreach (QJsonValue value,rowParameters.toArray()) {
@@ -286,6 +283,24 @@ void CVBBaseProvider::parse(){
                  node->listViewFields->append(value.toString());
              }
          }
+
+         QJsonValue fullFormFields = obj.value("fullFormFields");
+
+         if (fullFormFields.isArray()){
+             node->fullFormFields = fullFormFields.toVariant();
+         }
+         else {
+             // create fullFormFields from fieldList;
+             QStringList fieldList = node->model->fieldList.toStringList();
+             QJsonArray fields;
+             foreach (QString field, fieldList) {
+                 QJsonObject obj;
+                 obj["name"]=field;
+                 fields.append(obj);
+             }
+             node->fullFormFields =fields.toVariantList();
+         }
+
          nodeMap.insert(node->tableName,node);
      }
 
@@ -304,12 +319,4 @@ void CVBBaseProvider::parse(){
              desc.params.push_back(param);
          comboBoxes[obj.value("name").toString()]=desc;
      }
-
-     qDebug()<<nodeMap.keys();
-     qDebug()<<comboBoxes.keys();
-     qDebug()<<"parser end - ok";
-
-     CVBSqlNode *node=nodeMap["SubtypesView"];
-
-     qDebug()<<node->fullFormFields;
 }

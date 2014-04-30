@@ -6,15 +6,7 @@
         "name": "TypesView",
         "childNode": [
           {
-            "name": "SubtypesView",
-            "relation": "typeID"
-          },
-          {
-            "name": "SubtypesAvers",
-            "relation": "typeID"
-          },
-          {
-            "name": "SubtypesRevers",
+            "name": "VariatiesView",
             "relation": "typeID"
           }
         ],
@@ -38,7 +30,7 @@
         ]
       },
       {
-        "name": "SubtypesView",
+        "name": "VariatiesView",
         "listViewFields":["year","mintmark","avers","revers","edge"],
         "rowParamNames": { "name": "typeID" },
         "childNode": [
@@ -156,40 +148,6 @@
         "pictDelegate":"4"
       },
       {
-        "name": "VariantsView",
-        "rowParamNames": { "name": "stID" },
-        "listViewFields":["avers","revers","edge"],
-        "childNode": [
-          {
-            "name": "CurrentCoinsView",
-            "relation": "varID"
-          },
-          {
-            "name": "variantReferencesView",
-            "relation": "varID"
-          }
-        ],
-        "comboDelegate": [
-          {
-            "column": "3",
-            "dict": "aversVar"
-          },
-          {
-            "column": "4",
-            "dict": "reversVar"
-          },
-          {
-            "column": "6",
-            "dict": "mintYard"
-          },
-          {
-            "column": "5",
-            "dict": "edges"
-          }
-        ],
-        "pictDelegate":"2"
-      },
-      {
         "name": "CurrentCoinsView",
         "childNode": [
           {
@@ -212,16 +170,6 @@
         "pictDelegate":"3"
       },
       {
-        "name": "subtypeReferencesView",
-        "listForm": "ReferencesView",
-        "rowParamNames": { "name": "stID" },
-        "childNode": { "name": "SourcesList" },
-        "comboDelegate": {
-          "column": "1",
-          "dict": "sourceList"
-        }
-      },
-      {
         "name": "variantReferencesView",
         "listForm": "ReferencesView",
         "rowParamNames": { "name": "varID" },
@@ -235,16 +183,6 @@
       {
         "name": "CoinHistory",
         "rowParamNames": { "name": "coin" }
-      },
-      {
-        "name": "CoinPicture",
-        "rowParamNames": { "name": "coin" },
-        "pictDelegate":"1"
-      },
-      {
-        "name": "attachStorage",
-        "isSystem": "1",
-        "pictDelegate":"1"
       },
       {
         "name": "nominals",
@@ -267,7 +205,7 @@
         "isSystem": "1"
       },
       {
-        "name": "MintYard",
+        "name": "Mint",
         "isSystem": "1"
       }
     ],

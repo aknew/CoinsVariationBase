@@ -11,5 +11,4 @@ QVariant CVBSqlNode::getListViewFields(){
     else{
         return this->model->fieldList;
     }
-
 }

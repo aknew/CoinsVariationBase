@@ -225,7 +225,7 @@ ApplicationWindow {
         qmlString += collectDataString
 
         qmlString += "}" // mainRect
-        //console.log(qmlString)
+        console.log(qmlString)
         var fullInfoForm = Qt.createQmlObject(qmlString, tablesStack,
                                               "dynamicFullInfoForm")
         tablesStack.push(fullInfoForm)
