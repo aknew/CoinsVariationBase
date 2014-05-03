@@ -10,23 +10,25 @@
             "relation": "typeID"
           }
         ],
-        "comboDelegate": [
-          {
-            "column": "1",
-            "dict": "nominals"
-          },
-          {
-            "column": "2",
-            "dict": "metals"
-          },
-          {
-            "column": "5",
-            "dict": "edges"
-          },
-          {
-            "column": "6",
-            "dict": "issues"
-          }
+        "listViewFields":["nominal","firstYear","lastYear","issue"],
+        "fullFormFields": [
+        {"name": "nominal",
+        "type": "combo",
+        "dict": "nominals"},
+        {"name": "metal",
+        "type": "combo",
+        "dict": "metals"},
+        {"name": "firstYear"},
+        {"name": "lastYear"},
+        {"name": "edges",
+        "type": "combo",
+        "dict": "metals"},
+        {"name": "issue",
+        "type": "combo",
+        "dict": "issues"},
+        {"name": "avers"},
+        {"name": "revers"},
+        {"name": "weigth"}
         ]
       },
       {
