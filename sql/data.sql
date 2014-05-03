@@ -64,14 +64,27 @@ INSERT INTO "SourcesList" VALUES(37,'Конрос-Базовый',NULL,NULL);
 INSERT INTO "SourcesList" VALUES(38,'Чижов','С.И. Чижов Описанiе варiантовъ некоторыхъ типовъ русскихъ монетъ последнихъ двухъ столетiй. М:, Типография О.О. Гербека - 1904',NULL);
 INSERT INTO "SourcesList" VALUES(39,'Руководство ЦФН',NULL,NULL);
 
-INSERT INTO "Variaties" VALUES(8,1,1730,NULL,'Московский Красный двор',NULL,NULL);
+INSERT INTO "VariatiesView" VALUES(8,1,1730,NULL,'Московский Красный двор',NULL,NULL);
 
 INSERT INTO "varReferences" VALUES(1,39,'1730,1','монета встречается реже',NULL);
 
-INSERT INTO "attributes" VALUES(1,1,'Орел','образца 1730');
+INSERT INTO "attributes" VALUES(1,1,'Орел','образца 1730, ранний (центарльное перо хвоста выпирает)');
 INSERT INTO "attributes" VALUES(1,1,'Ости','в крыльях');
 INSERT INTO "attributes" VALUES(1,1,'Кресты на малых коронах','обычные');
 INSERT INTO "attributes" VALUES(1,1,'Крест державы','простой');
 INSERT INTO "attributes" VALUES(1,2,'Шаблон','1');
 INSERT INTO "attributes" VALUES(1,2,'Листья внизу','пальмовые');
 INSERT INTO "attributes" VALUES(1,2,'Арабески','однозавитковые');
+
+INSERT INTO "VariatiesView" VALUES(8,2,1730,NULL,'Московский Красный двор',NULL,NULL);
+
+INSERT INTO "varReferences" VALUES(2,39,'1730,2','монета встречается реже',NULL);
+
+INSERT INTO "attributes" VALUES(2,1,'Орел','образца 1730');
+INSERT INTO "attributes" VALUES(2,1,'Ости','отсуствуют');
+INSERT INTO "attributes" VALUES(2,1,'Кресты на малых коронах','обычные');
+INSERT INTO "attributes" VALUES(2,1,'Крест державы','простой, малый');
+INSERT INTO "attributes" VALUES(2,1,'Навершие скипетра','в виде креста');
+INSERT INTO "attributes" VALUES(2,2,'Шаблон','1');
+INSERT INTO "attributes" VALUES(2,2,'Листья внизу','акантовые');
+INSERT INTO "attributes" VALUES(2,2,'Арабески','двухзавитковые');

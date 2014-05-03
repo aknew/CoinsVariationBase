@@ -174,6 +174,32 @@ CREATE TABLE [attributes] (
 	CONSTRAINT attributesUnique UNIQUE (varID, type, attributeName)
 );
 
+--- FullVariantsView - need for showing list
+
+CREATE VIEW FullAversDescription AS 
+SELECT 
+	group_concat (attributeName|| ' ' ||attributeValue ,"; ") as avers, 
+	varID 
+FROM attributes where "type"=1 GROUP BY varID;
+
+CREATE VIEW FullReversDescription AS 
+SELECT 
+	group_concat (attributeName|| ' ' ||attributeValue ,"; ") as revers,
+	varID 
+FROM attributes where "type"=2 GROUP BY varID;
+
+
+CREATE VIEW "FullVariatiesView" AS 
+	SELECT 
+		id, 
+		year, 
+		mintmark,
+		FullAversDescription.avers as avers,
+		FullReversDescription.revers as revers,
+		edge
+	FROM VariatiesView left join FullAversDescription on id=FullAversDescription.varId
+				   	left join FullReversDescription on id=FullReversDescription.varId;
+
 --- references to catalogs, auction prices  etc
 
 CREATE TABLE "SourcesList" (

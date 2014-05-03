@@ -33,20 +33,13 @@
       },
       {
         "name": "VariatiesView",
+        "listModel":"FullVariatiesView",
         "listViewFields":["year","mintmark","avers","revers","edge"],
         "rowParamNames": { "name": "typeID" },
         "childNode": [
           {
-            "name": "VariantsView",
-            "relation": "stID"
-          },
-          {
-            "name": "subtypeReferencesView",
-            "relation": "stID"
-          },
-          {
-            "name": "CurrentCoinsView",
-            "relation": "stID"
+            "name": "ConcreteCoinsView",
+            "relation": "varID"
           }
         ],
         "fullFormFields": [
@@ -62,29 +55,9 @@
             "dict": "mintYard"
           },
           {
-            "name": "avers",
-            "type": "combo",
-            "dict": "SubtypesAvers"
-          },
-          {
-            "name": "revers",
-            "type": "combo",
-            "dict": "SubtypesRevers"
-          },
-          {
             "name": "edge",
             "type": "combo",
             "dict": "edges"
-          },
-          {
-            "name": "pict",
-            "type": "picture"
-          },
-          {
-            "name": "comment"
-          },
-          {
-            "name": "mintage"
           },
           {
             "name": "price"
@@ -92,70 +65,8 @@
         ]
       },
       {
-        "name": "SubtypesRevers",
-        "listViewFields":["description"],
-        "fullForm":"AversReversFullInfo",
-        "rowParamNames": { "name": "typeID" },
+        "name": "ConcreteCoinsView",
         "childNode": [
-          {
-            "name": "SubtypesView",
-            "relation": "ReversID"
-          },
-          {
-            "name": "variantRevers",
-            "relation": "revID"
-          }
-        ],
-        "pictDelegate":"3"
-      },
-      {
-        "name": "SubtypesAvers",
-        "listViewFields":["description"],
-        "fullForm":"AversReversFullInfo",
-        "childNode": [
-          {
-            "name": "SubtypesView",
-            "relation": "AversID"
-          },
-          {
-            "name": "variantAvers",
-            "relation": "avID"
-          }
-        ],
-        "rowParamNames": { "name": "typeID" },
-        "pictDelegate":"3"
-      },
-      {
-        "name": "variantAvers",
-        "listViewFields":["description"],
-        "fullForm":"AversReversFullInfo",
-        "childNode":[
-        {
-          "name": "VariantsView",
-          "relation": "AversID"
-        }
-        ],
-        "pictDelegate": "4"
-      },
-      {
-        "name": "variantRevers",
-        "listViewFields":["description"],
-        "fullForm":"AversReversFullInfo",
-        "childNode": [
-        {
-          "name": "VariantsView",
-          "relation": "ReversID"
-        }
-        ],
-        "pictDelegate":"4"
-      },
-      {
-        "name": "CurrentCoinsView",
-        "childNode": [
-          {
-            "name": "CoinPicture",
-            "relation": "coin"
-          },
           {
             "name": "CoinHistory",
             "relation": "coin"
@@ -170,16 +81,6 @@
           "dict": "statuses"
         },
         "pictDelegate":"3"
-      },
-      {
-        "name": "variantReferencesView",
-        "listForm": "ReferencesView",
-        "rowParamNames": { "name": "varID" },
-        "childNode": { "name": "SourcesList" },
-        "comboDelegate": {
-          "column": "1",
-          "dict": "sourceList"
-        }
       },
       { "name": "SourcesList" },
       {
@@ -233,32 +134,12 @@
           "name": "statuses"
         },
         {
-          "query": "select value from MintYard",
-          "name": "MintYard"
+          "query": "select value from Mint",
+          "name": "Mint"
         },
         {
           "query": "select reduction from SourcesList order by reduction",
           "name": "sourceList"
-        },
-        {
-          "query": "select description from SubtypesAvers where typeID=%1",
-          "name": "SubtypesAvers",
-          "param": "typeID"
-        },
-        {
-          "query": "select description from SubtypesRevers where typeID=%1",
-          "name": "SubtypesRevers",
-          "param": "typeID"
-        },
-        {
-          "query": "select description from variantAvers where typeID=%1",
-          "name": "variantAvers",
-          "param": "TypesView.id"
-        },
-        {
-          "query": "select description from variantRevers where typeID=%1",
-          "name": "variantRevers",
-          "param": "TypesView.id"
         }
       ]
   }
