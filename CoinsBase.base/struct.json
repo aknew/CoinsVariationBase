@@ -50,7 +50,7 @@
             "name": "mintmark"
           },
           {
-            "name": "Mint",
+            "name": "mint",
             "type": "combo",
             "dict": "mint"
           },
@@ -108,7 +108,7 @@
         "isSystem": "1"
       },
       {
-        "name": "Mint",
+        "name": "mint",
         "isSystem": "1"
       }
     ],
@@ -134,8 +134,8 @@
           "name": "statuses"
         },
         {
-          "query": "select value from Mint",
-          "name": "Mint"
+          "query": "select value from mint",
+          "name": "mint"
         },
         {
           "query": "select reduction from SourcesList order by reduction",
