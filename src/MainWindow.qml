@@ -176,7 +176,7 @@ ApplicationWindow {
         var qmlString = "import QtQuick 2.0; import CVB.api 1.0; import CVBControls 1.0; Rectangle { id: mainRect;"
         qmlString += "Flickable {clip: true; anchors.fill:parent;"
         qmlString += "contentHeight: nextlevel.y+nextlevel.height;"
-        qmlString += "Column {id: contentColumn;y: picture.height;width: parent.width;"
+        qmlString += "Column {id: contentColumn;y: 0;width: parent.width;"
 
         var collectDataString = "function collectData() { var returnedMap = {"
 

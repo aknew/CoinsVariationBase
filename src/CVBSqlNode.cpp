@@ -2,6 +2,7 @@
 
 CVBSqlNode::CVBSqlNode(){
     listViewFields=NULL;
+    listModel = NULL;
 }
 
 

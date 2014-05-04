@@ -50,9 +50,9 @@
             "name": "mintmark"
           },
           {
-            "name": "MintYard",
+            "name": "Mint",
             "type": "combo",
-            "dict": "mintYard"
+            "dict": "mint"
           },
           {
             "name": "edge",

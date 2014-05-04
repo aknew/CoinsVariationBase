@@ -124,8 +124,17 @@ void CVBBaseProvider::pressedButton(int index){
             QSqlRecord record=currentNode->model->record(rowIndex);
             QSqlField id=record.field("id");
             QString str1="%1=%2";
-            node->model->setFilter(str1.arg(str).arg(id.value().toString()));
+            // XXX: Need refactoring
+            str1 = str1.arg(str).arg(id.value().toString());
+            node->model->setFilter(str1);
+            if (node->listModel){
+                node->listModel->setFilter(str1);
+            }
             ids.insert(str,id.value().toString());
+        }
+        if (node->listModel){
+            node->listModel->select();
+            qDebug()<<node->listModel->rowCount();
         }
         node->model->select();
         qDebug()<<node->model->filter();
@@ -245,6 +254,14 @@ void CVBBaseProvider::parse(){
          node->model->setTable(node->tableName);
          node->model->applyRoles();
 
+         QJsonValue listModel = obj.value("listModel");
+
+         if (!listModel.isUndefined()){
+             node->listModel=new CVBSqlRelationalTableModel(this,db);
+             node->listModel->setTable(listModel.toString());
+             node->listModel->applyRoles();
+         }
+
          bool isSystem=obj.value("isSystem").toBool();
 
          if (isSystem){
@@ -299,6 +316,7 @@ void CVBBaseProvider::parse(){
                  fields.append(obj);
              }
              node->fullFormFields =fields.toVariantList();
+             qDebug()<<fields;
          }
 
          nodeMap.insert(node->tableName,node);

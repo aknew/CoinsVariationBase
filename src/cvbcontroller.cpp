@@ -125,7 +125,15 @@ QVariant CVBController::fieldsForListView(){
 }
 
 QObject *CVBController::currentModel() {
-    return baseProvider->currentNode()->model;
+    //FIXME: need rename metod and maybe review
+
+    CVBSqlNode *node = baseProvider->currentNode();
+    if (node->listModel){
+        return node->listModel;
+    }
+    else{
+        return node->model;
+    }
 }
 
 QObject* CVBController::getModelWithName(const QString& name){

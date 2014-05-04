@@ -191,6 +191,7 @@ FROM attributes where "type"=2 GROUP BY varID;
 
 CREATE VIEW "FullVariatiesView" AS 
 	SELECT 
+		typeID,
 		id, 
 		year, 
 		mintmark,
