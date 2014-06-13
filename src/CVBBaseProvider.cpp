@@ -277,6 +277,15 @@ void CVBBaseProvider::parse(){
                          );
          }
 
+         QJsonArray subNodes = obj.value("subNodes").toArray();
+         foreach (QJsonValue value1,subNodes) {
+             QJsonObject obj=value1.toObject();
+             node->subNodes.insert(
+                         obj.value("name").toString(),
+                         obj.value("relation").toString()
+                         );
+         }
+
          QJsonValue rowParameters = obj.value("rowParamNames");// FIXME: древний костыль, надо исправить, а может при изменении структуры базы и сам уйдет
          if (rowParameters.isArray()){
              foreach (QJsonValue value,rowParameters.toArray()) {

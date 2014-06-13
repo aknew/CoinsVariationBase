@@ -62,7 +62,30 @@
           {
             "name": "price"
           }
+        ],
+        "subNodes": [
+          {
+            "name": "AversAttributeList",
+            "relation": "varID"
+          },
+          {
+            "name": "ReversAttributeList",
+            "relation": "varID"
+          },
+          {
+            "name": "varReferencesView",
+            "relation": "varID"
+          }
         ]
+      },
+     {
+        "name": "AversAttributeList"
+      },
+      {
+        "name": "ReversAttributeList"
+      },
+      {
+        "name": "varReferencesView"
       },
       {
         "name": "ConcreteCoinsView",

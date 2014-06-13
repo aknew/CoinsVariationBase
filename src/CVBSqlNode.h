@@ -13,6 +13,7 @@ struct CVBSqlNode{
     CVBSqlRelationalTableModel *listModel;//модель-ссылка на таблицу для показа в виде списка
     QVector <QString> rowParamNames;
     QMap<QString, QString> childNodes;//идентификаторы узлов, на которые можно перейти от текущего и поле, по которому они связаны
+    QMap<QString, QString> subNodes;//идентификаторы зависимых узлов и поле, по которому они связаны
     QString listFormName;
     QString fullFormName;
     QVariant fullFormFields;

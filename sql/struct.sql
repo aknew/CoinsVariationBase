@@ -174,6 +174,20 @@ CREATE TABLE [attributes] (
 	CONSTRAINT attributesUnique UNIQUE (varID, type, attributeName)
 );
 
+CREATE VIEW AversAttributeList AS 
+SELECT 
+	attributeName,
+    attributeValue ,
+	varID 
+FROM attributes where "type"=1
+
+CREATE VIEW ReversAttributeList AS 
+SELECT 
+	attributeName,
+    attributeValue ,
+	varID 
+FROM attributes where "type"=2
+
 --- FullVariantsView - need for showing list
 
 CREATE VIEW FullAversDescription AS 
