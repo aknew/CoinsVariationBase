@@ -131,16 +131,15 @@ ApplicationWindow {
         openBaseDialog.open()
     }
 
-    function createListForm() {
+    function generateListViewFromFields(fieldList, model){
         var qmlString = "import QtQuick 2.0; import CVB.api 1.0; import CVBControls 1.0; Rectangle { id: mainRect; "
-        qmlString += "ListView { id: listView; anchors.fill: parent; delegate: delegate; model: CVBApi.currentModel() }"
+        qmlString += "ListView { id: listView; anchors.fill: parent; delegate: delegate; model:" + model + "}"
         qmlString += "Component { id: delegate;"
         qmlString += "Item { id: recipe; width: listView.width; height: Math.max(100,topLayout.height+10);"
         qmlString += "Rectangle {x: 2; y: 2; width: parent.width - x * 2; height: parent.height - y * 2; color: (index % 2) ? \"lightgray\" : \"white\"; border.color: \"gray\"; radius: 5}"
         qmlString += "MouseArea {anchors.fill: parent; onClicked: { CVBApi.fullInfo(index);} }"
         qmlString += "Column { id: topLayout; anchors.centerIn: parent; width: listView.width-10;"
 
-        var fieldList = CVBApi.fieldsForListView()
         for (var i = 0; i < fieldList.length; ++i) {
 
             var field = fieldList[i]
@@ -167,6 +166,16 @@ ApplicationWindow {
         qmlString += "}" //Component {
         qmlString += "}" // mainRect
         console.log(qmlString)
+        return qmlString;
+
+    }
+
+    function createListForm() {
+
+        var fieldList = CVBApi.fieldsForListView();
+
+        var qmlString = generateListViewFromFields(fieldList, " CVBApi.currentModel()");
+
         var listForm = Qt.createQmlObject(qmlString, tablesStack, "dynamicList")
         tablesStack.push(listForm)
     }
