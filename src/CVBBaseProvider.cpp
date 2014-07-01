@@ -316,16 +316,7 @@ void CVBBaseProvider::parse(){
              node->fullFormFields = fullFormFields.toVariant();
          }
          else {
-             // create fullFormFields from fieldList;
-             QStringList fieldList = node->model->fieldList.toStringList();
-             QJsonArray fields;
-             foreach (QString field, fieldList) {
-                 QJsonObject obj;
-                 obj["name"]=field;
-                 fields.append(obj);
-             }
-             node->fullFormFields =fields.toVariantList();
-             qDebug()<<fields;
+             node->fullFormFields =node->model->fieldList;
          }
 
          nodeMap.insert(node->tableName,node);

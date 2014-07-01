@@ -196,13 +196,23 @@ ApplicationWindow {
 
         for (var i = 0; i < fullFormFields.length; ++i) {
             var fieldStruct = fullFormFields[i];
-            var field = fieldStruct["name"];
+            var fieldType;
+            var field;
+
+            if ( typeof fieldStruct == 'string' || fieldStruct instanceof String){
+                fieldType = "default";
+                field = fieldStruct;
+            }
+            else {
+                fieldType = fieldStruct["type"]
+                field = fieldStruct["name"];
+            }
             var field_value = selectedItem[field];
 
             if ( typeof field_value == 'string')
                 field_value = field_value.replace(/"/g, '\\"');
 
-            switch (fieldStruct["type"]) {
+            switch (fieldType) {
             case "picture":
                 qmlString += "ImageWithFullScreen{ id: field_" + field
                         + "; pict: \"" + field_value + "\"; editing:false}"
