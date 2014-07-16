@@ -76,7 +76,6 @@ void CVBBaseProvider::previousLevel(){
     qDebug()<<"Before:\n"<<ids;
     QString buttonID=currentNode()->tableName;
     nodeStack.pop();
-    emit currentNodeWasChanged();
     QString str=currentNode()->childNodes.value(buttonID);
     if (str!=""){
         ids.remove(str);
@@ -90,7 +89,6 @@ void CVBBaseProvider::startLevel(){
     if (node){
         node->model->select();
         nodeStack.push(node);
-        emit currentNodeWasChanged();
         emit newTableWidget();
     }
 }
@@ -100,7 +98,6 @@ void CVBBaseProvider::loadSystemTables(const QString &name){
     if (node){
         node->model->select();
         nodeStack.push(node);
-        emit currentNodeWasChanged();
         emit newTableWidget();
     }
 }
@@ -140,7 +137,6 @@ void CVBBaseProvider::pressedButton(int index){
         qDebug()<<node->model->filter();
         qDebug()<<node->model->rowCount();
         nodeStack.push(node);
-        emit currentNodeWasChanged();
         emit newTableWidget();
     }
 }
