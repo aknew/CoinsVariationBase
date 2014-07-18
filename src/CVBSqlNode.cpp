@@ -54,10 +54,10 @@ CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db){
 
     QJsonValue  json_listViewFields = obj.value("listViewFields");
     if ( json_listViewFields.isArray()){
-        this->listViewFields = new QStringList();
-        foreach (QJsonValue value, json_listViewFields.toArray()) {
-            this->listViewFields->append(value.toString());
-        }
+        this->listViewFields = json_listViewFields.toVariant();
+    }
+    else {
+        this->listViewFields =this->model->fieldList;
     }
 
     QJsonValue json_fullFormFields = obj.value("fullFormFields");
@@ -67,14 +67,5 @@ CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db){
     }
     else {
         this->fullFormFields =this->model->fieldList;
-    }
-}
-
-
-QVariant CVBSqlNode::getListViewFields(){
-    if (this->listViewFields && this->listViewFields->count()>0)
-        return QVariant(*this->listViewFields);
-    else{
-        return this->model->fieldList;
     }
 }

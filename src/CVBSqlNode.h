@@ -20,11 +20,9 @@ public:
     QMap<QString, QString> subNodes;//идентификаторы зависимых узлов и поле, по которому они связаны
     QString listFormName;
     QString fullFormName;
+
     QVariant fullFormFields;
-
-    QStringList *listViewFields;
-
-    QVariant getListViewFields();
+    QVariant listViewFields;
 };
 
 #endif // CVBSQLNODE_H

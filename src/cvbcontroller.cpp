@@ -116,7 +116,7 @@ QVariant CVBController::listForName(const QString& name){
 }
 
 QVariant CVBController::fieldsForListView(){
-    return baseProvider->currentNode()->getListViewFields();
+    return baseProvider->currentNode()->listViewFields;
 }
 
 QObject *CVBController::currentModel() {
