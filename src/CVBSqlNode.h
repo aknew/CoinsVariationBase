@@ -6,8 +6,12 @@
 #include <QString>
 #include "CVBSqlRelationalTableModel.h"
 
-struct CVBSqlNode{
-    CVBSqlNode();
+class CVBSqlNode: public QObject
+{
+    Q_OBJECT
+
+public:
+    explicit CVBSqlNode(const QJsonObject &obj, QSqlDatabase &db);
     QString tableName;
     CVBSqlRelationalTableModel *model;//модель-ссылка на таблицу
     CVBSqlRelationalTableModel *listModel;//модель-ссылка на таблицу для показа в виде списка

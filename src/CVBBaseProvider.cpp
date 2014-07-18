@@ -243,76 +243,11 @@ void CVBBaseProvider::parse(){
      foreach (QJsonValue value1,nodes) {
          QJsonObject obj=value1.toObject();
 
-         CVBSqlNode *node=new CVBSqlNode();
-         node->tableName=obj.value("name").toString();
-         //FIXME Cтоит создавать модели только тогда, когда они нужны и выгружать потом
-         node->model=new CVBSqlRelationalTableModel(this,db);
-         node->model->setTable(node->tableName);
-         node->model->applyRoles();
-
-         QJsonValue listModel = obj.value("listModel");
-
-         if (!listModel.isUndefined()){
-             node->listModel=new CVBSqlRelationalTableModel(this,db);
-             node->listModel->setTable(listModel.toString());
-             node->listModel->applyRoles();
-         }
-
+         CVBSqlNode *node=new CVBSqlNode(obj,db);
          bool isSystem=obj.value("isSystem").toBool();
 
          if (isSystem){
              systemTables.append(node->tableName);
-         }
-
-         QJsonArray childNodes = obj.value("childNode").toArray();
-         foreach (QJsonValue value1,childNodes) {
-             QJsonObject obj=value1.toObject();
-             node->childNodes.insert(
-                         obj.value("name").toString(),
-                         obj.value("relation").toString()
-                         );
-         }
-
-         QJsonArray subNodes = obj.value("subNodes").toArray();
-         foreach (QJsonValue value1,subNodes) {
-             QJsonObject obj=value1.toObject();
-             node->subNodes.insert(
-                         obj.value("name").toString(),
-                         obj.value("relation").toString()
-                         );
-         }
-
-         QJsonValue rowParameters = obj.value("rowParamNames");// FIXME: древний костыль, надо исправить, а может при изменении структуры базы и сам уйдет
-         if (rowParameters.isArray()){
-             foreach (QJsonValue value,rowParameters.toArray()) {
-                 QJsonObject obj=value.toObject();
-                 node->rowParamNames.push_back(obj.value("name").toString());
-             }
-         }
-         else{
-             QJsonObject obj=rowParameters.toObject();
-             node->rowParamNames.push_back(obj.value("name").toString());
-         }
-
-         node->fullFormName = obj.value("fullForm").toString();
-
-         node->listFormName = obj.value("listForm").toString();
-
-         QJsonValue listViewFields = obj.value("listViewFields");
-         if (listViewFields.isArray()){
-             node->listViewFields = new QStringList();
-             foreach (QJsonValue value,listViewFields.toArray()) {
-                 node->listViewFields->append(value.toString());
-             }
-         }
-
-         QJsonValue fullFormFields = obj.value("fullFormFields");
-
-         if (fullFormFields.isArray()){
-             node->fullFormFields = fullFormFields.toVariant();
-         }
-         else {
-             node->fullFormFields =node->model->fieldList;
          }
 
          nodeMap.insert(node->tableName,node);
