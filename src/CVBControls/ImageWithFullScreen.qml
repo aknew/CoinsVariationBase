@@ -14,14 +14,14 @@ Image {
         onAccepted: {
             console.log("Accepted: " + fileUrls[0])
             if (!isOpenDialog){
-                CVBApi.saveImage(img.pict,fileUrls[0]);
+                CVBApi.saveImage(img.value,fileUrls[0]);
                 return;
             }
 
             var newID = CVBApi.loadNewImage(fileUrls[0])
             if (newID !== "-1") {
                 console.log("new image load - SUCCESS")
-                img.pict = newID
+                img.value = newID
             }
         }
         onRejected: {
@@ -47,7 +47,7 @@ Image {
                 var newID = CVBApi.loadNewImage(null)
                 if (newID !== "-1") {
                     console.log("new image paste - SUCCESS")
-                    img.pict = newID
+                    img.value = newID
                 }
             }
         }
@@ -68,18 +68,18 @@ Image {
         MenuItem {
             text: "Copy to clipboard"
             onTriggered: {
-                CVBApi.saveImage(img.pict,null)
+                CVBApi.saveImage(img.value,null)
             }
         }
     }
 
-    property string pict: ""
+    property string value: ""
     property bool editing: false //чтобы не дать переходить в полноэкранный режим при редактировании
     id: img
     width: Math.min(parent.width, 600)
     height: img.width / 2.0
     fillMode: Image.PreserveAspectFit
-    source: "image://imageProvider/" + pict
+    source: "image://imageProvider/" + value
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton

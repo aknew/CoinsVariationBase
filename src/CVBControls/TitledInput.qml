@@ -5,8 +5,9 @@ FocusScope {
     width: parent.width
     height: input.height
     property alias model: input.model
-    property alias text: input.text
+    property alias value: input.text
     property alias title: titleText.text
+    property alias editing: container.enabled
     Text {
         id: titleText
         text: ""

@@ -215,25 +215,22 @@ ApplicationWindow {
             switch (fieldType) {
             case "picture":
                 qmlString += "ImageWithFullScreen{ id: field_" + field
-                        + "; pict: \"" + field_value + "\"; editing:false}"
-                collectDataString += field + ": field_" + field + ".pict,"
-                stateEditableString += "PropertyChanges { target:field_" + field + ";editing:true }"
+                        + "; value: \"" + field_value + "\"; editing:false}"
                 break
             case "combo":
                 qmlString += "TitledInput {id: field_" + field + "; title: qsTr(\"" + field + "\");"
-                qmlString += "anchors.fill: parent.widths; text: \"" + field_value + "\";"
+                qmlString += "anchors.fill: parent.widths; value: \"" + field_value + "\";"
                 qmlString += "model: CVBApi.listForName(\"" + fieldStruct["dict"]
-                        + "\");z:15; enabled:false}"
-                collectDataString += field + ": field_" + field + ".text,"
-                stateEditableString += "PropertyChanges { target:field_" + field + ";enabled:true }"
+                        + "\");z:15; editing:false}"
                 break
             default:
                 qmlString += "Input {id: field_" + field
-                        + "; anchors.fill: parent.widths; text:  \"" + field_value
-                        + "\";title: qsTr(\"" + field + "\"); enabled:false}"
-                collectDataString += field + ": field_" + field + ".text,"
-                stateEditableString += "PropertyChanges { target:field_" + field + ";enabled:true }"
+                        + "; anchors.fill: parent.widths; value:  \"" + field_value
+                        + "\";title: qsTr(\"" + field + "\"); editing:false}"
             }
+
+            stateEditableString += "PropertyChanges { target:field_" + field + ";editing:true }"
+            collectDataString += field + ": field_" + field + ".value,"
         }
         qmlString += "}" //Column {
         qmlString += "NextLevelList { id:nextlevel; y: contentColumn.childrenRect.height+contentColumn.y }"
