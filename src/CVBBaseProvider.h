@@ -38,6 +38,7 @@ public:
     void addForeignKeyToMap(QVariantMap &map);
     void deleteCurrentRow();
     QAbstractItemModel *getModelWithName(const QString& name);
+    CVBSqlNode *nodeWithName(const QString& name);
 
 signals:
     //TODO: check that all this signals are realy needs

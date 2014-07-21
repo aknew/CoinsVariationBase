@@ -373,3 +373,7 @@ void CVBController::saveImage(QString imageId, QString imagePath = NULL){
         clipboard->setImage(img);
     }
 }
+
+CVBSqlNode *CVBController::nodeWithName(const QString &name){
+    return baseProvider->nodeWithName(name);
+}

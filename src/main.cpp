@@ -5,6 +5,7 @@
 #include <QtCore/QUrl>
 #include "CVBController.h"
 #include <QtWidgets/QApplication>
+#include "CVBSqlNode.h"
 
 static QObject *cvbApiObjectSingleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
@@ -23,6 +24,7 @@ static QObject *cvbApiObjectSingleton(QQmlEngine *engine, QJSEngine *scriptEngin
 int main(int argc, char *argv[])
 {
     qmlRegisterSingletonType<CVBController>("CVB.api", 1, 0, "CVBApi", cvbApiObjectSingleton);
+    qmlRegisterUncreatableType<CVBSqlNode>("CVB.api", 1, 0, "CVBSqlNode", "This class should be obtained from CVBApi.nodeWithName()");
 
     QApplication app(argc, argv);
     QQmlApplicationEngine engine(QUrl("qrc:/MainWindow.qml"));

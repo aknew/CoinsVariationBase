@@ -6,6 +6,7 @@
 #include <QtQml>
 #include "CVBBaseProvider.h"
 #include "CVBImageProvider.h"
+#include "CVBSqlNode.h"
 
 enum kCurrentWidget{
     QMLListWithoutEditing,
@@ -66,6 +67,7 @@ class CVBController : public QObject
        Q_INVOKABLE QVariant fieldsForListView();
        QObject *currentModel();
        Q_INVOKABLE QObject* getModelWithName(const QString& name);
+       Q_INVOKABLE CVBSqlNode* nodeWithName(const QString& name);
 
        //попытка вызвать диалог и загрузить в нем новую картинку, если все хорошо - вернется ее ссылка, если нет - -1
        //этот же метод вставит картикну из буфера обмена если ему передать imagePath=NULL (значение по умолчанию)

@@ -301,6 +301,11 @@ ApplicationWindow {
         iconSource: "/icons/Database.png"
         text: "systemTables"
         //onTriggered: CVBApi.buttonPressed(-1);
+        onTriggered: {
+            //FIXME: only for testing, need remove
+            var node = CVBApi.nodeWithName("VariatiesView");
+            console.log(node.listViewFields);
+        }
     }
     Action {
         id: actionApply

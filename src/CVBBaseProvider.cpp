@@ -196,6 +196,10 @@ QByteArray CVBBaseProvider::attachForId(QString id){
     return byteArray;
 }
 
+CVBSqlNode *CVBBaseProvider::nodeWithName(const QString &name){
+    return nodeMap.value(name);
+}
+
 QAbstractItemModel *CVBBaseProvider::getModelWithName(const QString& name){
     CVBSqlNode *node=nodeMap.value(name);
     if (node){
