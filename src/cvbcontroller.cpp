@@ -12,12 +12,6 @@ void CVBController::start(){
     QSettings settings("settings.ini",QSettings::IniFormat);
     settings.setIniCodec("windows-1251");
 
-#if defined(Q_OS_ANDROID)
-    useMobileForms=settings.value("global/useMobileForms","true").toBool();
-#else
-    useMobileForms=settings.value("global/useMobileForms","false").toBool();
-#endif
-
     basePath=settings.value("global/base","").toString();
 
     if (basePath.isEmpty()){
@@ -149,7 +143,7 @@ QStringList CVBController::nextLevelList(){
 }
 
 void CVBController::newTableWidget(){
-    QString str=baseProvider->basePath+(useMobileForms?"mobile-forms/":"forms/");
+    QString str=baseProvider->basePath+"forms/";
 
     if (baseProvider->currentNode()->listFormName.isEmpty()){
         //в xml не было указания на конкретную форму, пробуем собрать ее на месте
@@ -183,7 +177,7 @@ void CVBController::fullInfo(int index){
     CVBSqlRelationalTableModel *listModel=baseProvider->currentNode()->model;
     listModel->selectedRow=index;
 
-    QString str=baseProvider->basePath+(useMobileForms?"mobile-forms/":"forms/");
+    QString str=baseProvider->basePath+"forms/";
 
     if (baseProvider->currentNode()->fullFormName.isEmpty()){
         //в xml не было указания на конкретную форму, пробуем собрать ее на месте

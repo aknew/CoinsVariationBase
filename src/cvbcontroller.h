@@ -21,7 +21,6 @@ class CVBController : public QObject
     CVBImageProvider *imageProvider;
     QStack<kCurrentWidget> currentWidgetType;
     bool newRowInsertion;
-    bool useMobileForms;
 
    public:
        CVBController(QObject *parent = 0)
