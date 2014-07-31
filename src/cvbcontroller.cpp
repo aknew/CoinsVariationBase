@@ -109,17 +109,6 @@ QVariant CVBController::listForName(const QString& name){
     return QVariant(baseProvider->listForID(name));
 }
 
-QVariant CVBController::fieldsForListView(){
-    return baseProvider->currentNode()->listViewFields;
-}
-
-QObject *CVBController::currentModel() {
-    //FIXME: need rename metod and maybe review
-
-    CVBSqlNode *node = baseProvider->currentNode();
-    return node->getListModel();
-}
-
 QObject* CVBController::getModelWithName(const QString& name){
     return baseProvider->getModelWithName(name);
 }
@@ -366,3 +355,8 @@ void CVBController::saveImage(QString imageId, QString imagePath = NULL){
 CVBSqlNode *CVBController::nodeWithName(const QString &name){
     return baseProvider->nodeWithName(name);
 }
+
+CVBSqlNode *CVBController::currentNode(){
+    return baseProvider->currentNode();
+}
+

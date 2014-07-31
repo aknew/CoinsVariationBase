@@ -172,9 +172,9 @@ ApplicationWindow {
 
     function createListForm() {
 
-        var fieldList = CVBApi.fieldsForListView();
+        var fieldList = CVBApi.currentNode().listViewFields;
 
-        var qmlString = generateListViewFromFields(fieldList, " CVBApi.currentModel()");
+        var qmlString = generateListViewFromFields(fieldList, " CVBApi.currentNode().getListModel()");
 
         var listForm = Qt.createQmlObject(qmlString, tablesStack, "dynamicList")
         tablesStack.push(listForm)
@@ -298,11 +298,6 @@ ApplicationWindow {
         iconSource: "/icons/Database.png"
         text: "systemTables"
         //onTriggered: CVBApi.buttonPressed(-1);
-        onTriggered: {
-            //FIXME: only for testing, need remove
-            var node = CVBApi.nodeWithName("VariatiesView");
-            console.log(node.listViewFields);
-        }
     }
     Action {
         id: actionApply
