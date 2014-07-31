@@ -113,10 +113,6 @@ QObject* CVBController::getModelWithName(const QString& name){
     return baseProvider->getModelWithName(name);
 }
 
-QVariant CVBController::fullFormFields(){
-    return baseProvider->currentNode()->fullFormFields;
-}
-
 QVariantMap CVBController::selectedItem(){
     //FIXME: need rename
     return baseProvider->currentNode()->model->selectedItem();
@@ -174,10 +170,6 @@ void CVBController::fullInfo(int index){
     if (QFile::exists(str)){
 
         str = QString("file:///%1").arg(str);
-
-        engine->rootContext()->setContextProperty("myModel", listModel);
-        engine->rootContext()->setContextProperty("nextLevelList", QVariant::fromValue(baseProvider->buttonIDs()));
-        engine->rootContext()->setContextProperty("selectedItem",listModel->selectedItem());
 
         QMetaObject::invokeMethod(this->applicationWindow,
                                   "loadForm",
