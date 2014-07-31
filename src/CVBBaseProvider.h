@@ -29,7 +29,6 @@ public:
     void pressedButton(int index);
     void startLevel();
     CVBSqlNode *currentNode();
-    QStringList buttonIDs();
 
     //работа с картинками - захочу потом убрать их из базы, просто заменю код внутри функций
     QString idForAttach(QByteArray attach);

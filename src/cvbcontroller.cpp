@@ -118,10 +118,6 @@ QVariantMap CVBController::selectedItem(){
     return baseProvider->currentNode()->model->selectedItem();
 }
 
-QStringList CVBController::nextLevelList(){
-    return baseProvider->buttonIDs();
-}
-
 void CVBController::newTableWidget(){
     QString str=baseProvider->basePath+"forms/";
 

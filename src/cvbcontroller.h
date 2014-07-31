@@ -74,7 +74,6 @@ class CVBController : public QObject
 
        Q_INVOKABLE void openBase(QString basePath);
        Q_INVOKABLE QVariantMap selectedItem();
-       Q_INVOKABLE QStringList nextLevelList();
 
 };
 

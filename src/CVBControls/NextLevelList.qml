@@ -8,7 +8,7 @@ Rectangle {
         clip: true
         id: listView1
         delegate: nextLevelDelegate
-        model: CVBApi.nextLevelList()
+        model: CVBApi.currentNode().nextLevelList
         width: parent.width
         height: 120//nextLevelList.count*40 //FIXME костыль, но без этого при попыткезадействовать contentHeight  получается binding loop и ничего невыводит
         interactive:false

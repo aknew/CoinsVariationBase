@@ -102,18 +102,12 @@ void CVBBaseProvider::loadSystemTables(const QString &name){
     }
 }
 
-QStringList CVBBaseProvider::buttonIDs(){
-    QStringList buttonIDs=currentNode()->childNodes.keys();
-
-    return buttonIDs;
-}
-
 void CVBBaseProvider::pressedButton(int index){
 
 
     CVBSqlNode *currentNode=nodeStack.top();
     int rowIndex = currentNode->model->selectedRow;
-    QString buttonID=buttonIDs().at(index);
+    QString buttonID=currentNode->getNextLevelList().at(index);
     CVBSqlNode *node=nodeMap.value(buttonID);
     if (node){
         QString str=currentNode->childNodes.value(buttonID);
