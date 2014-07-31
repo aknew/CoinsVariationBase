@@ -12,6 +12,7 @@ class CVBSqlNode: public QObject
     Q_PROPERTY(QVariant fullFormFields MEMBER fullFormFields)
     Q_PROPERTY(QVariant listViewFields MEMBER listViewFields)
 
+
 public:
     explicit CVBSqlNode(const QJsonObject &obj, QSqlDatabase &db);
 
@@ -26,6 +27,8 @@ public:
 
     QVariant fullFormFields;
     QVariant listViewFields;
+
+    Q_INVOKABLE QObject* getListModel();
 };
 
 #endif // CVBSQLNODE_H

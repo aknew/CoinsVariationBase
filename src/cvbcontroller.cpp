@@ -117,12 +117,7 @@ QObject *CVBController::currentModel() {
     //FIXME: need rename metod and maybe review
 
     CVBSqlNode *node = baseProvider->currentNode();
-    if (node->listModel){
-        return node->listModel;
-    }
-    else{
-        return node->model;
-    }
+    return node->getListModel();
 }
 
 QObject* CVBController::getModelWithName(const QString& name){

@@ -69,3 +69,12 @@ CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db){
         this->fullFormFields =this->model->fieldList;
     }
 }
+
+ QObject* CVBSqlNode::getListModel(){
+     if (listModel){
+         return listModel;
+     }
+     else{
+         return model;
+     }
+ }
