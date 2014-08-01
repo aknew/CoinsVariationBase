@@ -113,11 +113,6 @@ QObject* CVBController::getModelWithName(const QString& name){
     return baseProvider->getModelWithName(name);
 }
 
-QVariantMap CVBController::selectedItem(){
-    //FIXME: need rename
-    return baseProvider->currentNode()->model->selectedItem();
-}
-
 void CVBController::newTableWidget(){
     QString str=baseProvider->basePath+"forms/";
 

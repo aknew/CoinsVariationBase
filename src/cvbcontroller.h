@@ -73,7 +73,6 @@ class CVBController : public QObject
        Q_INVOKABLE void saveImage(QString imageId, QString imagePath);
 
        Q_INVOKABLE void openBase(QString basePath);
-       Q_INVOKABLE QVariantMap selectedItem();
 
 };
 

@@ -192,7 +192,7 @@ ApplicationWindow {
         var stateEditableString = "states: State { name: \"editable\";"
 
         var currentNode = CVBApi.currentNode();
-        var selectedItem = CVBApi.selectedItem()
+        var selectedItem = currentNode.selectedItem;
         var fullFormFields = currentNode.fullFormFields;
 
         for (var i = 0; i < fullFormFields.length; ++i) {
