@@ -15,7 +15,7 @@ class CVBSqlNode: public QObject
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
 
 public:
-    explicit CVBSqlNode(const QJsonObject &obj, QSqlDatabase &db);
+    explicit CVBSqlNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent);
 
     QString tableName;
     CVBSqlRelationalTableModel *model;//модель-ссылка на таблицу

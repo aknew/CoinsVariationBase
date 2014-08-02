@@ -241,7 +241,7 @@ void CVBBaseProvider::parse(){
      foreach (QJsonValue value1,nodes) {
          QJsonObject obj=value1.toObject();
 
-         CVBSqlNode *node=new CVBSqlNode(obj,db);
+         CVBSqlNode *node=new CVBSqlNode(obj,db, this);
          bool isSystem=obj.value("isSystem").toBool();
 
          if (isSystem){

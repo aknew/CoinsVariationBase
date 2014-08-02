@@ -1,6 +1,6 @@
 #include "CVBSqlNode.h"
 
-CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db){
+CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *parent = 0):QObject(parent){
 
     this->tableName=obj.value("name").toString();
     //FIXME: Cтоит создавать модели только тогда, когда они нужны и выгружать потом
