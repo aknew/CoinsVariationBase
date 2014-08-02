@@ -32,8 +32,6 @@ class CVBController : public QObject
        ~CVBController() {}
 
        void start();
-       bool isFirstWidget();
-       void showExpanded();
        void addViewToStack(const QQuickView *view);
        QQuickView *newDeclarativeView();
        QQuickItem *stackView;

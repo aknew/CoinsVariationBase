@@ -103,8 +103,6 @@ QQuickItem * CVBController::currentItem(){
     return returnedValue.value<QQuickItem *>();
 }
 
-//Загрузка различных страниц
-
 QVariant CVBController::listForName(const QString& name){
     return QVariant(baseProvider->listForID(name));
 }
@@ -142,8 +140,6 @@ void CVBController::newTableWidget(){
 }
 
 void CVBController::fullInfo(int index){
-
-    //_currentIndex.push(index);
 
     CVBSqlRelationalTableModel *listModel=baseProvider->currentNode()->model;
     listModel->selectedRow=index;
