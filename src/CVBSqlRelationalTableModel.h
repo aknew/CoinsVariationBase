@@ -9,6 +9,7 @@ class CVBSqlRelationalTableModel : public QSqlRelationalTableModel
     // модель для qml
     Q_OBJECT
     Q_PROPERTY( int count READ rowCount() NOTIFY countChanged())
+    Q_PROPERTY( QVariant  fieldList MEMBER fieldList)
 
 signals:
     void countChanged();

@@ -233,6 +233,14 @@ ApplicationWindow {
             stateEditableString += "PropertyChanges { target:field_" + field + ";editing:true }"
             collectDataString += field + ": field_" + field + ".value,"
         }
+
+        for (var i = 0; i < currentNode.subNodes.length; ++i) {
+            var nodeName = currentNode.subNodes[i];
+            var model = CVBApi.getModelWithName(nodeName);
+            console.log("field of model "+nodeName)
+            console.log(model.fieldList)
+        }
+
         qmlString += "}" //Column {
         qmlString += "NextLevelList { id:nextlevel; y: contentColumn.childrenRect.height+contentColumn.y }"
         qmlString += "}" //Flickable {

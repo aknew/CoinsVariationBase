@@ -13,6 +13,7 @@ class CVBSqlNode: public QObject
     Q_PROPERTY(QVariant listViewFields MEMBER listViewFields)
     Q_PROPERTY(QStringList nextLevelList READ getNextLevelList)
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
+    Q_PROPERTY(QStringList subNodes READ getSubnodes)
 
 public:
     explicit CVBSqlNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent);
@@ -37,6 +38,10 @@ public:
 
     QVariantMap selectedItem(){
         return model->selectedItem();
+    }
+
+    QStringList getSubnodes(){
+        return subNodes.keys();
     }
 };
 
