@@ -1,4 +1,5 @@
 #include "CVBSqlNode.h"
+#include "CVBBaseProvider.h"
 
 CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *parent = 0):QObject(parent){
 
@@ -30,7 +31,7 @@ CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *paren
     QJsonArray json_subNodes = obj.value("subNodes").toArray();
     foreach (QJsonValue value1,json_subNodes) {
         QJsonObject obj=value1.toObject();
-        this->subNodes.insert(
+        this->m_subNodes.insert(
                     obj.value("name").toString(),
                     obj.value("relation").toString()
                     );
@@ -77,4 +78,24 @@ CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *paren
      else{
          return model;
      }
+ }
+
+ QList<QObject* > CVBSqlNode::getSubnodes(){
+     QList<QObject* > subnodes;
+     CVBBaseProvider * baseProvider= qobject_cast<CVBBaseProvider *>(parent());
+     QMap<QString, QString>::iterator iterator;
+     QString id = selectedItem()["id"].toString();
+     for (iterator = m_subNodes.begin(); iterator != m_subNodes.end(); ++iterator){
+         CVBSqlNode *node=baseProvider->nodeWithName(iterator.key());
+         if (node){
+             QString str1="%1=%2";
+             node->model->setFilter(str1
+                                    .arg(iterator.value())
+                                    .arg(id)
+                                    );
+             node->model->select();
+             subnodes.append(node);
+         }
+     }
+     return subnodes;
  }

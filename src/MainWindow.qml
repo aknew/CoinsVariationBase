@@ -235,9 +235,9 @@ ApplicationWindow {
         }
 
         for (var i = 0; i < currentNode.subNodes.length; ++i) {
-            var nodeName = currentNode.subNodes[i];
-            var model = CVBApi.getModelWithName(nodeName);
-            console.log("field of model "+nodeName)
+            var node = currentNode.subNodes[i];
+            var model = node.getListModel();
+            console.log("field of model "+node.name)
             console.log(model.fieldList)
         }
 

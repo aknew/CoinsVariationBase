@@ -107,10 +107,6 @@ QVariant CVBController::listForName(const QString& name){
     return QVariant(baseProvider->listForID(name));
 }
 
-QObject* CVBController::getModelWithName(const QString& name){
-    return baseProvider->getModelWithName(name);
-}
-
 void CVBController::newTableWidget(){
     QString str=baseProvider->basePath+"forms/";
 

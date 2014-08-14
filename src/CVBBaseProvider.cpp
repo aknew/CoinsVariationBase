@@ -194,24 +194,6 @@ CVBSqlNode *CVBBaseProvider::nodeWithName(const QString &name){
     return nodeMap.value(name);
 }
 
-QAbstractItemModel *CVBBaseProvider::getModelWithName(const QString& name){
-    CVBSqlNode *node=nodeMap.value(name);
-    if (node){
-        QString str=currentNode()->childNodes.value(name);
-        if (str!=""){
-            QString str1="%1=%2";
-            node->model->setFilter(str1
-                                   .arg(str)
-                                   .arg(currentNode()->model->selectedItem()["id"].toString())
-                    );
-        }
-        node->model->select();
-        qDebug()<<node->model->filter();
-        qDebug()<<node->model->rowCount();
-    }
-    return node->model;
-}
-
 void CVBBaseProvider::parse(){
 
     QString filename=basePath+"struct.json";

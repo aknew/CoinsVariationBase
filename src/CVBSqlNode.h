@@ -11,9 +11,13 @@ class CVBSqlNode: public QObject
     Q_OBJECT
     Q_PROPERTY(QVariant fullFormFields MEMBER fullFormFields)
     Q_PROPERTY(QVariant listViewFields MEMBER listViewFields)
+    Q_PROPERTY(QString name MEMBER tableName)
     Q_PROPERTY(QStringList nextLevelList READ getNextLevelList)
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
-    Q_PROPERTY(QStringList subNodes READ getSubnodes)
+    Q_PROPERTY(QList<QObject*> subNodes READ getSubnodes)
+
+protected:
+    QMap<QString, QString> m_subNodes;//идентификаторы зависимых узлов и поле, по которому они связаны
 
 public:
     explicit CVBSqlNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent);
@@ -23,7 +27,6 @@ public:
     CVBSqlRelationalTableModel *listModel;//модель-ссылка на таблицу для показа в виде списка
     QVector <QString> rowParamNames;
     QMap<QString, QString> childNodes;//идентификаторы узлов, на которые можно перейти от текущего и поле, по которому они связаны
-    QMap<QString, QString> subNodes;//идентификаторы зависимых узлов и поле, по которому они связаны
     QString listFormName;
     QString fullFormName;
 
@@ -40,9 +43,7 @@ public:
         return model->selectedItem();
     }
 
-    QStringList getSubnodes(){
-        return subNodes.keys();
-    }
+     QList<QObject* > getSubnodes();
 };
 
 #endif // CVBSQLNODE_H
