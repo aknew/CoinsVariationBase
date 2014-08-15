@@ -31,6 +31,16 @@ HEADERS  += CVBImageProvider.h \
 
 OTHER_FILES += \
     MainWindow.qml \
+    CVBControls/BigImage.qml \
+    CVBControls/ComboBox.qml \
+    CVBControls/ComboTextEdit.qml \
+    CVBControls/ImageWithFullScreen.qml \
+    CVBControls/Input.qml \
+    CVBControls/NextLevelList.qml \
+    CVBControls/StyledText.qml \
+    CVBControls/StyledTextInput.qml \
+    CVBControls/TitledInput.qml \
+    CVBControls/qmldir
 
 RESOURCES += \
     res.qrc
