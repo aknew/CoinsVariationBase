@@ -14,12 +14,15 @@ class CVBSqlNode: public QObject
     Q_PROPERTY(QString name MEMBER tableName)
     Q_PROPERTY(QStringList nextLevelList READ getNextLevelList)
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
-    Q_PROPERTY(QList<QObject*> subNodes READ getSubnodes)
+    Q_PROPERTY(QList<QObject*> subNodes MEMBER m_subNodes)
 
 protected:
-    QMap<QString, QString> m_subNodes;//идентификаторы зависимых узлов и поле, по которому они связаны
+    QMap<QString, QString> m_subNodesParameters;//идентификаторы зависимых узлов и поле, по которому они связаны
 
 public:
+
+    static const int kNewRowIndex = -1; //! specific constant, if node get it as selected row index it prepares for inserting new row
+
     explicit CVBSqlNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent);
 
     QString tableName;
@@ -43,7 +46,8 @@ public:
         return model->selectedItem();
     }
 
-     QList<QObject* > getSubnodes();
+    QList<QObject* > m_subNodes;
+    void selectItemWithIndex(int index);
 };
 
 #endif // CVBSQLNODE_H

@@ -31,7 +31,7 @@ CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *paren
     QJsonArray json_subNodes = obj.value("subNodes").toArray();
     foreach (QJsonValue value1,json_subNodes) {
         QJsonObject obj=value1.toObject();
-        this->m_subNodes.insert(
+        this->m_subNodesParameters.insert(
                     obj.value("name").toString(),
                     obj.value("relation").toString()
                     );
@@ -80,12 +80,20 @@ CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *paren
      }
  }
 
- QList<QObject* > CVBSqlNode::getSubnodes(){
-     QList<QObject* > subnodes;
+void CVBSqlNode::selectItemWithIndex(int index){
+    /*! \brief This method prepares subnodes and model for showing data with index
+     */
+    if (index == kNewRowIndex){
+        index = model->rowCount();
+    }
+
+     model->selectedRow = index;
+
+     m_subNodes.clear();
      CVBBaseProvider * baseProvider= qobject_cast<CVBBaseProvider *>(parent());
      QMap<QString, QString>::iterator iterator;
      QString id = selectedItem()["id"].toString();
-     for (iterator = m_subNodes.begin(); iterator != m_subNodes.end(); ++iterator){
+     for (iterator = m_subNodesParameters.begin(); iterator != m_subNodesParameters.end(); ++iterator){
          CVBSqlNode *node=baseProvider->nodeWithName(iterator.key());
          if (node){
              QString str1="%1=%2";
@@ -94,8 +102,7 @@ CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *paren
                                     .arg(id)
                                     );
              node->model->select();
-             subnodes.append(node);
+             m_subNodes.append(node);
          }
      }
-     return subnodes;
- }
+}

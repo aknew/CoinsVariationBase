@@ -137,8 +137,7 @@ void CVBController::newTableWidget(){
 
 void CVBController::fullInfo(int index){
 
-    CVBSqlRelationalTableModel *listModel=baseProvider->currentNode()->model;
-    listModel->selectedRow=index;
+    baseProvider->currentNode()->selectItemWithIndex(index);
 
     QString str=baseProvider->basePath+"forms/";
 
@@ -203,14 +202,15 @@ void CVBController::buttonPressed(int index){
 
         case newButtonIndex:{
                 newRowInsertion=true;
-                CVBSqlRelationalTableModel *model = baseProvider->currentNode()->model;
-                model->selectedRow=model->rowCount();
+
                 if (currentWidgetType.top()==QMLListWithoutEditing){
-                    this->fullInfo(model->selectedRow);
+                    this->fullInfo(CVBSqlNode::kNewRowIndex);
                 }
                 else{
+                    CVBSqlNode *node = baseProvider->currentNode();
+                    node->selectItemWithIndex(CVBSqlNode::kNewRowIndex);
                     QQuickItem *item = this->currentItem();
-                    item->setProperty("selectedItem",model->selectedItem());
+                    item->setProperty("selectedItem",node->selectedItem());
                 }
 
                 this->currentItem()->setProperty("state","editable");
