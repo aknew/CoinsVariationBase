@@ -237,8 +237,46 @@ ApplicationWindow {
         for (var i = 0; i < currentNode.subNodes.length; ++i) {
             var node = currentNode.subNodes[i];
             var model = node.getListModel();
-            console.log("field of model "+node.name)
-            console.log(model.fieldList)
+            var fieldsToShow = model.fieldList.join("+\" \"+");
+            qmlString += "Text  {font.pixelSize: 16; font.bold: true; text:qsTr(\""+node.name+"\")}"
+            qmlString += "ListView {
+                clip: true
+                delegate:Component {
+                    Item {
+                        width: parent.width
+                        height: 40
+                        Rectangle {
+                            x: 2
+                            y: 2
+                            width: parent.width - x * 2
+                            height: parent.height - y * 2
+                            color: (index % 2) ? \"lightgray\" : \"white\"
+                            border.color: \"gray\"
+                            radius: 5
+                        }
+                        Text {
+                            id: nextLevelButton
+                            x: 5
+                            y: 5
+                            width: parent.width - x * 2
+                            height: parent.height - y * 2
+                            text:"+fieldsToShow+"
+                            horizontalAlignment: Text.AlignHLeft
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {}
+                        }
+                   }
+                }
+                model: CVBApi.currentNode().subNodes[" +i+"].getListModel();
+                width: parent.width
+                height: 120
+                interactive:false
+            }";
+
+
         }
 
         qmlString += "}" //Column {
