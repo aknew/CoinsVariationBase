@@ -136,7 +136,7 @@ ApplicationWindow {
         qmlString += "ListView { id: listView; anchors.fill: parent; delegate: delegate; model:" + model + "}"
         qmlString += "Component { id: delegate;"
         qmlString += "Item { id: recipe; width: listView.width; height: Math.max(100,topLayout.height+10);"
-        qmlString += "Rectangle {x: 2; y: 2; width: parent.width - x * 2; height: parent.height - y * 2; color: (index % 2) ? \"lightgray\" : \"white\"; border.color: \"gray\"; radius: 5}"
+        qmlString += "BackgroundRect{}"
         qmlString += "MouseArea {anchors.fill: parent; onClicked: { CVBApi.fullInfo(index);} }"
         qmlString += "Column { id: topLayout; anchors.centerIn: parent; width: listView.width-10;"
 
@@ -245,15 +245,7 @@ ApplicationWindow {
                     Item {
                         width: parent.width
                         height: 40
-                        Rectangle {
-                            x: 2
-                            y: 2
-                            width: parent.width - x * 2
-                            height: parent.height - y * 2
-                            color: (index % 2) ? \"lightgray\" : \"white\"
-                            border.color: \"gray\"
-                            radius: 5
-                        }
+                        BackgroundRect{}
                         Text {
                             id: nextLevelButton
                             x: 5

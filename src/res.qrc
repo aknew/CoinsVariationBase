@@ -20,5 +20,6 @@
         <file>CVBControls/StyledTextInput.qml</file>
         <file>CVBControls/TitledInput.qml</file>
         <file>CVBControls/BigImage.qml</file>
+        <file>CVBControls/BackgroundRect.qml</file>
     </qresource>
 </RCC>

@@ -7,3 +7,4 @@ TitledInput 1.0 TitledInput.qml
 ComboBox 1.0 ComboBox.qml
 ComboTextEdit 1.0 ComboTextEdit.qml
 StyledTextInput 1.0 StyledTextInput.qml
+BackgroundRect 1.0 BackgroundRect.qml

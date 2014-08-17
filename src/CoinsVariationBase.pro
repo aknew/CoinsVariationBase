@@ -40,7 +40,8 @@ OTHER_FILES += \
     CVBControls/StyledText.qml \
     CVBControls/StyledTextInput.qml \
     CVBControls/TitledInput.qml \
-    CVBControls/qmldir
+    CVBControls/qmldir \
+    CVBControls/BackgroundRect.qml
 
 RESOURCES += \
     res.qrc
