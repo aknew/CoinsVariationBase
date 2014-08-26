@@ -182,7 +182,7 @@ ApplicationWindow {
 
     function createFullInfoForm() {
 
-        var qmlString = "import QtQuick 2.0; import CVB.api 1.0; import CVBControls 1.0; Rectangle { id: mainRect;"
+        var qmlString = "import QtQuick 2.0; import CVB.api 1.0; import CVBControls 1.0; import QtQuick.Controls 1.0; Rectangle { id: mainRect;"
         qmlString += "Flickable {clip: true; anchors.fill:parent;"
         qmlString += "contentHeight: nextlevel.y+nextlevel.height;"
         qmlString += "Column {id: contentColumn;y: 0;width: parent.width;"
@@ -238,9 +238,14 @@ ApplicationWindow {
             var node = currentNode.subNodes[i];
             var model = node.getListModel();
             var fieldsToShow = model.fieldList.join("+\" \"+");
+            var subnodeID = "subnode"+node.name
+
+            stateEditableString += "PropertyChanges { target: "+subnodeID+"; editing:true }"
             qmlString += "Text  {font.pixelSize: 16; font.bold: true; text:qsTr(\""+node.name+"\")}"
             qmlString += "ListView {
+                id:"+subnodeID+"
                 clip: true
+                property bool editing: false
                 delegate:Component {
                     Item {
                         width: parent.width
@@ -256,8 +261,13 @@ ApplicationWindow {
                             horizontalAlignment: Text.AlignHLeft
                             verticalAlignment: Text.AlignVCenter
                         }
-                        MouseArea {
-                            anchors.fill: parent
+                        Button{
+                            visible:"+subnodeID+".editing
+                            iconSource:\"/icons/delete.png\"
+                            width: parent.height-5
+                            height: parent.height-5
+                            x:parent.width - parent.height -10
+                            y:5
                             onClicked: {}
                         }
                    }
