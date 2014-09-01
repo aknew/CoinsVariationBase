@@ -105,6 +105,7 @@ ApplicationWindow {
 
     StackView {
         id: tablesStack
+        anchors.fill: parent
         objectName: "tablesStack"
         initialItem: Text {
             text: Qt.platform.os
