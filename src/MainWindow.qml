@@ -6,6 +6,8 @@ import CVB.api 1.0
 
 ApplicationWindow {
     id: mainWindow
+    width: 360
+    height: 360
     toolBar: ToolBar {
         id: windowToolbar
         states: State {
@@ -315,7 +317,10 @@ ApplicationWindow {
         iconName: "back"
         iconSource: "/icons/back.png"
         text: "back"
-        onTriggered: CVBApi.buttonPressed(-1)
+        onTriggered: {
+            tablesStack.pop()
+//            CVBApi.buttonPressed(-1)
+        }
         shortcut: "Ctrl+B"
     }
     Action {
