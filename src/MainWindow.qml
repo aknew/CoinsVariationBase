@@ -13,63 +13,16 @@ ApplicationWindow {
         states: State {
             name: "editable"
             PropertyChanges {
-                target: toolbuttonBack
+                target: defaultLayout
                 visible: false
             }
             PropertyChanges {
-                target: actionBack
-                enabled: false
-            }
-            PropertyChanges {
-                target: toolbuttonEdit
-                visible: false
-            }
-            PropertyChanges {
-                target: actionEdit
-                enabled: false
-            }
-            PropertyChanges {
-                target: toolbuttonAdd
-                visible: false
-            }
-            PropertyChanges {
-                target: actionAdd
-                enabled: false
-            }
-            PropertyChanges {
-                target: toolbuttonDelete
-                visible: false
-            }
-            PropertyChanges {
-                target: actionDelete
-                enabled: false
-            }
-            PropertyChanges {
-                target: toolbuttonSystemTables
-                visible: false
-            }
-            PropertyChanges {
-                target: systemTables
-                enabled: false
-            }
-            PropertyChanges {
-                target: toolbuttonUndo
+                target: editableLayout
                 visible: true
-            }
-            PropertyChanges {
-                target: actionUndo
-                enabled: true
-            }
-            PropertyChanges {
-                target: toolbuttonApply
-                visible: true
-            }
-            PropertyChanges {
-                target: actionApply
-                enabled: true
             }
         }
         RowLayout {
+            id:defaultLayout
             ToolButton {
                 id: toolbuttonBack
                 action: actionBack
@@ -90,16 +43,16 @@ ApplicationWindow {
                 id: toolbuttonSystemTables
                 action: systemTables
             }
+        }
+        RowLayout {
+            id:editableLayout
+            visible: false
             ToolButton {
                 id: toolbuttonApply
-                enabled: false
-                visible: false
                 action: actionApply
             }
             ToolButton {
                 id: toolbuttonUndo
-                enabled: false
-                visible: false
                 action: actionUndo
             }
         }
