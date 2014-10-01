@@ -20,7 +20,7 @@
         "dict": "metals"},
         {"name": "firstYear"},
         {"name": "lastYear"},
-        {"name": "edges",
+        {"name": "edge",
         "type": "combo",
         "dict": "edges"},
         {"name": "issue",
