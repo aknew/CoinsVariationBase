@@ -24,6 +24,12 @@ INSERT INTO "edges" VALUES(3,'возможны варианты');
 INSERT INTO "issues" VALUES(1,'Регулярный общегосударственный');
 INSERT INTO "issues" VALUES(16,'Сибирская монета');
 
+INSERT INTO "varityType" VALUES(1,'Регулярная разновидность');
+INSERT INTO "varityType" VALUES(2,'Случайная разновидность (присуща конкретной монете)');
+INSERT INTO "varityType" VALUES(3,'Подделка для обращения (фальшак)');
+INSERT INTO "varityType" VALUES(4,'Подделка для коллекционеров (фуфло)');
+INSERT INTO "varityType" VALUES(5,'Спорная монета');
+
 INSERT INTO "metals" VALUES(1,'Медь');
 
 INSERT INTO "Types" VALUES(1,2,1,1700,1718,'Двухглавый орел, увенчаный тремя коронами и надпись по кругу','В поле надпись "ПОЛУ|ШКА", под ней год и надпись по кругу','',1,1);
@@ -64,27 +70,27 @@ INSERT INTO "SourcesList" VALUES(37,'Конрос-Базовый',NULL,NULL);
 INSERT INTO "SourcesList" VALUES(38,'Чижов','С.И. Чижов Описанiе варiантовъ некоторыхъ типовъ русскихъ монетъ последнихъ двухъ столетiй. М:, Типография О.О. Гербека - 1904',NULL);
 INSERT INTO "SourcesList" VALUES(39,'Руководство ЦФН',NULL,NULL);
 
-INSERT INTO "VariatiesView" VALUES(8,1,1730,NULL,'Московский Красный двор',NULL,NULL);
+INSERT INTO "VariatiesView" VALUES(8,1,1,1730,NULL,'Московский Красный двор',NULL,NULL);
 
 INSERT INTO "varReferences" VALUES(1,39,'1730,1','монета встречается реже',NULL);
 
-INSERT INTO "attributes" VALUES(1,1,'Орел','образца 1730, ранний (центарльное перо хвоста выпирает)');
-INSERT INTO "attributes" VALUES(1,1,'Ости','в крыльях');
-INSERT INTO "attributes" VALUES(1,1,'Кресты на малых коронах','обычные');
-INSERT INTO "attributes" VALUES(1,1,'Крест державы','простой');
-INSERT INTO "attributes" VALUES(1,2,'Шаблон','1');
-INSERT INTO "attributes" VALUES(1,2,'Листья внизу','пальмовые');
-INSERT INTO "attributes" VALUES(1,2,'Арабески','однозавитковые');
+INSERT INTO "AversAttribute" VALUES(1,'Орел','образца 1730, ранний (центарльное перо хвоста выпирает)');
+INSERT INTO "AversAttribute" VALUES(1,'Ости','в крыльях');
+INSERT INTO "AversAttribute" VALUES(1,'Кресты на малых коронах','обычные');
+INSERT INTO "AversAttribute" VALUES(1,'Крест державы','простой');
+INSERT INTO "ReversAttribute" VALUES(1,'Шаблон','1');
+INSERT INTO "ReversAttribute" VALUES(1,'Листья внизу','пальмовые');
+INSERT INTO "ReversAttribute" VALUES(1,'Арабески','однозавитковые');
 
-INSERT INTO "VariatiesView" VALUES(8,2,1730,NULL,'Московский Красный двор',NULL,NULL);
+INSERT INTO "VariatiesView" VALUES(8,2,1,1730,NULL,'Московский Красный двор',NULL,NULL);
 
 INSERT INTO "varReferences" VALUES(2,39,'1730,2','монета встречается реже',NULL);
 
-INSERT INTO "attributes" VALUES(2,1,'Орел','образца 1730');
-INSERT INTO "attributes" VALUES(2,1,'Ости','отсуствуют');
-INSERT INTO "attributes" VALUES(2,1,'Кресты на малых коронах','обычные');
-INSERT INTO "attributes" VALUES(2,1,'Крест державы','простой, малый');
-INSERT INTO "attributes" VALUES(2,1,'Навершие скипетра','в виде креста');
-INSERT INTO "attributes" VALUES(2,2,'Шаблон','1');
-INSERT INTO "attributes" VALUES(2,2,'Листья внизу','акантовые');
-INSERT INTO "attributes" VALUES(2,2,'Арабески','двухзавитковые');
+INSERT INTO "AversAttribute" VALUES(2,'Орел','образца 1730');
+INSERT INTO "AversAttribute" VALUES(2,'Ости','отсуствуют');
+INSERT INTO "AversAttribute" VALUES(2,'Кресты на малых коронах','обычные');
+INSERT INTO "AversAttribute" VALUES(2,'Крест державы','простой, малый');
+INSERT INTO "AversAttribute" VALUES(2,'Навершие скипетра','в виде креста');
+INSERT INTO "ReversAttribute" VALUES(2,'Шаблон','1');
+INSERT INTO "ReversAttribute" VALUES(2,'Листья внизу','акантовые');
+INSERT INTO "ReversAttribute" VALUES(2,'Арабески','двухзавитковые');

@@ -112,7 +112,8 @@ CREATE TABLE "Mint" (
 
 CREATE TABLE [Variaties] (
   [typeID] INTEGER NOT NULL CONSTRAINT [stct] REFERENCES [Types]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
-  [id] INTEGER NOT NULL PRIMARY KEY, 
+  [id] INTEGER NOT NULL PRIMARY KEY,
+  [varityType] INTEGER DEFAULT 1,
   [year] INTEGER, 
   [mintmark] TEXT, 
   [Mint] INTEGER CONSTRAINT [stMint] REFERENCES [Mint]([id]) ON DELETE SET NULL ON UPDATE CASCADE, 
@@ -120,16 +121,24 @@ CREATE TABLE [Variaties] (
   [price] REAL
  );
 
+CREATE TABLE "varityType" (
+	"id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,
+	"value" TEXT UNIQUE NOT NULL
+);
+
+
 CREATE VIEW "VariatiesView" AS 
 	SELECT 
 		typeID, 
-		Variaties.id as id, 
+		Variaties.id as id,
+		varityType.value as varityType,
 		year, 
 		mintmark,
 		Mint.value as mint,
 		edges.value as edge,
 		price
 	FROM Variaties left join Mint on Variaties.Mint=Mint.id
+				   left join varityType on Variaties.varityType=varityType.id
 				   left join edges on edge=edges.id;
 
 CREATE TRIGGER VariatiesViewDelete instead of delete on VariatiesView
@@ -141,12 +150,14 @@ CREATE TRIGGER VariatiesViewInsert instead of insert on VariatiesView
 begin
 	insert or ignore into edges(value) values (new.edge);
     insert or ignore into Mint(value) values (new.Mint);
-	insert into Variaties(typeID, year, mintmark, mint, edge, price ) values(
+    insert or ignore into varityType(value) values (new.varityType);
+	insert into Variaties(typeID, year, mintmark, mint, edge, varityType, price) values(
 			new.typeID,
 			new.year, 
 			new.mintmark,
 			(select id from Mint where value=new.Mint),
-			(select id from edges where value=new.edge), 
+			(select id from edges where value=new.edge),
+			(select id from varityType where value=new.varityType), 
 			new.price
 	);
 end;
@@ -155,52 +166,46 @@ CREATE TRIGGER VariatiesView instead of update on VariatiesView
 begin
 	insert or ignore into edges(value) values (new.edge);
     insert or ignore into Mint(value) values (new.Mint);
+    insert or ignore into varityType(value) values (new.varityType);
     update Variaties set typeID=new.typeID where id=new.typeID;
     update Variaties set year=new.year where id=new.year;
     update Variaties set mintmark=new.mintmark where id=new.mintmark;
 	update Variaties set Mint=(select id from Mint where value=new.Mint) where id=new.id;
+    update Variaties set varityType=(select id from varityType where value=new.varityType) where id=new.id;
 	update Variaties set edge=(select id from edges where value=new.edge) where id=new.id;
-	update Variaties set price=new.price where id=new.price;
+	update Variaties set price=new.price where id=new.id;
 end;
 
 
 --- atributes of concrete variaty
 
-CREATE TABLE [attributes] (
-	varID INTEGER NOT NULL CONSTRAINT [varAttributeFK] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE,
-	type INTEGER NOT NULL,
-	attributeName TEXT NOT NULL,
-	attributeValue TEXT NOT NULL,
-	CONSTRAINT attributesUnique UNIQUE (varID, type, attributeName)
+CREATE TABLE [AversAttribute] (
+	varID INTEGER NOT NULL CONSTRAINT [AversAttributeFK] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE,
+	Name TEXT NOT NULL,
+	Value TEXT NOT NULL,
+	CONSTRAINT attributesUnique UNIQUE (varID, Name, Value)
 );
 
-CREATE VIEW AversAttributeList AS 
-SELECT 
-	attributeName,
-    attributeValue ,
-	varID 
-FROM attributes where "type"=1
-
-CREATE VIEW ReversAttributeList AS 
-SELECT 
-	attributeName,
-    attributeValue ,
-	varID 
-FROM attributes where "type"=2
+CREATE TABLE [ReversAttribute] (
+	varID INTEGER NOT NULL CONSTRAINT [ReversAttributeFK] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE,
+	Name TEXT NOT NULL,
+	Value TEXT NOT NULL,
+	CONSTRAINT attributesUnique UNIQUE (varID, Name, Value)
+);
 
 --- FullVariantsView - need for showing list
 
 CREATE VIEW FullAversDescription AS 
 SELECT 
-	group_concat (attributeName|| ' ' ||attributeValue ,"; ") as avers, 
+	group_concat (Name|| ' ' || Value ,"; ") as avers, 
 	varID 
-FROM attributes where "type"=1 GROUP BY varID;
+FROM AversAttribute GROUP BY varID;
 
 CREATE VIEW FullReversDescription AS 
 SELECT 
-	group_concat (attributeName|| ' ' ||attributeValue ,"; ") as revers,
+	group_concat (Name|| ' ' || Value ,"; ") as revers, 
 	varID 
-FROM attributes where "type"=2 GROUP BY varID;
+FROM ReversAttribute GROUP BY varID;
 
 
 CREATE VIEW "FullVariatiesView" AS 
@@ -330,3 +335,18 @@ CREATE TABLE [CoinHistory] (
   [seller] TEXT, 
   [buyer] TEXT, 
   [blitz] REAL);
+
+
+CREATE TABLE [Images] (
+  [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+  [comment] text,
+  [source] text,
+  [relation] text NOT NULL
+  );
+
+CREATE TABLE [Notes] (
+  [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+  [comment] text,
+  [source] text,
+  [relation] text NOT NULL
+  );
