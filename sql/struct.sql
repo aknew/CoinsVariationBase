@@ -211,7 +211,8 @@ FROM ReversAttribute GROUP BY varID;
 CREATE VIEW "FullVariatiesView" AS 
 	SELECT 
 		typeID,
-		id, 
+		id,
+		varityType,
 		year, 
 		mintmark,
 		FullAversDescription.avers as avers,

@@ -70,7 +70,7 @@ INSERT INTO "SourcesList" VALUES(37,'Конрос-Базовый',NULL,NULL);
 INSERT INTO "SourcesList" VALUES(38,'Чижов','С.И. Чижов Описанiе варiантовъ некоторыхъ типовъ русскихъ монетъ последнихъ двухъ столетiй. М:, Типография О.О. Гербека - 1904',NULL);
 INSERT INTO "SourcesList" VALUES(39,'Руководство ЦФН',NULL,NULL);
 
-INSERT INTO "VariatiesView" VALUES(8,1,1,1730,NULL,'Московский Красный двор',NULL,NULL);
+INSERT INTO "VariatiesView" VALUES(8,1,'Регулярная разновидность',1730,NULL,'Московский Красный двор',NULL,NULL);
 
 INSERT INTO "varReferences" VALUES(1,39,'1730,1','монета встречается реже',NULL);
 
@@ -82,7 +82,7 @@ INSERT INTO "ReversAttribute" VALUES(1,'Шаблон','1');
 INSERT INTO "ReversAttribute" VALUES(1,'Листья внизу','пальмовые');
 INSERT INTO "ReversAttribute" VALUES(1,'Арабески','однозавитковые');
 
-INSERT INTO "VariatiesView" VALUES(8,2,1,1730,NULL,'Московский Красный двор',NULL,NULL);
+INSERT INTO "VariatiesView" VALUES(8,2,'Регулярная разновидность',1730,NULL,'Московский Красный двор',NULL,NULL);
 
 INSERT INTO "varReferences" VALUES(2,39,'1730,2','монета встречается реже',NULL);
 
