@@ -342,12 +342,14 @@ CREATE TABLE [Images] (
   [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
   [comment] text,
   [source] text,
-  [relation] text NOT NULL
+  [relid] text NOT NULL,
+  [table] text NOT NULL
   );
 
 CREATE TABLE [Notes] (
   [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
   [comment] text,
   [source] text,
-  [relation] text NOT NULL
+  [relid] text NOT NULL,
+  [table] text NOT NULL
   );
