@@ -103,8 +103,8 @@ QQuickItem * CVBController::currentItem(){
     return returnedValue.value<QQuickItem *>();
 }
 
-QVariant CVBController::listForName(const QString& name){
-    return QVariant(baseProvider->listForID(name));
+QStringList CVBController::listForName(const QString& name){
+    return baseProvider->listForID(name);
 }
 
 void CVBController::newTableWidget(){

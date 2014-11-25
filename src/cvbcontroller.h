@@ -60,7 +60,7 @@ class CVBController : public QObject
        Q_INVOKABLE void buttonPressed(int index);
        Q_INVOKABLE void fullInfo(int index);
        Q_INVOKABLE void showFullScreenImage(QString imgSource);
-       Q_INVOKABLE QVariant listForName(const QString& name);
+       Q_INVOKABLE QStringList listForName(const QString& name);
        Q_INVOKABLE CVBSqlNode* nodeWithName(const QString& name);
        Q_INVOKABLE CVBSqlNode* currentNode();
 
