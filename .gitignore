@@ -5,4 +5,3 @@ CoinsBase.base/images
 bin/*
 build*
 *.user
-src/CoinsVariationBase.pro.user
