@@ -1,36 +1,4 @@
---- Некоторые поля которые всегда будут задействованя
 
-INSERT INTO "nominals" VALUES(1,'Полуполушка (1/8 копейки)');
-INSERT INTO "nominals" VALUES(2,'Полушка (1/4 копейки)');
-INSERT INTO "nominals" VALUES(3,'Деньга (1/2 копейки)');
-INSERT INTO "nominals" VALUES(4,'1 копейка');
-INSERT INTO "nominals" VALUES(5,'2 копейки');
-INSERT INTO "nominals" VALUES(6,'3 копейки');
-INSERT INTO "nominals" VALUES(7,'4 копейки');
-INSERT INTO "nominals" VALUES(8,'5 копеек');
-
-INSERT INTO "edges" VALUES(1,'Гладкий');
-INSERT INTO "edges" VALUES(11,'Надпись ЕМ');
-INSERT INTO "edges" VALUES(10,'Надпись ММД');
-INSERT INTO "edges" VALUES(9,'Надпись СПБ');
-INSERT INTO "edges" VALUES(7,'Рубчатый');
-INSERT INTO "edges" VALUES(2,'Сетчатый');
-INSERT INTO "edges" VALUES(6,'Узорчатый');
-INSERT INTO "edges" VALUES(5,'Шнур');
-INSERT INTO "edges" VALUES(12,'Шнур влево');
-INSERT INTO "edges" VALUES(4,'Шнур вправо');
-INSERT INTO "edges" VALUES(3,'возможны варианты');
-
-INSERT INTO "issues" VALUES(1,'Регулярный общегосударственный');
-INSERT INTO "issues" VALUES(16,'Сибирская монета');
-
-INSERT INTO "varityType" VALUES(1,'Регулярная разновидность');
-INSERT INTO "varityType" VALUES(2,'Случайная разновидность (присуща конкретной монете)');
-INSERT INTO "varityType" VALUES(3,'Подделка для обращения (фальшак)');
-INSERT INTO "varityType" VALUES(4,'Подделка для коллекционеров (фуфло)');
-INSERT INTO "varityType" VALUES(5,'Спорная монета');
-
-INSERT INTO "metals" VALUES(1,'Медь');
 
 INSERT INTO "Types" VALUES(1,2,1,1700,1718,'Двухглавый орел, увенчаный тремя коронами и надпись по кругу','В поле надпись "ПОЛУ|ШКА", под ней год и надпись по кругу','',1,1);
 INSERT INTO "Types" VALUES(2,3,1,1700,1718,'Двухглавый орел, увенчаный тремя коронами и надпись по кругу','В поле надпись "ДЕН|ГА", под ней год и надпись по кругу','',1,1);
@@ -54,9 +22,6 @@ INSERT INTO "Types" VALUES(19,5,1,1797,1801,'Вензель императора
 INSERT INTO "Types" VALUES(20,4,1,1797,1801,'Вензель императора Павла I и императорская корона над ним','Надпись в 2 строки "1| КОПЕЙКА" под ней черта и год и монетный двор в 2 строки',10.24,1,5);
 INSERT INTO "Types" VALUES(21,3,1,1797,1801,'Вензель императора Павла I и императорская корона над ним','Надпись в 2 строки "1| ДЕНЬГА" под ней черта и год и монетный двор в 2 строки',5.12,1,5);
 
-INSERT INTO "statuses" VALUES(3,'архив');
-INSERT INTO "statuses" VALUES(1,'коллекция');
-INSERT INTO "statuses" VALUES(2,'обменный фонд');
 
 INSERT INTO "SourcesList" VALUES(1,'Уздеников','В. Уздеников Монеты России. 1700-1917 Collector''s Book, 2004 ',NULL);
 INSERT INTO "SourcesList" VALUES(2,'Евдокимов','Евдокимов Г.С. Денги и полушки 1730–1754 гг. выпуска. Распределение денег и полушек по монетным дворам // Нумизматика на рубеже веков. НС ГИМ. Т. XV. (Труды ГИМ. Вып. 125). М., 2001. С.276–308',NULL);
@@ -70,7 +35,7 @@ INSERT INTO "SourcesList" VALUES(37,'Конрос-Базовый',NULL,NULL);
 INSERT INTO "SourcesList" VALUES(38,'Чижов','С.И. Чижов Описанiе варiантовъ некоторыхъ типовъ русскихъ монетъ последнихъ двухъ столетiй. М:, Типография О.О. Гербека - 1904',NULL);
 INSERT INTO "SourcesList" VALUES(39,'Руководство ЦФН',NULL,NULL);
 
-INSERT INTO "VariatiesView" VALUES(8,1,'Регулярная разновидность',1730,NULL,'Московский Красный двор',NULL,NULL);
+INSERT INTO "Variaties" VALUES(8,1,'Регулярная разновидность',1730,NULL,'Московский Красный двор',NULL,NULL);
 
 INSERT INTO "varReferences" VALUES(1,39,'1730,1','монета встречается реже',NULL);
 
@@ -82,7 +47,7 @@ INSERT INTO "ReversAttribute" VALUES(1,'Шаблон','1');
 INSERT INTO "ReversAttribute" VALUES(1,'Листья внизу','пальмовые');
 INSERT INTO "ReversAttribute" VALUES(1,'Арабески','однозавитковые');
 
-INSERT INTO "VariatiesView" VALUES(8,2,'Регулярная разновидность',1730,NULL,'Московский Красный двор',NULL,NULL);
+INSERT INTO "Variaties" VALUES(8,2,'Регулярная разновидность',1730,NULL,'Московский Красный двор',NULL,NULL);
 
 INSERT INTO "varReferences" VALUES(2,39,'1730,2','монета встречается реже',NULL);
 

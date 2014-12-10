@@ -1,12 +1,12 @@
 {
     "name": "Монеты Российской Империи",
-    "startTable": "TypesView",
+    "startTable": "Types",
     "nodes": [
       {
-        "name": "TypesView",
+        "name": "Types",
         "childNode": [
           {
-            "name": "VariatiesView",
+            "name": "Variaties",
             "relation": "typeID"
           }
         ],
@@ -32,13 +32,13 @@
         ]
       },
       {
-        "name": "VariatiesView",
+        "name": "Variaties",
         "listModel":"FullVariatiesView",
         "listViewFields":["year","mintmark","avers","revers","edge"],
         "rowParamNames": { "name": "typeID" },
         "childNode": [
           {
-            "name": "ConcreteCoinsView",
+            "name": "ConcreteCoins",
             "relation": "varID"
           }
         ],
@@ -137,27 +137,27 @@
     ],
     "comboBoxes": [
         {
-          "query": "select value from nominals order by value",
+          "query": "select distinct nominal from types",
           "name": "nominals"
         },
         {
-          "query": "select value from metals order by value",
+          "query": "select distinct metal from types",
           "name": "metals"
         },
         {
-          "query": "select value from issues order by value",
+          "query": "select distinct issue from types",
           "name": "issues"
         },
         {
-          "query": "select value from edges order by value",
+          "query": "select edges from types",
           "name": "edges"
         },
         {
-          "query": "select value from statuses",
+          "query": "select status from ConcreteCoins",
           "name": "statuses"
         },
         {
-          "query": "select value from mint",
+          "query": "select mint from types",
           "name": "mint"
         },
         {
