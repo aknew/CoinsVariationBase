@@ -10,17 +10,30 @@ ApplicationWindow {
     height: 360
     toolBar: ToolBar {
         id: windowToolbar
-        states: State {
-            name: "editable"
-            PropertyChanges {
-                target: defaultLayout
-                visible: false
+        states: [
+            State {
+                name: "editable"
+                PropertyChanges {
+                    target: defaultLayout
+                    visible: false
+                }
+                PropertyChanges {
+                    target: editableLayout
+                    visible: true
+                }
+            },
+            State {
+                name: "fullform"
+                PropertyChanges {
+                    target: toolbuttonEdit
+                    visible: true
+                }
+                PropertyChanges {
+                    target: toolbuttonDelete
+                    visible: true
+                }
             }
-            PropertyChanges {
-                target: editableLayout
-                visible: true
-            }
-        }
+        ]
         RowLayout {
             id:defaultLayout
             ToolButton {
@@ -30,6 +43,7 @@ ApplicationWindow {
             ToolButton {
                 id: toolbuttonEdit
                 action: actionEdit
+                visible:false
             }
             ToolButton {
                 id: toolbuttonAdd
@@ -38,6 +52,7 @@ ApplicationWindow {
             ToolButton {
                 id: toolbuttonDelete
                 action: actionDelete
+                visible:false
             }
             ToolButton {
                 id: toolbuttonSystemTables
@@ -134,11 +149,13 @@ ApplicationWindow {
 
         var listForm = Qt.createQmlObject(qmlString, tablesStack, "dynamicList")
         tablesStack.push(listForm)
+        windowToolbar.state = ""
     }
 
     function createFullInfoForm() {
 
         var qmlString = "import QtQuick 2.0; import CVB.api 1.0; import CVBControls 1.0; import QtQuick.Controls 1.0; Rectangle { id: mainRect;"
+        qmlString += "property bool isFullForm: true;"
         qmlString += "Flickable {clip: true; anchors.fill:parent;"
         qmlString += "contentHeight: nextlevel.y+nextlevel.height;"
         qmlString += "Column {id: contentColumn;y: 0;width: parent.width;"
@@ -255,6 +272,7 @@ ApplicationWindow {
         var fullInfoForm = Qt.createQmlObject(qmlString, tablesStack,
                                               "dynamicFullInfoForm")
         tablesStack.push(fullInfoForm)
+        windowToolbar.state = "fullform"
     }
 
     function loadForm(formName) {
@@ -273,6 +291,7 @@ ApplicationWindow {
         onTriggered: {
             tablesStack.pop()
 //            CVBApi.buttonPressed(-1)
+            windowToolbar.state=tablesStack.currentItem.isFullForm?"fullform":""
         }
         shortcut: "Ctrl+B"
     }
@@ -312,7 +331,7 @@ ApplicationWindow {
         iconSource: "/icons/apply.png"
         text: "apply"
         onTriggered: {
-            windowToolbar.state = ""
+            windowToolbar.state = "fullform"
             CVBApi.buttonPressed(-4)
         }
     }
@@ -321,7 +340,7 @@ ApplicationWindow {
         iconSource: "/icons/undo.png"
         text: "undo"
         onTriggered: {
-            windowToolbar.state = ""
+            windowToolbar.state = "fullform"
             CVBApi.buttonPressed(-5)
         }
     }
