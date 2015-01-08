@@ -22,12 +22,13 @@ CREATE TABLE "Types" (
 CREATE TABLE [Variaties] (
   [typeID] INTEGER NOT NULL CONSTRAINT [stct] REFERENCES [Types]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
   [id] INTEGER NOT NULL PRIMARY KEY,
-  [varityType] TEXT,
+  [varityType] TEXT, --- тип разновидности - обычная, случайная (например, перечеканы на определенных монетах), случайная, фальшивка, фуфло, новодел 
   [year] INTEGER, 
   [mintmark] TEXT, 
   [Mint] TEXT, 
   [edge] TEXT,
-  [price] REAL
+  [price] REAL,
+  [comment] TEXT
  );
 
 --- atributes of concrete variaty
@@ -105,7 +106,7 @@ begin
 	delete from varReferences where srid=(select id from SourcesList where reduction=old.reduction) and varID=old.varID;	
 end;
 
-CREATE TRIGGER varReferencesUnsert instead of insert on varReferencesView
+CREATE TRIGGER varReferencesInsert instead of insert on varReferencesView
 begin
 	insert or ignore into SourcesList(reduction) values (new.reduction);
 	insert into varReferences (varID,srid,number,rarity,comment) values(
@@ -127,7 +128,7 @@ CREATE TABLE [ConcreteCoins] (
   [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
   [varID] INTEGER NOT NULL CONSTRAINT [ccVariaties] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE,
   [condition] TEXT,
-  [status] TEXT NOT NULL DEFAULT 1
+  [status] TEXT NOT NULL DEFAULT "Архив"
   );
 COMMIT;
 
@@ -144,8 +145,10 @@ CREATE TABLE [CoinHistory] (
   [currency] , 
   [seller] TEXT, 
   [buyer] TEXT, 
-  [blitz] REAL);
+  [blitz] REAL,
+  comment TEXT);
 
+--- Пометки и картинки могут относиться практически к любой таблице, к какой относится конкретно устанавливается из программы в ручном режиме
 
 CREATE TABLE [Images] (
   [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
@@ -158,6 +161,7 @@ CREATE TABLE [Images] (
 CREATE TABLE [Notes] (
   [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
   [comment] text,
+  [source] text,
   [relid] text NOT NULL,
   [table] text NOT NULL
   );
