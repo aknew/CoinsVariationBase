@@ -11,15 +11,13 @@
         <file alias="icons/delete.png">../resources/icons/delete.png</file>
         <file>MainWindow.qml</file>
         <file>CVBControls/ComboBox.qml</file>
-        <file>CVBControls/ComboTextEdit.qml</file>
         <file>CVBControls/ImageWithFullScreen.qml</file>
-        <file>CVBControls/Input.qml</file>
         <file>CVBControls/NextLevelList.qml</file>
         <file>CVBControls/qmldir</file>
         <file>CVBControls/StyledText.qml</file>
-        <file>CVBControls/StyledTextInput.qml</file>
-        <file>CVBControls/TitledInput.qml</file>
+        <file>CVBControls/LabeledComboBoxInput.qml</file>
         <file>CVBControls/BigImage.qml</file>
         <file>CVBControls/BackgroundRect.qml</file>
+        <file>CVBControls/LabeledTextInput.qml</file>
     </qresource>
 </RCC>
