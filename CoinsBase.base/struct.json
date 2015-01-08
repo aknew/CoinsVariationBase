@@ -149,7 +149,7 @@
           "name": "issues"
         },
         {
-          "query": "select edges from types",
+          "query": "select distinct edge from types",
           "name": "edges"
         },
         {

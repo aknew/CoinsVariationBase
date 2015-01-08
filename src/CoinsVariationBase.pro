@@ -33,15 +33,13 @@ OTHER_FILES += \
     MainWindow.qml \
     CVBControls/BigImage.qml \
     CVBControls/ComboBox.qml \
-    CVBControls/ComboTextEdit.qml \
     CVBControls/ImageWithFullScreen.qml \
-    CVBControls/Input.qml \
     CVBControls/NextLevelList.qml \
     CVBControls/StyledText.qml \
-    CVBControls/StyledTextInput.qml \
-    CVBControls/TitledInput.qml \
     CVBControls/qmldir \
-    CVBControls/BackgroundRect.qml
+    CVBControls/BackgroundRect.qml \
+    CVBControls/LabeledComboBoxInput.qml \
+    CVBControls/LabeledTextInput.qml
 
 RESOURCES += \
     res.qrc

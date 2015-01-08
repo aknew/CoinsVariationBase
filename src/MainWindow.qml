@@ -192,13 +192,13 @@ ApplicationWindow {
                         + "; value: \"" + field_value + "\"; editing:false}"
                 break
             case "combo":
-                qmlString += "TitledInput {id: field_" + field + "; title: qsTr(\"" + field + "\");"
+                qmlString += "LabeledComboBoxInput {id: field_" + field + "; title: qsTr(\"" + field + "\");"
                 qmlString += "anchors.fill: parent.widths; value: \"" + field_value + "\";"
                 qmlString += "model: CVBApi.listForName(\"" + fieldStruct["dict"]
                         + "\");z:15; editing:false}"
                 break
             default:
-                qmlString += "Input {id: field_" + field
+                qmlString += "LabeledTextInput {id: field_" + field
                         + "; anchors.fill: parent.widths; value:  \"" + field_value
                         + "\";title: qsTr(\"" + field + "\"); editing:false}"
             }
