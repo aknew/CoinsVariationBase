@@ -32,7 +32,6 @@ HEADERS  += CVBImageProvider.h \
 OTHER_FILES += \
     MainWindow.qml \
     CVBControls/BigImage.qml \
-    CVBControls/ComboBox.qml \
     CVBControls/ImageWithFullScreen.qml \
     CVBControls/NextLevelList.qml \
     CVBControls/StyledText.qml \
