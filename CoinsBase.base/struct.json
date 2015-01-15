@@ -65,11 +65,11 @@
         ],
         "subNodes": [
           {
-            "name": "AversAttributeList",
+            "name": "AversAttribute",
             "relation": "varID"
           },
           {
-            "name": "ReversAttributeList",
+            "name": "ReversAttribute",
             "relation": "varID"
           },
           {
@@ -79,10 +79,10 @@
         ]
       },
      {
-        "name": "AversAttributeList"
+        "name": "AversAttribute"
       },
       {
-        "name": "ReversAttributeList"
+        "name": "ReversAttribute"
       },
       {
         "name": "varReferencesView"
