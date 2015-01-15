@@ -310,8 +310,8 @@ ApplicationWindow {
         iconSource: "/icons/add.png"
         text: "add"
         onTriggered: {
-            windowToolbar.state = "editable"
             CVBApi.buttonPressed(-2)
+            windowToolbar.state = "editable"
         }
     }
     Action {
