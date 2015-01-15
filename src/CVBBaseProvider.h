@@ -38,6 +38,10 @@ public:
     void deleteCurrentRow();
     CVBSqlNode *nodeWithName(const QString& name);
 
+    void beginTransaction();
+    void commit();
+    void rollback();
+
 signals:
     //TODO: check that all this signals are realy needs
     void newTableWidget();

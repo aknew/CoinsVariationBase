@@ -249,3 +249,15 @@ void CVBBaseProvider::parse(){
          comboBoxes[obj.value("name").toString()]=desc;
      }
 }
+
+void CVBBaseProvider::beginTransaction(){
+    db.transaction();
+}
+
+void CVBBaseProvider::commit(){
+    db.commit();
+}
+
+void CVBBaseProvider::rollback(){
+    db.rollback();
+}

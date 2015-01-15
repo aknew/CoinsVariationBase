@@ -212,12 +212,13 @@ void CVBController::buttonPressed(int index){
                     QQuickItem *item = this->currentItem();
                     item->setProperty("selectedItem",node->selectedItem());
                 }
-
+                this->baseProvider->beginTransaction();
                 this->currentItem()->setProperty("state","editable");
                 break;
 
             }
             case editButtonIndex:{
+                this->baseProvider->beginTransaction();
                 this->currentItem()->setProperty("state","editable");
                 break;
             }
@@ -240,6 +241,7 @@ void CVBController::buttonPressed(int index){
 
                     baseProvider->currentNode()->model->setSelectedItem(returnedMap);
                 }
+                this->baseProvider->commit();
                 this->currentItem()->setProperty("state","");
                 newRowInsertion=false;
                 break;
@@ -253,6 +255,7 @@ void CVBController::buttonPressed(int index){
                     this->currentItem()->setProperty("state","");
                 }
                 baseProvider->currentNode()->model->revertAll();
+                this->baseProvider->rollback();
                 newRowInsertion=false;
                 break;
 
