@@ -72,15 +72,6 @@ QStringList CVBBaseProvider::listForID(const QString &name){
 void CVBBaseProvider::previousLevel(){
     if (nodeStack.count()<=1)
         return;
-    //FIXME хак для удаления параметров для внешних ключей - весь механизм работы с ними не верен
-    qDebug()<<"Before:\n"<<ids;
-    QString buttonID=currentNode()->tableName;
-    nodeStack.pop();
-    QString str=currentNode()->childNodes.value(buttonID);
-    if (str!=""){
-        ids.remove(str);
-    }
-    qDebug()<<"After:\n"<<ids;
     emit removeCurrentWidget();
 }
 
@@ -114,14 +105,11 @@ void CVBBaseProvider::pressedButton(int index){
         if (str!=""){
             QSqlRecord record=currentNode->model->record(rowIndex);
             QSqlField id=record.field("id");
-            QString str1="%1=%2";
+            QPair<QString, QString> pair;
             // XXX: Need refactoring
-            str1 = str1.arg(str).arg(id.value().toString());
-            node->model->setFilter(str1);
-            if (node->listModel){
-                node->listModel->setFilter(str1);
-            }
-            ids.insert(str,id.value().toString());
+            pair.first  = str;
+            pair.second = id.value().toString();
+            node->setFilter(pair);
         }
         if (node->listModel){
             node->listModel->select();
@@ -134,17 +122,6 @@ void CVBBaseProvider::pressedButton(int index){
         emit newTableWidget();
     }
 }
-
-void CVBBaseProvider::addForeignKeyToMap(QVariantMap &map){
-    qDebug()<<map;
-    CVBSqlNode *currentNode=nodeStack.top();
-    for (int i=0;i<currentNode->rowParamNames.count();++i){
-        QString str=ids.value(currentNode->rowParamNames.at(i));
-        map[currentNode->rowParamNames.at(i)]=str;
-    }
-    qDebug()<<"after addForeignKeyToMap "<<map;
-}
-
 void CVBBaseProvider::deleteCurrentRow(){
     CVBSqlNode *currentNode=nodeStack.top();
     currentNode->model->removeCurrentItem();

@@ -18,6 +18,7 @@ class CVBSqlNode: public QObject
 
 protected:
     QMap<QString, QString> m_subNodesParameters;//идентификаторы зависимых узлов и поле, по которому они связаны
+    QPair<QString, QString> filterParam;
 
 public:
 
@@ -48,6 +49,8 @@ public:
 
     QList<QObject* > m_subNodes;
     void selectItemWithIndex(int index);
+
+    void setFilter(QPair<QString, QString> _filterParam);
 };
 
 #endif // CVBSQLNODE_H

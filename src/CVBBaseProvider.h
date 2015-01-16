@@ -14,7 +14,6 @@ class CVBBaseProvider : public QObject
     QString startTable;
     QStack<CVBSqlNode*> nodeStack;//как мы дошли до текущей
     QMap<QString,CVBSqlNode*> nodeMap;//словарь-список всех таблиц
-    QMap <QString,QString> ids;//уже использованные идентификаторы
     QMap <QString, ComboBoxDescription> comboBoxes;
     void parse();
 
@@ -34,7 +33,6 @@ public:
     QString idForAttach(QByteArray attach);
     QByteArray attachForId(QString id);
     QStringList listForID(const QString &name);
-    void addForeignKeyToMap(QVariantMap &map);
     void deleteCurrentRow();
     CVBSqlNode *nodeWithName(const QString& name);
 

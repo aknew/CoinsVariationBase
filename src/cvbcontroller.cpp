@@ -235,10 +235,6 @@ void CVBController::buttonPressed(int index){
 
                     qDebug()<<returnedMap;
 
-                    if (newRowInsertion){
-                        baseProvider->addForeignKeyToMap(returnedMap);
-                    }
-
                     baseProvider->currentNode()->model->setSelectedItem(returnedMap);
                 }
                 this->baseProvider->commit();

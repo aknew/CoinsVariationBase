@@ -1,6 +1,8 @@
 #include "CVBSqlNode.h"
 #include "CVBBaseProvider.h"
 
+const QString kNotValidPair = "This pair is not valid";
+
 CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *parent = 0):QObject(parent){
 
     this->tableName=obj.value("name").toString();
@@ -8,7 +10,7 @@ CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *paren
     this->model=new CVBSqlRelationalTableModel(this,db);
     this->model->setTable(this->tableName);
     this->model->applyRoles();
-
+    filterParam.first = kNotValidPair;
     listModel = NULL;
 
     QJsonValue json_listModel = obj.value("listModel");
@@ -85,6 +87,14 @@ void CVBSqlNode::selectItemWithIndex(int index){
      */
     if (index == kNewRowIndex){
         index = model->rowCount();
+        if(filterParam.first != kNotValidPair){
+            // add filters - foreign keys
+            QVariantMap map;
+            map[filterParam.first]=filterParam.second;
+            model->setSelectedItem(map);
+        }
+        else
+            model->insertRow(index);
     }
 
      model->selectedRow = index;
@@ -93,16 +103,25 @@ void CVBSqlNode::selectItemWithIndex(int index){
      CVBBaseProvider * baseProvider= qobject_cast<CVBBaseProvider *>(parent());
      QMap<QString, QString>::iterator iterator;
      QString id = selectedItem()["id"].toString();
+
      for (iterator = m_subNodesParameters.begin(); iterator != m_subNodesParameters.end(); ++iterator){
          CVBSqlNode *node=baseProvider->nodeWithName(iterator.key());
          if (node){
-             QString str1="%1=%2";
-             node->model->setFilter(str1
-                                    .arg(iterator.value())
-                                    .arg(id)
-                                    );
-             node->model->select();
+             node->setFilter(QPair<QString,QString>(iterator.value(),id));
              m_subNodes.append(node);
          }
      }
+}
+
+void CVBSqlNode::setFilter(QPair<QString, QString> _filterParam){
+    filterParam = _filterParam;
+
+    QString str1=QString("%1=%2").arg(filterParam.first,filterParam.second);
+    model->setFilter(str1);
+    model->select();
+
+    if (listModel){
+        listModel->setFilter(str1);
+        listModel->select();
+    }
 }
