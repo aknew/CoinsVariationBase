@@ -290,8 +290,13 @@ ApplicationWindow {
         text: "back"
         onTriggered: {
             tablesStack.pop()
-//            CVBApi.buttonPressed(-1)
-            windowToolbar.state=tablesStack.currentItem.isFullForm?"fullform":""
+            if (tablesStack.currentItem.isFullForm){
+                windowToolbar.state="fullform"
+            }
+            else{
+                CVBApi.buttonPressed(-1)
+                windowToolbar.state=""
+            }
         }
         shortcut: "Ctrl+B"
     }

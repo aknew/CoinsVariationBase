@@ -70,9 +70,8 @@ QStringList CVBBaseProvider::listForID(const QString &name){
 }
 
 void CVBBaseProvider::previousLevel(){
-    if (nodeStack.count()<=1)
-        return;
-    emit removeCurrentWidget();
+    if (nodeStack.count()>=1)
+        nodeStack.pop();
 }
 
 void CVBBaseProvider::startLevel(){
