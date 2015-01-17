@@ -43,7 +43,6 @@ public:
 signals:
     //TODO: check that all this signals are realy needs
     void newTableWidget();
-    void removeCurrentWidget();
     void getError(QString description);
 
 public slots:

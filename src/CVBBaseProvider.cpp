@@ -70,7 +70,7 @@ QStringList CVBBaseProvider::listForID(const QString &name){
 }
 
 void CVBBaseProvider::previousLevel(){
-    if (nodeStack.count()>=1)
+    if (nodeStack.count()>1)
         nodeStack.pop();
 }
 

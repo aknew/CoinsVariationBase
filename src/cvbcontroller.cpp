@@ -45,7 +45,6 @@ void CVBController::openBase(QString basePath){
     basePath=basePath.append("/");
     baseProvider=new CVBBaseProvider(basePath,this);
 
-    this->connect(baseProvider,SIGNAL(removeCurrentWidget()),this,SLOT(removeWidgetFromStack()));
     this->connect(baseProvider,SIGNAL(newTableWidget()),this,SLOT(newTableWidget()));
     this->connect(baseProvider,SIGNAL(getError(QString)),this,SLOT(showError(QString)));
 
@@ -192,12 +191,7 @@ void CVBController::buttonPressed(int index){
         //что- то из предопредопределенных кнопок
         switch (index) {
         case backButtonIndex:{
-            if (currentWidgetType.top()==FullForm||currentWidgetType.top()==FullScreenImage)
-                this->removeWidgetFromStack();
-            //FIXME: need update table view - we can change it into FullForm, maybe rewrite this part with switch
-            else {
-                baseProvider->previousLevel();
-            }
+            baseProvider->previousLevel();
             break;
 
         case newButtonIndex:{
