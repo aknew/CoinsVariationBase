@@ -30,11 +30,6 @@ CVBBaseProvider::~CVBBaseProvider(){
 
 QStringList CVBBaseProvider::listForID(const QString &name){
 
-    QStringList list;
-
-    qDebug()<<name;
-    //qDebug()<<"comboBoxes.keys()="<<comboBoxes.keys();
-
     ComboBoxDescription desc=comboBoxes[name];
 
     QSqlQuery query;
@@ -59,8 +54,14 @@ QStringList CVBBaseProvider::listForID(const QString &name){
         }
     }
     qDebug()<<str;
-    query.exec(str);
+    bool flag = query.exec(str);
 
+    if (!flag){
+        qDebug()<<query.lastError();
+        exit(-1);
+    }
+
+    QStringList list;
     while (query.next()) {
         list<<query.value(0).toString();
     }
@@ -105,7 +106,6 @@ void CVBBaseProvider::pressedButton(int index){
             QSqlRecord record=currentNode->model->record(rowIndex);
             QSqlField id=record.field("id");
             QPair<QString, QString> pair;
-            // XXX: Need refactoring
             pair.first  = str;
             pair.second = id.value().toString();
             node->setFilter(pair);
@@ -227,13 +227,22 @@ void CVBBaseProvider::parse(){
 }
 
 void CVBBaseProvider::beginTransaction(){
-    db.transaction();
+    bool flag = db.transaction();
+    if (!flag){
+        qDebug()<<"error in db.transaction: "<<db.lastError();
+    }
 }
 
 void CVBBaseProvider::commit(){
-    db.commit();
+    bool flag = db.commit();
+    if (!flag){
+        qDebug()<<"error in db.commit: "<<db.lastError();
+    }
 }
 
 void CVBBaseProvider::rollback(){
-    db.rollback();
+    bool flag = db.rollback();
+    if (!flag){
+        qDebug()<<"error in db.rollback: "<<db.lastError();
+    }
 }

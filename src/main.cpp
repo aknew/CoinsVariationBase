@@ -23,6 +23,8 @@ static QObject *cvbApiObjectSingleton(QQmlEngine *engine, QJSEngine *scriptEngin
 
 int main(int argc, char *argv[])
 {
+    qSetMessagePattern("%{file}(%{line}): %{message}"); //show line and file in qDebug messages
+
     qmlRegisterSingletonType<CVBController>("CVB.api", 1, 0, "CVBApi", cvbApiObjectSingleton);
     qmlRegisterUncreatableType<CVBSqlNode>("CVB.api", 1, 0, "CVBSqlNode", "This class should be obtained from CVBApi.nodeWithName()");
 
