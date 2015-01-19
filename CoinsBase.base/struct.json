@@ -157,7 +157,7 @@
           "name": "statuses"
         },
         {
-          "query": "select mint from types",
+          "query": "select distinct mint from Variaties",
           "name": "mint"
         },
         {
