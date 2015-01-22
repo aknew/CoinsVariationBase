@@ -3,6 +3,8 @@
 
 int main(int argc, char *argv[])
 {
+    qSetMessagePattern("%{file}(%{line}): %{message}"); //show line and file in qDebug messages
+
     QCoreApplication a(argc, argv);
 
     TestBaseClass testBase;

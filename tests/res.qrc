@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="base.sqlite">../CoinsBase.base/base.sqlite</file>
+        <file alias="struct.json">../CoinsBase.base/struct.json</file>
+    </qresource>
+</RCC>

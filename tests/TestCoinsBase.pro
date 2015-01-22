@@ -16,17 +16,18 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    testbaseclass.cpp
+    testbaseclass.cpp \
+    ../src/CVBBaseProvider.cpp \
+    ../src/CVBSqlNode.cpp \
+    ../src/CVBSqlRelationalTableModel.cpp \
+    ../src/comboboxdescription.cpp
 
 HEADERS += \
-    testbaseclass.h
+    testbaseclass.h \
+    ../src/CVBBaseProvider.h \
+    ../src/CVBSqlNode.h \
+    ../src/CVBSqlRelationalTableModel.h \
+    ../src/comboboxdescription.h
 
-OTHER_FILES +=
-
-## Define what files are 'extra_libs' and where to put them
-sqlStruct.files = "../sql/struct.sql"
-
-sqlStruct.path = "$$OUT_PWD"
-
-## Tell qmake to add the moving of them to the 'install' target
-INSTALLS += sqlStruct
+RESOURCES += \
+    res.qrc

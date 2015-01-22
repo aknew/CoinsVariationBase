@@ -19,7 +19,7 @@ public:
     QVariantMap selectedItem();
     QVariant fieldList;
     void setSelectedItem(const QVariantMap &map);
-    CVBSqlRelationalTableModel(QObject *parent, QSqlDatabase _db):QSqlRelationalTableModel(parent,_db){this->setEditStrategy(QSqlTableModel::OnManualSubmit);}
+    CVBSqlRelationalTableModel(QObject *parent, QSqlDatabase _db):QSqlRelationalTableModel(parent,_db){this->setEditStrategy(QSqlTableModel::OnRowChange);}
     void applyRoles();
     void removeCurrentItem();
     int selectedRow;
