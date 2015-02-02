@@ -125,3 +125,10 @@ void CVBSqlNode::setFilter(QPair<QString, QString> _filterParam){
         listModel->select();
     }
 }
+
+void CVBSqlNode::commitData(){
+    bool flag =  this->model->submitAll();
+    if (!flag){
+        qDebug()<<"error in db.commit: "<<this->model->lastError();
+    }
+}

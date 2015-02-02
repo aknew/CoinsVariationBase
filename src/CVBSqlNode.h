@@ -49,6 +49,7 @@ public:
 
     QList<QObject* > m_subNodes;
     void selectItemWithIndex(int index);
+    void commitData();
 
     void setFilter(QPair<QString, QString> _filterParam);
 };

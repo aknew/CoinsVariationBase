@@ -11,6 +11,7 @@ public:
     explicit TestBaseClass(QObject *parent = 0);
     
 private slots:
+    void testRowInsertionNative();
     void testRowInsertion();
     void initTestCase();
 

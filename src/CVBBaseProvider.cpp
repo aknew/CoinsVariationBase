@@ -234,6 +234,7 @@ void CVBBaseProvider::beginTransaction(){
 }
 
 void CVBBaseProvider::commit(){
+    this->currentNode()->commitData();
     bool flag = db.commit();
     if (!flag){
         qDebug()<<"error in db.commit: "<<db.lastError();
