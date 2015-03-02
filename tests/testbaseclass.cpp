@@ -5,7 +5,8 @@
 #include <QFile>
 #include "../src/CVBBaseProvider.h"
 
-const QString TestBaseFolder="testBase/";
+const QString TestBaseFolder= "testBase/";
+const QString TestBasePath = TestBaseFolder+"base.sqlite";
 
 QVariantMap testTypeMap(){
     QVariantMap returnedMap;
@@ -17,7 +18,7 @@ QVariantMap testTypeMap(){
     returnedMap["metal"]="test metall";
     returnedMap["nominal"]="test nominal";
     returnedMap["revers"]="avers test description";
-    returnedMap["weigth"]="0";
+    //returnedMap["weigth"]="0";
     return returnedMap;
 }
 
@@ -28,16 +29,18 @@ TestBaseClass::TestBaseClass(QObject *parent) :
 }
 
 void TestBaseClass::initTestCase(){
-
     QDir dir = QDir(TestBaseFolder);
     dir.removeRecursively();
     QDir().mkdir(TestBaseFolder);
 
-    QFile::copy(":/base.sqlite",TestBaseFolder+"base.sqlite");
+    QFile::copy(":/base.sqlite",TestBasePath);
     QFile::copy(":/struct.json",TestBaseFolder+"struct.json");
+    QFile f(TestBasePath);
+    f.setPermissions(f.permissions()|QFile::WriteOwner|QFile::WriteGroup|QFile::WriteOther);
 }
 
 void TestBaseClass::testRowInsertion(){
+
     CVBBaseProvider *baseProvider = new CVBBaseProvider(TestBaseFolder);
     baseProvider->startLevel();
     int before = baseProvider->currentNode()->model->rowCount();
@@ -60,9 +63,8 @@ void TestBaseClass::testRowInsertion(){
 
 void TestBaseClass::testRowInsertionNative(){
     QSqlDatabase *db = new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"));
-    db->setDatabaseName(TestBaseFolder+"base.sqlite");
+    db->setDatabaseName(TestBasePath);
     if (!db->open()) {
-        qDebug() << "Cannot open database:" << db->lastError();
         QFAIL("Cannot open database");
     }
 
@@ -75,8 +77,19 @@ void TestBaseClass::testRowInsertionNative(){
 
     QVariantMap map = testTypeMap();
     int index = model->rowCount();
-    model->insertRow(index);
-    QSqlRecord record=model->record(index);
+
+    QSqlRecord record;
+    QSqlField f1("weigth", QVariant::String);
+
+    f1.setValue(QVariant("inserted from testRowInsertionNative"));
+    record.append(f1);
+
+    bool flag = model->insertRecord(-1, record);
+    if (!flag) {
+        qDebug()<<model->lastError();
+        QFAIL("Cannot insert record");
+    }
+    record=model->record(index);
     QStringList keys=map.keys();
     for (int i=0;i<keys.count();++i){
         record.setValue(keys[i],map[keys[i]]);
@@ -87,12 +100,12 @@ void TestBaseClass::testRowInsertionNative(){
     QCOMPARE(model->rowCount(),before+1);
 
     delete model;
+    db->close();
     delete db;
 
     db = new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"));
-    db->setDatabaseName(TestBaseFolder+"base.sqlite");
+    db->setDatabaseName(TestBasePath);
     if (!db->open()) {
-        qDebug() << "Cannot open database:" << db->lastError();
         QFAIL("Cannot open database");
     }
 

@@ -7,12 +7,12 @@
 void CVBSqlRelationalTableModel::applyRoles()
 {
     roles.clear();
-    qDebug()<<"\n"<<this->tableName();
+    //qDebug()<<"\n"<<this->tableName();
     QStringList fields;
     for (int i = 0; i < this->columnCount(); i++) {
             QString role=this->headerData(i, Qt::Horizontal).toString();
             roles[Qt::UserRole + i + 1] = QVariant(role).toByteArray();
-            qDebug()<<this->headerData(i, Qt::Horizontal);
+            //qDebug()<<this->headerData(i, Qt::Horizontal);
             fields.append(role);
     }
     fieldList=QVariant(fields);
@@ -45,6 +45,7 @@ QVariantMap CVBSqlRelationalTableModel::selectedItem(){
 }
 
 void CVBSqlRelationalTableModel::setSelectedItem(const QVariantMap &map){
+    //FIXME: refactoring is needed
     QSqlRecord record=this->record(selectedRow);
     QStringList keys=map.keys();
     for (int i=0;i<keys.count();++i){

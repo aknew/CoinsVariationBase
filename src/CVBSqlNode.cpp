@@ -87,14 +87,16 @@ void CVBSqlNode::selectItemWithIndex(int index){
      */
     if (index == kNewRowIndex){
         index = model->rowCount();
+        QSqlRecord record;
+
         if(filterParam.first != kNotValidPair){
+            //FIXME: partly correlated with  CVBSqlRelationalTableModel::setSelectedItem
             // add filters - foreign keys
-            QVariantMap map;
-            map[filterParam.first]=filterParam.second;
-            model->setSelectedItem(map);
+            QSqlField f1(filterParam.first, QVariant::String);
+            f1.setValue(QVariant(filterParam.second));
+            record.append(f1);
         }
-        else
-            model->insertRow(index);
+        model->insertRecord(-1, record);
     }
 
      model->selectedRow = index;
