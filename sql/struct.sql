@@ -14,8 +14,8 @@ CREATE TABLE "Types" (
 	"avers" TEXT,
 	"revers" TEXT,
 	"weigth" REAL,
-	"issue",
-	"edge",
+	"issue" TEXT,
+	"edge" TEXT,
 	CONSTRAINT coinsTypeUnique UNIQUE (nominal, metal, avers, revers, weigth)
 );
 
@@ -78,51 +78,39 @@ CREATE VIEW "FullVariatiesView" AS
 --- references to catalogs, auction prices  etc
 
 CREATE TABLE "SourcesList" (
-	"id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , 
-	"reduction" TEXT NOT NULL UNIQUE,
+	"reduction" TEXT PRIMARY KEY NOT NULL,
 	"fullname" TEXT,
 	"comment" TEXT
 );
 
-CREATE TABLE [varReferences] (
+CREATE TABLE [References] (
   [varID] INTEGER NOT NULL CONSTRAINT [stRefFK] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
-  [srid] INTEGER NOT NULL CONSTRAINT [stRefSL] REFERENCES [SourcesList]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
+  [srid] TEXT NOT NULL CONSTRAINT [stRefSL] REFERENCES [SourcesList]([reduction]) ON DELETE CASCADE ON UPDATE CASCADE, 
   [number] TEXT NOT NULL, 
   [rarity] TEXT, 
   [comment] TEXT, 
   CONSTRAINT [coinsSubUnique] UNIQUE([varID], [srid], [number]));
 
-CREATE VIEW "varReferencesView" AS 
-	SELECT 
-		varID, 
-		reduction, 
-		number, 
-		rarity,
-		varReferences."comment"
-	FROM varReferences, SourcesList where varReferences.srid=SourcesList.id;
-
-CREATE TRIGGER varReferencesDelete instead of delete on varReferencesView
+CREATE TRIGGER varReferencesInsert before insert on [References]
 begin
-	delete from varReferences where srid=(select id from SourcesList where reduction=old.reduction) and varID=old.varID;	
+	insert or ignore into SourcesList(reduction) values (new.srid);
 end;
 
-CREATE TRIGGER varReferencesInsert instead of insert on varReferencesView
+CREATE TRIGGER varReferencesUpdate before update on [References]
 begin
-	insert or ignore into SourcesList(reduction) values (new.reduction);
-	insert into varReferences (varID,srid,number,rarity,comment) values(
-			new.varID,
-			(select id from SourcesList where reduction=new.reduction), 
-			new.number,
-			new.rarity,
-			new.comment
-	);
+	insert or ignore into SourcesList(reduction) values (new.srid);	
 end;
 
-CREATE TRIGGER varReferencesUpdate instead of update on varReferencesView
-begin
-	delete from varReferencesView where reduction=old.reduction and varID=old.varID;
-	insert into varReferencesView (varID,reduction,number,rarity, comment) values(new.varID,new.reduction,new.number,new.rarity, new.comment);	
-end;
+--- Features 
+
+CREATE TABLE [Features] (
+  [typeID] INTEGER NOT NULL CONSTRAINT [stct] REFERENCES [Types]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
+  [id] INTEGER NOT NULL PRIMARY KEY,
+  [description] TEXT,
+  [comment] TEXT
+ );
+
+ --- ConcreteCoins
 
 CREATE TABLE [ConcreteCoins] (
   [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
@@ -132,8 +120,14 @@ CREATE TABLE [ConcreteCoins] (
   );
 COMMIT;
 
---- history of the coin
+--- feautures of the coins
 
+CREATE TABLE [CoinFeature] (
+  [coin] INTEGER NOT NULL CONSTRAINT [cfCoin] REFERENCES [ConcreteCoins]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
+  [feature] INTEGER NOT NULL CONSTRAINT [cfFeature] REFERENCES [Features]([id]) ON DELETE CASCADE 
+);
+
+--- history of the coin
 
 CREATE TABLE [CoinHistory] (
   [coin] INTEGER NOT NULL CONSTRAINT [chCoin] REFERENCES [ConcreteCoins]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
@@ -142,7 +136,7 @@ CREATE TABLE [CoinHistory] (
   [price] TEXT, 
   [hyperlink] TEXT, 
   [startPrice] TEXT, 
-  [currency] , 
+  [currency] TEXT, 
   [seller] TEXT, 
   [buyer] TEXT, 
   [blitz] REAL,

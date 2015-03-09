@@ -4,7 +4,7 @@
 const QString kNotValidPair = "This pair is not valid";
 
 CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *parent = 0):QObject(parent){
-
+    // TODO: Добавить проверку что все хорошо прошло, проще здесь найти что таблица называется не так как в struct.json чем отлавливать это в qml
     this->tableName=obj.value("name").toString();
     //FIXME: Cтоит создавать модели только тогда, когда они нужны и выгружать потом
     this->model=new CVBSqlRelationalTableModel(this,db);

@@ -4,7 +4,7 @@
 
 ```
 ├───attachment
-│	├───note1.pdf
+│   ├───note1.pdf
 │   └───note2.doc
 ├───images
 │   ├───1.bmp

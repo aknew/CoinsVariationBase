@@ -8,6 +8,10 @@
           {
             "name": "Variaties",
             "relation": "typeID"
+          },
+          {
+            "name": "Features",
+            "relation": "typeID"
           }
         ],
         "listViewFields":["nominal","firstYear","lastYear","issue"],
@@ -73,7 +77,7 @@
             "relation": "varID"
           },
           {
-            "name": "varReferencesView",
+            "name": "References",
             "relation": "varID"
           }
         ]
@@ -85,7 +89,7 @@
         "name": "ReversAttribute"
       },
       {
-        "name": "varReferencesView"
+        "name": "References"
       },
       {
         "name": "ConcreteCoinsView",
@@ -106,6 +110,7 @@
         "pictDelegate":"3"
       },
       { "name": "SourcesList" },
+      { "name": "Features"    },
       {
         "name": "CoinHistory",
         "rowParamNames": { "name": "coin" }
