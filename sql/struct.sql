@@ -83,7 +83,7 @@ CREATE TABLE "SourcesList" (
 	"comment" TEXT
 );
 
-CREATE TABLE [References] (
+CREATE TABLE [SourceRef] (
   [varID] INTEGER NOT NULL CONSTRAINT [stRefFK] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
   [srid] TEXT NOT NULL CONSTRAINT [stRefSL] REFERENCES [SourcesList]([reduction]) ON DELETE CASCADE ON UPDATE CASCADE, 
   [number] TEXT NOT NULL, 
@@ -91,12 +91,12 @@ CREATE TABLE [References] (
   [comment] TEXT, 
   CONSTRAINT [coinsSubUnique] UNIQUE([varID], [srid], [number]));
 
-CREATE TRIGGER varReferencesInsert before insert on [References]
+CREATE TRIGGER varSourceRefInsert before insert on [SourceRef]
 begin
 	insert or ignore into SourcesList(reduction) values (new.srid);
 end;
 
-CREATE TRIGGER varReferencesUpdate before update on [References]
+CREATE TRIGGER varSourceRefUpdate before update on [SourceRef]
 begin
 	insert or ignore into SourcesList(reduction) values (new.srid);	
 end;

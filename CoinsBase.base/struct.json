@@ -77,7 +77,7 @@
             "relation": "varID"
           },
           {
-            "name": "References",
+            "name": "SourceRef",
             "relation": "varID"
           }
         ]
@@ -89,7 +89,7 @@
         "name": "ReversAttribute"
       },
       {
-        "name": "References"
+        "name": "SourceRef"
       },
       {
         "name": "ConcreteCoinsView",
