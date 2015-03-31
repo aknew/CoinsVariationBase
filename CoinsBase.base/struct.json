@@ -37,7 +37,6 @@
       },
       {
         "name": "Variaties",
-        "listModel":"FullVariatiesView",
         "listViewFields":["year","mintmark","avers","revers","edge"],
         "rowParamNames": { "name": "typeID" },
         "childNode": [
@@ -58,6 +57,8 @@
             "type": "combo",
             "dict": "mint"
           },
+          {"name": "avers"},
+          {"name": "revers"},
           {
             "name": "edge",
             "type": "combo",
@@ -69,24 +70,10 @@
         ],
         "subNodes": [
           {
-            "name": "AversAttribute",
-            "relation": "varID"
-          },
-          {
-            "name": "ReversAttribute",
-            "relation": "varID"
-          },
-          {
             "name": "SourceRef",
             "relation": "varID"
           }
         ]
-      },
-     {
-        "name": "AversAttribute"
-      },
-      {
-        "name": "ReversAttribute"
       },
       {
         "name": "SourceRef"

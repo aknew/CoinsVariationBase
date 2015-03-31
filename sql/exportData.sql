@@ -9,7 +9,3 @@ select * from SourcesList;
 select * from Variaties;
 .output SourceRef.csv 
 select * from SourceRef;
-.output AversAttribute.csv 
-select * from AversAttribute;
-.output ReversAttribute.csv 
-select * from ReversAttribute;

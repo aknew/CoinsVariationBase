@@ -26,54 +26,12 @@ CREATE TABLE [Variaties] (
   [year] INTEGER, 
   [mintmark] TEXT, 
   [Mint] TEXT, 
+  [avers] TEXT,
+  [revers] TEXT,
   [edge] TEXT,
   [price] REAL,
   [comment] TEXT
  );
-
---- atributes of concrete variaty
-
-CREATE TABLE [AversAttribute] (
-	varID INTEGER NOT NULL CONSTRAINT [AversAttributeFK] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE,
-	Name TEXT NOT NULL,
-	Value TEXT NOT NULL,
-	CONSTRAINT attributesUnique UNIQUE (varID, Name, Value)
-);
-
-CREATE TABLE [ReversAttribute] (
-	varID INTEGER NOT NULL CONSTRAINT [ReversAttributeFK] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE,
-	Name TEXT NOT NULL,
-	Value TEXT NOT NULL,
-	CONSTRAINT attributesUnique UNIQUE (varID, Name, Value)
-);
-
---- FullVariantsView - need for showing list
-
-CREATE VIEW FullAversDescription AS 
-SELECT 
-	group_concat (Name|| ' ' || Value ,"; ") as avers, 
-	varID 
-FROM AversAttribute GROUP BY varID;
-
-CREATE VIEW FullReversDescription AS 
-SELECT 
-	group_concat (Name|| ' ' || Value ,"; ") as revers, 
-	varID 
-FROM ReversAttribute GROUP BY varID;
-
-
-CREATE VIEW "FullVariatiesView" AS 
-	SELECT 
-		typeID,
-		id,
-		varityType,
-		year, 
-		mintmark,
-		FullAversDescription.avers as avers,
-		FullReversDescription.revers as revers,
-		edge
-	FROM Variaties left join FullAversDescription on id=FullAversDescription.varId
-				   	left join FullReversDescription on id=FullReversDescription.varId;
 
 --- references to catalogs, auction prices  etc
 
