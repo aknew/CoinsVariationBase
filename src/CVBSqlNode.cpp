@@ -118,7 +118,7 @@ void CVBSqlNode::selectItemWithIndex(int index){
 void CVBSqlNode::setFilter(QPair<QString, QString> _filterParam){
     filterParam = _filterParam;
 
-    QString str1=QString("%1=%2").arg(filterParam.first,filterParam.second);
+    QString str1=QString("%1=\"%2\"").arg(filterParam.first,filterParam.second);
     model->setFilter(str1);
     model->select();
 

@@ -6,7 +6,7 @@ BEGIN TRANSACTION;
 --- coins type
 
 CREATE TABLE "Types" (
-	"id" INTEGER PRIMARY KEY  NOT NULL ,
+	"id" TEXT PRIMARY KEY  NOT NULL ,
 	"nominal" TEXT,
 	"metal" TEXT,
 	"firstYear" INTEGER,
@@ -20,8 +20,8 @@ CREATE TABLE "Types" (
 );
 
 CREATE TABLE [Variaties] (
-  [typeID] INTEGER NOT NULL CONSTRAINT [stct] REFERENCES [Types]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
-  [id] INTEGER NOT NULL PRIMARY KEY,
+  [typeID] TEXT NOT NULL CONSTRAINT [stct] REFERENCES [Types]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
+  [id] TEXT NOT NULL PRIMARY KEY,
   [varityType] TEXT, --- тип разновидности - обычная, случайная (например, перечеканы на определенных монетах), случайная, фальшивка, фуфло, новодел 
   [year] INTEGER, 
   [mintmark] TEXT, 
@@ -42,7 +42,7 @@ CREATE TABLE "SourcesList" (
 );
 
 CREATE TABLE [SourceRef] (
-  [varID] INTEGER NOT NULL CONSTRAINT [stRefFK] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
+  [varID] TEXT NOT NULL CONSTRAINT [stRefFK] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
   [srid] TEXT NOT NULL CONSTRAINT [stRefSL] REFERENCES [SourcesList]([reduction]) ON DELETE CASCADE ON UPDATE CASCADE, 
   [number] TEXT NOT NULL, 
   [rarity] TEXT, 
@@ -62,8 +62,8 @@ end;
 --- Features 
 
 CREATE TABLE [Features] (
-  [typeID] INTEGER NOT NULL CONSTRAINT [stct] REFERENCES [Types]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
-  [id] INTEGER NOT NULL PRIMARY KEY,
+  [typeID] TEXT NOT NULL CONSTRAINT [stct] REFERENCES [Types]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
+  [id] TEXT NOT NULL PRIMARY KEY,
   [description] TEXT,
   [comment] TEXT
  );
@@ -71,8 +71,8 @@ CREATE TABLE [Features] (
  --- ConcreteCoins
 
 CREATE TABLE [ConcreteCoins] (
-  [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
-  [varID] INTEGER NOT NULL CONSTRAINT [ccVariaties] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE,
+  [id] TEXT NOT NULL PRIMARY KEY, 
+  [varID] TEXT NOT NULL CONSTRAINT [ccVariaties] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE,
   [condition] TEXT,
   [status] TEXT NOT NULL DEFAULT "Архив"
   );
@@ -81,14 +81,14 @@ COMMIT;
 --- feautures of the coins
 
 CREATE TABLE [CoinFeature] (
-  [coin] INTEGER NOT NULL CONSTRAINT [cfCoin] REFERENCES [ConcreteCoins]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
+  [coin] TEXT NOT NULL CONSTRAINT [cfCoin] REFERENCES [ConcreteCoins]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
   [feature] INTEGER NOT NULL CONSTRAINT [cfFeature] REFERENCES [Features]([id]) ON DELETE CASCADE 
 );
 
 --- history of the coin
 
 CREATE TABLE [CoinHistory] (
-  [coin] INTEGER NOT NULL CONSTRAINT [chCoin] REFERENCES [ConcreteCoins]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
+  [coin] TEXT NOT NULL CONSTRAINT [chCoin] REFERENCES [ConcreteCoins]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
   [event] TEXT NOT NULL, 
   [date] TEXT, 
   [price] TEXT, 
@@ -103,7 +103,7 @@ CREATE TABLE [CoinHistory] (
 --- Пометки и картинки могут относиться практически к любой таблице, к какой относится конкретно устанавливается из программы в ручном режиме
 
 CREATE TABLE [Images] (
-  [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+  [id] TEXT NOT NULL PRIMARY KEY, 
   [comment] text,
   [source] text,
   [relid] text NOT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE [Images] (
   );
 
 CREATE TABLE [Notes] (
-  [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+  [id] TEXT NOT NULL PRIMARY KEY, 
   [comment] text,
   [source] text,
   [relid] text NOT NULL,
