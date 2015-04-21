@@ -53,7 +53,7 @@
             "name": "mintmark"
           },
           {
-            "name": "mint",
+            "name": "Mint",
             "type": "combo",
             "dict": "mint"
           },
