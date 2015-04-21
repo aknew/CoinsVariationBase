@@ -184,84 +184,72 @@ QQuickView *CVBController::newDeclarativeView(){
     return w;
 }
 
+void CVBController::needPopCurrentNode(){
+    baseProvider->previousLevel();
+}
+
+void CVBController::addNewRecord(){
+    newRowInsertion=true;
+
+    if (currentWidgetType.top()==QMLListWithoutEditing){
+        this->fullInfo(CVBSqlNode::kNewRowIndex);
+    }
+    else{
+        CVBSqlNode *node = baseProvider->currentNode();
+        node->selectItemWithIndex(CVBSqlNode::kNewRowIndex);
+        QQuickItem *item = this->currentItem();
+        item->setProperty("selectedItem",node->selectedItem());
+    }
+    this->baseProvider->beginTransaction();
+    this->currentItem()->setProperty("state","editable");
+}
+
+void CVBController::deleteCurrentRecord(){
+
+    baseProvider->deleteCurrentRow();
+    this->removeWidgetFromStack();
+}
+
+void CVBController::applyChanges(){
+    qDebug()<<"try get property from qml \n";
+    QVariant returnedValue;
+
+    QMetaObject::invokeMethod(this->currentItem(), "collectData",
+                              Q_RETURN_ARG(QVariant, returnedValue));
+
+    QVariantMap returnedMap=returnedValue.toMap();
+
+    if (!returnedMap.isEmpty()) {
+
+        qDebug()<<returnedMap;
+
+        baseProvider->currentNode()->model->setSelectedItem(returnedMap);
+    }
+    this->baseProvider->commit();
+    this->currentItem()->setProperty("state","");
+    newRowInsertion=false;
+}
+
+void CVBController::dropChanges(){
+    if (newRowInsertion){
+        this->removeWidgetFromStack();
+    }
+    else{
+        this->currentItem()->setProperty("state","");
+    }
+    baseProvider->currentNode()->model->revertAll();
+    this->baseProvider->rollback();
+    newRowInsertion=false;
+}
+
+void CVBController::startEditRecord(){
+    this->baseProvider->beginTransaction();
+    this->currentItem()->setProperty("state","editable");
+}
+
 void CVBController::buttonPressed(int index){
 
     qDebug()<<index;
-    if(index<0){
-        //что- то из предопредопределенных кнопок
-        switch (index) {
-        case backButtonIndex:{
-            baseProvider->previousLevel();
-            break;
-
-        case newButtonIndex:{
-                newRowInsertion=true;
-
-                if (currentWidgetType.top()==QMLListWithoutEditing){
-                    this->fullInfo(CVBSqlNode::kNewRowIndex);
-                }
-                else{
-                    CVBSqlNode *node = baseProvider->currentNode();
-                    node->selectItemWithIndex(CVBSqlNode::kNewRowIndex);
-                    QQuickItem *item = this->currentItem();
-                    item->setProperty("selectedItem",node->selectedItem());
-                }
-                this->baseProvider->beginTransaction();
-                this->currentItem()->setProperty("state","editable");
-                break;
-
-            }
-            case editButtonIndex:{
-                this->baseProvider->beginTransaction();
-                this->currentItem()->setProperty("state","editable");
-                break;
-            }
-            case applyButtonIndex:{
-                qDebug()<<"try get property from qml \n";
-                QVariant returnedValue;
-
-                QMetaObject::invokeMethod(this->currentItem(), "collectData",
-                                          Q_RETURN_ARG(QVariant, returnedValue));
-
-                QVariantMap returnedMap=returnedValue.toMap();
-
-                if (!returnedMap.isEmpty()) {
-
-                    qDebug()<<returnedMap;
-
-                    baseProvider->currentNode()->model->setSelectedItem(returnedMap);
-                }
-                this->baseProvider->commit();
-                this->currentItem()->setProperty("state","");
-                newRowInsertion=false;
-                break;
-
-            }
-            case undoButtonIndex:{
-                if (newRowInsertion){
-                    this->removeWidgetFromStack();
-                }
-                else{
-                    this->currentItem()->setProperty("state","");
-                }
-                baseProvider->currentNode()->model->revertAll();
-                this->baseProvider->rollback();
-                newRowInsertion=false;
-                break;
-
-            }
-        }
-        case deleteButtonIndex:{
-            baseProvider->deleteCurrentRow();
-            this->removeWidgetFromStack();
-            break;
-        }
-        default:
-            this->showError(tr("Not imlemented yet"));
-        }
-        return;
-    }
-    qDebug()<<"this is not predefined button";
     baseProvider->pressedButton(index);
 }
 

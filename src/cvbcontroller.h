@@ -40,16 +40,6 @@ class CVBController : public QObject
 
        QQmlApplicationEngine *engine;
 
-       //  константы-кнопки, не входящие в список переходов (назад, новая запись, удалить и т.п.)
-       enum kButtonI{
-           backButtonIndex=-1,
-           newButtonIndex=-2,
-           deleteButtonIndex=-3,
-           applyButtonIndex=-4,
-           undoButtonIndex=-5,
-           editButtonIndex=-6
-       };
-
    public slots:
        //взаимодействие с baseProvider
        void newTableWidget();
@@ -63,6 +53,13 @@ class CVBController : public QObject
        Q_INVOKABLE QStringList listForName(const QString& name);
        Q_INVOKABLE CVBSqlNode* nodeWithName(const QString& name);
        Q_INVOKABLE CVBSqlNode* currentNode();
+
+       Q_INVOKABLE void needPopCurrentNode();
+       Q_INVOKABLE void addNewRecord();
+       Q_INVOKABLE void deleteCurrentRecord();
+       Q_INVOKABLE void applyChanges();
+       Q_INVOKABLE void dropChanges();
+       Q_INVOKABLE void startEditRecord();
 
        //попытка вызвать диалог и загрузить в нем новую картинку, если все хорошо - вернется ее ссылка, если нет - -1
        //этот же метод вставит картикну из буфера обмена если ему передать imagePath=NULL (значение по умолчанию)

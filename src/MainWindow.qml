@@ -104,6 +104,7 @@ ApplicationWindow {
 
     function generateListViewFromFields(fieldList, model){
         var qmlString = "import QtQuick 2.0; import CVB.api 1.0; import CVBControls 1.0; Rectangle { id: mainRect; "
+        qmlString += "property bool isListView: true;";
         qmlString += "ListView { id: listView; anchors.fill: parent; delegate: delegate; model:" + model + "}"
         qmlString += "Component { id: delegate;"
         qmlString += "Item { id: recipe; width: listView.width; height: Math.max(100,topLayout.height+10);"
@@ -289,12 +290,15 @@ ApplicationWindow {
         iconSource: "/icons/back.png"
         text: "back"
         onTriggered: {
+            if (tablesStack.currentItem.isListView){
+                CVBApi.needPopCurrentNode();
+            }
+
             tablesStack.pop()
             if (tablesStack.currentItem.isFullForm){
                 windowToolbar.state="fullform"
             }
             else{
-                CVBApi.buttonPressed(-1)
                 windowToolbar.state=""
             }
         }
@@ -305,8 +309,8 @@ ApplicationWindow {
         iconSource: "/icons/edit.png"
         text: "edit"
         onTriggered: {
+            CVBApi.startEditRecord();
             windowToolbar.state = "editable"
-            CVBApi.buttonPressed(-6)
         }
     }
     Action {
@@ -315,7 +319,7 @@ ApplicationWindow {
         iconSource: "/icons/add.png"
         text: "add"
         onTriggered: {
-            CVBApi.buttonPressed(-2)
+            CVBApi.addNewRecord();
             windowToolbar.state = "editable"
         }
     }
@@ -323,7 +327,7 @@ ApplicationWindow {
         id: actionDelete
         iconSource: "/icons/delete.png"
         text: "delete"
-        onTriggered: CVBApi.buttonPressed(-3)
+        onTriggered: CVBApi.deleteCurrentRecord();
     }
 //    Action {
 //        id: systemTables
@@ -337,7 +341,7 @@ ApplicationWindow {
         text: "apply"
         onTriggered: {
             windowToolbar.state = "fullform"
-            CVBApi.buttonPressed(-4)
+            CVBApi.applyChanges();
         }
     }
     Action {
@@ -346,7 +350,7 @@ ApplicationWindow {
         text: "undo"
         onTriggered: {
             windowToolbar.state = "fullform"
-            CVBApi.buttonPressed(-5)
+            CVBApi.dropChanges();
         }
     }
 }
