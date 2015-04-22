@@ -79,7 +79,7 @@
         "name": "SourceRef"
       },
       {
-        "name": "ConcreteCoinsView",
+        "name": "ConcreteCoins",
         "childNode": [
           {
             "name": "CoinHistory",
