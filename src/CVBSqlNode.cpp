@@ -21,6 +21,16 @@ CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *paren
         this->listModel->applyRoles();
     }
 
+    QJsonValue json_sortColumn = obj.value("sortColumn");
+    if (!json_sortColumn.isUndefined()){
+        QString sortColumn = json_sortColumn.toString();
+        this->model->sortByColumn(sortColumn);
+        if (listModel){
+            listModel->sortByColumn(sortColumn);
+        }
+    }
+
+
     QJsonArray json_childNodes = obj.value("childNode").toArray();
     foreach (QJsonValue value1,json_childNodes) {
         QJsonObject obj=value1.toObject();

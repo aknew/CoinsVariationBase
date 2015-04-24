@@ -4,6 +4,7 @@
     "nodes": [
       {
         "name": "Types",
+        "sortColumn":"firstYear",
         "childNode": [
           {
             "name": "Variaties",

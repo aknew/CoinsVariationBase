@@ -22,6 +22,7 @@ public:
     CVBSqlRelationalTableModel(QObject *parent, QSqlDatabase _db):QSqlRelationalTableModel(parent,_db){this->setEditStrategy(QSqlTableModel::OnRowChange);}
     void applyRoles();
     void removeCurrentItem();
+    void sortByColumn(const QString &name);
     int selectedRow;
 
 virtual QHash<int, QByteArray> roleNames() const{return roles;}

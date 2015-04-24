@@ -18,6 +18,18 @@ void CVBSqlRelationalTableModel::applyRoles()
     fieldList=QVariant(fields);
 }
 
+void CVBSqlRelationalTableModel::sortByColumn(const QString &columnName){
+    for (int i = 0; i < this->columnCount(); i++) {
+        QString role=this->headerData(i, Qt::Horizontal).toString();
+        if (role == columnName){
+            this->sort(i,Qt::AscendingOrder);
+            return;
+        }
+    }
+    //XXX: Maybe not best practice
+    qDebug()<<"Wrong sort column name: "<<columnName;
+}
+
 QVariant CVBSqlRelationalTableModel::data(const QModelIndex &index, int role= Qt::DisplayRole ) const{
 
     QVariant value;
