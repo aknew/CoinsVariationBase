@@ -2,7 +2,7 @@
 __author__ = 'aknew'
 
 import csv
-from CVBAPI import Variety, CoinPicture, SourceRef
+import CVBAPI
 
 path = "D:\\aknew-Data\\GoogleDrive\\Numismatics\\vrp"
 csvPath = path + "\\vrp.csv"
@@ -23,7 +23,7 @@ with open(csvPath, 'rt', encoding="utf-8") as csvfile:
                 Authors.append(row[i])
             continue
 
-        variety = Variety()
+        variety = CVBAPI.Variety()
         # manually add VRP's type id
         variety.typeId = "a5886730-bb5d-43f4-a172-52294bc18952"
 
@@ -41,11 +41,11 @@ with open(csvPath, 'rt', encoding="utf-8") as csvfile:
             if valLen > 1:
                 sources = row[8].split("|")
                 for index, filename in enumerate(pictures):
-                    pict = CoinPicture(path + "\\" + filename, sources[index], variety.id)
+                    pict = CVBAPI.CoinPicture(path + "\\" + filename, sources[index], variety.id)
                     variety.pictures.append(pict)
 
             else:
-                pict = CoinPicture(path + "\\" + row[7], row[8], variety.id)
+                pict = CVBAPI.CoinPicture(path + "\\" + row[7], row[8], variety.id)
                 variety.pictures.append(pict)
 
         variety.rarity = row[9]
@@ -54,7 +54,7 @@ with open(csvPath, 'rt', encoding="utf-8") as csvfile:
         for i in range(firstAuthor, len(row)):
             if "" != row[i]:
                 values = row[i].split("|")
-                ref = SourceRef()
+                ref = CVBAPI.SourceRef()
                 ref.varID = variety.id
                 ref.srid = Authors[i-firstAuthor]
                 ref.number = values[0]
@@ -68,7 +68,4 @@ with open(csvPath, 'rt', encoding="utf-8") as csvfile:
 
         Variaties.append(variety)
 
-print(Variaties[10].year)
-print(Variaties[10].avers)
-print(Variaties[10].revers)
-print(len(Variaties[10].references))
+CVBAPI.saveVariaties(Variaties)
