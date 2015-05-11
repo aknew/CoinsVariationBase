@@ -1,5 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
 __author__ = 'aknew'
 
 
@@ -9,7 +7,7 @@ import hashlib
 class Variety(object):
     typeId = ""
     id = ""
-    varityType = u"Обычная разновидность"
+    varityType = "Обычная разновидность"
     year = ""
     mintmark = ""
     mint = ""
@@ -41,18 +39,13 @@ class SourceRef(object):
 
 
 class CoinPicture(object):
-    id = ""
-    comment = u""
-    source = u""
-    relid = ""
     table = "Variaties"
-    path = u""
 
-    def __init__(self, filename, source, varID):
+    def __init__(self, filename, source, varid):
         self.path = filename
         self.source = source
         # fixme: Need add relation table, but now I always works with Variaties
-        self.relation = varID
+        self.relation = varid
         # try to get md5
-        pictFile = open(self.path, 'rb')
-        self.id = hashlib.md5(pictFile.read()).hexdigest()
+        pictfile = open(self.path, 'rb')
+        self.id = hashlib.md5(pictfile.read()).hexdigest()
