@@ -1,28 +1,26 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
 __author__ = 'aknew'
 
 import csv
 from CVBAPI import Variety, CoinPicture, SourceRef
 
-
-path = u"D:\\aknew-Data\\GoogleDrive\\Numismatics\\vrp"
+path = "D:\\aknew-Data\\GoogleDrive\\Numismatics\\vrp"
 csvPath = path + "\\vrp.csv"
 
-Variaties = [];
+Variaties = []
 
 firstAuthor = 11
 
-Authors = [];
+Authors = []
 
 with open(csvPath, 'rt', encoding="utf-8") as csvfile:
     varList = csv.reader(csvfile)
     for index, row in enumerate(varList):
 
-        if (0 == index ):
+        if 0 == index:
             # header
             for i in range(firstAuthor, len(row)):
-                Authors.append(row[i]);
+                Authors.append(row[i])
             continue
 
         variety = Variety()
@@ -37,34 +35,34 @@ with open(csvPath, 'rt', encoding="utf-8") as csvfile:
         variety.revers = row[5]
         variety.edge = row[6]
 
-        if ("" != row[7]):
+        if "" != row[7]:
             pictures = row[7].split("|")
             valLen=len(pictures)
-            if valLen>1:
+            if valLen > 1:
                 sources = row[8].split("|")
                 for index, filename in enumerate(pictures):
-                    pict = CoinPicture(path + "\\"+ filename,sources[index],variety.id)
+                    pict = CoinPicture(path + "\\" + filename, sources[index], variety.id)
                     variety.pictures.append(pict)
 
             else:
-                pict = CoinPicture(path + "\\"+ row[7],row[8],variety.id)
+                pict = CoinPicture(path + "\\" + row[7], row[8], variety.id)
                 variety.pictures.append(pict)
 
         variety.rarity = row[9]
         variety.comment = row[10]
 
         for i in range(firstAuthor, len(row)):
-            if ("" != row[i]):
+            if "" != row[i]:
                 values = row[i].split("|")
                 ref = SourceRef()
                 ref.varID = variety.id
                 ref.srid = Authors[i-firstAuthor]
-                ref.number=values[0]
-                valLen=len(values)
+                ref.number = values[0]
+                valLen = len(values)
                 if valLen>1:
-                    ref.rarity=values[1]
-                    if valLen==3:
-                        ref.comment=values[2]
+                    ref.rarity = values[1]
+                    if valLen == 3:
+                        ref.comment = values[2]
 
                 variety.references.append(ref)
 
