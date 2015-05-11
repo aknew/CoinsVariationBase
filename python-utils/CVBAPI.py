@@ -3,6 +3,9 @@
 __author__ = 'aknew'
 
 
+import hashlib
+
+
 class Variety(object):
     typeId = ""
     id = ""
@@ -44,3 +47,12 @@ class CoinPicture(object):
     relid = ""
     table = "Variaties"
     path = u""
+
+    def __init__(self, filename, source, varID):
+        self.path = filename
+        self.source = source
+        # fixme: Need add relation table, but now I always works with Variaties
+        self.relation = varID
+        # try to get md5
+        pictFile = open(self.path, 'rb')
+        self.id = hashlib.md5(pictFile.read()).hexdigest()

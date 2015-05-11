@@ -3,12 +3,11 @@
 __author__ = 'aknew'
 
 import csv
-import hashlib
 from CVBAPI import Variety, CoinPicture, SourceRef
 
-# path = u"C:\\Users\\Казанский\\Google Диск\\Numismatics\\vrp"
-path = u"D:\\aknew\\vrp"
-csvPath = path + "\\vrp1.csv"
+
+path = u"D:\\aknew-Data\\GoogleDrive\\Numismatics\\vrp"
+csvPath = path + "\\vrp.csv"
 
 Variaties = [];
 
@@ -16,7 +15,7 @@ firstAuthor = 11
 
 Authors = [];
 
-with open(csvPath, 'rb') as csvfile:
+with open(csvPath, 'rt', encoding="utf-8") as csvfile:
     varList = csv.reader(csvfile)
     for index, row in enumerate(varList):
 
@@ -39,15 +38,17 @@ with open(csvPath, 'rb') as csvfile:
         variety.edge = row[6]
 
         if ("" != row[7]):
-            pict = CoinPicture
-            pict.path = path + "\\" + row[7].decode('utf-8');
-            pict.source = row[8]
-            pict.relation = variety.id;
-            #try to get md5
-            print pict.path
-            pictFile = open(pict.path, 'rb');
-            pict.id = hashlib.md5(pictFile.read()).hexdigest()
-            variety.pictures.append(pict)
+            pictures = row[7].split("|")
+            valLen=len(pictures)
+            if valLen>1:
+                sources = row[8].split("|")
+                for index, filename in enumerate(pictures):
+                    pict = CoinPicture(path + "\\"+ filename,sources[index],variety.id)
+                    variety.pictures.append(pict)
+
+            else:
+                pict = CoinPicture(path + "\\"+ row[7],row[8],variety.id)
+                variety.pictures.append(pict)
 
         variety.rarity = row[9]
         variety.comment = row[10]
@@ -69,7 +70,7 @@ with open(csvPath, 'rb') as csvfile:
 
         Variaties.append(variety)
 
-print Variaties[15].year
-print Variaties[15].avers
-print Variaties[15].revers
-print len(Variaties[15].references)
+print(Variaties[10].year)
+print(Variaties[10].avers)
+print(Variaties[10].revers)
+print(len(Variaties[10].references))

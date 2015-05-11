@@ -5,3 +5,5 @@ CoinsBase.base/images
 bin/*
 build*
 *.user
+*.idea*
+*__pycache__*
