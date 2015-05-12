@@ -38,6 +38,7 @@
       },
       {
         "name": "Variaties",
+        "sortColumn":"year",
         "listViewFields":["year","mintmark","avers","revers","edge"],
         "rowParamNames": { "name": "typeID" },
         "childNode": [
@@ -67,6 +68,9 @@
           },
           {
             "name": "price"
+          },
+          {
+            "name": "comment"
           }
         ],
         "subNodes": [
