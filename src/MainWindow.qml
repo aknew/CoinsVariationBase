@@ -54,10 +54,6 @@ ApplicationWindow {
                 action: actionDelete
                 visible:false
             }
-//            ToolButton {
-//                id: toolbuttonSystemTables
-//                action: systemTables
-//            }
         }
         RowLayout {
             id:editableLayout
@@ -329,12 +325,6 @@ ApplicationWindow {
         text: "delete"
         onTriggered: CVBApi.deleteCurrentRecord();
     }
-//    Action {
-//        id: systemTables
-//        iconSource: "/icons/Database.png"
-//        text: "systemTables"
-//        //onTriggered: CVBApi.buttonPressed(-1);
-//    }
     Action {
         id: actionApply
         iconSource: "/icons/apply.png"

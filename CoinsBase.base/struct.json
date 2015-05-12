@@ -106,30 +106,6 @@
       {
         "name": "CoinHistory",
         "rowParamNames": { "name": "coin" }
-      },
-      {
-        "name": "nominals",
-        "isSystem": "1"
-      },
-      {
-        "name": "metals",
-        "isSystem": "1"
-      },
-      {
-        "name": "issues",
-        "isSystem": "1"
-      },
-      {
-        "name": "edges",
-        "isSystem": "1"
-      },
-      {
-        "name": "statuses",
-        "isSystem": "1"
-      },
-      {
-        "name": "mint",
-        "isSystem": "1"
       }
     ],
     "comboBoxes": [

@@ -6,7 +6,6 @@
         <file alias="icons/undo.png">../resources/icons/undo.png</file>
         <file alias="icons/back.png">../resources/icons/back.png</file>
         <file alias="icons/edit.png">../resources/icons/edit.png</file>
-        <file alias="icons/Database.png">../resources/icons/Database.png</file>
         <file alias="no_image.png">../resources/no_image.png</file>
         <file alias="icons/delete.png">../resources/icons/delete.png</file>
         <file>MainWindow.qml</file>
