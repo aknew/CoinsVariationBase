@@ -48,19 +48,6 @@ CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *paren
                     obj.value("relation").toString()
                     );
     }
-
-    QJsonValue  json_rowParameters = obj.value("rowParamNames");// FIXME: древний костыль, надо исправить, а может при изменении структуры базы и сам уйдет
-    if ( json_rowParameters.isArray()){
-        foreach (QJsonValue value, json_rowParameters.toArray()) {
-            QJsonObject obj=value.toObject();
-            this->rowParamNames.push_back(obj.value("name").toString());
-        }
-    }
-    else{
-        QJsonObject obj= json_rowParameters.toObject();
-        this->rowParamNames.push_back(obj.value("name").toString());
-    }
-
     this->fullFormName = obj.value("fullForm").toString();
 
     this->listFormName = obj.value("listForm").toString();

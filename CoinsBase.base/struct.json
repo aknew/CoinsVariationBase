@@ -40,7 +40,6 @@
         "name": "Variaties",
         "sortColumn":"year",
         "listViewFields":["year","mintmark","avers","revers","edge"],
-        "rowParamNames": { "name": "typeID" },
         "childNode": [
           {
             "name": "ConcreteCoins",
@@ -91,10 +90,6 @@
             "relation": "coin"
           }
         ],
-        "rowParamNames": [
-          { "name": "stID" },
-          { "name": "varID" }
-        ],
         "comboDelegate": {
           "column": "5",
           "dict": "statuses"
@@ -104,8 +99,7 @@
       { "name": "SourcesList" },
       { "name": "Features"    },
       {
-        "name": "CoinHistory",
-        "rowParamNames": { "name": "coin" }
+        "name": "CoinHistory"
       }
     ],
     "comboBoxes": [
