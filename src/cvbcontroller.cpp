@@ -59,6 +59,8 @@ void CVBController::openBase(QString basePath){
     QString filename = QString("languages/") + locale+".json";
 
     static CVBTranslator translator;
+    // FIXME: need get it from keys
+    translator.m_needCollect = true;
     if( translator.load(filename, basePath) ){
         QApplication::instance()->installTranslator(&translator);
         //QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));

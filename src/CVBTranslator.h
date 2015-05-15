@@ -11,11 +11,13 @@ class CVBTranslator : public QTranslator
     Q_OBJECT
 
 private:
-    QVariantMap strings;
+    QString m_fullFileName;
+    void save () const;
 
 public:
     explicit CVBTranslator(QObject *parent = 0);
 
+    bool m_needCollect;
     virtual bool load(const QString &filename,
                       const QString &directory,
                       const QString &search_delimiters  = QString(),

@@ -4,9 +4,13 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+//HOTFIX: I don't know how to solve passing 'const QVariant' as 'this' argument of 'QVariant& QVariant::operator=(const QVariant&)' discards qualifiers [-fpermissive]
+QVariantMap strings;
+
 CVBTranslator::CVBTranslator(QObject *parent) :
     QTranslator(parent)
 {
+    m_needCollect = false;
 }
 
 
@@ -14,6 +18,11 @@ bool CVBTranslator::load(const QString &filename, const QString &directory, cons
     Q_UNUSED(search_delimiters);
     Q_UNUSED(suffix);
     QString fullFilename = directory + filename;
+
+    if (m_needCollect){
+        m_fullFileName = fullFilename;
+    }
+
     QFile file(fullFilename);
     if (!file.open(QIODevice::ReadOnly)){
         qDebug() << "Cannot open translation";
@@ -38,7 +47,21 @@ QString CVBTranslator::translate(const char *context, const char *sourceText, co
     Q_UNUSED(n);
     QString original = QString(sourceText);
     QString translation = strings[original].toString();
-    return translation.isEmpty()?original:translation;
+    if (translation.isEmpty()){
+        translation = original;
+        if (m_needCollect){
+            strings[original] = QVariant(original);
+            this->save();
+        }
+    }
+    return translation;
 }
 
-
+void CVBTranslator::save() const {
+    QFile saveFile(m_fullFileName);
+    if (!saveFile.open(QIODevice::WriteOnly)) {
+            qWarning("Couldn't open save file.");
+    }
+    QJsonDocument saveDoc(QJsonObject::fromVariantMap(strings));
+    saveFile.write(saveDoc.toJson());
+}
