@@ -158,7 +158,8 @@ ApplicationWindow {
     function createFullInfoForm() {
 
         var qmlString = "import QtQuick 2.0; import CVB.api 1.0; import CVBControls 1.0; import QtQuick.Controls 1.0; Rectangle { id: mainRect;"
-        qmlString += "property bool isFullForm: true;"
+        qmlString += "property bool isFullForm: true;\n"
+        qmlString += "property variant selectedItem: CVBApi.currentNode().selectedItem;\n"
         qmlString += "Flickable {clip: true; anchors.fill:parent;"
         qmlString += "contentHeight: nextlevel.y+nextlevel.height;"
         qmlString += "Column {id: contentColumn;y: 0;width: parent.width;"
@@ -168,7 +169,6 @@ ApplicationWindow {
         var stateEditableString = "states: State { name: \"editable\";"
 
         var currentNode = CVBApi.currentNode();
-        var selectedItem = currentNode.selectedItem;
         var fullFormFields = currentNode.fullFormFields;
 
         for (var i = 0; i < fullFormFields.length; ++i) {
@@ -184,26 +184,22 @@ ApplicationWindow {
                 fieldType = fieldStruct["type"]
                 field = fieldStruct["name"];
             }
-            var field_value = selectedItem[field];
-
-            if ( typeof field_value == 'string')
-                field_value = field_value.replace(/"/g, '\\"');
 
             switch (fieldType) {
             case "picture":
                 qmlString += "ImageWithFullScreen{ id: field_" + field
-                        + "; value: \"" + field_value + "\"; editing:false}"
+                        + "; value: selectedItem." + field + "; editing:false}"
                 break
             case "combo":
                 qmlString += "LabeledComboBoxInput {id: field_" + field + "; title: qsTr(\"" + field + "\");"
-                qmlString += "anchors.fill: parent.widths; value: \"" + field_value + "\";"
+                qmlString += "anchors.fill: parent.widths; value: selectedItem." + field + ";"
                 qmlString += "model: CVBApi.listForName(\"" + fieldStruct["dict"]
                         + "\");z:15; editing:false}"
                 break
             default:
                 qmlString += "LabeledTextInput {id: field_" + field
-                        + "; anchors.fill: parent.widths; value:  \"" + field_value
-                        + "\";title: qsTr(\"" + field + "\"); editing:false}"
+                        + "; anchors.fill: parent.widths; value:  selectedItem." + field
+                        + ";title: qsTr(\"" + field + "\"); editing:false}"
             }
 
             stateEditableString += "PropertyChanges { target:field_" + field + ";editing:true }"
