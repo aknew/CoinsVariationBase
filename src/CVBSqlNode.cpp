@@ -130,9 +130,9 @@ void CVBSqlNode::commitData(){
 }
 
 QString CVBSqlNode::listFormName(){
-    return model->tableName()+"Full.qml";
+    return model->tableName()+"List.qml";
 }
 
 QString CVBSqlNode::fullFormName(){
-    return model->tableName()+"List.qml";
+    return model->tableName()+"Full.qml";
 }
