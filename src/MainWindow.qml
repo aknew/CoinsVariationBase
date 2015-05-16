@@ -5,6 +5,7 @@ import QtQuick.Dialogs 1.0
 import CVB.api 1.0
 
 ApplicationWindow {
+    property bool needCollect: false
     id: mainWindow
     width: 360
     height: 360
@@ -134,6 +135,11 @@ ApplicationWindow {
         qmlString += "}" //Component {
         qmlString += "}" // mainRect
         console.log(qmlString)
+
+        if (needCollect){
+            CVBApi.saveListForm(qmlString);
+        }
+
         return qmlString;
 
     }
@@ -266,6 +272,9 @@ ApplicationWindow {
 
         qmlString += "}" // mainRect
         console.log(qmlString)
+        if (needCollect){
+            CVBApi.saveFullForm(qmlString);
+        }
         var fullInfoForm = Qt.createQmlObject(qmlString, tablesStack,
                                               "dynamicFullInfoForm")
         tablesStack.push(fullInfoForm)

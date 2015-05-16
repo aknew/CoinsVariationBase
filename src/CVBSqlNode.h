@@ -30,8 +30,8 @@ public:
     CVBSqlRelationalTableModel *model;//модель-ссылка на таблицу
     CVBSqlRelationalTableModel *listModel;//модель-ссылка на таблицу для показа в виде списка // TODO: this model is not used now
     QMap<QString, QString> childNodes;//идентификаторы узлов, на которые можно перейти от текущего и поле, по которому они связаны
-    QString listFormName;
-    QString fullFormName;
+    QString listFormName();
+    QString fullFormName();
 
     QVariant fullFormFields;
     QVariant listViewFields;

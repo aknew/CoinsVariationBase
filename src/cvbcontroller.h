@@ -54,6 +54,10 @@ class CVBController : public QObject
        Q_INVOKABLE CVBSqlNode* nodeWithName(const QString& name);
        Q_INVOKABLE CVBSqlNode* currentNode();
 
+       Q_INVOKABLE void saveListForm(const QString& qmlString);
+       Q_INVOKABLE void saveFullForm(const QString& qmlString);
+
+
        Q_INVOKABLE void needPopCurrentNode();
        Q_INVOKABLE void addNewRecord();
        Q_INVOKABLE void deleteCurrentRecord();

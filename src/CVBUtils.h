@@ -3,5 +3,6 @@
 #include <QString>
 
 void CVBFromQmlFilePath(QString *str);
+void CVBSaveStringToFile(const QString &stringToSave, const QString &filePath);
 
 #endif // CVBUTILS_H

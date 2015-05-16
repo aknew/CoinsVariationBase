@@ -48,9 +48,6 @@ CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *paren
                     obj.value("relation").toString()
                     );
     }
-    this->fullFormName = obj.value("fullForm").toString();
-
-    this->listFormName = obj.value("listForm").toString();
 
     QJsonValue  json_listViewFields = obj.value("listViewFields");
     if ( json_listViewFields.isArray()){
@@ -130,4 +127,12 @@ void CVBSqlNode::commitData(){
     if (!flag){
         qDebug()<<"error in db.commit: "<<this->model->lastError();
     }
+}
+
+QString CVBSqlNode::listFormName(){
+    return model->tableName()+"Full.qml";
+}
+
+QString CVBSqlNode::fullFormName(){
+    return model->tableName()+"List.qml";
 }
