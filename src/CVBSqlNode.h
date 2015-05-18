@@ -15,6 +15,8 @@ class CVBSqlNode: public QObject
     Q_PROPERTY(QStringList nextLevelList READ getNextLevelList)
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
     Q_PROPERTY(QList<QObject*> subNodes MEMBER m_subNodes)
+    Q_PROPERTY(bool hasImages MEMBER m_hasImages)
+    Q_PROPERTY(bool hasNotes MEMBER m_hasNotes)
 
 protected:
     QMap<QString, QString> m_subNodesParameters;//идентификаторы зависимых узлов и поле, по которому они связаны
@@ -35,6 +37,7 @@ public:
 
     QVariant fullFormFields;
     QVariant listViewFields;
+    bool m_hasImages, m_hasNotes;
 
     Q_INVOKABLE QObject* getListModel();
 

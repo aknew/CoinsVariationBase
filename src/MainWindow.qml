@@ -171,6 +171,8 @@ ApplicationWindow {
         var currentNode = CVBApi.currentNode();
         var fullFormFields = currentNode.fullFormFields;
 
+        console.log("Node has images: "+currentNode.hasImages)
+
         for (var i = 0; i < fullFormFields.length; ++i) {
             var fieldStruct = fullFormFields[i];
             var fieldType;
@@ -267,7 +269,6 @@ ApplicationWindow {
         qmlString += collectDataString
 
         qmlString += "}" // mainRect
-        console.log(qmlString)
         if (needCollect){
             CVBApi.saveFullForm(qmlString);
         }

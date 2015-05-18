@@ -65,6 +65,12 @@ CVBSqlNode::CVBSqlNode(const QJsonObject &obj,  QSqlDatabase &db, QObject *paren
     else {
         this->fullFormFields =this->model->fieldList;
     }
+
+    QJsonValue json_val = obj.value("hasImages");
+    m_hasImages =json_val.isUndefined()?false:json_val.toBool();
+
+    json_val = obj.value("hasNotes");
+    m_hasNotes =json_val.isUndefined()?false:json_val.toBool();
 }
 
  QObject* CVBSqlNode::getListModel(){
