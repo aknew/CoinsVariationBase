@@ -7,7 +7,7 @@ import shutil
 
 # init DB connection
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine, Column, String
+from sqlalchemy import create_engine, Column, String, asc
 
 base_root_dir = "../CoinsBase.base/"
 
@@ -75,10 +75,18 @@ class CoinPicture(Base):
         self.id = hashlib.md5(pictfile.read()).hexdigest()
 
 def loadVarities(type = ""):
+    varList = [];
     if "" == type:
-        return session.query(Variety).all()
+        varList = session.query(Variety).all()
     else:
-        session.query(Variety).filter_by(typeId=type).all()
+        varList = session.query(Variety).filter_by(typeId=type).order_by(asc(Variety.year)).all()
+
+    for ind, variety in enumerate(varList):
+        variety.references = session.query(SourceRef).filter_by(varID=variety.id).all()
+        variety.pictures = session.query(CoinPicture).filter_by(relid=variety.id).all()
+        varList[ind] = variety;
+
+    return varList
 
 def saveVariaties(varietiesList):
     session.add_all(varietiesList)

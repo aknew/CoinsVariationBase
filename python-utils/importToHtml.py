@@ -4,7 +4,7 @@ __author__ = 'aknew'
 import CVBAPI
 
 # vrp
-typeId = "" #"a5886730-bb5d-43f4-a172-52294bc18952"
+typeId = "a5886730-bb5d-43f4-a172-52294bc18952"
 
 varietyList = CVBAPI.loadVarities(typeId)
 
@@ -47,7 +47,19 @@ for variety in varietyList:
     if "" != variety.comment and variety.comment:
         fullDescription = fullDescription + "<b>Комментарий:</b>" + variety.comment + "<p>"
 
-    #todo: add refList and pictures
+    if 0 != len(variety.references):
+        fullDescription = fullDescription + "<b>Разновидность описана:</b><p>"
+        for ref in variety.references:
+            fullDescription = fullDescription + ref.srid + " "
+            fullDescription = fullDescription + ref.number + " "
+            if ref.rarity:
+                fullDescription = fullDescription + ref.rarity + " "
+            if ref.comment:
+                fullDescription = fullDescription + ref.comment
+            fullDescription = fullDescription + "<p>"
+
+
+    #todo: add pictures
 
 
     tableOfContents = tableOfContents +  "</td>"
