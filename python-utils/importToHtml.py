@@ -2,9 +2,11 @@
 __author__ = 'aknew'
 
 import CVBAPI
+import shutil
 
 # vrp
 typeId = "a5886730-bb5d-43f4-a172-52294bc18952"
+path = "import/"
 
 varietyList = CVBAPI.loadVarities(typeId)
 
@@ -59,7 +61,12 @@ for variety in varietyList:
             fullDescription = fullDescription + "<p>"
 
 
-    #todo: add pictures
+    if 0 != len(variety.pictures):
+        for pict in variety.pictures:
+            pictname =  pict.id + ".jpg"
+            shutil.copy(CVBAPI.base_root_dir + "images/" + pictname, path + "images/"+ pictname)
+            fullDescription = fullDescription + "<img src=\"images/" + pictname +"\">" + "<p>"
+            fullDescription = fullDescription + "Источник: " + pict.source + "<p>"
 
 
     tableOfContents = tableOfContents +  "</td>"
@@ -69,7 +76,7 @@ for variety in varietyList:
 
 tableOfContents = tableOfContents + "</table>"
 
-result =  open("import/result.html", "w")
+result =  open(path+"result.html", "w")
 
 #fixme: title should be generated from type
 result.write("<!DOCTYPE HTML> \

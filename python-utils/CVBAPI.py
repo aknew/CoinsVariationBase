@@ -67,7 +67,7 @@ class CoinPicture(Base):
     def __init__(self, filename, source, varid):
         self.path = filename
         self.source = source
-        # fixme: Need add relation table, but now I always works with Variaties
+        # fixme: It seems, I don't need use tables - relid is unique
         self.table = "Variaties"
         self.relid = varid
         # try to get md5
