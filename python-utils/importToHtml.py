@@ -10,49 +10,43 @@ path = "import/"
 
 varietyList = CVBAPI.loadVarities(typeId)
 
-tableOfContents = "<table border=\"1\">\
-   <caption><h1>Список разновидностей<h1></caption> \
-   <tr> \
-    <th>Год</th>\
-    <th>Буквы</th>\
-    <th>Описание разновидности</th>\
-    <th>Тип разновидности</th>\
-   </tr>"
+tableOfContents = "Список разновидностей|Год||Буквы|Описание разновидности|Тип разновидности"
 
-fullDescription = "<h1>Подробное описание разновидностей:</h1>"
+fullDescription = "#Подробное описание разновидностей:"
 
 for variety in varietyList:
-    tableOfContents = tableOfContents + "<tr>"
-    fullDescription = fullDescription + "<hr> <a id=\"" + variety.id+"\"></a>"
+    fullDescription = fullDescription + "#" + variety.id
 
-    fullDescription = fullDescription + "<b> Тип разновидности: </b>" + variety.varityType + "<p>"
+    fullDescription = fullDescription + "*Тип разновидности:* " + variety.varityType + "\n\n"
 
-    tableOfContents = tableOfContents + "<td>" + str(variety.year) + "</td>"
-    fullDescription = fullDescription + "<b> Год: </b>" + str(variety.year)
+    tableOfContents = tableOfContents + str(variety.year) + "|"
+    fullDescription = fullDescription + "* Год: *" + str(variety.year)
 
-    tableOfContents = tableOfContents + "<td>" + variety.mintmark + "</td>"
-    fullDescription = fullDescription + "<b> Буквы: </b>" + variety.mintmark + "<p>"
+    tableOfContents = tableOfContents + "|" + variety.mintmark + "|"
+    fullDescription = fullDescription + " *Буквы:* " + variety.mintmark + "\n\n"
 
-    tableOfContents = tableOfContents + "<td>" + "<a href=\"#" + variety.id + "\">"
+    tableOfContents = tableOfContents + "|["
 
     if "" != variety.avers:
-        tableOfContents = tableOfContents + "<b>Л.С.:</b>" + variety.avers + "<p>"
-        fullDescription = fullDescription + "<b>Л.С.:</b>" + variety.avers + "<p>"
+        tableOfContents = tableOfContents + "*Л.С.:* " + variety.avers + "\n\n"
+        fullDescription = fullDescription + "*Л.С.:* " + variety.avers + "\n\n"
 
     if "" != variety.revers:
-        tableOfContents = tableOfContents + "<b>О.С.:</b>" + variety.revers
-        fullDescription = fullDescription + "<b>О.С.:</b>" + variety.revers + "<p>"
+        tableOfContents = tableOfContents + "*О.С.:* " + variety.revers
+        fullDescription = fullDescription + "*О.С.:* " + variety.revers + "\n\n"
 
     if "" == variety.avers and "" == variety.revers:
         tableOfContents = tableOfContents + "перейти к подробному описанию"
 
+    tableOfContents = tableOfContents + "](#" + variety.id + ")"
+
     if "" != variety.comment and variety.comment:
-        fullDescription = fullDescription + "<b>Комментарий:</b>" + variety.comment + "<p>"
+        fullDescription = fullDescription + "*Комментарий:* " + variety.comment + "\n\n"
 
     if 0 != len(variety.references):
-        fullDescription = fullDescription + "<b>Разновидность описана:</b> "
+        fullDescription = fullDescription + "*Разновидность описана:* "
         for ref in variety.references:
-            fullDescription = fullDescription + ref.srid 
+            fullDescription = fullDescription + ref.srid
             fullDescription = fullDescription + " " + ref.number
             if ref.rarity:
                 fullDescription = fullDescription + " " + ref.rarity
@@ -65,30 +59,18 @@ for variety in varietyList:
         for pict in variety.pictures:
             pictname =  pict.id + ".jpg"
             shutil.copy(CVBAPI.base_root_dir + "images/" + pictname, path + "images/"+ pictname)
-            fullDescription = fullDescription + "<img src=\"images/" + pictname +"\">" + "<p>"
-            fullDescription = fullDescription + "Источник: " + pict.source + "<p>"
+            fullDescription = fullDescription + "![Alt text](images/" + pictname
+            fullDescription = fullDescription + " \"Источник: " + pict.source + "\")\n\n"
 
 
-    tableOfContents = tableOfContents +  "</td>"
+    tableOfContents = tableOfContents + "|" + variety.varityType
 
-    tableOfContents = tableOfContents + "<td>" + variety.varityType + "</td>"
-    tableOfContents = tableOfContents + "</tr>"
 
-tableOfContents = tableOfContents + "</table>"
+result = open(path+"result.md", "wb")
 
-result =  open(path+"result.html", "w")
-
-#fixme: title should be generated from type
-result.write("<!DOCTYPE HTML> \
-<html> \
- <head> \
-  <meta charset=\"cp1251\"> \
-  <title>Полушки ВРП</title> \
- </head> \
- <body>");
 #todo: add table of context
-result.write(tableOfContents)
-result.write(fullDescription)
+result.write(tableOfContents.encode('utf-8'))
+result.write(fullDescription.encode('utf-8'))
 
 #todo: add references
 
