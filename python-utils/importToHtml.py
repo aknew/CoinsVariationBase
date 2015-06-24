@@ -50,15 +50,15 @@ for variety in varietyList:
         fullDescription = fullDescription + "<b>Комментарий:</b>" + variety.comment + "<p>"
 
     if 0 != len(variety.references):
-        fullDescription = fullDescription + "<b>Разновидность описана:</b><p>"
+        fullDescription = fullDescription + "<b>Разновидность описана:</b> "
         for ref in variety.references:
-            fullDescription = fullDescription + ref.srid + " "
-            fullDescription = fullDescription + ref.number + " "
+            fullDescription = fullDescription + ref.srid 
+            fullDescription = fullDescription + " " + ref.number
             if ref.rarity:
-                fullDescription = fullDescription + ref.rarity + " "
+                fullDescription = fullDescription + " " + ref.rarity
             if ref.comment:
                 fullDescription = fullDescription + ref.comment
-            fullDescription = fullDescription + "<p>"
+            fullDescription = fullDescription + "; "
 
 
     if 0 != len(variety.pictures):
