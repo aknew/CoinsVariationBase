@@ -61,7 +61,7 @@ for variety in varietyList:
         for pict in variety.pictures:
             pictname = pict.id + ".jpg"
             shutil.copy(CVBAPI.base_root_dir + "images/" + pictname, path + "images/"+ pictname)
-            result.write(("![**Не удалось подставить картинку " + pictname + "**](images/" + pictname).encode('utf-8'))
+            result.write(("![](images/" + pictname).encode('utf-8'))
             result.write((" \"Источник: " + pict.source + "\")\n\n").encode('utf-8'))
 
 

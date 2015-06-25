@@ -79,7 +79,7 @@ def loadVarities(type = ""):
     if "" == type:
         varList = session.query(Variety).all()
     else:
-        varList = session.query(Variety).filter_by(typeId=type).order_by(asc(Variety.year)).all()
+        varList = session.query(Variety).filter_by(typeId=type).order_by(asc(Variety.year), asc(Variety.mintmark)).all()
 
     for ind, variety in enumerate(varList):
         variety.references = session.query(SourceRef).filter_by(varID=variety.id).all()
