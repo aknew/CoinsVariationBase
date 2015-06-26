@@ -20,7 +20,7 @@ for variety in varietyList:
 
         currentYear = variety.year
         currentMM = variety.mintmark
-        result.write(("##" + str(variety.year) + " " + variety.mintmark + "\n\n").encode('utf-8'))
+        result.write(("#" + str(variety.year) + " " + variety.mintmark + "\n\n").encode('utf-8'))
 
     result.write("---\n\n".encode('utf-8'))
 
