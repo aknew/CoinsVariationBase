@@ -13,7 +13,8 @@ varietyList = CVBAPI.loadVarities(typeId)
 result = open(path+"result.md", "wb")
 
 currentYear = -1
-currentMM = "";
+currentMM = ""
+sources = set()
 
 for variety in varietyList:
     if variety.year != currentYear or currentMM != variety.mintmark:
@@ -42,6 +43,7 @@ for variety in varietyList:
         result.write(("**Разновидность описана:** ").encode('utf-8'))
 
         for ref in variety.references:
+            sources.add(ref.srid)
             result.write(ref.srid.encode('utf-8'))
             result.write((" " + ref.number).encode('utf-8'))
 
@@ -64,10 +66,17 @@ for variety in varietyList:
             result.write(("![](images/" + pictname).encode('utf-8'))
             result.write((" \"Источник: " + pict.source + "\")\n\n").encode('utf-8'))
 
+if (len(sources)):
+    result.write(("#Список литературы:\n\n").encode('utf-8'))
+    for red in sources:
+        sr = CVBAPI.loadSource(red)
+        if sr is not None:
+            if "" == sr.fullname or sr.fullname is None:
+                sr.fullname = "**!!! Этот источник не имеет подробного описания в базе!!!**"
 
-
-
-
-#todo: add references
+            result.write(("\[" + sr.reduction + "\] "+ sr.fullname).encode('utf-8'))
+            if "" != sr.comment and sr.comment:
+                result.write((" *" + sr.comment + "*").encode('utf-8'))
+            result.write("\n\n".encode('utf-8'))
 
 result.close();

@@ -54,6 +54,15 @@ class SourceRef(Base):
     rarity = Column(String)
     comment = Column(String)
 
+class Source(Base):
+    __tablename__ = 'SourcesList'
+    reduction = Column(String, primary_key=True)
+    fullname = Column(String)
+    comment = Column(String)
+
+def loadSource(reduction):
+    return session.query(Source).filter_by(reduction=reduction).first()
+
 
 class CoinPicture(Base):
     __tablename__ = 'Images'
