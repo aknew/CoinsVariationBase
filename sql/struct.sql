@@ -106,14 +106,12 @@ CREATE TABLE [Images] (
   [id] TEXT NOT NULL PRIMARY KEY, 
   [comment] text,
   [source] text,
-  [relid] text NOT NULL,
-  [table] text NOT NULL
+  [relid] text NOT NULL
   );
 
 CREATE TABLE [Notes] (
   [id] TEXT NOT NULL PRIMARY KEY, 
   [comment] text,
   [source] text,
-  [relid] text NOT NULL,
-  [table] text NOT NULL
+  [relid] text NOT NULL
   );

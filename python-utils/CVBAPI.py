@@ -70,13 +70,11 @@ class CoinPicture(Base):
     comment = Column(String)
     source = Column(String)
     relid = Column(String)
-    table = Column(String)
 
 
     def __init__(self, filename, source, varid):
         self.path = filename
         self.source = source
-        # fixme: It seems, I don't need use tables - relid is unique
         self.table = "Variaties"
         self.relid = varid
         # try to get md5
