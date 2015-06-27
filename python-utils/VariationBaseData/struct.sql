@@ -1,4 +1,4 @@
-PRAGMA foreign_keys=OFF;
+PRAGMA foreign_keys=ON;
 BEGIN TRANSACTION;
 
 --- 
@@ -19,17 +19,17 @@ CREATE TABLE "Types" (
 	CONSTRAINT coinsTypeUnique UNIQUE (nominal, metal, avers, revers, weigth)
 );
 
-CREATE TABLE [Variaties] (
+CREATE TABLE [Varieties] (
   [typeID] TEXT NOT NULL CONSTRAINT [stct] REFERENCES [Types]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
   [id] TEXT NOT NULL PRIMARY KEY,
-  [varityType] TEXT, --- тип разновидности - обычная, случайная (например, перечеканы на определенных монетах), случайная, фальшивка, фуфло, новодел 
+  [varietyType] TEXT, --- тип разновидности - обычная, случайная (например, перечеканы на определенных монетах), случайная, фальшивка, фуфло, новодел 
   [year] INTEGER, 
   [mintmark] TEXT, 
   [Mint] TEXT, 
   [avers] TEXT,
   [revers] TEXT,
   [edge] TEXT,
-  [price] REAL,
+  [rarity] REAL,
   [comment] TEXT
  );
 

@@ -30,8 +30,7 @@ class Variety(Base):
     avers = Column(String)
     revers = Column(String)
     edge = Column(String)
-    # FIXME: need rename column into the base
-    rarity = Column("price", String)
+    rarity = Column(String)
     comment = Column(String)
 
     def __init__(self):

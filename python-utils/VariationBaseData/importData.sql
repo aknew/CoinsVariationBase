@@ -1,3 +1,4 @@
+--- this script doesn't work  from pythone becouse .import is feature sqlite3 command line? but not salite3
 .mode csv
 -- .headers on
 
