@@ -3,10 +3,20 @@ __author__ = 'aknew'
 
 import CVBAPI
 import shutil
+import os
 
 # vrp
 typeId = "a5886730-bb5d-43f4-a172-52294bc18952"
-path = "import/"
+path = "../importResult/"
+image_path = path + "images/"
+
+if os.path.exists(path):
+    shutil.rmtree(path)
+
+#folders
+os.makedirs(path)
+os.makedirs(image_path)
+
 
 varietyList = CVBAPI.loadVarities(typeId)
 
@@ -25,7 +35,7 @@ for variety in varietyList:
 
     result.write("---\n\n".encode('utf-8'))
 
-    result.write(("**Тип разновидности:** " + variety.varityType + "\n\n").encode('utf-8'))
+    result.write(("**Тип разновидности:** " + variety.varietyType + "\n\n").encode('utf-8'))
 
     if "" != variety.avers:
         result.write(("**Л.С.:** " + variety.avers + "\n\n").encode('utf-8'))
@@ -62,7 +72,7 @@ for variety in varietyList:
     if 0 != len(variety.pictures):
         for pict in variety.pictures:
             pictname = pict.id + ".jpg"
-            shutil.copy(CVBAPI.base_root_dir + "images/" + pictname, path + "images/"+ pictname)
+            shutil.copy(CVBAPI.base_root_dir + "images/" + pictname, image_path + pictname)
             result.write(("![](images/" + pictname).encode('utf-8'))
             result.write((" \"Источник: " + pict.source + "\")\n\n").encode('utf-8'))
 

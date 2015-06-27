@@ -29,7 +29,7 @@ def import_csv(path, type):
             variety = CVBAPI.Variety()
             variety.typeId = type
 
-            variety.varityType = row[0]
+            variety.varietyType = row[0]
             variety.year = row[1]
             variety.mintmark = row[2]
             variety.mint = row[3]
