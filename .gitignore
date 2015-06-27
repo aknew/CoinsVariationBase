@@ -1,9 +1,10 @@
 *.pro.user
 *.pro.user*
 android/bin*
-CoinsBase.base/images
 bin/*
 build*
 *.user
 *.idea*
 *__pycache__*
+VariationBase*
+importResult*
