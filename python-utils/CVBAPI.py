@@ -9,7 +9,7 @@ import shutil
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, Column, String, asc
 
-base_root_dir = "../CoinsBase.base/"
+base_root_dir = "../VariationBase/"
 
 engine = create_engine('sqlite:///' + base_root_dir + "base.sqlite", echo=True)
 
@@ -20,10 +20,10 @@ session = Session()
 Base = declarative_base()
 
 class Variety(Base):
-    __tablename__ = 'Variaties'
+    __tablename__ = 'Varieties'
     typeId = Column(String)
     id = Column(String,primary_key = True)
-    varityType = Column(String)
+    varietyType = Column(String)
     year = Column(String)
     mintmark = Column(String)
     mint = Column(String)
@@ -74,7 +74,6 @@ class CoinPicture(Base):
     def __init__(self, filename, source, varid):
         self.path = filename
         self.source = source
-        self.table = "Variaties"
         self.relid = varid
         # try to get md5
         pictfile = open(self.path, 'rb')
@@ -94,7 +93,7 @@ def loadVarities(type = ""):
 
     return varList
 
-def saveVariaties(varietiesList):
+def saveVarieties(varietiesList):
     session.add_all(varietiesList)
     for variety in varietiesList:
         session.add_all(variety.references)

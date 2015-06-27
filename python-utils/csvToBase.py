@@ -3,69 +3,71 @@ __author__ = 'aknew'
 
 import csv
 import CVBAPI
+from os.path import dirname
 
-path = "D:\\aknew-Data\\GoogleDrive\\Numismatics\\vrp"
-csvPath = path + "\\vrp.csv"
 
-Variaties = []
+def import_csv(path, type):
 
-firstAuthor = 11
+    base_path = dirname(path)
 
-Authors = []
+    Variaties = []
 
-with open(csvPath, 'rt', encoding="utf-8") as csvfile:
-    varList = csv.reader(csvfile)
-    for index, row in enumerate(varList):
+    firstAuthor = 11
 
-        if 0 == index:
-            # header
-            for i in range(firstAuthor, len(row)):
-                Authors.append(row[i])
-            continue
+    Authors = []
 
-        variety = CVBAPI.Variety()
-        # manually add VRP's type id
-        variety.typeId = "a5886730-bb5d-43f4-a172-52294bc18952"
+    with open(path, 'rt', encoding="utf-8") as csvfile:
+        varList = csv.reader(csvfile)
+        for index, row in enumerate(varList):
 
-        variety.varityType = row[0]
-        variety.year = row[1]
-        variety.mintmark = row[2]
-        variety.mint = row[3]
-        variety.avers = row[4]
-        variety.revers = row[5]
-        variety.edge = row[6]
+            if 0 == index:
+                # header
+                for i in range(firstAuthor, len(row)):
+                    Authors.append(row[i])
+                continue
 
-        if "" != row[7]:
-            pictures = row[7].split("|")
-            valLen=len(pictures)
-            if valLen > 1:
-                sources = row[8].split("|")
-                for index, filename in enumerate(pictures):
-                    pict = CVBAPI.CoinPicture(path + "\\" + filename, sources[index], variety.id)
+            variety = CVBAPI.Variety()
+            variety.typeId = type
+
+            variety.varityType = row[0]
+            variety.year = row[1]
+            variety.mintmark = row[2]
+            variety.mint = row[3]
+            variety.avers = row[4]
+            variety.revers = row[5]
+            variety.edge = row[6]
+
+            if "" != row[7]:
+                pictures = row[7].split("|")
+                valLen=len(pictures)
+                if valLen > 1:
+                    sources = row[8].split("|")
+                    for index, filename in enumerate(pictures):
+                        pict = CVBAPI.CoinPicture(base_path + "\\" + filename, sources[index], variety.id)
+                        variety.pictures.append(pict)
+
+                else:
+                    pict = CVBAPI.CoinPicture(base_path + "\\" + row[7], row[8], variety.id)
                     variety.pictures.append(pict)
 
-            else:
-                pict = CVBAPI.CoinPicture(path + "\\" + row[7], row[8], variety.id)
-                variety.pictures.append(pict)
+            variety.rarity = row[9]
+            variety.comment = row[10]
 
-        variety.rarity = row[9]
-        variety.comment = row[10]
+            for i in range(firstAuthor, len(row)):
+                if "" != row[i]:
+                    values = row[i].split("|")
+                    ref = CVBAPI.SourceRef()
+                    ref.varID = variety.id
+                    ref.srid = Authors[i-firstAuthor]
+                    ref.number = values[0]
+                    valLen = len(values)
+                    if valLen>1:
+                        ref.rarity = values[1]
+                        if valLen == 3:
+                            ref.comment = values[2]
 
-        for i in range(firstAuthor, len(row)):
-            if "" != row[i]:
-                values = row[i].split("|")
-                ref = CVBAPI.SourceRef()
-                ref.varID = variety.id
-                ref.srid = Authors[i-firstAuthor]
-                ref.number = values[0]
-                valLen = len(values)
-                if valLen>1:
-                    ref.rarity = values[1]
-                    if valLen == 3:
-                        ref.comment = values[2]
+                    variety.references.append(ref)
 
-                variety.references.append(ref)
+            Variaties.append(variety)
 
-        Variaties.append(variety)
-
-CVBAPI.saveVariaties(Variaties)
+    CVBAPI.saveVarieties(Variaties)

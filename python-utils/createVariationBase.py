@@ -5,6 +5,7 @@ import shutil
 import os
 import sqlite3
 import csv
+import csvToBase
 
 base_path = "../VariationBase/"
 data_path = "VariationBaseData/"
@@ -63,3 +64,5 @@ except Exception as e:
     print(e)
 finally:
     connection.close()
+
+csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\vrp\\vrp.csv","a5886730-bb5d-43f4-a172-52294bc18952")
