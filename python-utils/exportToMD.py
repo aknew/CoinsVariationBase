@@ -5,6 +5,11 @@ import CVBAPI
 import shutil
 import os
 
+#convert with pandoc:
+#html:  pandoc --toc -s result.md -o vrp.html
+#latex: pandoc -s result.md -o vrp.tex
+
+
 # vrp
 typeId = "a5886730-bb5d-43f4-a172-52294bc18952"
 path = "../importResult/"
