@@ -62,10 +62,7 @@ void CVBController::openBase(QString basePath){
     this->connect(baseProvider,SIGNAL(newTableWidget()),this,SLOT(newTableWidget()));
     this->connect(baseProvider,SIGNAL(getError(QString)),this,SLOT(showError(QString)));
 
-    imageProvider= new CVBImageProvider(QQuickImageProvider::Pixmap);
-    imageProvider->imageFolder=baseProvider->basePath+"images/";
-
-    engine->addImageProvider(QLatin1String("imageProvider"),imageProvider);
+    engine->addImageProvider(QLatin1String("imageProvider"),baseProvider->imageProvider);
 
     engine->rootContext()->setContextProperty("window",this);
 
@@ -189,7 +186,7 @@ QQuickView *CVBController::newDeclarativeView(){
 
     QQuickView *w=new QQuickView();
     w->setResizeMode(QQuickView::SizeRootObjectToView);
-    w->engine()->addImageProvider(QLatin1String("imageProvider"),imageProvider);
+    w->engine()->addImageProvider(QLatin1String("imageProvider"),baseProvider->imageProvider);
     w->rootContext()->setContextProperty("window",this);
     return w;
 }
@@ -299,7 +296,7 @@ QVariant CVBController::loadNewImage(QString imagePath = NULL){
 void CVBController::saveImage(QString imageId, QString imagePath = NULL){
 
     QSize size=QSize();
-    QImage img = imageProvider->requestImage(imageId,&size,size);
+    QImage img = baseProvider->imageProvider->requestImage(imageId,&size,size);
 
     if (!imagePath.isEmpty()){
 

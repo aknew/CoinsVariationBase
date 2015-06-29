@@ -6,6 +6,7 @@
 #include <QString>
 #include "CVBSqlNode.h"
 #include "comboboxdescription.h"
+#include "CVBImageProvider.h"
 
 class CVBBaseProvider : public QObject
 {
@@ -24,6 +25,7 @@ public:
 
     QString basePath;
     QStringList systemTables;
+    CVBImageProvider *imageProvider;
 
     void pressedButton(int index);
     void startLevel();

@@ -18,7 +18,6 @@ class CVBController : public QObject
 {
     Q_OBJECT
     CVBBaseProvider *baseProvider;
-    CVBImageProvider *imageProvider;
     QStack<kCurrentWidget> currentWidgetType;
     bool newRowInsertion;
 

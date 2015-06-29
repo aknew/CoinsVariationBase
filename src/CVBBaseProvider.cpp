@@ -24,10 +24,14 @@ CVBBaseProvider::CVBBaseProvider(QString pathPath, QObject *parent) :
     query.exec("PRAGMA foreign_keys = ON;");
 
     this->parse();
+
+    imageProvider= new CVBImageProvider(QQuickImageProvider::Pixmap);
+    imageProvider->imageFolder=basePath+"images/";
 }
 
 CVBBaseProvider::~CVBBaseProvider(){
     db.close();
+    delete imageProvider;
 }
 
 QStringList CVBBaseProvider::listForID(const QString &name){
