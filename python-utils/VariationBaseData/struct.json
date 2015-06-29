@@ -66,7 +66,7 @@
             "dict": "edges"
           },
           {
-            "name": "price"
+            "name": "rarity"
           },
           {
             "name": "comment"

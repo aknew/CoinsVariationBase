@@ -23,7 +23,14 @@ void CVBController::start(){
                                   );
     }
     else {
-        this->openBase(basePath);
+        try {
+            this->openBase(basePath);
+        }
+        catch (...) {
+            QMetaObject::invokeMethod(this->applicationWindow,
+                                      "openBaseAlert"
+                                      );
+        }
     }
 
 }

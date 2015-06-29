@@ -1,4 +1,5 @@
 #include "CVBBaseProvider.h"
+#include <stdexcept>
 
 CVBBaseProvider::CVBBaseProvider(QString pathPath, QObject *parent) :
     QObject(parent)
@@ -15,6 +16,7 @@ CVBBaseProvider::CVBBaseProvider(QString pathPath, QObject *parent) :
     db.setDatabaseName(pathPath);
     if (!db.open()) {
         qDebug() << "Cannot open database:" << db.lastError();
+        throw  std::runtime_error("open base error");
     }
 
     //enable foreign key
@@ -178,7 +180,7 @@ void CVBBaseProvider::parse(){
      QFile file(filename);
      if (!file.open(QIODevice::ReadOnly)){
          qDebug() << "Cannot open json";
-         exit(-1);
+         throw  std::runtime_error("Cannot open json");
      }
      QString jsonData = file.readAll();
      file.close();

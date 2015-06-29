@@ -1,7 +1,7 @@
-import QtQuick 2.1
+import QtQuick 2.2
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
-import QtQuick.Dialogs 1.0
+import QtQuick.Dialogs 1.1
 import CVB.api 1.0
 
 ApplicationWindow {
@@ -95,8 +95,24 @@ ApplicationWindow {
         }
     }
 
+    MessageDialog {
+        id: messageDialog
+        title: qsTr("Base open error")
+        text: qsTr("Something wrong during opening base. Would you like to open another?")
+        icon: StandardIcon.Warning
+        standardButtons: StandardButton.Ok | StandardButton.Cancel
+        modality: Qt.WindowModal
+        onAccepted: {
+            openBase();
+        }
+    }
+
     function openBase() {
         openBaseDialog.open()
+    }
+
+    function openBaseAlert(){
+        messageDialog.open();
     }
 
     function generateListViewFromFields(fieldList, model){
