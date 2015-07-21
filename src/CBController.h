@@ -7,7 +7,7 @@
 
 class CBController : public QObject
 /*!
-          \brief This class is used as bridge between c++ and qml
+          \brief Bridge between c++ and qml
 
 */
 {
