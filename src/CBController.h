@@ -5,6 +5,8 @@
 #include <QtQml>
 #include <QQuickWindow>
 
+#include "CBBaseProvider.h"
+
 class CBController : public QObject
 /*!
           \brief Bridge between c++ and qml
@@ -12,6 +14,9 @@ class CBController : public QObject
 */
 {
     Q_OBJECT
+
+    Q_PROPERTY(CBBaseProvider *baseProvider MEMBER m_baseProvider FINAL)
+
 public:
     explicit CBController(QObject *parent = 0);
     void start(); ///< starts all actions, runs once from main
@@ -19,11 +24,14 @@ public:
     QQuickWindow *applicationWindow; ///< needs for invoking some actions like "need show message" or "need save generated qml"
     QQmlApplicationEngine *engine; ///< needs for set imageProvider
 
-signals:
+    Q_INVOKABLE void openBase(QString basePath); ///< open base with path, is usualy called from qml openDialog and from start method
+
+private:
+    CBBaseProvider *m_baseProvider;
 
 public slots:
+    void providerReadyToWork();
 
-    Q_INVOKABLE void openBase(QString basePath); ///< open base with path, is usualy called from qml openDialog and from start method
 };
 
 #endif // CBCONTROLLER_H

@@ -4,7 +4,8 @@ SOURCES += \
     main.cpp \
     CBController.cpp \
     CBTranslator.cpp \
-    CBUtils.cpp
+    CBUtils.cpp \
+    CBBaseProvider.cpp
 
 DISTFILES += \
     main.qml
@@ -15,4 +16,5 @@ RESOURCES += \
 HEADERS += \
     CBController.h \
     CBTranslator.h \
-    CBUtils.h
+    CBUtils.h \
+    CBBaseProvider.h

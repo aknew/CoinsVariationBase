@@ -19,6 +19,10 @@ ApplicationWindow {
         }
     }
 
+    function providerReadyToWork(){
+        title = CBApi.baseProvider.baseTitle;
+    }
+
     // Dialogs
 
     FileDialog {
