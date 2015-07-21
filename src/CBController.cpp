@@ -66,7 +66,6 @@ void CBController::openBase(QString basePath){
 
     engine->addImageProvider(QLatin1String("imageProvider"),baseProvider->imageProvider);
 
-    engine->rootContext()->setContextProperty("window",this);
 */
     QString locale = QLocale::system().name();
     QString filename = QString("languages/") + locale+".json";
