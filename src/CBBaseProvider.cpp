@@ -40,22 +40,22 @@ void CBBaseProvider::startWithPath(const QString &path){
      QJsonObject baseStruct = sd.object();
      m_baseTitle = baseStruct.value("baseTitle").toString();
 
-//     startTable = baseStruct.value("startTable").toString();
+     startTable = baseStruct.value("startTable").toString();
 
-//     QJsonArray nodes = baseStruct.value("nodes").toArray();
+     QJsonArray nodes = baseStruct.value("nodes").toArray();
 
-//     foreach (QJsonValue value1,nodes) {
-//         QJsonObject obj=value1.toObject();
+     foreach (QJsonValue value1,nodes) {
+         QJsonObject obj=value1.toObject();
 
-//         CVBSqlNode *node=new CVBSqlNode(obj,db, this);
-//         bool isSystem=obj.value("isSystem").toBool();
+         CBNode *node=new CBNode(obj,db, this);
+         bool isSystem=obj.value("isSystem").toBool();
 
 //         if (isSystem){
 //             systemTables.append(node->tableName);
 //         }
 
-//         nodeMap.insert(node->tableName,node);
-//     }
+         nodeMap.insert(node->tableName,node);
+     }
 
 //     nodes = baseStruct.value("comboBoxes").toArray();
 

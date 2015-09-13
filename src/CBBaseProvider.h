@@ -3,10 +3,11 @@
 
 #include <QObject>
 #include <QtSql>
+#include "CBNode.h"
 
 class CBBaseProvider : public QObject
 /*! \brief implement base logic - reading/writing data, loading/saving images, transitions between tables, etc
- * It actually should have abstact parrent, but I have only one kind of database now and don't think that will be use
+ * It actually should have abstact parent, but I have only one kind of database now and don't think that will be use
  * more kinds in the nearest future
 */
 {
@@ -21,7 +22,9 @@ public:
 private:
     QString rootPath; //< root folder
     QString m_baseTitle;
+    QString startTable;
     QSqlDatabase db;
+    QMap<QString,CBNode*> nodeMap;//словарь-список всех таблиц
 
 signals:
     void readyToWork();
