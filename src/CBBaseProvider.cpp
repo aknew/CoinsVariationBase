@@ -1,4 +1,5 @@
 #include "CBBaseProvider.h"
+#include "CBUtils.h"
 
 void CBBaseProvider::startWithPath(const QString &path){
 
@@ -83,5 +84,17 @@ void CBBaseProvider::startWithPath(const QString &path){
 
  CBNode* CBBaseProvider::getNode(const QString &name){
     CBNode *node = nodeMap[name];
+
+    nodeStack.push(node);
     return node;
 }
+
+ void CBBaseProvider::saveListForm(const QString& qmlString){
+     QString filePath=rootPath+"forms/"+nodeStack.top()->listFormName();
+     CBUtils::SaveStringToFile(qmlString,filePath);
+ }
+
+ void CBBaseProvider::saveFullForm(const QString& qmlString){
+     QString filePath=rootPath+"forms/"+nodeStack.top()->fullFormName();
+     CBUtils::SaveStringToFile(qmlString,filePath);
+ }

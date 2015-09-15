@@ -7,7 +7,7 @@ function createListForm(node) {
                 "Rectangle {\n" +
                 "   id: mainRect;\n" +
                 "   property bool isListView: true;\n" +
-                "   property alias model: listView.model;";
+                "   property alias model: listView.model;\n";
 
     qmlString+= "   ListView {\n" +
                 "       id:listView;\n" +
@@ -58,9 +58,9 @@ function createListForm(node) {
     qmlString += "}" // mainRect
     console.log(qmlString)
 
-//    if (needCollect) {
-//        CBApi.saveListForm(qmlString)
-//    }
+    if (needCollect) {
+        CBApi.baseProvider.saveListForm(qmlString)
+    }
 
     var component = Qt.createQmlObject(qmlString,tablesStack, "dynamicList");
     component.model = node.listModel;

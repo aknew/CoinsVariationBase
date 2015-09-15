@@ -10,6 +10,8 @@ ApplicationWindow {
     id: mainWindow
     title: "Open base"
 
+    property bool needCollect: false;
+
     StackView {
         id: tablesStack
         anchors.fill: parent
