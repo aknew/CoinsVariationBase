@@ -19,6 +19,12 @@ public:
     explicit CBBaseProvider(QObject *parent = 0):QObject(parent){}
     void startWithPath(const QString &path);//< start base interaction with path
 
+    Q_INVOKABLE CBNode* getStartNode(){
+        return getNode(startTable);
+    }
+
+    Q_INVOKABLE CBNode* getNode(const QString &name);
+
 private:
     QString rootPath; //< root folder
     QString m_baseTitle;

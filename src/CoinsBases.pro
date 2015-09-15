@@ -10,7 +10,15 @@ SOURCES += \
     CBSqlRelationalTableModel.cpp
 
 DISTFILES += \
-    main.qml
+    main.qml \
+    CBControls/qmldir \
+    CBControls/BackgroundRect.qml \
+    CBControls/BigImage.qml \
+    CBControls/ImageWithFullScreen.qml \
+    CBControls/LabeledComboBoxInput.qml \
+    CBControls/LabeledTextInput.qml \
+    CBControls/NextLevelList.qml \
+    CBControls/StyledText.qml
 
 RESOURCES += \
     resources.qrc

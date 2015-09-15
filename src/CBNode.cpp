@@ -71,7 +71,7 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
     }
 }
 
-QAbstractItemModel* CBNode::listModel(){
+QObject *CBNode::listModel(){
     if (_listModel){
         return _listModel;
     }

@@ -3,6 +3,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 
 import CB.api 1.0
+import "FormCreator.js" as FormCreator
 
 
 ApplicationWindow {
@@ -21,6 +22,9 @@ ApplicationWindow {
 
     function providerReadyToWork(){
         title = CBApi.baseProvider.baseTitle;
+        var node = CBApi.baseProvider.getStartNode();
+        var listForm = FormCreator.createListForm(node);
+        tablesStack.push(listForm);
     }
 
     // Dialogs

@@ -1,0 +1,7 @@
+module CBControls
+NextLevelList 1.0 NextLevelList.qml
+ImageWithFullScreen 1.0 ImageWithFullScreen.qml
+StyledText 1.0 StyledText.qml
+LabeledComboBoxInput 1.0 LabeledComboBoxInput.qml
+LabeledTextInput 1.0 LabeledTextInput.qml
+BackgroundRect 1.0 BackgroundRect.qml

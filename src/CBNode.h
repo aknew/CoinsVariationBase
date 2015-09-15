@@ -14,7 +14,7 @@ class CBNode : public QObject
     Q_PROPERTY(QString tableName MEMBER tableName FINAL)
     Q_PROPERTY(QStringList nextLevelList READ getNextLevelList  FINAL)
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
-    Q_PROPERTY(QAbstractItemModel* listModel READ listModel FINAL)
+    Q_PROPERTY(QObject* listModel READ listModel FINAL)
 
 public:
     explicit CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent = 0);
@@ -35,7 +35,7 @@ protected:
     CBSqlRelationalTableModel *_listModel;//< presentation view
     QMap<QString, QString> childNodes;//< list of nodes where we can go from current
 
-    QAbstractItemModel* listModel();
+    QObject* listModel();
 
     QStringList getNextLevelList(){
         return childNodes.keys();

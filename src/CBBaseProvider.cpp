@@ -80,3 +80,8 @@ void CBBaseProvider::startWithPath(const QString &path){
 
      emit readyToWork();
 }
+
+ CBNode* CBBaseProvider::getNode(const QString &name){
+    CBNode *node = nodeMap[name];
+    return node;
+}

@@ -1,5 +1,14 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>CBControls/BackgroundRect.qml</file>
+        <file>CBControls/BigImage.qml</file>
+        <file>CBControls/ImageWithFullScreen.qml</file>
+        <file>CBControls/LabeledComboBoxInput.qml</file>
+        <file>CBControls/LabeledTextInput.qml</file>
+        <file>CBControls/NextLevelList.qml</file>
+        <file>CBControls/qmldir</file>
+        <file>CBControls/StyledText.qml</file>
+        <file>FormCreator.js</file>
     </qresource>
 </RCC>

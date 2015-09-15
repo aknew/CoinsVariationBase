@@ -24,8 +24,8 @@ int main(int argc, char *argv[])
     qSetMessagePattern("%{file}(%{line}): %{message}"); //show line and file in qDebug messages
 
     qmlRegisterSingletonType<CBController>("CB.api", 1, 0, "CBApi", cbApiObjectSingleton);
-    qmlRegisterUncreatableType<CBBaseProvider>("CB.api", 1, 0, "CBBaseProvider", "This class should be obtained from CBApi.baseProvider");
-
+    qmlRegisterUncreatableType<CBBaseProvider>("CB.api", 1, 0, "CBBaseProvider", "The object of this class should be obtained from CBApi.baseProvider");
+    qmlRegisterUncreatableType<CBNode>("CB.api", 1, 0, "CBNode", "The object of this class should be obtained from CBApi.baseProvider.getNode(name) or CBApi..baseProvider.getStartNode()");
 
     QApplication app(argc, argv);
 
