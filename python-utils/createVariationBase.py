@@ -18,6 +18,7 @@ os.makedirs(base_path)
 os.makedirs(base_path + "languages")
 os.makedirs(base_path + "images")
 os.makedirs(base_path + "notes")
+os.makedirs(base_path + "forms")
 
 
 shutil.copy(data_path + "struct.json",base_path + "struct.json")

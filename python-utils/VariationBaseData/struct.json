@@ -7,7 +7,7 @@
         "sortColumn":"firstYear",
         "childNode": [
           {
-            "name": "Variaties",
+            "name": "Varieties",
             "relation": "typeID"
           },
           {
@@ -37,7 +37,7 @@
         ]
       },
       {
-        "name": "Variaties",
+        "name": "Varieties",
         "sortColumn":"year",
         "listViewFields":["year","mintmark","avers","revers","edge"],
         "childNode": [
