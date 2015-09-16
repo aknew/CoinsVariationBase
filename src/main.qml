@@ -29,6 +29,13 @@ ApplicationWindow {
         tablesStack.push(listForm);
     }
 
+    function showFullForm(node, index){
+
+        node.selectItemWithIndex(index);
+        var fullForm = FormCreator.createFullForm(node);
+        tablesStack.push(fullForm);
+    }
+
     // Dialogs
 
     FileDialog {
