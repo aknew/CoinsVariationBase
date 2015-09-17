@@ -119,10 +119,10 @@ void CBNode::applyFilters(){
 
     if (levelFilter!=kWrongString){
         if (filters.isEmpty()){
-            fullFilterString = levelFilter + " and " + fullFilterString;
+            fullFilterString = levelFilter;
         }
         else{
-            fullFilterString = levelFilter;
+            fullFilterString = levelFilter + " and " + fullFilterString;
         }
     }
 
