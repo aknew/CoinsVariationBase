@@ -24,17 +24,13 @@ public:
 
     void startWithPath(const QString &path);//< start base interaction with path
 
-    Q_INVOKABLE CBNode* getNode(const QString &name); //< returns node by name with preparing it (filtering by froeighn keys) and puting it to stack
+    Q_INVOKABLE CBNode* getNode(const QString &name, CBNode * curentNode = NULL); //< returns node by name with preparing it (filtering by froeighn keys) and puting it to stack
     Q_INVOKABLE CBNode* getStartNode(){
         return getNode(startTable);
     }
 
-    void currentNodeUnused(){//< Calls via signal when GUI goes back to previous node
-        nodeStack.pop();
-    }
-
-    Q_INVOKABLE void saveListForm(const QString& qmlString);
-    Q_INVOKABLE void saveFullForm(const QString& qmlString);
+    Q_INVOKABLE void saveListForm(const QString& qmlString, CBNode *node);
+    Q_INVOKABLE void saveFullForm(const QString& qmlString, CBNode *node);
 
 private:
     QString rootPath; //< root folder
@@ -42,7 +38,6 @@ private:
     QString startTable;
     QSqlDatabase db;
     QMap<QString,CBNode*> nodeMap;//< Map which contains all node and uses for gwtting it by name
-    QStack<CBNode*> nodeStack;//< Stack of used node
 
 signals:
     void readyToWork();

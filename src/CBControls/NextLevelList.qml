@@ -29,7 +29,7 @@ Rectangle {
                 anchors.fill: parent
                 id: mouseArea
                 onClicked: {
-                    mainWindow.showListForm(modelData);
+                    mainWindow.showListForm(modelData, node);
                 }
             }
         }

@@ -60,7 +60,7 @@ function createListForm(node) {
     console.log(qmlString)
 
     if (needCollect) {
-        CBApi.baseProvider.saveListForm(qmlString)
+        CBApi.baseProvider.saveListForm(qmlString,node)
     }
 
     var component = Qt.createQmlObject(qmlString,tablesStack, "dynamicList");
@@ -148,7 +148,7 @@ function createFullForm(node) {
     console.log(qmlString)
 
     if (needCollect) {
-        CBApi.baseProvider.saveFullForm(qmlString)
+        CBApi.baseProvider.saveFullForm(qmlString,node)
     }
 
     var component = Qt.createQmlObject(qmlString,tablesStack, "dynamicFull");

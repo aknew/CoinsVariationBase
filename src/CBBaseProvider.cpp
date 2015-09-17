@@ -82,22 +82,21 @@ void CBBaseProvider::startWithPath(const QString &path){
      emit readyToWork();
 }
 
- CBNode* CBBaseProvider::getNode(const QString &name){
+ CBNode* CBBaseProvider::getNode(const QString &name, CBNode * curentNode){
     CBNode *node = nodeMap[name];
-    if (!nodeStack.isEmpty()){ // I.e. it is not start node
-        QString filterString = nodeStack.top()->filteringStringForChildNode(name);
+    if (curentNode){ // I.e. it is not start node
+        QString filterString =curentNode->filteringStringForChildNode(name);
         node->setLevelFilter(filterString);
     }
-    nodeStack.push(node);
     return node;
 }
 
- void CBBaseProvider::saveListForm(const QString& qmlString){
-     QString filePath=rootPath+"forms/"+nodeStack.top()->listFormName();
+ void CBBaseProvider::saveListForm(const QString& qmlString, CBNode *node){
+     QString filePath=rootPath+"forms/"+node->listFormName();
      CBUtils::SaveStringToFile(qmlString,filePath);
  }
 
- void CBBaseProvider::saveFullForm(const QString& qmlString){
-     QString filePath=rootPath+"forms/"+nodeStack.top()->fullFormName();
+ void CBBaseProvider::saveFullForm(const QString& qmlString, CBNode *node){
+     QString filePath=rootPath+"forms/"+node->fullFormName();
      CBUtils::SaveStringToFile(qmlString,filePath);
  }

@@ -10,6 +10,33 @@ ApplicationWindow {
     id: mainWindow
     title: "Open base"
 
+    height:500;
+    width:1200;
+
+    toolBar: ToolBar {
+        id: windowToolbar
+        Row {
+            id:defaultLayout
+            MouseArea{
+                Image {
+                    source: "/icons/back.png"
+                    anchors.fill: parent
+                }
+                height:25
+                width:25
+                onClicked:{
+                    if (tablesStack.depth>1){
+                        tablesStack.pop();
+                    }
+                }
+                onPressAndHold: {
+                    // TODO: show dialog all shown tables and pop to clicked
+                    console.log("catch long tap")
+                }
+            }
+        }
+    }
+
     property bool needCollect: false;
 
     StackView {
@@ -36,8 +63,8 @@ ApplicationWindow {
         tablesStack.push(fullForm);
     }
 
-    function showListForm(nodeName){
-        var node = CBApi.baseProvider.getNode(nodeName);
+    function showListForm(nodeName, currentNode){
+        var node = CBApi.baseProvider.getNode(nodeName, currentNode);
         var listForm = FormCreator.createListForm(node);
         tablesStack.push(listForm);
     }
@@ -75,6 +102,5 @@ ApplicationWindow {
     function openBaseAlert(){
         messageDialog.open();
     }
-
 }
 
