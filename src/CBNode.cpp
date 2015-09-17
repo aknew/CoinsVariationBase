@@ -3,8 +3,11 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
+const QString kWrongString = "*wrongString*"; //< marker that some string wasn't filled
+
 CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObject(parent)
 {
+    levelFilter = kWrongString;
 
     // TODO: Добавить проверку что все хорошо прошло, проще здесь найти что таблица называется не так как в struct.json чем отлавливать это в qml
     tableName=obj.value("name").toString();
@@ -96,18 +99,32 @@ QString CBNode::filteringStringForChildNode(const QString& childNodeName){
     return str;
 }
 
+void CBNode::setLevelFilter(const QString &filterString){
+    levelFilter = filterString;
+    applyFilters();
+}
+
 void CBNode::addFilter(const QString &filterString){
     filters.append(filterString);
     applyFilters();
 }
 
-void CBNode::dropAllFilters(){
+void CBNode::dropFilters(){
     filters.clear();
     applyFilters();
 }
 
 void CBNode::applyFilters(){
     QString fullFilterString = filters.join(" and ");
+
+    if (levelFilter!=kWrongString){
+        if (filters.isEmpty()){
+            fullFilterString = levelFilter + " and " + fullFilterString;
+        }
+        else{
+            fullFilterString = levelFilter;
+        }
+    }
 
     // TODO: need analyze what it will happend if we will use filter that is defined only in one of models
     model->setFilter(fullFilterString);

@@ -30,13 +30,15 @@ public:
     QVariant fullFormFields; //< describe which fields and how should be shown in full form
 
     Q_INVOKABLE void selectItemWithIndex(int index){
+        //* Uses for set selecteditem from qml
         model->selectedRow = index;
     }
 
     QString filteringStringForChildNode(const QString& childNodeName);
 
-    void addFilter(const QString &filterString);
-    void dropAllFilters();
+    void setLevelFilter(const QString &filterString); //< filtering only record related to previous level
+    void addFilter(const QString &filterString); //< add any other filters, uses for selection from related record
+    void dropFilters(); //< drop all filters excapt level
 
 protected:
 
@@ -47,6 +49,7 @@ protected:
     QObject* listModel();
 
     QStringList filters;
+    QString levelFilter;
 
     QStringList getNextLevelList(){
         return childNodes.keys();
