@@ -36,6 +36,12 @@ ApplicationWindow {
         tablesStack.push(fullForm);
     }
 
+    function showListForm(nodeName){
+        var node = CBApi.baseProvider.getNode(nodeName);
+        var listForm = FormCreator.createListForm(node);
+        tablesStack.push(listForm);
+    }
+
     // Dialogs
 
     FileDialog {

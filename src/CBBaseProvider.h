@@ -9,6 +9,10 @@ class CBBaseProvider : public QObject
 /*! \brief implement base logic - reading/writing data, loading/saving images, transitions between tables, etc
  * It actually should have abstact parent, but I have only one kind of database now and don't think that will be use
  * more kinds in the nearest future
+ *
+ * Known limitations:
+ *
+ * each table has to contains primary key field called "id" and this field is used for navigation between nodes
 */
 {
     Q_OBJECT

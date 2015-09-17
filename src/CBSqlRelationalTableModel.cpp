@@ -76,3 +76,9 @@ void CBSqlRelationalTableModel::removeCurrentItem(){
     this->removeRow(this->selectedRow);
     this->submitAll();
 }
+
+QString CBSqlRelationalTableModel::selectedItemId(){
+    QSqlRecord record=this->record(selectedRow);
+    QSqlField id=record.field("id");
+    return id.value().toString();
+}

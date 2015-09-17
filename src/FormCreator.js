@@ -70,7 +70,7 @@ function createListForm(node) {
 }
 
 function createFullForm(node) {
-    //FIXME: need rewrite collect data? comboboxes and next level list
+    //FIXME: need rewrite collect data, comboboxes
 
     var qmlString
 
@@ -86,8 +86,8 @@ function createFullForm(node) {
                  "       clip: true;\n"+
                  "       anchors.fill:parent;\n";
 
-    //qmlString += "       contentHeight: nextlevel.y+nextlevel.height;\n"
-    qmlString += "       contentHeight: contentColumn.height;\n"
+    qmlString += "       contentHeight: nextlevel.y+nextlevel.height;\n"
+
     qmlString += "      Column {id: contentColumn;y: 0;width: parent.width;"
 
     var collectDataString = "function collectData() { var returnedMap = {"
@@ -133,7 +133,7 @@ function createFullForm(node) {
     }
 
     qmlString += "      }\n" //Column {
-    //qmlString += "NextLevelList { id:nextlevel; y: contentColumn.childrenRect.height+contentColumn.y }"
+    qmlString += "NextLevelList { id:nextlevel; y: contentColumn.childrenRect.height+contentColumn.y }"
     qmlString += "  }\n" //Flickable {
 
     //stateEditableString += "PropertyChanges { target: nextlevel; visible:false }"

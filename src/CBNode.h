@@ -33,6 +33,11 @@ public:
         model->selectedRow = index;
     }
 
+    QString filteringStringForChildNode(const QString& childNodeName);
+
+    void addFilter(const QString &filterString);
+    void dropAllFilters();
+
 protected:
 
     CBSqlRelationalTableModel *model;//< real table or view
@@ -40,6 +45,8 @@ protected:
     QMap<QString, QString> childNodes;//< list of nodes where we can go from current
 
     QObject* listModel();
+
+    QStringList filters;
 
     QStringList getNextLevelList(){
         return childNodes.keys();
@@ -49,7 +56,7 @@ protected:
         return model->selectedItem();
     }
 
-
+    void applyFilters();
 };
 
 #endif // CBNODE_H

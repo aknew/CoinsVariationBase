@@ -84,7 +84,10 @@ void CBBaseProvider::startWithPath(const QString &path){
 
  CBNode* CBBaseProvider::getNode(const QString &name){
     CBNode *node = nodeMap[name];
-
+    if (!nodeStack.isEmpty()){ // I.e. it is not start node
+        QString filterString = nodeStack.top()->filteringStringForChildNode(name);
+        node->addFilter(filterString);
+    }
     nodeStack.push(node);
     return node;
 }

@@ -87,3 +87,35 @@ QString CBNode::listFormName(){
 QString CBNode::fullFormName(){
     return tableName+"Full.qml";
 }
+
+QString CBNode::filteringStringForChildNode(const QString& childNodeName){
+    QString str=childNodes.value(childNodeName);
+    if (str!=""){
+        str = str + "=\"" + model->selectedItemId() + "\"";
+    }
+    return str;
+}
+
+void CBNode::addFilter(const QString &filterString){
+    filters.append(filterString);
+    applyFilters();
+}
+
+void CBNode::dropAllFilters(){
+    filters.clear();
+    applyFilters();
+}
+
+void CBNode::applyFilters(){
+    QString fullFilterString = filters.join(" and ");
+
+    // TODO: need analyze what it will happend if we will use filter that is defined only in one of models
+    model->setFilter(fullFilterString);
+    model->select();
+
+    if(_listModel){
+        _listModel->setFilter(fullFilterString);
+        _listModel->select();
+    }
+
+}

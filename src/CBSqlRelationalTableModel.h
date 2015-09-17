@@ -24,6 +24,7 @@ public:
     void removeCurrentItem();
     void sortByColumn(const QString &name);
     int selectedRow;
+    QString selectedItemId();
 
 virtual QHash<int, QByteArray> roleNames() const{return roles;}
 
