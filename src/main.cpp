@@ -1,6 +1,4 @@
-#include <QtGui/QGuiApplication>
 #include <QtQml>
-#include <QtQuick/QQuickView>
 #include <QtWidgets/QApplication>
 
 #include "CBController.h"

@@ -11,7 +11,7 @@ ApplicationWindow {
     title: "Open base"
 
     height:500;
-    width:1200;
+    width:1000;
 
     toolBar: ToolBar {
         id: windowToolbar
@@ -25,7 +25,7 @@ ApplicationWindow {
                 height:25
                 width:25
                 onClicked:{
-                    if (tablesStack.depth>1){
+                    if (tablesStack.depth>2){
                         tablesStack.pop();
                     }
                 }

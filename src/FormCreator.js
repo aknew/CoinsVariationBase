@@ -57,7 +57,6 @@ function createListForm(node) {
     qmlString += "      }\n" //Item {
     qmlString += "  }\n" //Component {
     qmlString += "}" // mainRect
-    console.log(qmlString)
 
     if (needCollect) {
         CBApi.baseProvider.saveListForm(qmlString,node)
@@ -145,7 +144,6 @@ function createFullForm(node) {
     collectDataString += "}; return returnedMap }"
     qmlString += collectDataString
     qmlString += "}" // mainRect
-    console.log(qmlString)
 
     if (needCollect) {
         CBApi.baseProvider.saveFullForm(qmlString,node)

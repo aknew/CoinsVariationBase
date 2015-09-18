@@ -49,7 +49,7 @@ void CBBaseProvider::startWithPath(const QString &path){
          QJsonObject obj=value1.toObject();
 
          CBNode *node=new CBNode(obj,db, this);
-         bool isSystem=obj.value("isSystem").toBool();
+         //bool isSystem=obj.value("isSystem").toBool();
 
 //         if (isSystem){
 //             systemTables.append(node->tableName);
@@ -82,10 +82,10 @@ void CBBaseProvider::startWithPath(const QString &path){
      emit readyToWork();
 }
 
- CBNode* CBBaseProvider::getNode(const QString &name, CBNode * curentNode){
+ CBNode* CBBaseProvider::getNode(const QString &name, CBNode * currentNode){
     CBNode *node = nodeMap[name];
-    if (curentNode){ // I.e. it is not start node
-        QString filterString =curentNode->filteringStringForChildNode(name);
+    if (currentNode){ // I.e. it is not start node
+        QString filterString =currentNode->filteringStringForChildNode(name);
         node->setLevelFilter(filterString);
     }
     return node;
