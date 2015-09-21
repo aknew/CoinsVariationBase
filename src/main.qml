@@ -13,6 +13,17 @@ ApplicationWindow {
     height:500;
     width:1000;
 
+    menuBar:MenuBar{
+        Menu {
+                    title: "File"
+                    MenuItem {
+                        text: "Open..."
+                        onTriggered: openBase();
+                    }
+                    MenuItem { text: "Recent" }
+                }
+    }
+
     toolBar: ToolBar {
         id: windowToolbar
         Row {
@@ -50,6 +61,7 @@ ApplicationWindow {
     }
 
     function providerReadyToWork(){
+        tablesStack.pop(tablesStack.initialItem);
         title = CBApi.baseProvider.baseTitle;
         var node = CBApi.baseProvider.getStartNode();
         var listForm = FormCreator.createListForm(node);
