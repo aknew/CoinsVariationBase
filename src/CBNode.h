@@ -45,6 +45,7 @@ protected:
     CBSqlRelationalTableModel *model;//< real table or view
     CBSqlRelationalTableModel *_listModel;//< presentation view
     QMap<QString, QString> childNodes;//< list of nodes where we can go from current
+    QMap<QString, QString> m_subNodesParameters;//< subnodes + how it relation to this node
 
     QObject* listModel();
 

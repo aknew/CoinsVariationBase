@@ -46,14 +46,22 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
                     );
     }
 
-//    QJsonArray json_subNodes = obj.value("subNodes").toArray();
-//    foreach (QJsonValue value1,json_subNodes) {
-//        QJsonObject obj=value1.toObject();
-//        this->m_subNodesParameters.insert(
-//                    obj.value("name").toString(),
-//                    obj.value("relation").toString()
-//                    );
-//    }
+    QJsonArray json_subNodes = obj.value("subNodes").toArray();
+    foreach (QJsonValue value1,json_subNodes) {
+        if (value1.isString()){
+            this->m_subNodesParameters.insert(
+                        value1.toString(),
+                        "parentId"
+                        );
+        }
+        else{
+            QJsonObject obj=value1.toObject();
+            this->m_subNodesParameters.insert(
+                        obj.value("name").toString(),
+                        obj.value("relation").toString()
+                        );
+        }
+    }
 
     // FIXME: need generate listViewFields and fullFormFields only when it need if it doesn't exists into json
     QJsonValue  json_listViewFields = obj.value("listViewFields");
