@@ -58,22 +58,6 @@ void CBBaseProvider::startWithPath(const QString &path){
          nodeMap.insert(node->tableName,node);
      }
 
-//     nodes = baseStruct.value("comboBoxes").toArray();
-
-//     foreach (QJsonValue value,nodes) {
-
-//         QJsonObject obj=value.toObject();
-
-//         ComboBoxDescription desc;
-
-//         desc.query=obj.value("query").toString();
-
-//         QString param=obj.value("param").toString();
-//         if (!param.isEmpty())
-//             desc.params.push_back(param);
-//         comboBoxes[obj.value("name").toString()]=desc;
-//     }
-
     // create imageProvider
 
 //    imageProvider= new CVBImageProvider(QQuickImageProvider::Pixmap);

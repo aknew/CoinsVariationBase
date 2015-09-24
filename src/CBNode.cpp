@@ -2,10 +2,12 @@
 
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QtSql>
+#include <QDebug>
 
 const QString kWrongString = "*wrongString*"; //< marker that some string wasn't filled
 
-CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObject(parent)
+CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObject(parent), db(db)
 {
     levelFilter = kWrongString;
 
@@ -142,5 +144,24 @@ void CBNode::applyFilters(){
         _listModel->setFilter(fullFilterString);
         _listModel->select();
     }
+
+}
+
+QStringList CBNode::listFromQuery(QString queryString){
+
+    QSqlQuery query(db);
+
+    bool flag = query.exec(queryString);
+
+    if (!flag){
+        qDebug()<<query.lastError();
+    }
+
+    QStringList list;
+    while (query.next()) {
+        list<<query.value(0).toString();
+    }
+
+    return list;
 
 }

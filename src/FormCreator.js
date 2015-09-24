@@ -118,7 +118,7 @@ function createFullForm(node) {
         case "combo":
             qmlString += "LabeledComboBoxInput {\n  id: field_" + field + ";\n  title: qsTr(\"" + field + "\");\n   "
             qmlString += "anchors.fill: parent.widths;\n value: node.selectedItem." + field + ";\n"
-            qmlString += "model: CBApi.listForName(\"" + fieldStruct["dict"]
+            qmlString += "model: node.listFromQuery(\"" + fieldStruct["query"]
                     + "\");z:15; editing:false}\n"
             break
         default:

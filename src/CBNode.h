@@ -40,7 +40,11 @@ public:
     void addFilter(const QString &filterString); //< add any other filters, uses for selection from related record
     void dropFilters(); //< drop all filters excapt level
 
+    Q_INVOKABLE QStringList listFromQuery(QString query);
+
 protected:
+
+    QSqlDatabase &db;
 
     CBSqlRelationalTableModel *model;//< real table or view
     CBSqlRelationalTableModel *_listModel;//< presentation view
