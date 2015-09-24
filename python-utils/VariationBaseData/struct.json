@@ -19,18 +19,18 @@
         "fullFormFields": [
         {"name": "nominal",
         "type": "combo",
-        "dict": "nominals"},
+        "query": "select distinct nominal from types"},
         {"name": "metal",
         "type": "combo",
-        "dict": "metals"},
+        "query": "select distinct metal from types"},
         {"name": "firstYear"},
         {"name": "lastYear"},
         {"name": "edge",
         "type": "combo",
-        "dict": "edges"},
+        "query": "select distinct edge from types"},
         {"name": "issue",
         "type": "combo",
-        "dict": "issues"},
+        "query": "select distinct issue from types"},
         {"name": "avers"},
         {"name": "revers"},
         {"name": "weigth"}
@@ -56,14 +56,14 @@
           {
             "name": "Mint",
             "type": "combo",
-            "dict": "mint"
+            "query": "select distinct mint from Variaties"
           },
           {"name": "avers"},
           {"name": "revers"},
           {
             "name": "edge",
             "type": "combo",
-            "dict": "edges"
+            "query": "select distinct edge from types"
           },
           {
             "name": "rarity"
@@ -94,7 +94,7 @@
         ],
         "comboDelegate": {
           "column": "5",
-          "dict": "statuses"
+          "query": "statuses"
         },
         "pictDelegate":"3"
       },
@@ -103,35 +103,5 @@
       {
         "name": "CoinHistory"
       }
-    ],
-    "comboBoxes": [
-        {
-          "query": "select distinct nominal from types",
-          "name": "nominals"
-        },
-        {
-          "query": "select distinct metal from types",
-          "name": "metals"
-        },
-        {
-          "query": "select distinct issue from types",
-          "name": "issues"
-        },
-        {
-          "query": "select distinct edge from types",
-          "name": "edges"
-        },
-        {
-          "query": "select status from ConcreteCoins",
-          "name": "statuses"
-        },
-        {
-          "query": "select distinct mint from Variaties",
-          "name": "mint"
-        },
-        {
-          "query": "select reduction from SourcesList order by reduction",
-          "name": "sourceList"
-        }
-      ]
+    ]
 }
