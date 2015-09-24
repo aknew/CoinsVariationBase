@@ -82,7 +82,8 @@ ApplicationWindow {
 
     function showListForm(nodeName, currentNode){
         var node = CBApi.baseProvider.getNode(nodeName, currentNode);
-        var listForm = FormCreator.createListForm(node);
+        //var listForm = FormCreator.createListForm(node);
+        var listForm = FormCreator.createTable(node);
         tablesStack.push(listForm);
     }
 

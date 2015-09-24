@@ -68,6 +68,42 @@ function createListForm(node) {
     return component;
 }
 
+function createTable(node){
+
+    var qmlString
+
+    qmlString = "import QtQuick 2.0;\n" +
+                "import CB.api 1.0;\n" +
+            "import QtQuick.Controls 1.2\n\n"+
+            "Rectangle {\n" +
+            "   id: mainRect;\n" +
+            "   property bool isListView: true;\n" +
+            "   property var node;\n"+
+            "   onNodeChanged:{tableView.model = node.listModel;}\n\n"+
+            "   TableView {\n       id:tableView;\n        anchors.fill:parent;\n\n";
+
+
+    var fieldList = node.listViewFields;
+    for (var i = 0; i < fieldList.length; ++i) {
+
+        var field = fieldList[i]
+        qmlString +="        TableViewColumn { role: \"" + field +"\"; title:qsTr(\""+ field +"\")}\n"
+
+    }
+
+    qmlString += "  }\n" //TableView
+    qmlString += "}" // mainRect
+
+    if (needCollect) {
+        CBApi.baseProvider.saveListForm(qmlString,node)
+    }
+
+    var component = Qt.createQmlObject(qmlString,tablesStack, "dynamicList");
+    component.node = node;
+
+    return component;
+}
+
 function createFullForm(node) {
     //FIXME: need rewrite collect data, comboboxes
 
