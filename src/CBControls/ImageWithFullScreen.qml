@@ -1,7 +1,7 @@
-import QtQuick 2.1
+import QtQuick 2.2
 import QtQuick.Dialogs 1.0
 import QtQuick.Controls 1.0
-import CVB.api 1.0
+import CB.api 1.0
 
 Image {
 

@@ -91,7 +91,7 @@ function createFullForm(node) {
 
     var collectDataString = "function collectData() { var returnedMap = {"
 
-    var stateEditableString = "states: State { name: \"editable\";"
+    var stateEditableString = "states: State { name: \"editing\";"
 
     var fullFormFields = node.fullFormFields;
 

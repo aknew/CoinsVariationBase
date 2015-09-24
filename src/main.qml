@@ -45,6 +45,11 @@ ApplicationWindow {
                     console.log("catch long tap")
                 }
             }
+            ToolButton {
+                id: toolbuttonEdit
+                action: actionEdit
+                //visible:false
+            }
         }
     }
 
@@ -113,6 +118,16 @@ ApplicationWindow {
 
     function openBaseAlert(){
         messageDialog.open();
+    }
+
+    Action {
+        id: actionEdit
+        iconSource: "/icons/edit.png"
+        text: "edit"
+        onTriggered: {
+            //windowToolbar.state = "editing"
+            tablesStack.currentItem.state = "editing"
+        }
     }
 }
 
