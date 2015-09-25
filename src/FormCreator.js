@@ -80,7 +80,8 @@ function createTable(node){
             "   property bool isListView: true;\n" +
             "   property var node;\n"+
             "   onNodeChanged:{tableView.model = node.listModel;}\n\n"+
-            "   TableView {\n       id:tableView;\n        anchors.fill:parent;\n\n";
+            "   TableView {\n       id:tableView;\n        anchors.fill:parent;\n" +
+            "       onClicked: { mainWindow.showFullForm(node,row);}\n\n";
 
 
     var fieldList = node.listViewFields;
