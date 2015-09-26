@@ -69,7 +69,8 @@ ApplicationWindow {
         tablesStack.pop(tablesStack.initialItem);
         title = CBApi.baseProvider.baseTitle;
         var node = CBApi.baseProvider.getStartNode();
-        var listForm = FormCreator.createListForm(node);
+        //var listForm = FormCreator.createListForm(node);
+        var listForm = FormCreator.createTable(node);
         tablesStack.push(listForm);
     }
 
@@ -114,6 +115,11 @@ ApplicationWindow {
     }
 
     function openBase() {
+        //HOTFIX: for android
+        if (Qt.platform.os == "android"){
+            CBApi.openBase("/storage/sdcard0/VariationBase")
+        }
+
         openBaseDialog.open()
     }
 
