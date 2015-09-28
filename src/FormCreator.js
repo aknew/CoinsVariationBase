@@ -168,6 +168,12 @@ function createFullForm(node) {
         collectDataString += field + ": field_" + field + ".value,"
     }
 
+    var subNodes = node.subNodes;
+
+    for (var i = 0; i < subNodes.length; ++i) {
+        console.log(subNodes[i].tableName)
+    }
+
     qmlString += "      }\n" //Column {
     qmlString += "NextLevelList { id:nextlevel; y: contentColumn.childrenRect.height+contentColumn.y }"
     qmlString += "  }\n" //Flickable {

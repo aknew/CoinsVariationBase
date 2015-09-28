@@ -5,6 +5,8 @@
 #include <QtSql>
 #include <QDebug>
 
+#include "CBBaseProvider.h"
+
 const QString kWrongString = "*wrongString*"; //< marker that some string wasn't filled
 
 CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObject(parent), db(db)
@@ -164,4 +166,21 @@ QStringList CBNode::listFromQuery(QString queryString){
 
     return list;
 
+}
+
+QList<QObject*> CBNode::getSubnodes(){
+
+    QList<QObject* > m_subNodes;
+
+    CBBaseProvider * baseProvider= qobject_cast<CBBaseProvider *>(parent());
+    QMap<QString, QString>::iterator iterator;
+
+    for (iterator = m_subNodesParameters.begin(); iterator != m_subNodesParameters.end(); ++iterator){
+        CBNode *node=baseProvider->getNode(iterator.key(),this);
+        if (node){
+            m_subNodes.append(node);
+        }
+    }
+
+    return m_subNodes;
 }

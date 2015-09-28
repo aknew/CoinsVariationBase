@@ -15,6 +15,7 @@ class CBNode : public QObject
     Q_PROPERTY(QStringList nextLevelList READ getNextLevelList  FINAL)
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
     Q_PROPERTY(QObject* listModel READ listModel FINAL)
+    Q_PROPERTY(QList<QObject*> subNodes READ getSubnodes)
 
 public:
     explicit CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent = 0);
@@ -65,6 +66,8 @@ protected:
     }
 
     void applyFilters();
+
+    QList<QObject*> getSubnodes();
 };
 
 #endif // CBNODE_H
