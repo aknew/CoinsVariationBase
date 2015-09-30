@@ -42,28 +42,20 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
 
 
     QJsonArray json_childNodes = obj.value("childNode").toArray();
-    foreach (QJsonValue value1,json_childNodes) {
-        QJsonObject obj=value1.toObject();
-        this->childNodes.insert(
-                    obj.value("name").toString(),
-                    obj.value("relation").toString()
-                    );
-    }
-
-    QJsonArray json_subNodes = obj.value("subNodes").toArray();
-    foreach (QJsonValue value1,json_subNodes) {
+    foreach (QJsonValue value1,json_childNodes) {        
         if (value1.isString()){
-            this->m_subNodesParameters.insert(
+            this->childNodes.insert(
                         value1.toString(),
                         "parentId"
                         );
         }
         else{
+
             QJsonObject obj=value1.toObject();
-            this->m_subNodesParameters.insert(
-                        obj.value("name").toString(),
-                        obj.value("relation").toString()
-                        );
+            this->childNodes.insert(
+                    obj.value("name").toString(),
+                    obj.value("relation").toString()
+                    );
         }
     }
 
@@ -166,21 +158,4 @@ QStringList CBNode::listFromQuery(QString queryString){
 
     return list;
 
-}
-
-QList<QObject*> CBNode::getSubnodes(){
-
-    QList<QObject* > m_subNodes;
-
-    CBBaseProvider * baseProvider= qobject_cast<CBBaseProvider *>(parent());
-    QMap<QString, QString>::iterator iterator;
-
-    for (iterator = m_subNodesParameters.begin(); iterator != m_subNodesParameters.end(); ++iterator){
-        CBNode *node=baseProvider->getNode(iterator.key(),this);
-        if (node){
-            m_subNodes.append(node);
-        }
-    }
-
-    return m_subNodes;
 }

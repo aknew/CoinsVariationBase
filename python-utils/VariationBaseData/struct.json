@@ -44,6 +44,10 @@
           {
             "name": "ConcreteCoins",
             "relation": "varID"
+          },
+          {
+            "name": "SourceRef",
+            "relation": "varID"
           }
         ],
         "fullFormFields": [
@@ -70,12 +74,6 @@
           },
           {
             "name": "comment"
-          }
-        ],
-        "subNodes": [
-          {
-            "name": "SourceRef",
-            "relation": "varID"
           }
         ],
         "hasImages":true,
