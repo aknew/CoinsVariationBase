@@ -9,3 +9,5 @@ build*
 VariationBase*
 importResult*
 docs/doxygen/*
+IndividualCoinsDataBase/*
+IndividualCoinsDataBase/struct.json
