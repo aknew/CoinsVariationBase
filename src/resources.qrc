@@ -8,7 +8,6 @@
         <file>CBControls/LabeledTextInput.qml</file>
         <file>CBControls/NextLevelList.qml</file>
         <file>CBControls/qmldir</file>
-        <file>CBControls/StyledText.qml</file>
         <file>FormCreator.js</file>
         <file alias="no_image_double.png">../resources/no_image_double.png</file>
         <file alias="icons/apply.png">../resources/icons/apply.png</file>

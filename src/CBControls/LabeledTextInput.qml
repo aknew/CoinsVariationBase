@@ -1,41 +1,26 @@
-import QtQuick 2.0
+import QtQuick 2.3
+import QtQuick.Controls 1.4
 
 FocusScope {
-    id: container
     width: parent.width
-    height: titleText.height+borderRect.height
+    height:titleLabel.height + input.height
     signal
     accepted
     property alias value: input.text
-    property alias title: titleText.text
-    property alias editing: container.enabled
-    Text {
-        id: titleText
+    property alias title: titleLabel.text
+    property alias editing: input.enabled
+    Label {
+        id: titleLabel
         text: ""
         font.pixelSize: 16
         font.bold: true
     }
-    Rectangle{
-        id: borderRect
+    TextArea{
+        id: input
+        font.pixelSize: 16
         width: parent.width
-        height: input.height+10
-        anchors.top: titleText.bottom
-        border.color: container.enabled?"black":"white"
-        radius: 5
-        border.width: 1
-
-        TextEdit {
-            id: input
-            x:5
-            y:5
-            width: parent.width-10
-            font.pixelSize: 16
-            color: "#151515"
-            //selectionColor: "mediumseagreen"
-            focus: true
-            text: ""
-            selectByMouse: true
-            wrapMode: Text.Wrap
-        }
+        anchors.top: titleLabel.bottom
+        wrapMode: Text.Wrap
+        height: 44
     }
 }
