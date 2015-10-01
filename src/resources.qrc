@@ -2,20 +2,16 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>CBControls/BackgroundRect.qml</file>
-        <file>CBControls/BigImage.qml</file>
-        <file>CBControls/ImageWithFullScreen.qml</file>
         <file>CBControls/LabeledComboBoxInput.qml</file>
         <file>CBControls/LabeledTextInput.qml</file>
         <file>CBControls/NextLevelList.qml</file>
         <file>CBControls/qmldir</file>
         <file>FormCreator.js</file>
-        <file alias="no_image_double.png">../resources/no_image_double.png</file>
         <file alias="icons/apply.png">../resources/icons/apply.png</file>
         <file alias="icons/add.png">../resources/icons/add.png</file>
         <file alias="icons/undo.png">../resources/icons/undo.png</file>
         <file alias="icons/back.png">../resources/icons/back.png</file>
         <file alias="icons/edit.png">../resources/icons/edit.png</file>
-        <file alias="no_image.png">../resources/no_image.png</file>
         <file alias="icons/delete.png">../resources/icons/delete.png</file>
     </qresource>
 </RCC>

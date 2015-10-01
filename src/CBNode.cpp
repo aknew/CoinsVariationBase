@@ -76,6 +76,16 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
     else {
         this->fullFormFields =this->model->fieldList;
     }
+
+    QJsonValue json_hasImages = obj.value("hasImages");
+
+    if (json_hasImages.isBool()){
+        hasImages = json_hasImages.toBool();
+    }
+    else{
+        hasImages = false;
+    }
+
 }
 
 QObject *CBNode::listModel(){
@@ -157,5 +167,12 @@ QStringList CBNode::listFromQuery(QString queryString){
     }
 
     return list;
+
+}
+
+void CBNode::selectItemWithIndex(int index){
+        //* Uses for set selecteditem from qml
+        model->selectedRow = index;
+        emit idWasSelected(model->selectedItemId());
 
 }

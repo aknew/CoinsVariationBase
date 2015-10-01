@@ -113,6 +113,7 @@ function createFullForm(node) {
     qmlString = "import QtQuick 2.0;\n" +
                 "import CB.api 1.0;\n" +
                 "import CBControls 1.0;\n" +
+                "import QtQuick.Controls 1.4\n\n"+
                 "Rectangle {\n" +
                 "   id: mainRect;\n" +
                 "   property bool isListView: false;\n" +
@@ -148,10 +149,6 @@ function createFullForm(node) {
         }
 
         switch (fieldType) {
-        case "picture":
-            qmlString += "ImageWithFullScreen{ id: field_" + field
-                    + "; value: node.selectedItem." + field + "; editing:false}"
-            break
         case "combo":
             qmlString += "LabeledComboBoxInput {\n  id: field_" + field + ";\n  title: qsTr(\"" + field + "\");\n   "
             qmlString += "anchors.fill: parent.widths;\n value: node.selectedItem." + field + ";\n"
@@ -166,6 +163,32 @@ function createFullForm(node) {
 
         stateEditableString += "PropertyChanges { target:field_" + field + ";editing:true }"
         collectDataString += field + ": field_" + field + ".value,"
+    }
+
+    if (node.hasImages){
+        qmlString +="Label{text: qsTr(\"Images\"); font.pixelSize: 16; font.bold: true;}\n"
+
+
+        qmlString+= "   ListView {\n" +
+                    "       height: CBApi.baseProvider.images.rowCount>1?400:200;\n" +
+                    "       width: parent.width;\n" +
+                    "       delegate: imageDelegate;\n" +
+                    "       model:CBApi.baseProvider.images;\n" +
+                    " }\n";
+
+
+        qmlString += "  Component {\n       id: imageDelegate;\n";
+
+        qmlString += "      Item {\n"+
+                     "          width: parent.width;\n"+
+                     "          height: 200;\n";
+        qmlString += "          Image{ anchors.fill: parent \n" +
+                     "          source: \"image://imageProvider/\"+id\n" +
+                     "          fillMode: Image.PreserveAspectFit}\n";
+
+        //qmlString += "          MouseArea {anchors.fill: parent; onClicked: { mainWindow.showFullForm(node,index);} }\n";
+        qmlString += "       }\n";
+        qmlString += "  }\n";
     }
 
     qmlString += "      }\n" //Column {

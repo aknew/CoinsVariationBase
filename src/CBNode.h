@@ -15,6 +15,7 @@ class CBNode : public QObject
     Q_PROPERTY(QStringList nextLevelList READ getNextLevelList  FINAL)
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
     Q_PROPERTY(QObject* listModel READ listModel FINAL)
+    Q_PROPERTY(bool hasImages MEMBER hasImages FINAL)
 
 public:
     explicit CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent = 0);
@@ -29,10 +30,7 @@ public:
     QVariant listViewFields; //< describe which fields and how should be shown in list form
     QVariant fullFormFields; //< describe which fields and how should be shown in full form
 
-    Q_INVOKABLE void selectItemWithIndex(int index){
-        //* Uses for set selecteditem from qml
-        model->selectedRow = index;
-    }
+    Q_INVOKABLE void selectItemWithIndex(int index);
 
     QString filteringStringForChildNode(const QString& childNodeName);
 
@@ -40,7 +38,12 @@ public:
     void addFilter(const QString &filterString); //< add any other filters, uses for selection from related record
     void dropFilters(); //< drop all filters excapt level
 
+    bool hasImages;
+
     Q_INVOKABLE QStringList listFromQuery(QString query);
+
+signals:
+    void idWasSelected(QString id);
 
 protected:
 

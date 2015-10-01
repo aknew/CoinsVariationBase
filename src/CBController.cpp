@@ -80,7 +80,7 @@ void CBController::openBase(QString basePath){
 }
 
 void CBController::providerReadyToWork(){
-//    engine->addImageProvider(QLatin1String("imageProvider"),m_baseProvider->imageProvider);
+    engine->addImageProvider(QLatin1String("imageProvider"),m_baseProvider->imageProvider);
     QMetaObject::invokeMethod(this->applicationWindow,
                               "providerReadyToWork"
                               );

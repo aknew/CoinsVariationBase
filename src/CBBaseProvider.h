@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QtSql>
 #include "CBNode.h"
+#include "CBImageProvider.h"
 
 class CBBaseProvider : public QObject
 /*! \brief implement base logic - reading/writing data, loading/saving images, transitions between tables, etc
@@ -18,6 +19,7 @@ class CBBaseProvider : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString baseTitle MEMBER m_baseTitle FINAL)
+    Q_PROPERTY(QObject* images READ getImages())
 
 public:
     explicit CBBaseProvider(QObject *parent = 0):QObject(parent){}
@@ -31,6 +33,11 @@ public:
 
     Q_INVOKABLE void saveListForm(const QString& qmlString, CBNode *node);
     Q_INVOKABLE void saveFullForm(const QString& qmlString, CBNode *node);
+    CBImageProvider *imageProvider;
+
+    QObject *getImages(){
+        return m_imageModel;
+    }
 
 private:
     QString rootPath; //< root folder
@@ -38,6 +45,10 @@ private:
     QString startTable;
     QSqlDatabase db;
     QMap<QString,CBNode*> nodeMap;//< Map which contains all node and uses for gwtting it by name
+
+
+    CBSqlRelationalTableModel *m_imageModel; //< model for reading images list from base
+    void idWasSelected(const QString &id); //<when we set some record as selected, we need find Images and Nodes for it
 
 signals:
     void readyToWork();

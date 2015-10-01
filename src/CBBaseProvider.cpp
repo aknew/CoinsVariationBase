@@ -43,12 +43,23 @@ void CBBaseProvider::startWithPath(const QString &path){
 
      startTable = baseStruct.value("startTable").toString();
 
+     // create and init imageProvider
+
+     imageProvider= new CBImageProvider(QQuickImageProvider::Pixmap);
+     imageProvider->imageFolder = rootPath+"images/";
+     m_imageModel = new CBSqlRelationalTableModel(this,db);
+     m_imageModel->setTable("Images");
+     m_imageModel->applyRoles();
+
      QJsonArray nodes = baseStruct.value("nodes").toArray();
 
      foreach (QJsonValue value1,nodes) {
          QJsonObject obj=value1.toObject();
 
          CBNode *node=new CBNode(obj,db, this);
+         if (node->hasImages){
+             connect(node,&CBNode::idWasSelected,this,&CBBaseProvider::idWasSelected);
+         }
          //bool isSystem=obj.value("isSystem").toBool();
 
 //         if (isSystem){
@@ -57,11 +68,6 @@ void CBBaseProvider::startWithPath(const QString &path){
 
          nodeMap.insert(node->tableName,node);
      }
-
-    // create imageProvider
-
-//    imageProvider= new CVBImageProvider(QQuickImageProvider::Pixmap);
-//    imageProvider->imageFolder=basePath+"images/";
 
      emit readyToWork();
 }
@@ -83,4 +89,12 @@ void CBBaseProvider::startWithPath(const QString &path){
  void CBBaseProvider::saveFullForm(const QString& qmlString, CBNode *node){
      QString filePath=rootPath+"forms/"+node->fullFormName();
      CBUtils::SaveStringToFile(qmlString,filePath);
+ }
+
+
+ void CBBaseProvider::idWasSelected(const QString &id){
+     // FIXME: need add stack of previous selected ids whenwe go back from some node
+     QString filter = QString("\"ParentID\"=\"%1\"").arg(id);
+     m_imageModel->setFilter(filter);
+     m_imageModel->select();
  }
