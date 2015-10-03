@@ -33,10 +33,15 @@ public:
 
     Q_INVOKABLE void saveListForm(const QString& qmlString, CBNode *node);
     Q_INVOKABLE void saveFullForm(const QString& qmlString, CBNode *node);
-    CBImageProvider *imageProvider;
 
+
+    CBImageProvider *imageProvider;
     QObject *getImages(){
         return m_imageModel;
+    }
+    Q_INVOKABLE QVariantMap imageFullInfo(int index){
+        m_imageModel->selectedRow = index;
+        return m_imageModel->selectedItem();
     }
 
 private:

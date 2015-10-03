@@ -88,6 +88,15 @@ ApplicationWindow {
         tablesStack.push(listForm);
     }
 
+    function showFullImageInfo(index){
+        var component = Qt.createComponent("CBControls/FullImageInfo.qml")
+        if (component.status === Component.Ready) {
+            var form = component.createObject();
+            form.imageInfo = CBApi.baseProvider.imageFullInfo(index)
+            tablesStack.push(form);
+        }
+    }
+
     // Dialogs
 
     FileDialog {

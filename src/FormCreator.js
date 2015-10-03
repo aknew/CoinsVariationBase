@@ -186,7 +186,7 @@ function createFullForm(node) {
                      "          source: \"image://imageProvider/\"+id\n" +
                      "          fillMode: Image.PreserveAspectFit}\n";
 
-        //qmlString += "          MouseArea {anchors.fill: parent; onClicked: { mainWindow.showFullForm(node,index);} }\n";
+        qmlString += "          MouseArea {anchors.fill: parent; onClicked: { mainWindow.showFullImageInfo(index);} }\n";
         qmlString += "       }\n";
         qmlString += "  }\n";
     }
