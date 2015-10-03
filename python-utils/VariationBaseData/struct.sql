@@ -1,4 +1,4 @@
-PRAGMA foreign_keys=ON;
+﻿PRAGMA foreign_keys=ON;
 BEGIN TRANSACTION;
 
 --- 
@@ -106,12 +106,12 @@ CREATE TABLE [Images] (
   [id] TEXT NOT NULL PRIMARY KEY, 
   [comment] text,
   [source] text,
-  [relid] text NOT NULL
+  [ParentID] text NOT NULL
   );
 
 CREATE TABLE [Notes] (
   [id] TEXT NOT NULL PRIMARY KEY, 
   [comment] text,
   [source] text,
-  [relid] text NOT NULL
+  [ParentID] text NOT NULL
   );
