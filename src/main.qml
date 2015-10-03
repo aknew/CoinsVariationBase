@@ -94,6 +94,7 @@ ApplicationWindow {
             var form = component.createObject();
             form.imageInfo = CBApi.baseProvider.imageFullInfo(index)
             tablesStack.push(form);
+            form.applyContentHeight(); //HOTFIX: I have to apply contentHeight after some delay
         }
     }
 
