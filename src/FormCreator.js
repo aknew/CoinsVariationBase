@@ -119,6 +119,8 @@ function createFullForm(node) {
                 "   property bool isListView: false;\n" +
                 "   property var node;\n";
 
+    var onNodeChangedString = "  onNodeChanged:{\n";
+
     qmlString += "  Flickable {\n"+
                  "       clip: true;\n"+
                  "       anchors.fill:parent;\n";
@@ -148,21 +150,24 @@ function createFullForm(node) {
             field = fieldStruct["name"];
         }
 
+        var field_id = "field_" + field;
+
         switch (fieldType) {
         case "combo":
-            qmlString += "LabeledComboBoxInput {\n  id: field_" + field + ";\n  title: qsTr(\"" + field + "\");\n   "
-            qmlString += "anchors.fill: parent.widths;\n value: node.selectedItem." + field + ";\n"
-            qmlString += "model: node.listFromQuery(\"" + fieldStruct["query"]
-                    + "\");z:15; editing:false}\n"
+            qmlString += "LabeledComboBoxInput {\n  id:" + field_id + ";\n  title: qsTr(\"" + field + "\");\n   "
+            qmlString += "anchors.fill: parent.widths;\n z:15;\n editing:false \n}\n"
+            onNodeChangedString += field_id + ".model=node.listFromQuery(\"" + fieldStruct["query"]
+                    + "\");\n"
             break
         default:
-            qmlString += "LabeledTextInput {id: field_" + field
-                    + ";\n   anchors.fill: parent.widths;\n  value:  node.selectedItem." + field
-                    + ";\n  title: qsTr(\"" + field + "\");\n    editing:false\n}\n"
+            qmlString += "LabeledTextInput {id:" + field_id
+                    + ";\n   anchors.fill: parent.widths;\n"
+                    + "title: qsTr(\"" + field + "\");\n    editing:false\n}\n"
         }
 
-        stateEditableString += "PropertyChanges { target:field_" + field + ";editing:true }"
-        collectDataString += field + ": field_" + field + ".value,"
+        stateEditableString += "PropertyChanges { target:" + field_id  + ";editing:true }"
+        collectDataString += field + ": " + field_id  + ".value,"
+        onNodeChangedString +=field_id + ".value =  node.selectedItem." + field + ";\n";
     }
 
     if (node.hasImages){
@@ -170,7 +175,7 @@ function createFullForm(node) {
 
 
         qmlString+= "   ListView {\n" +
-                    "       height: CBApi.baseProvider.images.rowCount>1?400:200;\n" +
+                    "       height: 200;\n" +
                     "       width: parent.width;\n" +
                     "       delegate: imageDelegate;\n" +
                     "       model:CBApi.baseProvider.images;\n" +
@@ -196,8 +201,11 @@ function createFullForm(node) {
     qmlString += "  }\n" //Flickable {
 
     //stateEditableString += "PropertyChanges { target: nextlevel; visible:false }"
-    stateEditableString += "}"
+    stateEditableString += "}\n\n"
     qmlString += stateEditableString
+
+    onNodeChangedString +="}\n\n";
+    qmlString += onNodeChangedString;
 
     collectDataString = collectDataString.substring(
                 0, collectDataString.length - 1)
