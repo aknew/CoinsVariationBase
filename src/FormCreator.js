@@ -204,7 +204,7 @@ function createFullForm(node) {
     stateEditableString += "}\n\n"
     qmlString += stateEditableString
 
-    onNodeChangedString +="}\n\n";
+    onNodeChangedString +="nextlevel.model = node.nextLevelList}\n\n";
     qmlString += onNodeChangedString;
 
     collectDataString = collectDataString.substring(

@@ -3,11 +3,15 @@ import QtQuick 2.0
 Rectangle {
     width: parent.width
     height: listView1.height
+    property var model
+    onModelChanged: {
+        listView1.model = model;
+    }
+
     ListView {
         clip: true
         id: listView1
         delegate: nextLevelDelegate
-        model: node.nextLevelList
         width: parent.width
         height: 120//nextLevelList.count*40 //FIXME костыль, но без этого при попыткезадействовать contentHeight  получается binding loop и ничего невыводит
         interactive:false

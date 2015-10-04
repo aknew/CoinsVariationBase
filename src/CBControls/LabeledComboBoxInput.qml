@@ -3,19 +3,27 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Controls 1.4
 
 FocusScope {
+    id: container
     width: parent.width
     height: textInput.height
     property alias model: valuelist.model
     property alias value: textInput.value
     property alias title: textInput.title
-    property alias editing: textInput.editing
+    property bool editing: false;
+    onEditingChanged: {
+        textInput.editing = editing;
+        mouseArea.enabled = editing;
+    }
     // I use Dialog instead of ComboBox from QtQuick.Controls because ComboBox has bug - I cant type space in it.
     // https://bugreports.qt.io/browse/QTBUG-38612 Tested with Qt 5.4.0
     LabeledTextInput{
         id:textInput
         anchors.fill: parent
+        editing: false
     }
     MouseArea{
+        id: mouseArea
+        enabled: false
         anchors.fill: parent
         onClicked: {
             dialog.value = textInput.value
