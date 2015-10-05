@@ -2,87 +2,127 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 
 Item {
-    property var node;
-
-    Component {
-        id: comboDelegate
-        ComboBox {
-            model: ListModel {
-                ListElement { text: "Banana" }
-                ListElement { text: "Apple" }
-                ListElement { text: "Coconut" }
-            }
-        }
-    }
-
-    Component{
-        id: buttonDelegate
-        Button{
-            action:itemText==="+"?addAction:undoAction;
-        }
-    }
-
-    Component {
-        id: textDelegate
-        TextField {
-            text: itemText
-        }
-    }
+    property var node
 
     ListModel {
         id: filterList
-        ListElement{
-            field:"";
-            relation:"=="
-            filter:""
-            button:"+"
+        ListElement {
+            field: "avers"
+            relation: "!="
+            filter: "122"
+            button: "-"
+        }
+        ListElement {
+            field: "revers"
+            relation: "contains"
+            filter: " sample"
+            button: "-"
+        }
+        ListElement {
+            field: ""
+            relation: "=="
+            filter: ""
+            button: "+"
         }
     }
-    TableView{
+    TableView {
         height: 50
         model: filterList
         anchors.fill: parent
-        TableViewColumn{
+        TableViewColumn {
             role: "field"
             title: qsTr("field")
-        }
-        TableViewColumn{
-            role: "relation"
-            title: qsTr("relation")
-        }
-        TableViewColumn{
-            role: "filter"
-            title: qsTr("filter string")
-        }
-        TableViewColumn{
-            role: "button"
-            title:""
-            width:25
-        }
-        itemDelegate: Item {
-                height: 25
-                Loader {
-                    property string itemText: styleData.value
-                    sourceComponent: styleData.column === 3 ? buttonDelegate:textDelegate //: comboDelegate
+            delegate: Component {
+                id: comboFieldDelegate
+                ComboBox {
+                    //currentText: styleData.value
+                    model: ListModel {
+                        id: fieldsList
+                        ListElement {
+                            text: "nominal"
+                        }
+                        ListElement {
+                            text: "years"
+                        }
+                        ListElement {
+                            text: "metal"
+                        }
+                    }
+                    onCurrentIndexChanged: {
+                        filterList.get(styleData.row).field = currentText
+                    }
                 }
             }
-    }
+        }
+        TableViewColumn {
+            role: "relation"
+            title: qsTr("relation")
+            delegate: Component {
+                id: comboDelegate
+                ComboBox {
+                    //currentText: styleData.value
+                    model: ListModel {
+                        ListElement {
+                            text: "=="
+                        }
+                        ListElement {
+                            text: "!="
+                        }
+                        ListElement {
+                            text: "contains"
+                        }
+                    }
+                    onCurrentIndexChanged: {
+                        filterList.get(styleData.row).relation = currentText
+                    }
+                }
+            }
+        }
+        TableViewColumn {
+            role: "filter"
+            title: qsTr("filter string")
+            delegate: Component {
+                id: textDelegate
+                TextField {
+                    text: styleData.value
+                    onEditingFinished: {
+                        var currentRow = filterList.get(styleData.row);
 
-    Action{
-        id: addAction
-        iconSource: "/icons/add.png"
-        onTriggered: {
-            filterList.append({"button":"-","field":"test field","relation":"like","filter":"test filter"})
+                        if (currentRow.filter===""){
+
+                            filterList.append({
+                                                  button: "+",
+                                                  field: "avers", //FIXME:
+                                                  relation: "==",
+                                                  filter: ""
+                                              });
+
+                            currentRow.button = "-";
+                        }
+                        currentRow.filter = text
+                    }
+                }
+            }
+        }
+        TableViewColumn {
+            role: "button"
+            title: ""
+            width: 25
+            delegate: Component {
+                id: buttonDelegate
+                Button {
+                    //iconSource: styleData.value  === "+" ?"/icons/add.png":"/icons/undo.png"
+                    iconSource:  "/icons/undo.png"
+                    visible: styleData.value  === "-"
+                    onClicked: {
+//                        var k = filterList.get(styleData.row)
+//                        console.log(k.field)
+//                        console.log(k.filter)
+                        filterList.remove(styleData.row)
+                    }
+
+                }
+            }
         }
     }
-    Action{
-        id: undoAction
-        iconSource: "/icons/undo.png"
-        onTriggered: {
-            //filterList.remove()
-        }
-    }
-
-
 }
-
