@@ -22,6 +22,21 @@ ApplicationWindow {
                     }
                     MenuItem { text: "Recent" }
                 }
+        Menu {
+                    title: "Filters"
+                    visible: tablesStack.currentItem.isListView;
+                    MenuItem {
+                        text: "Set filters"
+                        onTriggered: {
+                            var component = Qt.createComponent("CBControls/FilterDialog.qml")
+                            if (component.status === Component.Ready) {
+                                var form = component.createObject();
+                                form.node = tablesStack.currentItem.node;
+                                tablesStack.push(form);
+                            }
+                        }
+                    }
+                }
     }
 
     toolBar: ToolBar {
