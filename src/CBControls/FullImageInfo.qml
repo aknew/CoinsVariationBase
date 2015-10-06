@@ -4,6 +4,7 @@ import CBControls 1.0
 Flickable {
     clip: true
     property var imageInfo
+    property bool isListView: false
     onImageInfoChanged: {
         image.source = "image://imageProvider/" + imageInfo.id
         sourceLabel.value = imageInfo.source

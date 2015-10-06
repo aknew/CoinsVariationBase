@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 
 Item {
     property var node
+    property bool isListView: false
 
     ListModel {
         id: filterList
@@ -35,7 +36,7 @@ Item {
             delegate: Component {
                 id: comboFieldDelegate
                 ComboBox {
-                    //currentText: styleData.value
+                    currentIndex: find(styleData.value)
                     model: ListModel {
                         id: fieldsList
                         ListElement {
@@ -60,8 +61,8 @@ Item {
             delegate: Component {
                 id: comboDelegate
                 ComboBox {
-                    //currentText: styleData.value
                     model: ListModel {
+                        id: lmRelation
                         ListElement {
                             text: "=="
                         }
@@ -71,7 +72,16 @@ Item {
                         ListElement {
                             text: "contains"
                         }
+                        function indexOf(text){
+                            for(var i =0; i< count; ++i){
+                                if (get(i).text === text){
+                                    return i;
+                                }
+                            }
+                            console.error("Cant find text "+text+" into lmRelation");
+                        }
                     }
+                    currentIndex:lmRelation.indexOf(styleData.value);
                     onCurrentIndexChanged: {
                         filterList.get(styleData.row).relation = currentText
                     }

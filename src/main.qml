@@ -75,6 +75,7 @@ ApplicationWindow {
         anchors.fill: parent
         objectName: "tablesStack"
         initialItem: Text {
+            property bool isListView: false
             text: "Running on: " + Qt.platform.os + "\n" +
                   "Open some base to start work";
         }
