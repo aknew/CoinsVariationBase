@@ -52,6 +52,10 @@ ApplicationWindow {
                 width:25
                 onClicked:{
                     if (tablesStack.depth>2){
+                        if(tablesStack.currentItem.isFilterDialog){
+                            tablesStack.currentItem.applyFilters();
+                        }
+
                         tablesStack.pop();
                     }
                 }

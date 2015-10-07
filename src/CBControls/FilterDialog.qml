@@ -4,6 +4,7 @@ import QtQuick.Controls 1.4
 Item {
     property var node
     property bool isListView: false
+    property bool isFilterDialog: true //FIXME: do some enum to determine which form is shown
 
     ListModel {
         id: filterList
@@ -95,4 +96,30 @@ Item {
             }
         }
     }
+    function applyFilters(){
+
+        var conditions = [];
+        for (var i = 0; i < filterList.count; ++i){
+            var filter = filterList.get(i);
+            if (filter.button === "-"){
+                //FIXME: use boolean button instead string
+                var condition = "\"" + node.listViewFields[filter.field] + "\""
+                switch (filter.relation){
+                case 0:
+                    condition += " = \"" + filter.filter + "\"";
+                    break;
+                case 1:
+                    condition += " like \"%" + filter.filter + "%\"";
+                    break;
+                case 2:
+                    condition += " = \"" + filter.filter + "\"";
+                    condition = "not " + condition;
+                    break;
+                }
+                conditions.push(condition);
+            }
+        }
+        console.log(conditions.join(" and "));
+    }
+
 }
