@@ -38,6 +38,14 @@ public:
     void addFilter(const QString &filterString); //< add any other filters, uses for selection from related record
     void dropFilters(); //< drop all filters excapt level
 
+    Q_INVOKABLE static QStringList relationList(){
+       QStringList list;
+       list.append("is equal");
+       list.append("like");
+       list.append("not equal");
+       return list;
+    }
+
     bool hasImages;
 
     Q_INVOKABLE QStringList listFromQuery(QString query);

@@ -8,23 +8,12 @@ Item {
     ListModel {
         id: filterList
         ListElement {
-            field: "avers"
-            relation: "!="
-            filter: "122"
-            button: "-"
-        }
-        ListElement {
-            field: "revers"
-            relation: "contains"
-            filter: " sample"
-            button: "-"
-        }
-        ListElement {
-            field: ""
-            relation: "=="
+            field: 0
+            relation: 0
             filter: ""
             button: "+"
         }
+
     }
     TableView {
         height: 50
@@ -36,21 +25,11 @@ Item {
             delegate: Component {
                 id: comboFieldDelegate
                 ComboBox {
-                    currentIndex: find(styleData.value)
-                    model: ListModel {
-                        id: fieldsList
-                        ListElement {
-                            text: "nominal"
-                        }
-                        ListElement {
-                            text: "years"
-                        }
-                        ListElement {
-                            text: "metal"
-                        }
-                    }
+
+                    model: node.listViewFields
+                    currentIndex:styleData.value;
                     onCurrentIndexChanged: {
-                        filterList.get(styleData.row).field = currentText
+                        filterList.get(styleData.row).field = currentIndex
                     }
                 }
             }
@@ -61,29 +40,10 @@ Item {
             delegate: Component {
                 id: comboDelegate
                 ComboBox {
-                    model: ListModel {
-                        id: lmRelation
-                        ListElement {
-                            text: "=="
-                        }
-                        ListElement {
-                            text: "!="
-                        }
-                        ListElement {
-                            text: "contains"
-                        }
-                        function indexOf(text){
-                            for(var i =0; i< count; ++i){
-                                if (get(i).text === text){
-                                    return i;
-                                }
-                            }
-                            console.error("Cant find text "+text+" into lmRelation");
-                        }
-                    }
-                    currentIndex:lmRelation.indexOf(styleData.value);
+                    model: node.relationList()
+                    currentIndex:styleData.value;
                     onCurrentIndexChanged: {
-                        filterList.get(styleData.row).relation = currentText
+                        filterList.get(styleData.row).relation = currentIndex
                     }
                 }
             }
@@ -102,8 +62,8 @@ Item {
 
                             filterList.append({
                                                   button: "+",
-                                                  field: "avers", //FIXME:
-                                                  relation: "==",
+                                                  field: 1,
+                                                  relation: 1,
                                                   filter: ""
                                               });
 
