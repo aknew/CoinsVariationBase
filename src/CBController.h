@@ -26,6 +26,14 @@ public:
 
     Q_INVOKABLE void openBase(QString basePath); ///< open base with path, is usualy called from qml openDialog and from start method
 
+    enum FormType{
+        ListForm,
+        FullForm,
+        ImageFullForm,
+        FilterDialog
+    };
+    Q_ENUM(FormType)
+
 private:
     CBBaseProvider *m_baseProvider;
 

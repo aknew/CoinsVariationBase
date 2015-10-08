@@ -24,7 +24,7 @@ ApplicationWindow {
                 }
         Menu {
                     title: "Filters"
-                    visible: tablesStack.currentItem.isListView;
+                    visible: tablesStack.currentItem.formType === CBApi.ListForm;
                     MenuItem {
                         text: "Set filters"
                         onTriggered: {
@@ -58,7 +58,7 @@ ApplicationWindow {
                 width:25
                 onClicked:{
                     if (tablesStack.depth>2){
-                        if(tablesStack.currentItem.isFilterDialog){
+                        if(tablesStack.currentItem.formType === CBApi.FilterDialog){
                             tablesStack.currentItem.applyFilters();
                         }
 

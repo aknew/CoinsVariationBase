@@ -1,10 +1,11 @@
 import QtQuick 2.0
 import CBControls 1.0
+import CB.api 1.0
 
 Flickable {
     clip: true
     property var imageInfo
-    property bool isListView: false
+    property var formType: CBApi.ImageFullForm
     onImageInfoChanged: {
         image.source = "image://imageProvider/" + imageInfo.id
         sourceLabel.value = imageInfo.source

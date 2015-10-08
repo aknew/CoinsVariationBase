@@ -1,10 +1,10 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
+import CB.api 1.0
 
 Item {
     property var node
-    property bool isListView: false
-    property bool isFilterDialog: true //FIXME: do some enum to determine which form is shown
+    property var formType: CBApi.FilterDialog
 
     ListModel {
         id: filterList

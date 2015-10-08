@@ -6,7 +6,7 @@ function createListForm(node) {
                 "import CBControls 1.0;\n" +
                 "Rectangle {\n" +
                 "   id: mainRect;\n" +
-                "   property bool isListView: true;\n" +
+                "   property var formType: CBApi.ListForm\n" +
                 "   property var node;\n"+
                 "   onNodeChanged:{listView.model = node.listModel;}\n";
 
@@ -77,7 +77,7 @@ function createTable(node){
             "import QtQuick.Controls 1.2\n\n"+
             "Rectangle {\n" +
             "   id: mainRect;\n" +
-            "   property bool isListView: true;\n" +
+            "   property var formType: CBApi.ListForm\n" +
             "   property var node;\n"+
             "   onNodeChanged:{tableView.model = node.listModel;}\n\n"+
             "   TableView {\n       id:tableView;\n        anchors.fill:parent;\n" +
@@ -116,7 +116,7 @@ function createFullForm(node) {
                 "import QtQuick.Controls 1.4\n\n"+
                 "Rectangle {\n" +
                 "   id: mainRect;\n" +
-                "   property bool isListView: false;\n" +
+                "   property var formType: CBApi.FullForm\n" +
                 "   property var node;\n";
 
     var onNodeChangedString = "  onNodeChanged:{\n";
