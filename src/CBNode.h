@@ -35,8 +35,8 @@ public:
     QString filteringStringForChildNode(const QString& childNodeName);
 
     void setLevelFilter(const QString &filterString); //< filtering only record related to previous level
-    void addFilter(const QString &filterString); //< add any other filters, uses for selection from related record
-    void dropFilters(); //< drop all filters excapt level
+    Q_INVOKABLE void addFilter(const QString &filterString); //< add any other filters, uses for selection from related record
+    Q_INVOKABLE void dropFilter(); //< drop all filters excapt level
 
     Q_INVOKABLE static QStringList relationList(){
        QStringList list;
@@ -63,7 +63,7 @@ protected:
 
     QObject* listModel();
 
-    QStringList filters;
+    QString filter;
     QString levelFilter;
 
     QStringList getNextLevelList(){

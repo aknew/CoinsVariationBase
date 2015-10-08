@@ -36,6 +36,12 @@ ApplicationWindow {
                             }
                         }
                     }
+                    MenuItem {
+                        text: "Drop filters"
+                        onTriggered: {
+                            tablesStack.currentItem.node.dropFilter();
+                        }
+                    }
                 }
     }
 

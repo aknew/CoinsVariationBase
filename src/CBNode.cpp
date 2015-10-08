@@ -13,6 +13,8 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
 {
     levelFilter = kWrongString;
 
+    filter = "";
+
     // TODO: Добавить проверку что все хорошо прошло, проще здесь найти что таблица называется не так как в struct.json чем отлавливать это в qml
     tableName=obj.value("name").toString();
 
@@ -119,20 +121,21 @@ void CBNode::setLevelFilter(const QString &filterString){
 }
 
 void CBNode::addFilter(const QString &filterString){
-    filters.append(filterString);
+    filter = filterString;
     applyFilters();
 }
 
-void CBNode::dropFilters(){
-    filters.clear();
+void CBNode::dropFilter(){
+    filter = "";
     applyFilters();
 }
 
 void CBNode::applyFilters(){
-    QString fullFilterString = filters.join(" and ");
+
+    QString fullFilterString = filter;
 
     if (levelFilter!=kWrongString){
-        if (filters.isEmpty()){
+        if (filter == ""){
             fullFilterString = levelFilter;
         }
         else{

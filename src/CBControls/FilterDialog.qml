@@ -119,7 +119,7 @@ Item {
                 conditions.push(condition);
             }
         }
-        console.log(conditions.join(" and "));
+        node.addFilter(conditions.join(" and "));
     }
 
 }
