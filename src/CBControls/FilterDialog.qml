@@ -12,7 +12,7 @@ Item {
             field: 0
             relation: 0
             filter: ""
-            button: "+"
+            deletable: false
         }
 
     }
@@ -62,13 +62,13 @@ Item {
                         if (currentRow.filter===""){
 
                             filterList.append({
-                                                  button: "+",
+                                                  deletable: false,
                                                   field: 1,
                                                   relation: 1,
                                                   filter: ""
                                               });
 
-                            currentRow.button = "-";
+                            currentRow.deletable = true;
                         }
                         currentRow.filter = text
                     }
@@ -76,19 +76,15 @@ Item {
             }
         }
         TableViewColumn {
-            role: "button"
+            role: "deletable"
             title: ""
             width: 25
             delegate: Component {
                 id: buttonDelegate
                 Button {
-                    //iconSource: styleData.value  === "+" ?"/icons/add.png":"/icons/undo.png"
                     iconSource:  "/icons/undo.png"
-                    visible: styleData.value  === "-"
+                    visible: styleData.value
                     onClicked: {
-//                        var k = filterList.get(styleData.row)
-//                        console.log(k.field)
-//                        console.log(k.filter)
                         filterList.remove(styleData.row)
                     }
 
@@ -101,8 +97,7 @@ Item {
         var conditions = [];
         for (var i = 0; i < filterList.count; ++i){
             var filter = filterList.get(i);
-            if (filter.button === "-"){
-                //FIXME: use boolean button instead string
+            if (filter.deletable){
                 var condition = "\"" + node.listViewFields[filter.field] + "\""
                 switch (filter.relation){
                 case 0:
