@@ -179,6 +179,7 @@ function createFullForm(node) {
                     "       width: parent.width;\n" +
                     "       delegate: imageDelegate;\n" +
                     "       model:CBApi.baseProvider.images;\n" +
+                    "       clip: true;\n" +
                     " }\n";
 
 
@@ -186,11 +187,14 @@ function createFullForm(node) {
 
         qmlString += "      Item {\n"+
                      "          width: parent.width;\n"+
-                     "          height: 200;\n";
-        qmlString += "          Image{ anchors.fill: parent \n" +
+                     "          height: 230;\n";
+        qmlString += "          Column{anchors.fill: parent;\n"
+        qmlString += "          Text{text: comment;  font.pixelSize: 16} \n"
+        qmlString += "          Image{ width: parent.width \n" +
+                     "          height: 200\n" +
                      "          source: \"image://imageProvider/\"+id\n" +
                      "          fillMode: Image.PreserveAspectFit}\n";
-
+        qmlString += "       }\n";
         qmlString += "          MouseArea {anchors.fill: parent; onClicked: { mainWindow.showFullImageInfo(index);} }\n";
         qmlString += "       }\n";
         qmlString += "  }\n";
