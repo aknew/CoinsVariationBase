@@ -19,6 +19,11 @@ void CBController::start(){
 
     basePath= settings->lastBasePath;
 
+    QMetaObject::invokeMethod(this->applicationWindow,
+                              "onRecentBasesChanged"
+                              );
+
+
     if (basePath.isEmpty()){
         QMetaObject::invokeMethod(this->applicationWindow,
                                   "openBase"
@@ -47,6 +52,7 @@ void CBController::openBase(QString basePath){
     this->applicationWindow->setProperty("needCollect", QVariant(needCollect));
 
     if (m_baseProvider) {
+        //FIXME: need check that new baseProvider can be created before terminate old one
         delete m_baseProvider;
     }
 
@@ -79,4 +85,11 @@ void CBController::providerReadyToWork(){
     QMetaObject::invokeMethod(this->applicationWindow,
                               "providerReadyToWork"
                               );
+}
+
+void CBController::openRecentBase(QString baseName){
+    QString path = CBSettings::settingsInstance()->recentPathByName(baseName);
+    if (path!=""){
+        openBase(path);
+    }
 }

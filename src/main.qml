@@ -15,12 +15,13 @@ ApplicationWindow {
 
     menuBar:MenuBar{
         Menu {
+                    id: fileMenu;
                     title: "File"
                     MenuItem {
                         text: "Open..."
                         onTriggered: openBase();
                     }
-                    MenuItem { text: "Recent" }
+                    MenuSeparator{}
                 }
         Menu {
                     title: "Filters"
@@ -162,6 +163,19 @@ ApplicationWindow {
     function openBaseAlert(){
         messageDialog.open();
     }
+
+    function onRecentBasesChanged(){
+        var recentBases = CBSettings.recentBases;
+        for ( var i = 0; i< recentBases.length; ++i){
+            var base = recentBases[i];
+            var qmlString = "import QtQuick 2.2\nimport QtQuick.Controls 1.2\nimport CB.api 1.0\n";
+            qmlString += "MenuItem {text:\"" + base + "\"; ";
+            qmlString += "onTriggered: CBApi.openRecentBase(\"" + base + "\")}";
+            var component = Qt.createQmlObject(qmlString,tablesStack, "menuItem");
+            fileMenu.insertItem(fileMenu.items.length,component);
+        }
+    }
+
 
     Action {
         id: actionEdit

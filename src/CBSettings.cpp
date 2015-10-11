@@ -69,10 +69,9 @@ void CBSettings::addRecentBase(const QString &name,const QString &path){
 QStringList CBSettings::recentBases(){
     QStringList bases;
     for (auto base = recentBasesMap.begin(); base!= recentBasesMap.end(); ++base){
-        bases.append(base.value());
+        bases.append(base.key());
     }
     return bases;
-
 }
 
 QString CBSettings::recentPathByName(const QString &name){

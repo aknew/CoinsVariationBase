@@ -25,6 +25,7 @@ public:
     QQmlApplicationEngine *engine; ///< needs for set imageProvider
 
     Q_INVOKABLE void openBase(QString basePath); ///< open base with path, is usualy called from qml openDialog and from start method
+    Q_INVOKABLE void openRecentBase(QString baseName); ///< try to open recent base by name, its path will be got from settings
 
     enum FormType{
         ListForm,

@@ -4,7 +4,11 @@
 
 void CBBaseProvider::startWithPath(const QString &path){
 
-    rootPath = path + "/";
+    rootPath = path;
+
+    if (rootPath.lastIndexOf("/")!=rootPath.length()-1){
+        rootPath += "/";
+    }
 
     // open sqlite base
 
