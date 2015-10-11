@@ -29,6 +29,7 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent),
         recentBasesMap[name] = path;
     }
     settings.endArray();
+    emit recentBasesChanged();
 
 }
 

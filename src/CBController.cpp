@@ -19,11 +19,6 @@ void CBController::start(){
 
     basePath= settings->lastBasePath;
 
-    QMetaObject::invokeMethod(this->applicationWindow,
-                              "onRecentBasesChanged"
-                              );
-
-
     if (basePath.isEmpty()){
         QMetaObject::invokeMethod(this->applicationWindow,
                                   "openBase"
