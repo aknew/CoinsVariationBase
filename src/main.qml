@@ -132,6 +132,8 @@ ApplicationWindow {
             windowToolbar.state = ""
             tablesStack.currentItem.state = ""
             tablesStack.currentItem.node.dropChanges();
+             //HOTFIX: to update data after dropping
+            tablesStack.currentItem.node = tablesStack.currentItem.node;
         }
     }
     Action{
