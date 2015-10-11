@@ -64,6 +64,12 @@ os.makedirs(base_path + "forms")
 
 shutil.copy(data_path + "struct.json",base_path + "struct.json")
 
+src_files = os.listdir(import_path)
+for file_name in src_files:
+    full_file_name = os.path.join(import_path, file_name)
+    if (os.path.isfile(full_file_name) and file_name != import_file):
+        shutil.copy(full_file_name, base_path + "images")
+
 
 dbfilename = base_path + "base.sqlite"
 

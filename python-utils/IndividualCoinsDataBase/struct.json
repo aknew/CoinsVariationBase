@@ -43,7 +43,7 @@
           {"name": "description"},
           {"name": "comment"}
         ],
-        "childNodes": ["SourceRef", "CoinHistory"],
+        "childNode": ["SourceRef", "CoinHistory"],
         "hasImages":true,
         "hasNotes":true
       },
