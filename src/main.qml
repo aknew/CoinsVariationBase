@@ -44,12 +44,48 @@ ApplicationWindow {
                         }
                     }
                 }
+        Menu{
+            title: "Change data"
+            visible: tablesStack.currentItem.formType !== CBApi.FilterDialog;
+            MenuItem{
+                text: "Edit record"
+                visible: tablesStack.currentItem.formType !== CBApi.ListForm;
+                iconSource: "/icons/edit.png"
+                onTriggered: {
+                    windowToolbar.state = "editing"
+                    tablesStack.currentItem.state = "editing"
+                }
+            }
+            MenuItem{
+                text: "Add new"
+            }
+            MenuItem{
+                text: "Delete"
+                visible: tablesStack.currentItem.formType !== CBApi.ListForm;
+                onTriggered: {
+                    deleteRowDialog.open();
+                }
+            }
+        }
     }
 
     toolBar: ToolBar {
         id: windowToolbar
+        states: [
+            State {
+                name: "editing"
+                PropertyChanges {
+                    target: defaultToolbar
+                    visible: false
+                }
+                PropertyChanges {
+                    target: editingToolbar
+                    visible: true
+                }
+            }
+        ]
         Row {
-            id:defaultLayout
+            id:defaultToolbar
             MouseArea{
                 Image {
                     source: "/icons/back.png"
@@ -57,24 +93,57 @@ ApplicationWindow {
                 }
                 height:25
                 width:25
-                onClicked:{
-                    if (tablesStack.depth>2){
-                        if(tablesStack.currentItem.formType === CBApi.FilterDialog){
-                            tablesStack.currentItem.applyFilters();
-                        }
-
-                        tablesStack.pop();
-                    }
-                }
+                onClicked:actionBack.trigger();
                 onPressAndHold: {
                     // TODO: show dialog all shown tables and pop to clicked
                     console.log("catch long tap")
                 }
             }
+        }
+        Row {
+            id:editingToolbar
+            visible: false
             ToolButton {
-                id: toolbuttonEdit
-                action: actionEdit
-                //visible:false
+                id: toolbuttonApply
+                action: actionApply
+            }
+            ToolButton {
+                id: toolbuttonUndo
+                action: actionUndo
+            }
+        }
+    }
+
+    Action {
+        id: actionApply
+        iconSource: "/icons/apply.png"
+        text: "apply"
+        onTriggered: {
+            windowToolbar.state = ""
+            tablesStack.currentItem.state = ""
+            tablesStack.currentItem.collectData();
+        }
+    }
+    Action {
+        id: actionUndo
+        iconSource: "/icons/undo.png"
+        text: "undo"
+        onTriggered: {
+            windowToolbar.state = ""
+            tablesStack.currentItem.state = ""
+            tablesStack.currentItem.node.dropChanges();
+        }
+    }
+    Action{
+        id: actionBack
+        text: "back"
+        onTriggered: {
+            if (tablesStack.depth>2){
+                if(tablesStack.currentItem.formType === CBApi.FilterDialog){
+                    tablesStack.currentItem.applyFilters();
+                }
+
+                tablesStack.pop();
             }
         }
     }
@@ -151,6 +220,18 @@ ApplicationWindow {
         }
     }
 
+    MessageDialog {
+        id: deleteRowDialog
+        text: qsTr("Do you realy want to delete this row?")
+        icon: StandardIcon.Warning
+        standardButtons: StandardButton.Ok | StandardButton.Cancel
+        modality: Qt.WindowModal
+        onAccepted: {
+            tablesStack.currentItem.node.deleteSelectedItem();
+            actionBack.trigger();
+        }
+    }
+
     function openBase() {
         //HOTFIX: for android
         if (Qt.platform.os == "android"){
@@ -182,17 +263,6 @@ ApplicationWindow {
                     fileMenu.insertItem(fileMenu.items.length,component);
                 }
             }
-    }
-
-
-    Action {
-        id: actionEdit
-        iconSource: "/icons/edit.png"
-        text: "edit"
-        onTriggered: {
-            //windowToolbar.state = "editing"
-            tablesStack.currentItem.state = "editing"
-        }
     }
 }
 

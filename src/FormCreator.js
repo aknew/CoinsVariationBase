@@ -211,9 +211,10 @@ function createFullForm(node) {
     onNodeChangedString +="nextlevel.model = node.nextLevelList}\n\n";
     qmlString += onNodeChangedString;
 
+    //FIXME: change string this coma deletion to Array.join
     collectDataString = collectDataString.substring(
                 0, collectDataString.length - 1)
-    collectDataString += "}; return returnedMap }"
+    collectDataString += "}; node.applyChanges(returnedMap); }"
     qmlString += collectDataString
     qmlString += "}" // mainRect
 

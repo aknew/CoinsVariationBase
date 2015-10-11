@@ -50,11 +50,18 @@ public:
 
     Q_INVOKABLE QStringList listFromQuery(QString query);
 
+    Q_INVOKABLE void prepareToNewItem();
+    Q_INVOKABLE void applyChanges(QVariantMap changedItem);
+    Q_INVOKABLE void dropChanges();
+    Q_INVOKABLE void deleteSelectedItem();
+
+
 signals:
     void idWasSelected(QString id);
 
 protected:
 
+    bool insertingNewRow = false;
     QSqlDatabase &db;
 
     CBSqlRelationalTableModel *model;//< real table or view

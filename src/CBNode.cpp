@@ -179,3 +179,27 @@ void CBNode::selectItemWithIndex(int index){
         emit idWasSelected(model->selectedItemId());
 
 }
+
+void CBNode::prepareToNewItem(){
+    insertingNewRow = true;
+    // TODO: insert new row with defined filtered string
+
+}
+
+void CBNode::applyChanges(QVariantMap changedItem){
+    model->setSelectedItem(changedItem);
+    if (insertingNewRow){
+        insertingNewRow = false;
+    }
+}
+
+void CBNode::dropChanges(){
+    if (insertingNewRow){
+       insertingNewRow = false;
+       model->removeCurrentItem();
+    }
+}
+
+void CBNode::deleteSelectedItem(){
+    model->removeCurrentItem();
+}
