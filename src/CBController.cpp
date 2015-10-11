@@ -41,8 +41,6 @@ void CBController::openBase(QString basePath){
 
 
     CBSettings *settings = CBSettings::settingsInstance();
-    settings->lastBasePath = basePath;
-    settings->saveSetting();
 
     bool needCollect = settings->needCollect; //FIXME: It should be not here
 
@@ -76,6 +74,7 @@ void CBController::openBase(QString basePath){
 }
 
 void CBController::providerReadyToWork(){
+
     engine->addImageProvider(QLatin1String("imageProvider"),m_baseProvider->imageProvider);
     QMetaObject::invokeMethod(this->applicationWindow,
                               "providerReadyToWork"

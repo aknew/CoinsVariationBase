@@ -1,5 +1,6 @@
 #include "CBBaseProvider.h"
 #include "CBUtils.h"
+#include "CBSettings.h"
 
 void CBBaseProvider::startWithPath(const QString &path){
 
@@ -68,6 +69,10 @@ void CBBaseProvider::startWithPath(const QString &path){
 
          nodeMap.insert(node->tableName,node);
      }
+
+     CBSettings *settings = CBSettings::settingsInstance();
+     settings->lastBasePath = rootPath;
+     settings->addRecentBase(m_baseTitle,rootPath);
 
      emit readyToWork();
 }

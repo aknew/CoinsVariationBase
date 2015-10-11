@@ -34,3 +34,5 @@ HEADERS += \
     CBSqlRelationalTableModel.h \
     CBImageProvider.h \
     CBSettings.h
+
+CONFIG += c++11

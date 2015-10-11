@@ -10,11 +10,17 @@ class QJSEngine;
 class CBSettings : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QStringList recentBases READ recentBases NOTIFY recentBasesChanged)
 public:
     void saveSetting();
 
     QString lastBasePath;
     bool needCollect;
+
+    void addRecentBase(const QString &name,const QString &path);
+    QStringList recentBases();
+    QString recentPathByName(const QString &name);
+
 
     static CBSettings *settingsInstance(){
         static CBSettings *settings = NULL;
@@ -24,11 +30,15 @@ public:
         return settings;
     }
 
+signals:
+    void recentBasesChanged();
+
 
 private:
-
+    //FIXME: need add operator= and copyed constructor
     explicit CBSettings(QObject *parent = 0);
     QSettings settings;
+    QMap<QString, QString> recentBasesMap;
 };
 
 #endif // CBSETTINGS_H
