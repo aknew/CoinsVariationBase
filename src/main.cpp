@@ -2,6 +2,7 @@
 #include <QtWidgets/QApplication>
 
 #include "CBController.h"
+#include "CBSettings.h"
 
 static QObject *cbApiObjectSingleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
@@ -17,11 +18,20 @@ static QObject *cbApiObjectSingleton(QQmlEngine *engine, QJSEngine *scriptEngine
     return api;
 }
 
+static QObject *cbSettingsObjectSingleton(QQmlEngine *engine, QJSEngine *scriptEngine)
+{
+    Q_UNUSED(engine)
+    Q_UNUSED(scriptEngine)
+
+    return  CBSettings::settingsInstance();
+}
+
 int main(int argc, char *argv[])
 {
     qSetMessagePattern("%{file}(%{line}): %{message}"); //show line and file in qDebug messages
 
     qmlRegisterSingletonType<CBController>("CB.api", 1, 0, "CBApi", cbApiObjectSingleton);
+    qmlRegisterSingletonType<CBSettings>("CB.api", 1, 0, "CBSettings", cbSettingsObjectSingleton);
     qmlRegisterUncreatableType<CBBaseProvider>("CB.api", 1, 0, "CBBaseProvider", "The object of this class should be obtained from CBApi.baseProvider");
     qmlRegisterUncreatableType<CBNode>("CB.api", 1, 0, "CBNode", "The object of this class should be obtained from CBApi.baseProvider.getNode(name) or CBApi..baseProvider.getStartNode()");
 
