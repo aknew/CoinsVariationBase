@@ -174,9 +174,11 @@ function createFullForm(node) {
         qmlString +="Label{text: qsTr(\"Images\"); font.pixelSize: 16; font.bold: true;}\n"
 
 
-        qmlString+= "   ListView {\n" +
-                    "       height: 200;\n" +
+        qmlString+= "   GridView {\n" +
+                    "       id: grid;\n" +
+                    "       height: 275;\n" +
                     "       width: parent.width;\n" +
+                    "       cellWidth: 250; cellHeight: 250;\n" +
                     "       delegate: imageDelegate;\n" +
                     "       model:CBApi.baseProvider.images;\n" +
                     "       clip: true;\n" +
@@ -186,12 +188,11 @@ function createFullForm(node) {
         qmlString += "  Component {\n       id: imageDelegate;\n";
 
         qmlString += "      Item {\n"+
-                     "          width: parent.width;\n"+
-                     "          height: 230;\n";
+                     "          width: grid.cellWidth; height: grid.cellHeight;\n";
         qmlString += "          Column{anchors.fill: parent;\n"
-        qmlString += "          Text{text: comment;  font.pixelSize: 16} \n"
+        qmlString += "          Text{text: comment;  font.pixelSize: 16; anchors.horizontalCenter: parent.horizontalCenter} \n"
         qmlString += "          Image{ width: parent.width \n" +
-                     "          height: 200\n" +
+                     "          anchors.horizontalCenter: parent.horizontalCenter;\n"+
                      "          source: \"image://imageProvider/\"+id\n" +
                      "          fillMode: Image.PreserveAspectFit}\n";
         qmlString += "       }\n";
