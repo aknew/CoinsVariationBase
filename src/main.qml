@@ -250,13 +250,13 @@ ApplicationWindow {
         target: CBSettings
         onRecentBasesChanged:{
                 var count = fileMenu.items.length;
-                for (var i = count; i>2; --i){
-                    fileMenu.removeItem(i);
+                for (var i = count-1; i>1; --i){
+                    fileMenu.removeItem(fileMenu.items[i]);
                 }
 
 
                 var recentBases = CBSettings.recentBases;
-                for ( var i = 0; i< recentBases.length; ++i){
+                for (i = 0; i< recentBases.length; ++i){
                     var base = recentBases[i];
                     var qmlString = "import QtQuick 2.2\nimport QtQuick.Controls 1.2\nimport CB.api 1.0\n";
                     qmlString += "MenuItem {text:\"" + base + "\"; ";
