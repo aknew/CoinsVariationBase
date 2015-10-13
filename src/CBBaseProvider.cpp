@@ -84,8 +84,8 @@ void CBBaseProvider::startWithPath(const QString &path){
  CBNode* CBBaseProvider::getNode(const QString &name, CBNode * currentNode){
     CBNode *node = nodeMap[name];
     if (currentNode){ // I.e. it is not start node
-        QString filterString =currentNode->filteringStringForChildNode(name);
-        node->setLevelFilter(filterString);
+        QPair<QString,QString> filter =currentNode->filterForChildNode(name);
+        node->setLevelFilter(filter);
     }
     return node;
 }

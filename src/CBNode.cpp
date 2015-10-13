@@ -9,9 +9,8 @@
 
 const QString kWrongString = "*wrongString*"; //< marker that some string wasn't filled
 
-CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObject(parent), db(db)
+CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObject(parent), db(db), levelFilter(kWrongString,kWrongString)
 {
-    levelFilter = kWrongString;
 
     filter = "";
 
@@ -107,16 +106,16 @@ QString CBNode::fullFormName(){
     return tableName+"Full.qml";
 }
 
-QString CBNode::filteringStringForChildNode(const QString& childNodeName){
+QPair<QString, QString> CBNode::filterForChildNode(const QString& childNodeName){
     QString str=childNodes.value(childNodeName);
-    if (str!=""){
-        str = str + "=\"" + model->selectedItemId() + "\"";
+    if (str==""){
+        return QPair<QString, QString>(kWrongString,kWrongString);
     }
-    return str;
+    return QPair<QString, QString>(str,model->selectedItemId());
 }
 
-void CBNode::setLevelFilter(const QString &filterString){
-    levelFilter = filterString;
+void CBNode::setLevelFilter(const QPair<QString, QString> &filter){
+    levelFilter = filter;
     applyFilters();
 }
 
@@ -134,12 +133,17 @@ void CBNode::applyFilters(){
 
     QString fullFilterString = filter;
 
-    if (levelFilter!=kWrongString){
+    QString s_levelFilter  = kWrongString;
+
+    if (levelFilter.first!=kWrongString){
+        s_levelFilter = levelFilter.first + "=\"" + levelFilter.second + "\"";
+    }
+    if (s_levelFilter!=kWrongString){
         if (filter == ""){
-            fullFilterString = levelFilter;
+            fullFilterString = s_levelFilter;
         }
         else{
-            fullFilterString = levelFilter + " and " + fullFilterString;
+            fullFilterString = s_levelFilter + " and " + fullFilterString;
         }
     }
 

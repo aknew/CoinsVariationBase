@@ -32,9 +32,9 @@ public:
 
     Q_INVOKABLE void selectItemWithIndex(int index);
 
-    QString filteringStringForChildNode(const QString& childNodeName);
+    QPair<QString,QString> filterForChildNode(const QString& childNodeName);
 
-    void setLevelFilter(const QString &filterString); //< filtering only record related to previous level
+    void setLevelFilter(const QPair<QString,QString> &filter); //< filtering only record related to previous level
     Q_INVOKABLE void addFilter(const QString &filterString); //< add any other filters, uses for selection from related record
     Q_INVOKABLE void dropFilter(); //< drop all filters excapt level
 
@@ -71,7 +71,7 @@ protected:
     QObject* listModel();
 
     QString filter;
-    QString levelFilter;
+    QPair<QString,QString> levelFilter;
 
     QStringList getNextLevelList(){
         return childNodes.keys();
