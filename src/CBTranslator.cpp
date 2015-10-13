@@ -26,7 +26,7 @@ bool CBTranslator::load(const QString &filename, const QString &directory, const
     QFile file(fullFilename);
     if (!file.open(QIODevice::ReadOnly)){
         qDebug() << "Cannot open translation";
-        return false;
+        return m_needCollect;
     }
     QString jsonData = file.readAll();
     file.close();
