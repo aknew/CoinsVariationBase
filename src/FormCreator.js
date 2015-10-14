@@ -205,7 +205,7 @@ function createFullForm(node) {
     qmlString += "NextLevelList { id:nextlevel; y: contentColumn.childrenRect.height+contentColumn.y }"
     qmlString += "  }\n" //Flickable {
 
-    //stateEditableString += "PropertyChanges { target: nextlevel; visible:false }"
+    stateEditableString += "PropertyChanges { target: nextlevel; visible:false }"
     stateEditableString += "}\n\n"
     qmlString += stateEditableString
 
