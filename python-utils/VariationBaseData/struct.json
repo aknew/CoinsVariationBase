@@ -60,7 +60,7 @@
           {
             "name": "Mint",
             "type": "combo",
-            "query": "select distinct mint from Variaties"
+            "query": "select distinct mint from Varieties"
           },
           {"name": "avers"},
           {"name": "revers"},
