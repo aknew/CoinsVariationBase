@@ -125,7 +125,7 @@ function createFullForm(node) {
                  "       clip: true;\n"+
                  "       anchors.fill:parent;\n";
 
-    qmlString += "       contentHeight: nextlevel.y+nextlevel.height;\n"
+    qmlString += "       contentHeight: contentColumn.height + nextlevel.height;\n"
 
     qmlString += "      Column {id: contentColumn;y: 0;width: parent.width;"
 
