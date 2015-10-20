@@ -88,3 +88,9 @@ void CBController::openRecentBase(QString baseName){
         openBase(path);
     }
 }
+
+void CBController::appWillTerminate(){
+    if (m_baseProvider) {
+        delete m_baseProvider;
+    }
+}

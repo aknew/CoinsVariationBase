@@ -186,8 +186,24 @@ void CBNode::selectItemWithIndex(int index){
 
 void CBNode::prepareToNewItem(){
     insertingNewRow = true;
-    // TODO: insert new row with defined filtered string
 
+    QSqlRecord record;
+
+    if(levelFilter.first!=kWrongString){
+        // add filters - foreign keys
+        QSqlField f1(levelFilter.first, QVariant::String);
+        f1.setValue(QVariant(levelFilter.second));
+        record.append(f1);
+    }
+    QSqlField f1("id", QVariant::String);
+    QUuid u=QUuid::createUuid();
+    f1.setValue(QVariant(u.toString()));
+    record.append(f1);
+    if (!model->insertRecord(-1, record)){
+        qDebug()<<model->lastError();
+    }
+
+    selectItemWithIndex(model->rowCount()-1);
 }
 
 void CBNode::applyChanges(QVariantMap changedItem){

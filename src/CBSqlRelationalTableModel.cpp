@@ -63,11 +63,10 @@ void CBSqlRelationalTableModel::setSelectedItem(const QVariantMap &map){
     for (int i=0;i<keys.count();++i){
         record.setValue(keys[i],map[keys[i]]);
     }
-    if (selectedRow==this->rowCount()){
-        this->insertRecord(selectedRow,record);
+    bool flag = this->setRecord(selectedRow,record);
+    if (!flag){
+        qDebug()<<this->lastError();
     }
-    else
-        this->setRecord(selectedRow,record);
     this->submitAll();
 
 }

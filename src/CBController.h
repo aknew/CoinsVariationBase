@@ -40,6 +40,7 @@ private:
 
 public slots:
     void providerReadyToWork();
+    void appWillTerminate();
 
 };
 

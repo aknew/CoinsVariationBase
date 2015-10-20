@@ -23,6 +23,7 @@ class CBBaseProvider : public QObject
 
 public:
     explicit CBBaseProvider(QObject *parent = 0):QObject(parent){}
+    ~CBBaseProvider();
 
     void startWithPath(const QString &path);//< start base interaction with path
 

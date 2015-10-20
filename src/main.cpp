@@ -55,6 +55,8 @@ int main(int argc, char *argv[])
     cvbAPI->applicationWindow = window;
     cvbAPI->engine = &engine;
 
+    QObject::connect(&app,&QApplication::aboutToQuit,cvbAPI,&CBController::appWillTerminate);
+
     emit CBSettings::settingsInstance()->recentBasesChanged();
 
     cvbAPI->start();

@@ -78,6 +78,8 @@ void CBBaseProvider::startWithPath(const QString &path){
      settings->lastBasePath = rootPath;
      settings->addRecentBase(m_baseTitle,rootPath);
 
+     qDebug() << db.connectOptions();
+
      emit readyToWork();
 }
 
@@ -106,4 +108,10 @@ void CBBaseProvider::startWithPath(const QString &path){
      QString filter = QString("\"ParentID\"=\"%1\"").arg(id);
      m_imageModel->setFilter(filter);
      m_imageModel->select();
+ }
+
+
+ CBBaseProvider::~CBBaseProvider(){
+     db.close();
+     db.removeDatabase(rootPath + "base.sqlite");
  }

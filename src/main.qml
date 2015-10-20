@@ -12,6 +12,7 @@ ApplicationWindow {
 
     height:500;
     width:1000;
+    property bool isInsertingNew: false;
 
     menuBar:MenuBar{
         Menu {
@@ -58,6 +59,22 @@ ApplicationWindow {
             }
             MenuItem{
                 text: "Add new"
+                onTriggered: {
+                    windowToolbar.state = "editing"
+                    tablesStack.currentItem.state = "editing"
+                    tablesStack.currentItem.node.prepareToNewItem();
+                    if (tablesStack.currentItem.formType === CBApi.ListForm){
+                        showFullForm(tablesStack.currentItem.node)
+                    }
+                    else{
+                        //HOTFIX: to update data after dropping
+                       tablesStack.currentItem.node = tablesStack.currentItem.node;
+                    }
+                    windowToolbar.state = "editing"
+                    tablesStack.currentItem.state = "editing"
+                    isInsertingNew = true;
+                }
+
             }
             MenuItem{
                 text: "Delete"
@@ -132,8 +149,14 @@ ApplicationWindow {
             windowToolbar.state = ""
             tablesStack.currentItem.state = ""
             tablesStack.currentItem.node.dropChanges();
-             //HOTFIX: to update data after dropping
-            tablesStack.currentItem.node = tablesStack.currentItem.node;
+            if (isInsertingNew){
+                actionBack.trigger()
+                isInsertingNew = false;
+            }
+            else{
+                //HOTFIX: to update data after dropping
+                tablesStack.currentItem.node = tablesStack.currentItem.node;
+            }
         }
     }
     Action{
@@ -173,8 +196,9 @@ ApplicationWindow {
     }
 
     function showFullForm(node, index){
-
-        node.selectItemWithIndex(index);
+        if (typeof index !== 'undefined'){
+            node.selectItemWithIndex(index);
+        }
         var fullForm = FormCreator.createFullForm(node);
         tablesStack.push(fullForm);
     }
