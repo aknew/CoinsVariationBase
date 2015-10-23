@@ -68,13 +68,13 @@ class CoinPicture(Base):
     id = Column(String,primary_key = True)
     comment = Column(String)
     source = Column(String)
-    relid = Column(String)
+    ParentID = Column(String)
 
 
     def __init__(self, filename, source, varid):
         self.path = filename
         self.source = source
-        self.relid = varid
+        self.ParentID = varid
         # try to get md5
         pictfile = open(self.path, 'rb')
         self.id = hashlib.md5(pictfile.read()).hexdigest()
@@ -88,7 +88,7 @@ def loadVarities(type = ""):
 
     for ind, variety in enumerate(varList):
         variety.references = session.query(SourceRef).filter_by(varID=variety.id).all()
-        variety.pictures = session.query(CoinPicture).filter_by(relid=variety.id).all()
+        variety.pictures = session.query(CoinPicture).filter_by(ParentID=variety.id).all()
         varList[ind] = variety;
 
     return varList

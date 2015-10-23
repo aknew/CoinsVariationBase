@@ -11,7 +11,7 @@ from collections import defaultdict
 # otherwise header is reference reduction and all
 
 
-def import_csv(path, typeID):
+def import_csv(path, typeID=""):
 
     base_path = dirname(path)
 
@@ -19,15 +19,19 @@ def import_csv(path, typeID):
 
     with open(path, 'rt', encoding="utf-8") as csvfile:
         varList = csv.DictReader(csvfile)
-        field_names = ["varietyType","year","mintmark","mint","avers","revers","edge","picture","picture_source","rarity","comment"]
+        field_names = ["varietyType","year","mintmark","mint","avers","revers","edge","picture","picture_source","rarity","comment","id","typeID"]
         Authors = [n for n in varList.fieldnames if n not in field_names]
 
         for row in varList:
 
-            variety = CVBAPI.Variety()
-            variety.typeId = typeID
-
             row = defaultdict(lambda: "", row)
+
+            variety = CVBAPI.Variety()
+
+            if "" != row["id"]:
+                variety.id = row["id"];
+
+            variety.typeId = (typeID,row["typeID"])[typeID==""];
 
             variety.varietyType = row["varietyType"]
             variety.year = row["year"]

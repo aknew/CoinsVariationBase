@@ -1,8 +1,3 @@
-﻿PRAGMA foreign_keys=ON;
-BEGIN TRANSACTION;
-
---- 
-
 --- coins type
 
 CREATE TABLE "Types" (
@@ -76,8 +71,6 @@ CREATE TABLE [ConcreteCoins] (
   [condition] TEXT,
   [status] TEXT NOT NULL DEFAULT "Архив"
   );
-COMMIT;
-
 --- feautures of the coins
 
 CREATE TABLE [CoinFeature] (
