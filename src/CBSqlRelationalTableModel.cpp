@@ -62,6 +62,7 @@ void CBSqlRelationalTableModel::setSelectedItem(const QVariantMap &map){
     QStringList keys=map.keys();
     for (int i=0;i<keys.count();++i){
         record.setValue(keys[i],map[keys[i]]);
+        record.setGenerated(keys[i],true);
     }
     bool flag = this->setRecord(selectedRow,record);
     if (!flag){
