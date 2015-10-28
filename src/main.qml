@@ -20,6 +20,7 @@ ApplicationWindow {
                     title: "File"
                     MenuItem {
                         text: "Open..."
+                        shortcut: "Ctrl+O"
                         onTriggered: openBase();
                     }
                     MenuSeparator{}
@@ -50,6 +51,7 @@ ApplicationWindow {
             visible: tablesStack.currentItem.formType !== CBApi.FilterDialog;
             MenuItem{
                 text: "Edit record"
+                shortcut: "Ctrl+E"
                 visible: tablesStack.currentItem.formType !== CBApi.ListForm;
                 iconSource: "/icons/edit.png"
                 onTriggered: {
@@ -59,6 +61,7 @@ ApplicationWindow {
             }
             MenuItem{
                 text: "Add new"
+                shortcut: "Ctrl+N"
                 onTriggered: {
                     windowToolbar.state = "editing"
                     tablesStack.currentItem.state = "editing"
@@ -135,6 +138,7 @@ ApplicationWindow {
         id: actionApply
         iconSource: "/icons/apply.png"
         text: "apply"
+        shortcut: "Ctrl+S"
         onTriggered: {
             windowToolbar.state = ""
             tablesStack.currentItem.state = ""
@@ -162,6 +166,7 @@ ApplicationWindow {
     Action{
         id: actionBack
         text: "back"
+        shortcut: Qt.BackButton
         onTriggered: {
             if (tablesStack.depth>2){
                 if(tablesStack.currentItem.formType === CBApi.FilterDialog){
