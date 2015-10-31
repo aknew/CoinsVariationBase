@@ -110,6 +110,18 @@ void CBBaseProvider::startWithPath(const QString &path){
      m_imageModel->select();
  }
 
+ void CBBaseProvider::saveImageInfo(QVariantMap imageInfo){
+         QSqlQuery query(db);
+         query.prepare("INSERT OR REPLACE INTO Images(\"id\",\"comment\",\"source\",\"ParentID\") VALUES(:id,:comment,:source,:ParentID)");
+         query.bindValue(":id",imageInfo["id"]);
+         query.bindValue(":ParentID",imageInfo["ParentID"]);
+         query.bindValue(":comment",imageInfo["comment"]);
+         query.bindValue(":source",imageInfo["source"]);
+         if (!query.exec()){
+             qDebug()<<query.lastError();
+         }
+}
+
 
  CBBaseProvider::~CBBaseProvider(){
      db.close();

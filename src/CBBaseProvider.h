@@ -45,6 +45,8 @@ public:
         return m_imageModel->selectedItem();
     }
 
+    Q_INVOKABLE void saveImageInfo(QVariantMap imageInfo);
+
 private:
     QString rootPath; //< root folder
     QString m_baseTitle;
