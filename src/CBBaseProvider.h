@@ -46,6 +46,11 @@ public:
     }
 
     Q_INVOKABLE void saveImageInfo(QVariantMap imageInfo);
+    Q_INVOKABLE void saveImage(QString imageId, QString savingPath);
+    Q_INVOKABLE QString loadImage(QString imagePath);
+    Q_INVOKABLE void copyImageToClipboard(QString imageId);
+    Q_INVOKABLE QString importImageFromClipboard();
+
 
 private:
     QString rootPath; //< root folder

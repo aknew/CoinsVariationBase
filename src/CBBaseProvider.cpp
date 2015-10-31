@@ -1,4 +1,7 @@
 #include "CBBaseProvider.h"
+#include <QClipboard>
+#include <QApplication>
+
 #include "CBUtils.h"
 #include "CBSettings.h"
 
@@ -120,6 +123,33 @@ void CBBaseProvider::startWithPath(const QString &path){
          if (!query.exec()){
              qDebug()<<query.lastError();
          }
+}
+
+void CBBaseProvider::saveImage(QString imageId, QString savingPath){
+
+
+    QSize size=QSize();
+    QImage img = imageProvider->requestImage(imageId,&size,size);
+
+    CBUtils::FromQmlFilePath(&savingPath);
+
+    img.save(savingPath);
+
+}
+
+QString CBBaseProvider::loadImage(QString imagePath){
+    return "";
+}
+
+void CBBaseProvider::copyImageToClipboard(QString imageId){
+    QSize size=QSize();
+    QImage img = imageProvider->requestImage(imageId,&size,size);
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setImage(img);
+}
+
+QString CBBaseProvider::importImageFromClipboard(){
+    return "";
 }
 
 

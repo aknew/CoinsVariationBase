@@ -1,4 +1,5 @@
-import QtQuick 2.0
+import QtQuick 2.3
+import QtQuick.Controls 1.4
 import CBControls 1.0
 import CB.api 1.0
 
@@ -22,6 +23,13 @@ Flickable {
         id: image
         fillMode: Image.PreserveAspectFit
         width: parent.width
+        MouseArea{
+            anchors.fill:parent
+            acceptedButtons: Qt.RightButton
+            onClicked: {
+                imageMenu.popup()
+            }
+        }
     }
     LabeledTextInput {
         id: sourceLabel
@@ -42,14 +50,48 @@ Flickable {
         PropertyChanges { target: imageInfoRect; editing: true}
     }
 
+    function currentImageID(){
+        return image.source.toString().split('/').pop();
+    }
+
     function collectData() {
-        var imID = image.source.toString().split('/').pop();
         var returnedMap = {
-            id: imID,
+            id: currentImageID(),
             source: sourceLabel.value,
             comment: commentLabel.value,
             ParentID: imageInfo.ParentID
         };
         CBApi.baseProvider.saveImageInfo(returnedMap);
     }
+
+    Menu{
+        id: imageMenu
+        MenuItem{
+            text: qsTr("Save image")
+            onTriggered: {
+
+            }
+        }
+        MenuItem{
+            text: qsTr("Copy image to clipboard")
+            onTriggered: {
+                CBApi.baseProvider.copyImageToClipboard(currentImageID())
+            }
+        }
+        MenuItem{
+            text: qsTr("Load image")
+            visible: imageInfoRect.editing
+            onTriggered: {
+
+            }
+        }
+        MenuItem{
+            text: qsTr("Insert image from clipboard")
+            visible: imageInfoRect.editing
+            onTriggered: {
+
+            }
+        }
+    }
+
 }
