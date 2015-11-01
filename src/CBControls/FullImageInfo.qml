@@ -1,5 +1,7 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.4
+import QtQuick.Dialogs 1.2
+
 import CBControls 1.0
 import CB.api 1.0
 
@@ -68,9 +70,7 @@ Flickable {
         id: imageMenu
         MenuItem{
             text: qsTr("Save image")
-            onTriggered: {
-
-            }
+            onTriggered: fileDialog.open()
         }
         MenuItem{
             text: qsTr("Copy image to clipboard")
@@ -90,6 +90,22 @@ Flickable {
             visible: imageInfoRect.editing
             onTriggered: {
 
+            }
+        }
+    }
+
+    FileDialog {
+        id: fileDialog
+        modality: Qt.WindowModal
+        title: editing ? qsTr("Choose an image to load") : qsTr("Choose where to save")
+        selectExisting: editing
+        selectMultiple: false
+        onAccepted: {
+            if (editing){
+
+            }
+            else{
+                CBApi.baseProvider.saveImage(imageInfo.id,fileUrls[0])
             }
         }
     }

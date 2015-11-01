@@ -131,6 +131,7 @@ void CBBaseProvider::saveImage(QString imageId, QString savingPath){
     QSize size=QSize();
     QImage img = imageProvider->requestImage(imageId,&size,size);
 
+    // TODO: need check that savingPath is file and it has correct extantion. Maybe also need sheck that file does not exist
     CBUtils::FromQmlFilePath(&savingPath);
 
     img.save(savingPath);
