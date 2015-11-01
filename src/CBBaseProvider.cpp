@@ -115,6 +115,17 @@ void CBBaseProvider::startWithPath(const QString &path){
 
  void CBBaseProvider::saveImageInfo(QVariantMap imageInfo){
          QSqlQuery query(db);
+
+         // FIXME: to const
+         if (imageInfo["idToDelete"].toString()!="NothingToDelete"){
+             query.prepare("DELETE FROM Images WHERE \"id\"=:id");
+             query.bindValue(":id",imageInfo["idToDelete"]);
+             if (!query.exec()){
+                 qDebug()<<query.lastError();
+             }
+
+         }
+
          query.prepare("INSERT OR REPLACE INTO Images(\"id\",\"comment\",\"source\",\"ParentID\") VALUES(:id,:comment,:source,:ParentID)");
          query.bindValue(":id",imageInfo["id"]);
          query.bindValue(":ParentID",imageInfo["ParentID"]);
@@ -123,6 +134,7 @@ void CBBaseProvider::startWithPath(const QString &path){
          if (!query.exec()){
              qDebug()<<query.lastError();
          }
+         m_imageModel->select();
 }
 
 void CBBaseProvider::saveImage(QString imageId, QString savingPath){
@@ -139,7 +151,18 @@ void CBBaseProvider::saveImage(QString imageId, QString savingPath){
 }
 
 QString CBBaseProvider::loadImage(QString imagePath){
-    return "";
+
+    CBUtils::FromQmlFilePath(&imagePath);
+    QFile file(imagePath);
+
+    if (file.open(QIODevice::ReadOnly)){
+
+        QByteArray byteArray = file.readAll();
+
+        return imageProvider->saveImage(byteArray);
+    }
+    // FIXME: to const
+    return "*error*";
 }
 
 void CBBaseProvider::copyImageToClipboard(QString imageId){
@@ -150,7 +173,19 @@ void CBBaseProvider::copyImageToClipboard(QString imageId){
 }
 
 QString CBBaseProvider::importImageFromClipboard(){
-    return "";
+    QClipboard *clipboard = QApplication::clipboard();
+    QPixmap pix = clipboard->pixmap();
+    if (!pix.isNull()){
+
+        QByteArray byteArray;
+        QBuffer buffer( &byteArray );
+        buffer.open( QIODevice::WriteOnly );
+        pix.save( &buffer, "JPG" );
+
+        return imageProvider->saveImage(byteArray);
+    }
+    // FIXME: to const
+    return "*error*";
 }
 
 

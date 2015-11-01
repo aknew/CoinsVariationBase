@@ -11,6 +11,8 @@ Flickable {
     property var imageInfo
     property var formType: CBApi.ImageFullForm
     property bool editing: false
+    // FIXME: to const
+    property string idToDelete: "NothingToDelete"
     onImageInfoChanged: {
         image.source = "image://imageProvider/" + imageInfo.id
         sourceLabel.value = imageInfo.source
@@ -56,7 +58,8 @@ Flickable {
             id: imageInfo.id,
             source: sourceLabel.value,
             comment: commentLabel.value,
-            ParentID: imageInfo.ParentID
+            ParentID: imageInfo.ParentID,
+            idToDelete: imageInfoRect.idToDelete
         };
         CBApi.baseProvider.saveImageInfo(returnedMap);
     }
@@ -76,15 +79,14 @@ Flickable {
         MenuItem{
             text: qsTr("Load image")
             visible: imageInfoRect.editing
-            onTriggered: {
-
-            }
+            onTriggered:  fileDialog.open()
         }
         MenuItem{
             text: qsTr("Insert image from clipboard")
             visible: imageInfoRect.editing
             onTriggered: {
-
+                var newID = CBApi.baseProvider.importImageFromClipboard();
+                reloadImage(newID);
             }
         }
     }
@@ -97,7 +99,8 @@ Flickable {
         selectMultiple: false
         onAccepted: {
             if (editing){
-
+                var newID = CBApi.baseProvider.loadImage(fileUrls[0]);
+                reloadImage(newID);
             }
             else{
                 CBApi.baseProvider.saveImage(imageInfo.id,fileUrls[0])
@@ -105,4 +108,21 @@ Flickable {
         }
     }
 
+    function reloadImage(newID){
+        // FIXME: to const
+        if (newID === "*error*"){
+            return;
+        }
+
+        idToDelete = imageInfo.id;
+
+        var returnedMap = {
+            id: newID,
+            source: sourceLabel.value,
+            comment: commentLabel.value,
+            ParentID: imageInfo.ParentID
+        };
+
+        imageInfoRect.imageInfo = returnedMap;
+    }
 }

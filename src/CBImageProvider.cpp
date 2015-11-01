@@ -1,5 +1,7 @@
 #include "CBImageProvider.h"
 #include <QDebug>
+#include <QFile>
+#include <QCryptographicHash>
 
 CBImageProvider::CBImageProvider(ImageType type): QQuickImageProvider(type)
 {
@@ -22,4 +24,16 @@ QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSi
     QPixmap result= QPixmap(imageFolder+id+".jpg");
 
     return result;
+}
+
+QString CBImageProvider::saveImage(QByteArray attach){
+
+    QString md5=QCryptographicHash::hash(attach,QCryptographicHash::Md5).toHex();
+
+    QString str=imageFolder + md5 + ".jpg";
+    QFile file(str);
+
+    if (!file.open(QIODevice::WriteOnly)) return "NULL";
+    file.write(attach);
+    return md5;
 }
