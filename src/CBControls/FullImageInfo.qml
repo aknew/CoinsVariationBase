@@ -17,7 +17,6 @@ Flickable {
         commentLabel.value = imageInfo.comment
     }
     function applyContentHeight() {
-        console.log(image.height)
         contentHeight = commentLabel.height + commentLabel.y
     }
 
@@ -52,13 +51,9 @@ Flickable {
         PropertyChanges { target: imageInfoRect; editing: true}
     }
 
-    function currentImageID(){
-        return image.source.toString().split('/').pop();
-    }
-
     function collectData() {
         var returnedMap = {
-            id: currentImageID(),
+            id: imageInfo.id,
             source: sourceLabel.value,
             comment: commentLabel.value,
             ParentID: imageInfo.ParentID
@@ -75,7 +70,7 @@ Flickable {
         MenuItem{
             text: qsTr("Copy image to clipboard")
             onTriggered: {
-                CBApi.baseProvider.copyImageToClipboard(currentImageID())
+                CBApi.baseProvider.copyImageToClipboard(imageInfo.id)
             }
         }
         MenuItem{
