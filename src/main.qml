@@ -5,89 +5,87 @@ import QtQuick.Dialogs 1.2
 import CB.api 1.0
 import "FormCreator.js" as FormCreator
 
-
 ApplicationWindow {
     id: mainWindow
     title: "Open base"
 
-    height:500;
-    width:1000;
-    property bool isInsertingNew: false;
+    height: 500
+    width: 1000
+    property bool isInsertingNew: false
 
-    menuBar:MenuBar{
+    menuBar: MenuBar {
         Menu {
-                    id: fileMenu;
-                    title: "File"
-                    MenuItem {
-                        text: "Open..."
-                        shortcut: "Ctrl+O"
-                        onTriggered: openBase();
-                    }
-                    MenuSeparator{}
-                }
+            id: fileMenu
+            title: "File"
+            MenuItem {
+                text: "Open..."
+                shortcut: "Ctrl+O"
+                onTriggered: openBase()
+            }
+            MenuSeparator {
+            }
+        }
         Menu {
-                    title: "Filters"
-                    visible: tablesStack.currentItem.formType === CBApi.ListForm;
-                    MenuItem {
-                        text: "Set filters"
-                        onTriggered: {
-                            var component = Qt.createComponent("CBControls/FilterDialog.qml")
-                            if (component.status === Component.Ready) {
-                                var form = component.createObject();
-                                form.node = tablesStack.currentItem.node;
-                                tablesStack.push(form);
-                            }
-                        }
-                    }
-                    MenuItem {
-                        text: "Drop filters"
-                        onTriggered: {
-                            tablesStack.currentItem.node.dropFilter();
-                        }
+            title: "Filters"
+            visible: tablesStack.currentItem.formType === CBApi.ListForm
+            MenuItem {
+                text: "Set filters"
+                onTriggered: {
+                    var component = Qt.createComponent(
+                                "CBControls/FilterDialog.qml")
+                    if (component.status === Component.Ready) {
+                        var form = component.createObject()
+                        form.node = tablesStack.currentItem.node
+                        tablesStack.push(form)
                     }
                 }
-        Menu{
+            }
+            MenuItem {
+                text: "Drop filters"
+                onTriggered: {
+                    tablesStack.currentItem.node.dropFilter()
+                }
+            }
+        }
+        Menu {
             title: "Change data"
-            visible: tablesStack.currentItem.formType !== CBApi.FilterDialog;
-            MenuItem{
+            visible: tablesStack.currentItem.formType !== CBApi.FilterDialog
+            MenuItem {
                 text: "Edit record"
                 shortcut: "Ctrl+E"
-                visible: tablesStack.currentItem.formType !== CBApi.ListForm;
+                visible: tablesStack.currentItem.formType !== CBApi.ListForm
                 iconSource: "/icons/edit.png"
                 onTriggered: {
                     windowToolbar.state = "editing"
                     tablesStack.currentItem.state = "editing"
                 }
             }
-            MenuItem{
+            MenuItem {
                 text: "Add new"
                 shortcut: "Ctrl+N"
                 onTriggered: {
 
-                    if (tablesStack.currentItem.formType === CBApi.ImageFullForm){
-                        addNewImage();
-                    }
-                    else{
-                    tablesStack.currentItem.node.prepareToNewItem();
-                    if (tablesStack.currentItem.formType === CBApi.ListForm){
-                        showFullForm(tablesStack.currentItem.node)
-                    }
-                    else{
-                        //HOTFIX: to update data after dropping
-                       tablesStack.currentItem.node = tablesStack.currentItem.node;
-                    }
-                    windowToolbar.state = "editing"
-                    tablesStack.currentItem.state = "editing"
-                    isInsertingNew = true;
+                    if (tablesStack.currentItem.formType === CBApi.ImageFullForm) {
+                        addNewImage()
+                    } else {
+                        tablesStack.currentItem.node.prepareToNewItem()
+                        if (tablesStack.currentItem.formType === CBApi.ListForm) {
+                            showFullForm(tablesStack.currentItem.node)
+                        } else {
+                            //HOTFIX: to update data after dropping
+                            tablesStack.currentItem.node = tablesStack.currentItem.node
+                        }
+                        windowToolbar.state = "editing"
+                        tablesStack.currentItem.state = "editing"
+                        isInsertingNew = true
                     }
                 }
-
             }
-            MenuItem{
+            MenuItem {
                 text: "Delete"
-                visible: tablesStack.currentItem.formType !== CBApi.ListForm;
+                visible: tablesStack.currentItem.formType !== CBApi.ListForm
                 onTriggered: {
-                    deleteRowDialog.open();
+                    deleteRowDialog.open()
                 }
             }
         }
@@ -109,15 +107,15 @@ ApplicationWindow {
             }
         ]
         Row {
-            id:defaultToolbar
-            MouseArea{
+            id: defaultToolbar
+            MouseArea {
                 Image {
                     source: "/icons/back.png"
                     anchors.fill: parent
                 }
-                height:25
-                width:25
-                onClicked:actionBack.trigger();
+                height: 25
+                width: 25
+                onClicked: actionBack.trigger()
                 onPressAndHold: {
                     // TODO: show dialog all shown tables and pop to clicked
                     console.log("catch long tap")
@@ -125,7 +123,7 @@ ApplicationWindow {
             }
         }
         Row {
-            id:editingToolbar
+            id: editingToolbar
             visible: false
             ToolButton {
                 id: toolbuttonApply
@@ -146,7 +144,7 @@ ApplicationWindow {
         onTriggered: {
             windowToolbar.state = ""
             tablesStack.currentItem.state = ""
-            tablesStack.currentItem.collectData();
+            tablesStack.currentItem.collectData()
         }
     }
     Action {
@@ -156,33 +154,32 @@ ApplicationWindow {
         onTriggered: {
             windowToolbar.state = ""
             tablesStack.currentItem.state = ""
-            tablesStack.currentItem.node.dropChanges();
-            if (isInsertingNew){
+            tablesStack.currentItem.node.dropChanges()
+            if (isInsertingNew) {
                 actionBack.trigger()
-                isInsertingNew = false;
-            }
-            else{
+                isInsertingNew = false
+            } else {
                 //HOTFIX: to update data after dropping
-                tablesStack.currentItem.node = tablesStack.currentItem.node;
+                tablesStack.currentItem.node = tablesStack.currentItem.node
             }
         }
     }
-    Action{
+    Action {
         id: actionBack
         text: "back"
         shortcut: Qt.BackButton
         onTriggered: {
-            if (tablesStack.depth>2){
-                if(tablesStack.currentItem.formType === CBApi.FilterDialog){
-                    tablesStack.currentItem.applyFilters();
+            if (tablesStack.depth > 2) {
+                if (tablesStack.currentItem.formType === CBApi.FilterDialog) {
+                    tablesStack.currentItem.applyFilters()
                 }
 
-                tablesStack.pop();
+                tablesStack.pop()
             }
         }
     }
 
-    property bool needCollect: false;
+    property bool needCollect: false
 
     StackView {
         id: tablesStack
@@ -190,60 +187,58 @@ ApplicationWindow {
         objectName: "tablesStack"
         initialItem: Text {
             property bool isListView: false
-            text: "Running on: " + Qt.platform.os + "\n" +
-                  "Open some base to start work";
+            text: "Running on: " + Qt.platform.os + "\n" + "Open some base to start work"
         }
     }
 
-    function providerReadyToWork(){
-        tablesStack.pop(tablesStack.initialItem);
-        title = CBApi.baseProvider.baseTitle;
-        var node = CBApi.baseProvider.getStartNode();
+    function providerReadyToWork() {
+        tablesStack.pop(tablesStack.initialItem)
+        title = CBApi.baseProvider.baseTitle
+        var node = CBApi.baseProvider.getStartNode()
         //var listForm = FormCreator.createListForm(node);
-        var listForm = FormCreator.createTable(node);
-        tablesStack.push(listForm);
+        var listForm = FormCreator.createTable(node)
+        tablesStack.push(listForm)
     }
 
-    function showFullForm(node, index){
-        if (typeof index !== 'undefined'){
-            node.selectItemWithIndex(index);
+    function showFullForm(node, index) {
+        if (typeof index !== 'undefined') {
+            node.selectItemWithIndex(index)
         }
-        var fullForm = FormCreator.createFullForm(node);
-        tablesStack.push(fullForm);
+        var fullForm = FormCreator.createFullForm(node)
+        tablesStack.push(fullForm)
     }
 
-    function showListForm(nodeName, currentNode){
-        var node = CBApi.baseProvider.getNode(nodeName, currentNode);
+    function showListForm(nodeName, currentNode) {
+        var node = CBApi.baseProvider.getNode(nodeName, currentNode)
         //var listForm = FormCreator.createListForm(node);
-        var listForm = FormCreator.createTable(node);
-        tablesStack.push(listForm);
+        var listForm = FormCreator.createTable(node)
+        tablesStack.push(listForm)
     }
 
-    function showFullImageInfo(index){
+    function showFullImageInfo(index) {
         var component = Qt.createComponent("CBControls/FullImageInfo.qml")
         if (component.status === Component.Ready) {
-            var form = component.createObject();
+            var form = component.createObject()
             form.imageInfo = CBApi.baseProvider.imageFullInfo(index)
-            tablesStack.push(form);
-            form.applyContentHeight(); //HOTFIX: I have to apply contentHeight after some delay
+            tablesStack.push(form)
+            form.applyContentHeight(
+                        ) //HOTFIX: I have to apply contentHeight after some delay
         }
     }
 
-    function addNewImage(){
-        var ParentID = "";
-        var form ;
-        if (tablesStack.currentItem.formType === CBApi.FullForm){
-            ParentID = tablesStack.currentItem.node.selectedItem.id;
+    function addNewImage() {
+        var ParentID = ""
+        var form
+        if (tablesStack.currentItem.formType === CBApi.FullForm) {
+            ParentID = tablesStack.currentItem.node.selectedItem.id
             var component = Qt.createComponent("CBControls/FullImageInfo.qml")
             if (component.status === Component.Ready) {
-                form = component.createObject();
-                tablesStack.push(form);
-
+                form = component.createObject()
+                tablesStack.push(form)
             }
-        }
-        else{
+        } else {
             // TODO: add assert tablesStack.currentItem.formType === CBApi.ImageFullForm
-            form = tablesStack.currentItem;
+            form = tablesStack.currentItem
             ParentID = form.imageInfo.ParentID
         }
 
@@ -252,15 +247,16 @@ ApplicationWindow {
             source: "",
             comment: "",
             ParentID: ParentID
-        };
-        form.imageInfo = imageInfo;
-        form.applyContentHeight(); //HOTFIX: I have to apply contentHeight after some delay
+        }
+        form.imageInfo = imageInfo
+        form.applyContentHeight(
+                    ) //HOTFIX: I have to apply contentHeight after some delay
         windowToolbar.state = "editing"
         tablesStack.currentItem.state = "editing"
     }
 
-    // Dialogs
 
+    // Dialogs
     FileDialog {
         id: openBaseDialog
         modality: Qt.WindowModal
@@ -281,7 +277,7 @@ ApplicationWindow {
         standardButtons: StandardButton.Ok | StandardButton.Cancel
         modality: Qt.WindowModal
         onAccepted: {
-            openBase();
+            openBase()
         }
     }
 
@@ -292,42 +288,41 @@ ApplicationWindow {
         standardButtons: StandardButton.Ok | StandardButton.Cancel
         modality: Qt.WindowModal
         onAccepted: {
-            tablesStack.currentItem.node.deleteSelectedItem();
-            actionBack.trigger();
+            tablesStack.currentItem.node.deleteSelectedItem()
+            actionBack.trigger()
         }
     }
 
     function openBase() {
         //HOTFIX: for android
-        if (Qt.platform.os == "android"){
+        if (Qt.platform.os == "android") {
             CBApi.openBase("/storage/sdcard0/VariationBase")
         }
 
         openBaseDialog.open()
     }
 
-    function openBaseAlert(){
-        messageDialog.open();
+    function openBaseAlert() {
+        messageDialog.open()
     }
     Connections {
         target: CBSettings
-        onRecentBasesChanged:{
-                var count = fileMenu.items.length;
-                for (var i = count-1; i>1; --i){
-                    fileMenu.removeItem(fileMenu.items[i]);
-                }
-
-
-                var recentBases = CBSettings.recentBases;
-                for (i = 0; i< recentBases.length; ++i){
-                    var base = recentBases[i];
-                    var qmlString = "import QtQuick 2.2\nimport QtQuick.Controls 1.2\nimport CB.api 1.0\n";
-                    qmlString += "MenuItem {text:\"" + base + "\"; ";
-                    qmlString += "onTriggered: CBApi.openRecentBase(\"" + base + "\")}";
-                    var component = Qt.createQmlObject(qmlString,tablesStack, "menuItem");
-                    fileMenu.insertItem(fileMenu.items.length,component);
-                }
+        onRecentBasesChanged: {
+            var count = fileMenu.items.length
+            for (var i = count - 1; i > 1; --i) {
+                fileMenu.removeItem(fileMenu.items[i])
             }
+
+            var recentBases = CBSettings.recentBases
+            for (i = 0; i < recentBases.length; ++i) {
+                var base = recentBases[i]
+                var qmlString = "import QtQuick 2.2\nimport QtQuick.Controls 1.2\nimport CB.api 1.0\n"
+                qmlString += "MenuItem {text:\"" + base + "\"; "
+                qmlString += "onTriggered: CBApi.openRecentBase(\"" + base + "\")}"
+                var component = Qt.createQmlObject(qmlString, tablesStack,
+                                                   "menuItem")
+                fileMenu.insertItem(fileMenu.items.length, component)
+            }
+        }
     }
 }
-
