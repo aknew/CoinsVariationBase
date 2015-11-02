@@ -18,10 +18,15 @@ QImage CBImageProvider::requestImage(const QString& id, QSize* size, const QSize
 QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSize& requestedSize)
 {
     Q_UNUSED(size)
+    Q_UNUSED(requestedSize)
 
     //FIXME: need conver to jpg or use not only it
     qDebug()<<imageFolder+id+".jpg";
     QPixmap result= QPixmap(imageFolder+id+".jpg");
+
+    if (result.isNull()){
+        result=QPixmap("://no_image.png");
+    }
 
     return result;
 }

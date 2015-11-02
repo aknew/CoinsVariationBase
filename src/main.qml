@@ -63,8 +63,11 @@ ApplicationWindow {
                 text: "Add new"
                 shortcut: "Ctrl+N"
                 onTriggered: {
-                    windowToolbar.state = "editing"
-                    tablesStack.currentItem.state = "editing"
+
+                    if (tablesStack.currentItem.formType === CBApi.ImageFullForm){
+                        addNewImage();
+                    }
+                    else{
                     tablesStack.currentItem.node.prepareToNewItem();
                     if (tablesStack.currentItem.formType === CBApi.ListForm){
                         showFullForm(tablesStack.currentItem.node)
@@ -76,6 +79,7 @@ ApplicationWindow {
                     windowToolbar.state = "editing"
                     tablesStack.currentItem.state = "editing"
                     isInsertingNew = true;
+                    }
                 }
 
             }
@@ -223,6 +227,36 @@ ApplicationWindow {
             tablesStack.push(form);
             form.applyContentHeight(); //HOTFIX: I have to apply contentHeight after some delay
         }
+    }
+
+    function addNewImage(){
+        var ParentID = "";
+        var form ;
+        if (tablesStack.currentItem.formType === CBApi.FullForm){
+            ParentID = tablesStack.currentItem.node.selectedItem.id;
+            var component = Qt.createComponent("CBControls/FullImageInfo.qml")
+            if (component.status === Component.Ready) {
+                form = component.createObject();
+                tablesStack.push(form);
+
+            }
+        }
+        else{
+            // TODO: add assert tablesStack.currentItem.formType === CBApi.ImageFullForm
+            form = tablesStack.currentItem;
+            ParentID = form.imageInfo.ParentID
+        }
+
+        var imageInfo = {
+            id: "NothingToDelete",
+            source: "",
+            comment: "",
+            ParentID: ParentID
+        };
+        form.imageInfo = imageInfo;
+        form.applyContentHeight(); //HOTFIX: I have to apply contentHeight after some delay
+        windowToolbar.state = "editing"
+        tablesStack.currentItem.state = "editing"
     }
 
     // Dialogs

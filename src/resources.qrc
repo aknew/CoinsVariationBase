@@ -15,5 +15,6 @@
         <file alias="icons/delete.png">../resources/icons/delete.png</file>
         <file>CBControls/FullImageInfo.qml</file>
         <file>CBControls/FilterDialog.qml</file>
+        <file alias="no_image.png">../resources/no_image.png</file>
     </qresource>
 </RCC>
