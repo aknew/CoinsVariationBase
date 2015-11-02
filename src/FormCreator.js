@@ -171,7 +171,10 @@ function createFullForm(node) {
     }
 
     if (node.hasImages){
-        qmlString +="Label{text: qsTr(\"Images\"); font.pixelSize: 16; font.bold: true;}\n"
+        qmlString += "Row{"
+        qmlString +="   Label{text: qsTr(\"Images\"); font.pixelSize: 16; font.bold: true;}\n"
+        qmlString += "  Button{iconSource:  \"/icons/add.png\"; onClicked: mainWindow.addNewImage()}\n"
+        qmlString += "}\n"
 
 
         qmlString+= "   GridView {\n" +
