@@ -62,6 +62,7 @@ ApplicationWindow {
             }
             MenuItem {
                 text: "Add new"
+                iconSource:  "/icons/add.png"
                 shortcut: "Ctrl+N"
                 onTriggered: {
 
@@ -83,6 +84,7 @@ ApplicationWindow {
             }
             MenuItem {
                 text: "Delete"
+                iconSource:  "/icons/delete.png"
                 visible: tablesStack.currentItem.formType !== CBApi.ListForm
                 onTriggered: {
                     deleteRowDialog.open()
