@@ -22,7 +22,7 @@ public:
     CBSqlRelationalTableModel(QObject *parent, QSqlDatabase _db):QSqlRelationalTableModel(parent,_db){this->setEditStrategy(QSqlTableModel::OnRowChange);}
     void applyRoles();
     void removeCurrentItem();
-    void sortByColumn(const QString &name);
+    Q_INVOKABLE void sortByColumn(const QString &name, Qt::SortOrder order = Qt::AscendingOrder);
     int selectedRow;
     QString selectedItemId();
 

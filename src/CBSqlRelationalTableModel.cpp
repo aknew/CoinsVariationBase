@@ -18,11 +18,11 @@ void CBSqlRelationalTableModel::applyRoles()
     fieldList=QVariant(fields);
 }
 
-void CBSqlRelationalTableModel::sortByColumn(const QString &columnName){
+void CBSqlRelationalTableModel::sortByColumn(const QString &columnName, Qt::SortOrder order){
     for (int i = 0; i < this->columnCount(); i++) {
         QString role=this->headerData(i, Qt::Horizontal).toString();
         if (role == columnName){
-            this->sort(i,Qt::AscendingOrder);
+            this->sort(i,order);
             return;
         }
     }

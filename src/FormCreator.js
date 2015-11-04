@@ -81,7 +81,13 @@ function createTable(node){
             "   property var node;\n"+
             "   onNodeChanged:{tableView.model = node.listModel;}\n\n"+
             "   TableView {\n       id:tableView;\n        anchors.fill:parent;\n" +
-            "       onClicked: { mainWindow.showFullForm(node,row);}\n\n";
+            "       onClicked: { mainWindow.showFullForm(node,row);}\n\n"+
+            "       function applySort(){\n"+
+            "           var column = getColumn(sortIndicatorColumn).role;\n"+
+            "           model.sortByColumn(column,sortIndicatorOrder);\n"+
+            "           sortIndicatorVisible = true;\n       }"+
+            "       onSortIndicatorColumnChanged:applySort()\n"+
+            "       onSortIndicatorOrderChanged:applySort()\n";
 
 
     var fieldList = node.listViewFields;
