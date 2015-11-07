@@ -49,15 +49,6 @@ try:
         sql_insert = "INSERT INTO 'SourcesList' ('reduction','fullname','comment') VALUES (:reduction, :fullname, :comment);"
         cursor.executemany(sql_insert, csv_reader)
 
-    with open(data_path + 'varieties.csv','rt', encoding="utf-8") as csv_file:
-        csv_reader = csv.DictReader(csv_file)
-        sql_insert = "INSERT INTO 'Varieties'"\
-                     "('typeID','id','varietyType','year','mintmark','mint','avers','revers','edge','rarity','comment')"\
-                     "VALUES "\
-                     "(:typeID, :id, :varietyType, :year, :mintmark, :mint, :avers, :revers, :edge, :rarity, :comment);"
-
-        cursor.executemany(sql_insert, csv_reader)
-
     connection.commit()
 
 except Exception as e:
@@ -68,3 +59,5 @@ finally:
 
 csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\vrp\\vrp.csv","a5886730-bb5d-43f4-a172-52294bc18952")
 csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\Variaties\\1k1755-1757.csv")
+csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\Variaties\\2k1757-1796.csv")
+csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\Variaties\\2k1797-1801.csv")
