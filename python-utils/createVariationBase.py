@@ -60,4 +60,5 @@ finally:
 csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\vrp\\vrp.csv","a5886730-bb5d-43f4-a172-52294bc18952")
 csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\Variaties\\1k1755-1757.csv")
 csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\Variaties\\2k1757-1796.csv")
+csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\Variaties\\5k1758-1796.csv")
 csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\Variaties\\2k1797-1801.csv")
