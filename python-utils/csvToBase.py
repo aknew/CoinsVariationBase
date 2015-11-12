@@ -3,12 +3,15 @@ __author__ = 'aknew'
 
 import csv
 import CVBAPI
-from os.path import dirname
+from os.path import dirname, exists
 from collections import defaultdict
 
 # Hint: csv struct:
-# first row is header, it can be one of tavle Vatieties field name, "picture" or "picture_source"
-# otherwise header is reference reduction and all
+# first row is header, it can be one of table Vatieties field name, "picture", "picture_source" or "picture_comment"
+# otherwise header is reference reduction
+# "picture", "picture_source" or "picture_comment" contain list of pictures, sources and comments separeted by "|"
+# reference fields contains separeted by "|" identificator in reference source, rarity and comment
+# if comment need, you have to also add rariry, but it can be "" (233.1100||crown isn't separated)
 
 
 def import_csv(path, typeID=""):
@@ -44,8 +47,16 @@ def import_csv(path, typeID=""):
             if "" != row["picture"]:
                 pictures = row["picture"].split("|")
                 sources = row["picture_source"].split("|")
+                comments = row["picture_comment"].split("|")
                 for index, filename in enumerate(pictures):
-                    pict = CVBAPI.CoinPicture(base_path + "\\" + filename, sources[index], variety.id)
+                    path = base_path + "\\" + filename;
+                    if not exists(path):
+                        path = base_path + "\\images\\" + filename
+                    comment = ""
+                    if index < len(comments):
+                        comment = comments[index]
+
+                    pict = CVBAPI.CoinPicture(path, sources[index],comment, variety.id)
                     variety.pictures.append(pict)
 
 

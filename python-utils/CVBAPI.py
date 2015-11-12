@@ -71,10 +71,11 @@ class CoinPicture(Base):
     ParentID = Column(String)
 
 
-    def __init__(self, filename, source, varid):
+    def __init__(self, filename, source, comment, varid):
         self.path = filename
         self.source = source
         self.ParentID = varid
+        self.comment = comment
         # try to get md5
         pictfile = open(self.path, 'rb')
         self.id = hashlib.md5(pictfile.read()).hexdigest()
