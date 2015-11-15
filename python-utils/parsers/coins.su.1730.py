@@ -75,7 +75,7 @@ separatorMatcher = re.compile("(={2,})")
 aversMatcher = re.compile("(\d\d?[а-я]?)\s?-\s?[Аа]верс:\s?(.*)")
 reversMatcher = re.compile("[Рр]еверс:\s?(.*)")
 pictureMatcher = re.compile('<a class="resized_img" href="([^"]*)" id="*.')
-rarityMatcher = re.compile('<span style="color:rgb\(\d{1,3},\d{1,3},\d{1,3}\)">(.*)<\/span>')
+rarityMatcher = re.compile('<span style="color:(?:rgb\(\d{1,3},\d{1,3},\d{1,3}\)|#[\da-fA-f]{6})">(.*)<\/span>')
 
 variety = Variety()
 
@@ -157,10 +157,13 @@ for index, post in enumerate(posts):
                 variety.rarity = m.group(1)
                 continue
 
+            if line == "\n":
+                continue
+
             variety.unrecognized += line + "\n"
 
 appendVariety(variety)
 
-with open('result.csv', 'w', newline='') as fp:
+with open('result.csv', 'w', newline='', encoding="utf-8") as fp:
     a = csv.writer(fp, delimiter=',')
     a.writerows(variations)
