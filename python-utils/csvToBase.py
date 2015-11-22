@@ -7,12 +7,13 @@ from os.path import dirname, exists
 from collections import defaultdict
 
 # Hint: csv struct:
-# first row is header, it can be one of table Vatieties field name, "not_for_import", "picture", "picture_source" or "picture_comment"
+# first row is header, it can be one of table Vatieties field name (or Features), "not_for_import", "picture", "picture_source"
+# or "picture_comment"
 # otherwise header is reference reduction
 # "picture", "picture_source" or "picture_comment" contain list of pictures, sources and comments separeted by "|"
 # reference fields contains separeted by "|" identificator in reference source, rarity and comment
+# if comment need for referece, you have to also add rariry for it, but it can be "" (233.1100||crown isn't separated)
 # "not_for_import" is column for add some information that will not be imported to db
-# if comment need, you have to also add rariry, but it can be "" (233.1100||crown isn't separated)
 
 
 def import_csv(path, typeID=""):
@@ -82,3 +83,24 @@ def import_csv(path, typeID=""):
             Variaties.append(variety)
 
     CVBAPI.saveVarieties(Variaties)
+
+def import_features(path):
+
+    base_path = dirname(path)
+
+    Features = []
+
+    with open(path, 'rt', encoding="utf-8") as csvfile:
+        varList = csv.DictReader(csvfile)
+        #field_names = ["description","comment","id","typeID","not_for_import"]
+        for row in varList:
+
+            row = defaultdict(lambda: "", row)
+
+            feature = CVBAPI.Feature()
+            feature.typeId = row["typeID"]
+            feature.comment = row["comment"]
+            feature.description = row["description"]
+            Features.append(feature)
+
+    CVBAPI.saveFeatures(Features);

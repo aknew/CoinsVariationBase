@@ -66,3 +66,5 @@ csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\Variaties\\2k175
 csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\Variaties\\5k1758-1796.csv")
 csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\Variaties\\Pavel.csv")
 csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\Variaties\\Siberia.csv")
+#csvToBase.import_csv("D:\\aknew-Data\\GoogleDrive\\Numismatics\\Variaties\\1730.csv")
+csvToBase.import_features("D:\\aknew-Data\\GoogleDrive\\Numismatics\\Variaties\\features.csv")

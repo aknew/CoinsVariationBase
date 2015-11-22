@@ -62,6 +62,17 @@ class Source(Base):
 def loadSource(reduction):
     return session.query(Source).filter_by(reduction=reduction).first()
 
+class Feature(Base):
+    __tablename__ = 'Features'
+    typeId = Column(String)
+    id = Column(String,primary_key = True)
+    description = Column(String)
+    comment = Column(String)
+
+    def __init__(self):
+        self.description = ""
+        self.comment = ""
+        self.id = uuid.uuid1().__str__()
 
 class CoinPicture(Base):
     __tablename__ = 'Images'
@@ -69,7 +80,6 @@ class CoinPicture(Base):
     comment = Column(String)
     source = Column(String)
     ParentID = Column(String)
-
 
     def __init__(self, filename, source, comment, varid):
         self.path = filename
@@ -102,4 +112,8 @@ def saveVarieties(varietiesList):
         for pict in variety.pictures:
             shutil.copy(pict.path, base_root_dir + "images/" + pict.id + ".jpg")
 
+    session.commit()
+
+def saveFeatures(featuresList):
+    session.add_all(featuresList)
     session.commit()
