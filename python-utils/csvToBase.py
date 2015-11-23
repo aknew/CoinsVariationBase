@@ -5,12 +5,14 @@ import csv
 import CVBAPI
 from os.path import dirname, exists
 from collections import defaultdict
+import re
+import urllib.request
 
 # Hint: csv struct:
 # first row is header, it can be one of table Vatieties field name (or Features), "not_for_import", "picture", "picture_source"
 # or "picture_comment"
 # otherwise header is reference reduction
-# "picture", "picture_source" or "picture_comment" contain list of pictures, sources and comments separeted by "|"
+# "picture", "picture_source" or "picture_comment" contain lists of pictures, sources and comments separeted by "|"
 # reference fields contains separeted by "|" identificator in reference source, rarity and comment
 # if comment need for referece, you have to also add rariry for it, but it can be "" (233.1100||crown isn't separated)
 # "not_for_import" is column for add some information that will not be imported to db
@@ -53,13 +55,32 @@ def import_csv(path, typeID=""):
                 for index, filename in enumerate(pictures):
                     path = base_path + "\\" + filename;
                     if not exists(path):
-                        path = base_path + "\\images\\" + filename
+                        if re.match("http.*", filename) is not None:
+                            path = "" #HOTFIX:
+                            try:
+                                local_filename, headers = urllib.request.urlretrieve(filename)
+                                path = local_filename
+                                sources[index] = filename
+                            except urllib.error.URLError as e:
+                                print(e.reason)
+                                print(filename)
+                        else:
+                            path = base_path + "\\images\\" + filename
+
                     comment = ""
                     if index < len(comments):
                         comment = comments[index]
 
-                    pict = CVBAPI.CoinPicture(path, sources[index],comment, variety.id)
-                    variety.pictures.append(pict)
+                    source = ""
+                    if index < len(source):
+                        source = sources[index]
+
+                    if path !="":
+                        pict = CVBAPI.CoinPicture(path, source,comment, variety.id)
+                        variety.pictures.append(pict)
+                    else:
+                        print(filename)
+
 
 
             variety.rarity = row["rarity"]
