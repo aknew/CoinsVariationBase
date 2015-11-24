@@ -96,14 +96,15 @@ CREATE TABLE [CoinHistory] (
 --- Пометки и картинки могут относиться практически к любой таблице, к какой относится конкретно устанавливается из программы в ручном режиме
 
 CREATE TABLE [Images] (
-  [id] TEXT NOT NULL PRIMARY KEY, 
+  --- id is not unique because one image can be addet to few tables (for example, as variaty, as current coin and as feature)
+  [id] TEXT, 
   [comment] text,
   [source] text,
   [ParentID] text NOT NULL
   );
 
 CREATE TABLE [Notes] (
-  [id] TEXT NOT NULL PRIMARY KEY, 
+  [id] TEXT, 
   [comment] text,
   [source] text,
   [ParentID] text NOT NULL

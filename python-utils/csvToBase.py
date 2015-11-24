@@ -60,7 +60,6 @@ def import_csv(path, typeID=""):
                             try:
                                 local_filename, headers = urllib.request.urlretrieve(filename)
                                 path = local_filename
-                                sources[index] = filename
                             except urllib.error.URLError as e:
                                 print(e.reason)
                                 print(filename)
