@@ -69,9 +69,9 @@ def appendVariety(variety):
 
 headerMatcher = re.compile('(17\d\d)\. Пять копеек ((Набережного двора)|(Кадашевского двора)).*')
 
-separatorMatcher = re.compile("(={2,})")
-aversMatcher = re.compile("(\d\d?[а-яa-b]?)\s?-\s?[Аа]верс:\s?(.*)")
-reversMatcher = re.compile("[Рр]еверс:\s?(.*)")
+separatorMatcher = re.compile(".*?(={2,})")
+aversMatcher = re.compile(".*?(\d\d?[а-яa-b]?)\s?-\s?[Аа]верс:\s?(.*)")
+reversMatcher = re.compile(".*?[Рр]еверс:\s?(.*)")
 pictureMatcher = re.compile('<a class="resized_img" href="([^"]*)" id="*.')
 rarityMatcher = re.compile('<span style="color:(?:rgb\(\d{1,3},\d{1,3},\d{1,3}\)|#[\da-fA-f]{6})">(.*)<\/span>')
 
@@ -84,7 +84,7 @@ typeId = ""
 
 for index, post in enumerate(posts):
 
-    if index == 0:
+    if index < 8:
         # skip context post
         continue
 
@@ -93,7 +93,7 @@ for index, post in enumerate(posts):
             continue
 
         # skip post info and editing
-        if element.has_attr('class'):
+        if element.has_attr('class') and element.name != "strong" and element.name != "a":
             continue
 
         # delete formating tags - I can't use they for parsing because  they haven't standart structure
