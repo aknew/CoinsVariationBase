@@ -1,6 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
+import QtWebKit 3.0
 
 import CB.api 1.0
 import "FormCreator.js" as FormCreator
@@ -88,6 +89,16 @@ ApplicationWindow {
                 visible: tablesStack.currentItem.formType !== CBApi.ListForm
                 onTriggered: {
                     deleteRowDialog.open()
+                }
+            }
+        }
+        Menu {
+            title:qsTr("About")
+            MenuItem{
+                text:qsTr("About base")
+                onTriggered: {
+                    aboutDialog.htmlPath = CBApi.baseProvider.getAbout();
+                    aboutDialog.open()
                 }
             }
         }
@@ -325,6 +336,17 @@ ApplicationWindow {
                                                    "menuItem")
                 fileMenu.insertItem(fileMenu.items.length, component)
             }
+        }
+    }
+
+    Dialog {
+        id: aboutDialog
+        height: 500
+        width: 800
+        property alias htmlPath: aboutView.url
+        contentItem: WebView{
+            id: aboutView
+            anchors.fill: parent
         }
     }
 }

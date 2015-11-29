@@ -51,6 +51,11 @@ public:
     Q_INVOKABLE void copyImageToClipboard(QString imageId);
     Q_INVOKABLE QString importImageFromClipboard();
 
+    //! path to about page for qml
+    Q_INVOKABLE QString getAbout(){
+        return "file:///" + rootPath + "about.html";
+    }
+
 
 private:
     QString rootPath; //< root folder
