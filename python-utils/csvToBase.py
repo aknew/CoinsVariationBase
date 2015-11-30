@@ -7,6 +7,7 @@ from os.path import dirname, exists
 from collections import defaultdict
 import re
 import urllib.request
+from urllib.parse import urlparse
 
 # Hint: csv struct:
 # first row is header, it can be one of table Vatieties field name (or Features), "not_for_import", "picture", "picture_source"
@@ -51,8 +52,14 @@ def import_csv(path, typeID=""):
             if "" != row["picture"]:
                 pictures = row["picture"].split("|")
                 sources = row["picture_source"].split("|")
+
+
                 comments = row["picture_comment"].split("|")
                 for index, filename in enumerate(pictures):
+                    source = ""
+                    if index < len(sources):
+                        source = sources[index]
+
                     path = base_path + "\\" + filename;
                     if not exists(path):
                         if re.match("http.*", filename) is not None:
@@ -60,6 +67,7 @@ def import_csv(path, typeID=""):
                             try:
                                 local_filename, headers = urllib.request.urlretrieve(filename)
                                 path = local_filename
+                                source = urlparse(filename).netloc
                             except urllib.error.URLError as e:
                                 print(e.reason)
                                 print(filename)
@@ -69,10 +77,6 @@ def import_csv(path, typeID=""):
                     comment = ""
                     if index < len(comments):
                         comment = comments[index]
-
-                    source = ""
-                    if index < len(source):
-                        source = sources[index]
 
                     if path !="":
                         pict = CVBAPI.CoinPicture(path, source,comment, variety.id)
