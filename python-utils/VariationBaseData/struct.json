@@ -47,7 +47,7 @@
           },
           {
             "name": "SourceRef",
-            "relation": "varID"
+            "relation": "refID"
           }
         ],
         "fullFormFields": [
@@ -100,7 +100,16 @@
         "pictDelegate":"3"
       },
       { "name": "SourcesList" },
-      { "name": "Features"    },
+      { "name": "Features",
+      "childNode": [
+          {
+            "name": "SourceRef",
+            "relation": "refID"
+          }
+        ],
+      "hasImages":true,
+        "hasNotes":true
+      },
       {
         "name": "CoinHistory"
       }

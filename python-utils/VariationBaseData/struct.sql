@@ -37,12 +37,12 @@ CREATE TABLE "SourcesList" (
 );
 
 CREATE TABLE [SourceRef] (
-  [varID] TEXT NOT NULL CONSTRAINT [stRefFK] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
+  [refID] TEXT NOT NULL, 
   [srid] TEXT NOT NULL CONSTRAINT [stRefSL] REFERENCES [SourcesList]([reduction]) ON DELETE CASCADE ON UPDATE CASCADE, 
   [number] TEXT NOT NULL, 
   [rarity] TEXT, 
   [comment] TEXT, 
-  CONSTRAINT [coinsSubUnique] UNIQUE([varID], [srid], [number]));
+  CONSTRAINT [coinsSubUnique] UNIQUE([refID], [srid], [number]));
 
 CREATE TRIGGER varSourceRefInsert before insert on [SourceRef]
 begin

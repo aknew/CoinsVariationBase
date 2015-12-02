@@ -47,7 +47,7 @@ class Variety(Base):
 
 class SourceRef(Base):
     __tablename__ = 'SourceRef'
-    varID = Column(String, primary_key=True)
+    refID = Column(String, primary_key=True)
     srid = Column(String, primary_key=True)
     number = Column(String)
     rarity = Column(String)
