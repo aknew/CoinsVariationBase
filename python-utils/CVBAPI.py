@@ -70,6 +70,8 @@ class Feature(Base):
     comment = Column(String)
 
     def __init__(self):
+        self.pictures = []
+        self.references = []
         self.description = ""
         self.comment = ""
         self.id = uuid.uuid1().__str__()
@@ -104,7 +106,7 @@ def loadVarities(type = ""):
 
     return varList
 
-def saveVarieties(varietiesList):
+def save_varieties_or_features(varietiesList):
     session.add_all(varietiesList)
     for variety in varietiesList:
         session.add_all(variety.references)
@@ -114,6 +116,3 @@ def saveVarieties(varietiesList):
 
     session.commit()
 
-def saveFeatures(featuresList):
-    session.add_all(featuresList)
-    session.commit()
