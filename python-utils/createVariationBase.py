@@ -22,6 +22,7 @@ os.makedirs(base_path + "forms")
 
 
 shutil.copy(data_path + "struct.json",base_path + "struct.json")
+shutil.copy(data_path + "about.html",base_path + "about.html")
 
 
 dbfilename = base_path + "base.sqlite"
