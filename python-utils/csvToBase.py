@@ -133,17 +133,18 @@ def parse_references(row,Authors,_id):
     references = []
     for author in Authors:
         if "" != row[author]:
-            values = row[author].split("|")
-            ref = CVBAPI.SourceRef()
-            ref.refID = _id
-            ref.srid = author
-            ref.number = values[0]
-            valLen = len(values)
-            if valLen > 1:
-                ref.rarity = values[1]
-                if valLen == 3:
-                    ref.comment = values[2]
+            for subrow in row[author].split("\n"):
+                values = subrow.split("|")
+                ref = CVBAPI.SourceRef()
+                ref.refID = _id
+                ref.srid = author
+                ref.number = values[0]
+                valLen = len(values)
+                if valLen > 1:
+                    ref.rarity = values[1]
+                    if valLen == 3:
+                        ref.comment = values[2]
 
-            references.append(ref)
+                references.append(ref)
 
     return references
