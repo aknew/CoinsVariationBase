@@ -63,7 +63,7 @@
           {
             "name": "Mint",
             "type": "combo",
-            "query": "select distinct mint from Varieties"
+            "query": "select distinct mint from Varieties order by mint"
           },
           {"name": "avers"},
           {"name": "revers"},
@@ -83,7 +83,22 @@
         "hasNotes":true
       },
       {
-        "name": "SourceRef"
+        "name": "SourceRef",
+        "listViewFields":["srid","number","rarity","comment"],
+        "fullFormFields": [
+          
+          {
+            "name": "srid",
+            "type": "combo",
+            "query": "select reduction from SourcesList"
+          },
+          {"name": "number"},
+          {
+            "name": "rarity"
+          },
+          {"name": "comment"}
+        ]
+
       },
       {
         "name": "ConcreteCoins",
