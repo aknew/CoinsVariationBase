@@ -19,10 +19,16 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
 
     //FIXME: Cтоит создавать модели только тогда, когда они нужны и выгружать потом
     model=new CBSqlRelationalTableModel(this,db);
+    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
     model->setTable(this->tableName);
     model->applyRoles();
     //filterParam.first = kNotValidPair;
     _listModel = NULL;
+
+    QJsonValue json_usesUUIDs = obj.value("usesUUIDs");
+    if (!json_usesUUIDs.isUndefined()){
+        usesUUIDs = json_usesUUIDs.toBool();
+    }
 
     QJsonValue json_listModel = obj.value("listModel");
 
@@ -195,10 +201,12 @@ void CBNode::prepareToNewItem(){
         f1.setValue(QVariant(levelFilter.second));
         record.append(f1);
     }
-    QSqlField f1("id", QVariant::String);
-    QUuid u=QUuid::createUuid();
-    f1.setValue(QVariant(u.toString()));
-    record.append(f1);
+    if(usesUUIDs){
+        QSqlField f1("id", QVariant::String);
+        QUuid u=QUuid::createUuid();
+        f1.setValue(QVariant(u.toString()));
+        record.append(f1);
+    }
     if (!model->insertRecord(-1, record)){
         qDebug()<<model->lastError();
     }

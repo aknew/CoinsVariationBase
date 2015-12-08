@@ -84,6 +84,7 @@
       },
       {
         "name": "SourceRef",
+        "usesUUIDs":false,
         "listViewFields":["srid","number","rarity","comment"],
         "fullFormFields": [
           

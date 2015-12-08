@@ -82,6 +82,12 @@ protected:
     }
 
     void applyFilters();
+    /**
+      \brief UUID generating flag
+      Reason - usually we use UUID as table primary key, but some table
+      no need to do this. Usually this tables are affiliated like references list
+    */
+    bool usesUUIDs = true;
 };
 
 #endif // CBNODE_H
