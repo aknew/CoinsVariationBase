@@ -67,7 +67,7 @@ CREATE TABLE [Features] (
 
 CREATE TABLE [ConcreteCoins] (
   [id] TEXT NOT NULL PRIMARY KEY, 
-  [varID] TEXT NOT NULL CONSTRAINT [ccVariaties] REFERENCES [Variaties]([id]) ON DELETE CASCADE ON UPDATE CASCADE,
+  [varID] TEXT NOT NULL CONSTRAINT [ccVariaties] REFERENCES [Varieties]([id]) ON DELETE CASCADE ON UPDATE CASCADE,
   [condition] TEXT,
   [status] TEXT NOT NULL DEFAULT "Архив"
   );

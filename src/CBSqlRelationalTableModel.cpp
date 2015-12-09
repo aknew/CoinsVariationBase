@@ -68,7 +68,10 @@ void CBSqlRelationalTableModel::setSelectedItem(const QVariantMap &map){
     if (!flag){
         qDebug()<<this->lastError();
     }
-    this->submitAll();
+    flag = this->submitAll();
+    if (!flag){
+        qDebug()<<this->lastError();
+    }
 
 }
 
