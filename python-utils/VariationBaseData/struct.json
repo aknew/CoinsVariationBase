@@ -109,11 +109,18 @@
             "relation": "coin"
           }
         ],
-        "comboDelegate": {
-          "column": "5",
-          "query": "statuses"
-        },
-        "pictDelegate":"3"
+        "listViewFields":["condition","status"],
+        "fullFormFields": [
+          
+          {
+            "name": "status",
+            "type": "combo",
+            "query": "select distinct status from ConcreteCoins"
+          },
+          {"name": "condition"}
+        ],
+        "hasImages":true,
+        "hasNotes":true
       },
       { "name": "SourcesList" },
       { "name": "Features",
@@ -127,7 +134,8 @@
         "hasNotes":true
       },
       {
-        "name": "CoinHistory"
+        "name": "CoinHistory",
+        "usesUUIDs":false
       }
     ]
 }
