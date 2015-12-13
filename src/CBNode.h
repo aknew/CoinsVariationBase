@@ -55,6 +55,12 @@ public:
     Q_INVOKABLE void dropChanges();
     Q_INVOKABLE void deleteSelectedItem();
 
+    /** \brief: clone current selected item as new item
+     *  If node has UUID's id, new item will have it's own. Need use applyChanges();
+     *  to save new item
+    */
+    Q_INVOKABLE void cloneItem();
+
 
 signals:
     void idWasSelected(QString id);

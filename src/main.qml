@@ -91,6 +91,19 @@ ApplicationWindow {
                     deleteRowDialog.open()
                 }
             }
+            MenuItem {
+                text: qsTr("Clone")
+                //iconSource:  "/icons/delete.png"
+                visible: tablesStack.currentItem.formType === CBApi.FullForm
+                onTriggered: {
+                    tablesStack.currentItem.node.cloneItem()
+                    //HOTFIX: to update data after dropping
+                    tablesStack.currentItem.node = tablesStack.currentItem.node
+                    windowToolbar.state = "editing"
+                    tablesStack.currentItem.state = "editing"
+                    isInsertingNew = true
+                }
+            }
         }
         Menu {
             title:qsTr("About")

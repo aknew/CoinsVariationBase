@@ -214,6 +214,22 @@ void CBNode::prepareToNewItem(){
     selectItemWithIndex(model->rowCount()-1);
 }
 
+void CBNode::cloneItem(){
+    insertingNewRow = true;
+    QSqlRecord record = model->record(model->selectedRow);
+    if(usesUUIDs){
+        QSqlField f1("id", QVariant::String);
+        QUuid u=QUuid::createUuid();
+        f1.setValue(QVariant(u.toString()));
+        record.append(f1);
+    }
+    if (!model->insertRecord(-1, record)){
+        qDebug()<<model->lastError();
+    }
+
+    selectItemWithIndex(model->rowCount()-1);
+}
+
 void CBNode::applyChanges(QVariantMap changedItem){
     model->setSelectedItem(changedItem);
     if (insertingNewRow){
