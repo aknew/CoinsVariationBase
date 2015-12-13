@@ -88,9 +88,7 @@ CREATE TABLE [CoinHistory] (
   [hyperlink] TEXT, 
   [startPrice] TEXT, 
   [currency] TEXT, 
-  [seller] TEXT, 
-  [buyer] TEXT, 
-  [blitz] REAL,
+  [description] TEXT,
   comment TEXT);
 
 --- Пометки и картинки могут относиться практически к любой таблице, к какой относится конкретно устанавливается из программы в ручном режиме
