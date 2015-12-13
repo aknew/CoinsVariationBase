@@ -40,7 +40,12 @@ def insert_from_dict(dict, table="", rec_counter=0):
         result = result.replace("%*parentID*%", parent_id)
 
         if rec_counter >1: # i.e. it is not independent table
-            fields.append("parentID")
+            parent_id_name = "parentID"
+            # FIXME: dirty hack again - I should read foreign keys from file
+            if table == "CoinHistory":
+                parent_id_name = "coin"
+
+            fields.append(parent_id_name)
             values.append("%*parentID*%")
 
         result1 = "INSERT INTO " + table + " ("

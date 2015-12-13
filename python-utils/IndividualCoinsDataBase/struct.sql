@@ -50,29 +50,27 @@ end;
 --- history of the coin
 
 CREATE TABLE [CoinHistory] (
-  [parentID] TEXT NOT NULL CONSTRAINT [chCoin] REFERENCES [Coins]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
+  [coin] TEXT NOT NULL CONSTRAINT [chCoin] REFERENCES [Coins]([id]) ON DELETE CASCADE ON UPDATE CASCADE, 
   [event] TEXT NOT NULL, 
   [date] TEXT, 
   [price] TEXT, 
   [hyperlink] TEXT, 
   [startPrice] TEXT, 
   [currency] TEXT, 
-  [seller] TEXT, 
-  [buyer] TEXT, 
-  [blitz] REAL,
+  [description] TEXT,
   comment TEXT);
 
 --- Пометки и картинки могут относиться практически к любой таблице, к какой относится конкретно устанавливается из программы в ручном режиме
 
 CREATE TABLE [Images] (
-  [id] TEXT NOT NULL PRIMARY KEY, 
+  [id] TEXT, 
   [comment] text,
   [source] text,
   [parentID] text NOT NULL
   );
 
 CREATE TABLE [Notes] (
-  [id] TEXT NOT NULL PRIMARY KEY, 
+  [id] TEXT, 
   [comment] text,
   [source] text,
   [parentID] text NOT NULL
