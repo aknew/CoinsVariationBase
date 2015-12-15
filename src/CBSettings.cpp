@@ -63,7 +63,6 @@ void CBSettings::addRecentBase(const QString &name,const QString &path){
     else{
         recentBasesMap[name + ": " + path] = path;
     }
-    saveSetting();
     emit recentBasesChanged();
 }
 

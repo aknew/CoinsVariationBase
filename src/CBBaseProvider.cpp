@@ -80,6 +80,7 @@ void CBBaseProvider::startWithPath(const QString &path){
      CBSettings *settings = CBSettings::settingsInstance();
      settings->lastBasePath = rootPath;
      settings->addRecentBase(m_baseTitle,rootPath);
+     settings->saveSetting();
 
      qDebug() << db.connectOptions();
 
