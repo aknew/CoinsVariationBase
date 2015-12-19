@@ -1,170 +1,165 @@
 {
-    "baseTitle": "Монеты Российской Империи",
-    "startTable": "Types",
-    "nodes": [
-      {
-        "name": "Types",
-        "sortColumn":"firstYear",
-        "childNode": [
-          {
-            "name": "Varieties",
-            "relation": "typeID"
-          },
-          {
-            "name": "Features",
-            "relation": "typeID"
-          }
-        ],
-        "listViewFields":["nominal","firstYear","lastYear","issue"],
-        "fullFormFields": [
-        {"name": "nominal",
-        "type": "combo",
-        "query": "select distinct nominal from types"},
-        {"name": "metal",
-        "type": "combo",
-        "query": "select distinct metal from types"},
-        {"name": "firstYear"},
-        {"name": "lastYear"},
-        {"name": "edge",
-        "type": "combo",
-        "query": "select distinct edge from types"},
-        {"name": "issue",
-        "type": "combo",
-        "query": "select distinct issue from types"},
-        {"name": "avers"},
-        {"name": "revers"},
-        {"name": "weigth"}
-        ]
-      },
-      {
-        "name": "Varieties",
-        "sortColumn":"year",
-        "listViewFields":["varietyType","year","mintmark","avers","revers","edge"],
-        "childNode": [
-          {
-            "name": "ConcreteCoins",
-            "relation": "varID"
-          },
-          {
-            "name": "SourceRef",
-            "relation": "refID"
-          }
-        ],
-        "fullFormFields": [
-          {
-            "name": "year"
-          },
-          {
-            "name": "mintmark"
-          },
-          {
-            "name": "varietyType"
-          },
-          {
-            "name": "Mint",
-            "type": "combo",
-            "query": "select distinct mint from Varieties order by mint"
-          },
-          {"name": "avers"},
-          {"name": "revers"},
-          {
-            "name": "edge",
-            "type": "combo",
-            "query": "select distinct edge from types"
-          },
-          {
-            "name": "rarity"
-          },
-          {
-            "name": "comment"
-          }
-        ],
-        "hasImages":true,
-        "hasNotes":true
-      },
-      {
-        "name": "SourceRef",
-        "usesUUIDs":false,
-        "listViewFields":["srid","number","rarity","comment"],
-        "fullFormFields": [
-          
-          {
-            "name": "srid",
-            "type": "combo",
-            "query": "select reduction from SourcesList"
-          },
-          {"name": "number"},
-          {
-            "name": "rarity"
-          },
-          {"name": "comment"}
-        ]
+  "baseTitle": "Монеты Российской Империи",
+  "startTable": "Types",
+  "nodes": [{
+    "name": "Types",
+    "sortColumn": "firstYear",
+    "childNode": [{
+      "name": "Varieties",
+      "relation": "typeID"
+    }, {
+      "name": "Features",
+      "relation": "typeID"
+    }],
+    "listViewFields": ["nominal", "firstYear", "lastYear", "issue"],
+    "fullFormFields": [{
+      "name": "nominal",
+      "type": "combo",
+      "query": "select distinct nominal from types"
+    }, {
+      "name": "metal",
+      "type": "combo",
+      "query": "select distinct metal from types"
+    }, {
+      "name": "firstYear"
+    }, {
+      "name": "lastYear"
+    }, {
+      "name": "edge",
+      "type": "combo",
+      "query": "select distinct edge from types"
+    }, {
+      "name": "issue",
+      "type": "combo",
+      "query": "select distinct issue from types"
+    }, {
+      "name": "avers"
+    }, {
+      "name": "revers"
+    }, {
+      "name": "weigth"
+    }]
+  }, {
+    "name": "Varieties",
+    "sortColumn": "year",
+    "listViewFields": ["varietyType", "year", "mintmark", "avers", "revers", "edge"],
+    "childNode": [{
+      "name": "ConcreteCoins",
+      "relation": "varID"
+    }, {
+      "name": "SourceRef",
+      "relation": "refID"
+    }],
+    "fullFormFields": [{
+      "name": "year"
+    }, {
+      "name": "mintmark"
+    }, {
+      "name": "varietyType"
+    }, {
+      "name": "Mint",
+      "type": "combo",
+      "query": "select distinct mint from Varieties order by mint"
+    }, {
+      "name": "avers"
+    }, {
+      "name": "revers"
+    }, {
+      "name": "edge",
+      "type": "combo",
+      "query": "select distinct edge from types"
+    }, {
+      "name": "rarity"
+    }, {
+      "name": "comment"
+    }],
+    "hasImages": true,
+    "hasNotes": true
+  }, {
+    "name": "SourceRef",
+    "usesUUIDs": false,
+    "listViewFields": ["srid", "number", "rarity", "comment"],
+    "fullFormFields": [
 
-      },
       {
-        "name": "ConcreteCoins",
-        "childNode": [
-          {
-            "name": "CoinHistory",
-            "relation": "coin"
-          }
-        ],
-        "listViewFields":["condition","status"],
-        "fullFormFields": [
-          
-          {
-            "name": "status",
-            "type": "combo",
-            "query": "select distinct status from ConcreteCoins"
-          },
-          {"name": "condition"}
-        ],
-        "hasImages":true,
-        "hasNotes":true
-      },
-      { "name": "SourcesList" },
-      { "name": "Features",
-      "childNode": [
-          {
-            "name": "SourceRef",
-            "relation": "refID"
-          }
-        ],
-      "hasImages":true,
-        "hasNotes":true
-      },
-      {
-        "name": "CoinHistory",
-        "usesUUIDs":false,
-        "listViewFields":["date","event","description","price"],
-        "fullFormFields": [
-          {
-            "name": "date",
-            "type": "date"
-          },
-          {
-            "name": "event",
-            "type": "combo",
-            "query": "select distinct event from CoinHistory"
-          },
-          {
-            "name": "description",
-            "type": "combo",
-            "query": "select distinct description from CoinHistory"
-          },
-          {
-            "name": "hyperlink",
-            "type": "hyperlink"
-          },
-          {"name": "price"},
-          {"name": "startPrice"},
-          {
-            "name": "currency",
-            "type": "combo",
-            "query": "select distinct currency from CoinHistory"
-          },
-          {"name": "comment"}
-        ]
+        "name": "srid",
+        "type": "combo",
+        "query": "select reduction from SourcesList"
+      }, {
+        "name": "number"
+      }, {
+        "name": "rarity"
+      }, {
+        "name": "comment"
       }
-    ]
+    ],
+    "childNode": [{
+      "name": "SourcesList",
+      "relation": ""
+    }]
+  }, {
+    "name": "ConcreteCoins",
+    "childNode": [{
+      "name": "CoinHistory",
+      "relation": "coin"
+    }],
+    "listViewFields": ["condition", "status"],
+    "fullFormFields": [
+
+      {
+        "name": "status",
+        "type": "combo",
+        "query": "select distinct status from ConcreteCoins"
+      }, {
+        "name": "condition"
+      }
+    ],
+    "hasImages": true,
+    "hasNotes": true
+  }, {
+    "name": "SourcesList"
+  }, {
+    "name": "Features",
+    "childNode": [{
+      "name": "SourceRef",
+      "relation": "refID"
+    }],
+    "hasImages": true,
+    "hasNotes": true,
+    "listViewFields": ["description", "comment"],
+    "fullFormFields": [{
+      "name": "description"
+    }, {
+      "name": "comment"
+    }]
+  }, {
+    "name": "CoinHistory",
+    "usesUUIDs": false,
+    "listViewFields": ["date", "event", "description", "price"],
+    "fullFormFields": [{
+      "name": "date",
+      "type": "date"
+    }, {
+      "name": "event",
+      "type": "combo",
+      "query": "select distinct event from CoinHistory"
+    }, {
+      "name": "description",
+      "type": "combo",
+      "query": "select distinct description from CoinHistory"
+    }, {
+      "name": "hyperlink",
+      "type": "hyperlink"
+    }, {
+      "name": "price"
+    }, {
+      "name": "startPrice"
+    }, {
+      "name": "currency",
+      "type": "combo",
+      "query": "select distinct currency from CoinHistory"
+    }, {
+      "name": "comment"
+    }]
+  }]
 }
