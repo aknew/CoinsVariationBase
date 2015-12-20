@@ -5,6 +5,7 @@
 #include <QtSql>
 #include "CBNode.h"
 #include "CBImageProvider.h"
+#include "CBNotesProvider.h"
 
 class CBBaseProvider : public QObject
 /*! \brief implement base logic - reading/writing data, loading/saving images, transitions between tables, etc
@@ -36,6 +37,9 @@ public:
     Q_INVOKABLE void saveFullForm(const QString& qmlString, CBNode *node);
 
 
+    CBNotesProvider *notesProvider;
+
+    // Working with images
     CBImageProvider *imageProvider;
     QObject *getImages(){
         return m_imageModel;
@@ -66,7 +70,7 @@ private:
 
 
     CBSqlRelationalTableModel *m_imageModel; //< model for reading images list from base
-    void idWasSelected(const QString &id); //<when we set some record as selected, we need find Images and Nodes for it
+    void idWasSelected(const QString &id); //<when we set some record as selected, we need find Images and Notes for it
 
 signals:
     void readyToWork();

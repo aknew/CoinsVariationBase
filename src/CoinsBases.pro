@@ -9,7 +9,8 @@ SOURCES += \
     CBNode.cpp \
     CBSqlRelationalTableModel.cpp \
     CBImageProvider.cpp \
-    CBSettings.cpp
+    CBSettings.cpp \
+    CBNotesProvider.cpp
 
 DISTFILES += \
     main.qml \
@@ -33,6 +34,7 @@ HEADERS += \
     CBNode.h \
     CBSqlRelationalTableModel.h \
     CBImageProvider.h \
-    CBSettings.h
+    CBSettings.h \
+    CBNotesProvider.h
 
 CONFIG += c++11

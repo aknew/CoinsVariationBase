@@ -59,6 +59,8 @@ void CBBaseProvider::startWithPath(const QString &path){
      m_imageModel->setTable("Images");
      m_imageModel->applyRoles();
 
+     notesProvider = new CBNotesProvider(rootPath);
+
      QJsonArray nodes = baseStruct.value("nodes").toArray();
 
      foreach (QJsonValue value1,nodes) {
@@ -112,6 +114,7 @@ void CBBaseProvider::startWithPath(const QString &path){
      QString filter = QString("\"ParentID\"=\"%1\"").arg(id);
      m_imageModel->setFilter(filter);
      m_imageModel->select();
+     notesProvider->selectID(id);
  }
 
  void CBBaseProvider::saveImageInfo(QVariantMap imageInfo){
