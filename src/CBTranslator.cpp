@@ -58,6 +58,7 @@ QString CBTranslator::translate(const char *context, const char *sourceText, con
 }
 
 void CBTranslator::save() const {
+    return;
     QFile saveFile(m_fullFileName);
     if (!saveFile.open(QIODevice::WriteOnly)) {
             qWarning("Couldn't open save file.");

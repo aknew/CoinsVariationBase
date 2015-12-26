@@ -1,7 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
-import QtWebKit 3.0
+//import QtWebKit 3.0
 
 import CB.api 1.0
 import "FormCreator.js" as FormCreator
@@ -134,18 +134,9 @@ ApplicationWindow {
         ]
         Row {
             id: defaultToolbar
-            MouseArea {
-                Image {
-                    source: "/icons/back.png"
-                    anchors.fill: parent
-                }
-                height: 25
-                width: 25
-                onClicked: actionBack.trigger()
-                onPressAndHold: {
-                    // TODO: show dialog all shown tables and pop to clicked
-                    console.log("catch long tap")
-                }
+            ToolButton {
+                id: backButton
+                action: actionBack
             }
         }
         Row {
@@ -193,6 +184,7 @@ ApplicationWindow {
     Action {
         id: actionBack
         text: "back"
+        iconSource: "/icons/back.png"
         shortcut: Qt.BackButton
         onTriggered: {
             if (tablesStack.depth > 2) {
@@ -221,8 +213,13 @@ ApplicationWindow {
         tablesStack.pop(tablesStack.initialItem)
         title = CBApi.baseProvider.baseTitle
         var node = CBApi.baseProvider.getStartNode()
-        //var listForm = FormCreator.createListForm(node);
-        var listForm = FormCreator.createTable(node)
+        var listForm;
+        if(Qt.platform.os == "android"){
+            listForm = FormCreator.createListForm(node);
+        }
+        else{
+            listForm = FormCreator.createTable(node);
+        }
         tablesStack.push(listForm)
     }
 
@@ -236,8 +233,13 @@ ApplicationWindow {
 
     function showListForm(nodeName, currentNode) {
         var node = CBApi.baseProvider.getNode(nodeName, currentNode)
-        //var listForm = FormCreator.createListForm(node);
-        var listForm = FormCreator.createTable(node)
+        var listForm;
+        if(Qt.platform.os == "android"){
+            listForm = FormCreator.createListForm(node);
+        }
+        else{
+            listForm = FormCreator.createTable(node);
+        }
         tablesStack.push(listForm)
     }
 
@@ -321,9 +323,9 @@ ApplicationWindow {
 
     function openBase() {
         //HOTFIX: for android
-        if (Qt.platform.os == "android") {
-            CBApi.openBase("/storage/sdcard0/VariationBase")
-        }
+//        if (Qt.platform.os == "android") {
+//            CBApi.openBase("/storage/sdcard0/VariationBase/")
+//        }
 
         openBaseDialog.open()
     }
@@ -352,14 +354,14 @@ ApplicationWindow {
         }
     }
 
-    Dialog {
-        id: aboutDialog
-        height: 500
-        width: 800
-        property alias htmlPath: aboutView.url
-        contentItem: WebView{
-            id: aboutView
-            anchors.fill: parent
-        }
-    }
+//    Dialog {
+//        id: aboutDialog
+//        height: 500
+//        width: 800
+//        property alias htmlPath: aboutView.url
+//        contentItem: WebView{
+//            id: aboutView
+//            anchors.fill: parent
+//        }
+//    }
 }
