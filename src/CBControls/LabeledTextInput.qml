@@ -1,5 +1,4 @@
 import QtQuick 2.3
-import QtQuick.Controls 1.4
 
 FocusScope {
     width: parent.width
@@ -8,19 +7,32 @@ FocusScope {
     accepted
     property alias value: input.text
     property alias title: titleLabel.text
-    property alias editing: input.enabled
-    Label {
+    enabled: false;
+    property bool editing: false;
+    onEditingChanged: {
+        enabled = editing;
+        editingBackgrouns.visible = editing;
+    }
+    Text {
         id: titleLabel
         text: ""
         font.pixelSize: 16
         font.bold: true
     }
-    TextArea{
+    Rectangle {
+        id: editingBackgrouns
+        border.color: "black"
+        radius: 1
+        visible: false
+        width: parent.width
+        height: input.height
+        anchors.top: titleLabel.bottom
+    }
+    TextEdit {
         id: input
         font.pixelSize: 16
         width: parent.width
         anchors.top: titleLabel.bottom
         wrapMode: Text.Wrap
-        height: 44
     }
 }
