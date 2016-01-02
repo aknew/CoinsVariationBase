@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<CBSettings>("CB.api", 1, 0, "CBSettings", cbSettingsObjectSingleton);
     qmlRegisterUncreatableType<CBBaseProvider>("CB.api", 1, 0, "CBBaseProvider", "The object of this class should be obtained from CBApi.baseProvider");
     qmlRegisterUncreatableType<CBNode>("CB.api", 1, 0, "CBNode", "The object of this class should be obtained from CBApi.baseProvider.getNode(name) or CBApi.baseProvider.getStartNode()");
-    qmlRegisterUncreatableType<CBNotesProvider>("CB.api", 1, 0, "CBNotesProvider", "The object of this class should be obtained from CBApi.baseProvider.notesProvider");
+    qmlRegisterUncreatableType<CBAttachmentsProvider>("CB.api", 1, 0, "CBNotesProvider", "The object of this class should be obtained from CBApi.baseProvider.notesProvider");
 
     QApplication app(argc, argv);
 

@@ -5,7 +5,7 @@
 #include <QtSql>
 #include "CBNode.h"
 #include "CBImageProvider.h"
-#include "CBNotesProvider.h"
+#include "CBAttachmentsProvider.h"
 
 class CBBaseProvider : public QObject
 /*! \brief implement base logic - reading/writing data, loading/saving images, transitions between tables, etc
@@ -37,7 +37,7 @@ public:
     Q_INVOKABLE void saveFullForm(const QString& qmlString, CBNode *node);
 
 
-    CBNotesProvider *notesProvider;
+    CBAttachmentsProvider *attachmentsProvider;
 
     // Working with images
     CBImageProvider *imageProvider;

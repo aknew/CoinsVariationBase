@@ -1,20 +1,20 @@
-#include "CBNotesProvider.h"
+#include "CBAttachmentsProvider.h"
 #include <QDir>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QVariantMap>
 
-CBNotesProvider::CBNotesProvider(const QString &basePath, QObject *parent) : QObject(parent)
+CBAttachmentsProvider::CBAttachmentsProvider(const QString &basePath, QObject *parent) : QObject(parent)
 {
-    _basePath = basePath + "Notes/";
+    _basePath = basePath + "attachments/";
 }
 
 
-void CBNotesProvider::selectID(const QString &newID){
+void CBAttachmentsProvider::selectID(const QString &newID){
     _selectedID = new QString(newID);
 
     if (QDir(_basePath+*_selectedID).exists()){
-        QString filename=notesAttributePath();
+        QString filename=attributePath();
          QFile file(filename);
          if (!file.open(QIODevice::ReadOnly)){
              qWarning("Cannot open attribute json");
@@ -34,7 +34,7 @@ void CBNotesProvider::selectID(const QString &newID){
     }
 }
 
-void CBNotesProvider::insertNewNote(const QString &notePath){
+void CBAttachmentsProvider::insertNewNote(const QString &notePath){
     QString dirPath = _basePath+*_selectedID;
     if (!QDir(dirPath).exists()){
         QDir().mkdir(dirPath);
@@ -51,8 +51,8 @@ void CBNotesProvider::insertNewNote(const QString &notePath){
     //TODO: need rewrite notes to property and emit its changing
 }
 
-void CBNotesProvider::saveAttributes(){
-    QFile saveFile(notesAttributePath());
+void CBAttachmentsProvider::saveAttributes(){
+    QFile saveFile(attributePath());
     if (!saveFile.open(QIODevice::WriteOnly)) {
             qWarning("Couldn't open save file.");
     }

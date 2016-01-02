@@ -5,11 +5,11 @@
 
 #include <QJsonArray>
 
-class CBNotesProvider : public QObject
+class CBAttachmentsProvider : public QObject
 {
     Q_OBJECT
 public:
-    explicit CBNotesProvider(const QString &basePath,QObject *parent = 0);
+    explicit CBAttachmentsProvider(const QString &basePath,QObject *parent = 0);
 
     /**
      * @brief selectID
@@ -29,9 +29,9 @@ public:
      */
 
 private:
-    QString _basePath; ///< root path of Notes
+    QString _basePath; ///< root path of Attachments
     QString *_selectedID = NULL;
-    QString notesAttributePath(){
+    QString attributePath(){
         return _basePath+*_selectedID + "/attributes.json";
     }
     QJsonArray attributes;
