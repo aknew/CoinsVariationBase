@@ -28,13 +28,12 @@ Rectangle {
                     text: modelData.about
                 }
             }
-        }
-    }
-    MouseArea{
-        anchors.fill: parent
-        onClicked: {
-            var k = attachmentsListView.model[0];
-            console.log(k.about)
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                     mainWindow.showAttachmentsFullInfo(modelData)
+                }
+            }
         }
     }
 }

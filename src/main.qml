@@ -254,6 +254,22 @@ ApplicationWindow {
         }
     }
 
+    function showAttachmentsFullInfo(attachmentInfo) {
+        var component = Qt.createComponent("CBControls/AttachmentFullInfo.qml")
+        switch (component.status){
+        case Component.Ready:
+            var form = component.createObject()
+            form.attachmentInfo = attachmentInfo
+            tablesStack.push(form)
+            break;
+
+        case Component.Error:
+            console.log(component.errorString());
+            break;
+
+        }
+    }
+
     function addNewImage() {
         var ParentID = ""
         var form

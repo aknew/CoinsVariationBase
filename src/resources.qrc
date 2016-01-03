@@ -18,5 +18,6 @@
         <file alias="no_image.png">../resources/no_image.png</file>
         <file>CBControls/LabeledDateInput.qml</file>
         <file>CBControls/AttachmentsList.qml</file>
+        <file>CBControls/AttachmentFullInfo.qml</file>
     </qresource>
 </RCC>
