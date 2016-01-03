@@ -213,6 +213,9 @@ function createFullForm(node) {
         qmlString += "       }\n";
         qmlString += "  }\n";
     }
+    if (node.usesUUIDs){
+        qmlString += "AttachmentsList{}";
+    }
 
     qmlString += "      }\n" //Column {
     qmlString += "NextLevelList { id:nextlevel; y: contentColumn.childrenRect.height+contentColumn.y }"

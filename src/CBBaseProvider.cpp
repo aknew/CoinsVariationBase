@@ -67,7 +67,7 @@ void CBBaseProvider::startWithPath(const QString &path){
          QJsonObject obj=value1.toObject();
 
          CBNode *node=new CBNode(obj,db, this);
-         if (node->hasImages){
+         if (node->usesUUIDs){
              connect(node,&CBNode::idWasSelected,this,&CBBaseProvider::idWasSelected);
          }
          //bool isSystem=obj.value("isSystem").toBool();

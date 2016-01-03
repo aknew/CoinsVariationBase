@@ -21,6 +21,7 @@ class CBBaseProvider : public QObject
 
     Q_PROPERTY(QString baseTitle MEMBER m_baseTitle FINAL)
     Q_PROPERTY(QObject* images READ getImages())
+    Q_PROPERTY(CBAttachmentsProvider *attachmentsProvider MEMBER attachmentsProvider FINAL)
 
 public:
     explicit CBBaseProvider(QObject *parent = 0):QObject(parent){}

@@ -16,6 +16,7 @@ class CBNode : public QObject
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
     Q_PROPERTY(QObject* listModel READ listModel FINAL)
     Q_PROPERTY(bool hasImages MEMBER hasImages FINAL)
+    Q_PROPERTY(bool usesUUIDs MEMBER usesUUIDs FINAL)
 
 public:
     explicit CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent = 0);
@@ -61,6 +62,13 @@ public:
     */
     Q_INVOKABLE void cloneItem();
 
+    /**
+      \brief UUID generating flag
+      Reason - usually we use UUID as table primary key, but some table
+      no need to do this. Usually this tables are affiliated like references list
+    */
+    bool usesUUIDs = true;
+
 
 signals:
     void idWasSelected(QString id);
@@ -88,12 +96,7 @@ protected:
     }
 
     void applyFilters();
-    /**
-      \brief UUID generating flag
-      Reason - usually we use UUID as table primary key, but some table
-      no need to do this. Usually this tables are affiliated like references list
-    */
-    bool usesUUIDs = true;
+
 };
 
 #endif // CBNODE_H

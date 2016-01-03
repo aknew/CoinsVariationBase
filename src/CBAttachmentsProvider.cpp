@@ -1,6 +1,7 @@
 #include "CBAttachmentsProvider.h"
 #include <QDir>
 #include <QJsonDocument>
+#include <QJsonArray>
 #include <QJsonObject>
 #include <QVariantMap>
 
@@ -27,11 +28,12 @@ void CBAttachmentsProvider::selectID(const QString &newID){
          if (sd.isNull()){
             qWarning("Wrong file attribute json format");
          }
-         attributes = sd.array();
+         attributes = sd.array().toVariantList();
     }
     else{
-        attributes = QJsonArray();
+        attributes = QVariantList();
     }
+    emit attributesChanged();
 }
 
 void CBAttachmentsProvider::insertNewNote(const QString &notePath){
@@ -46,9 +48,9 @@ void CBAttachmentsProvider::insertNewNote(const QString &notePath){
     newNote["description"]=QVariant("");
     newNote["source"]=QVariant("");
     newNote["comment"]=QVariant("");
-    attributes.append(QJsonObject::fromVariantMap(newNote));
+    attributes.append(newNote);
     saveAttributes();
-    //TODO: need rewrite notes to property and emit its changing
+    emit attributesChanged();
 }
 
 void CBAttachmentsProvider::saveAttributes(){
@@ -56,6 +58,6 @@ void CBAttachmentsProvider::saveAttributes(){
     if (!saveFile.open(QIODevice::WriteOnly)) {
             qWarning("Couldn't open save file.");
     }
-    QJsonDocument saveDoc(attributes);
+    QJsonDocument saveDoc(QJsonArray::fromVariantList(attributes));
     saveFile.write(saveDoc.toJson());
 }

@@ -2,12 +2,13 @@
 #define CBNOTESPROVIDER_H
 
 #include <QObject>
-
-#include <QJsonArray>
+#include <QVariantList>
 
 class CBAttachmentsProvider : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QVariantList attributes MEMBER attributes NOTIFY attributesChanged())
+
 public:
     explicit CBAttachmentsProvider(const QString &basePath,QObject *parent = 0);
 
@@ -16,12 +17,12 @@ public:
      * @param newID - id (uuid) of some record in base which was selected
      */
     void selectID(const QString &newID);
-    QJsonArray *notes(){ ///< List of notes for selected id with attributes, json
-        return &attributes;
-    }
 
     void insertNewNote(const QString &notePath); ///< note will copied into record folder, attributes will push into json
     void saveAttributes(); ///<saves json with note's attributes to file into record folder
+
+signals:
+    void attributesChanged();
 
     /* TODO:
      * note deleting
@@ -34,7 +35,7 @@ private:
     QString attributePath(){
         return _basePath+*_selectedID + "/attributes.json";
     }
-    QJsonArray attributes;
+    QVariantList attributes;///< List of attachments for selected id with attributes, json array
 
 };
 

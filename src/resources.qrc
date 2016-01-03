@@ -17,6 +17,6 @@
         <file>CBControls/FilterDialog.qml</file>
         <file alias="no_image.png">../resources/no_image.png</file>
         <file>CBControls/LabeledDateInput.qml</file>
-        <file>CBControls/NotesList.qml</file>
+        <file>CBControls/AttachmentsList.qml</file>
     </qresource>
 </RCC>
