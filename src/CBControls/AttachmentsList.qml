@@ -31,7 +31,19 @@ Rectangle {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                     mainWindow.showAttachmentsFullInfo(modelData)
+                    var component = Qt.createComponent("AttachmentFullInfo.qml")
+                    switch (component.status){
+                    case Component.Ready:
+                        var form = component.createObject()
+                        form.attachmentInfo = modelData
+                        mainWindow.pushToStackView(form)
+                        break;
+
+                    case Component.Error:
+                        console.log(component.errorString());
+                        break;
+
+                    }
                 }
             }
         }
