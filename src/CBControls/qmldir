@@ -8,3 +8,4 @@ BackgroundRect 1.0 BackgroundRect.qml
 FilterDialog 1.0 FilterDialog.qml
 LabeledDateInput 1.0 LabeledDateInput.qml
 AttachmentsList 1.0 AttachmentsList.qml
+AttachmentFullInfo 1.0 AttachmentFullInfo.qml
