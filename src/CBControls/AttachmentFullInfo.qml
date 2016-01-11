@@ -26,6 +26,11 @@ Rectangle {
         listModel.append(val)
     }
 
+    function cnangeInfoField(name, value, index) {
+        var val ={'name':name,'value':value}
+        listModel.set(index, val)
+    }
+
     ListModel {
         id: listModel
     }
@@ -53,6 +58,13 @@ Rectangle {
                 anchors.right: btnRemove.left
                 anchors.leftMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
+                onClicked: {
+                    console.log("index = " + index)
+                    editRowDialog.index = index;
+                    editRowDialog.name = name;
+                    editRowDialog.value = value;
+                    editRowDialog.open();
+                }
             }
             Button{
                 id:btnRemove
@@ -78,6 +90,64 @@ Rectangle {
         modality: Qt.WindowModal
         onAccepted: {
            listModel.remove(index)
+        }
+    }
+
+    Dialog {
+        id: editRowDialog
+        title: qsTr("Select value for field: ")+ container.title;
+        property int index:-1
+        property alias name:edtName.value
+        property alias value:edtValue.value
+
+        contentItem: Rectangle {
+            implicitWidth: 400
+            implicitHeight: 500
+            LabeledTextInput{
+                id:edtName
+                title: qsTr("name")
+                editing: true
+            }
+            LabeledTextInput{
+                id:edtValue
+                title:qsTr("value")
+                editing: true
+                anchors.topMargin: 5
+                anchors.top: edtName.bottom
+            }
+
+            Button{
+                id: btnApply
+                width: (parent.width-15)/2
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                anchors.top:edtValue.bottom
+                anchors.topMargin: 5
+                height:40
+                text: qsTr("Apply")
+                onClicked:{
+                    if (editRowDialog.index === -1){
+                        addInfoField(edtName.value,edtValue.value)
+                    }
+                    else{
+                        cnangeInfoField(edtName.value,edtValue.value, editRowDialog.index)
+                    }
+
+                    editRowDialog.close();
+                }
+            }
+            Button{
+                width: (parent.width-15)/2
+                anchors.left: btnApply.right
+                anchors.leftMargin: 5
+                anchors.top:edtValue.bottom
+                anchors.topMargin: 5
+                height:40
+                text: qsTr("Cancel")
+                onClicked:{
+                    editRowDialog.close();
+                }
+            }
         }
     }
 }
