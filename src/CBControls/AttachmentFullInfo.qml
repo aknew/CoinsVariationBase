@@ -39,7 +39,7 @@ Rectangle {
         id: attachmentsInfoListView
         clip: true
         width: parent.width
-        height: parent.height - 100
+        height: editing?parent.height-bottomBar.height:parent.height
         model: listModel
         delegate: Rectangle{
             width: parent.width
@@ -59,7 +59,6 @@ Rectangle {
                 anchors.leftMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked: {
-                    console.log("index = " + index)
                     editRowDialog.index = index;
                     editRowDialog.name = name;
                     editRowDialog.value = value;
@@ -81,6 +80,31 @@ Rectangle {
         }
     }
 
+    Rectangle{
+        id: bottomBar
+        visible:editing
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 100
+        Button{
+            id: btnAddField
+            iconSource: "/icons/add.png"
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            anchors.top:parent.top
+            anchors.topMargin: 5
+            height:parent.height - 10
+            width: parent.height - 10
+            onClicked:{
+                editRowDialog.index = -1;
+                editRowDialog.name = "";
+                editRowDialog.value = "";
+                editRowDialog.open();
+            }
+        }
+    }
+
     MessageDialog {
         id: deleteRowDialog
         text: qsTr("Do you realy want to delete this field?")
@@ -95,7 +119,7 @@ Rectangle {
 
     Dialog {
         id: editRowDialog
-        title: qsTr("Select value for field: ")+ container.title;
+        title: qsTr("Select value for field: ");
         property int index:-1
         property alias name:edtName.value
         property alias value:edtValue.value
