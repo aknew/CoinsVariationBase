@@ -31,6 +31,15 @@ Rectangle {
         listModel.set(index, val)
     }
 
+    function collectData() {
+        var map = {};
+        for (var i =0; i<listModel.count; ++i){
+            var element = listModel.get(i);
+            map[element.name]=element.value;
+        }
+        CBApi.baseProvider.attachmentsProvider.updateAttributes(map);
+    }
+
     ListModel {
         id: listModel
     }

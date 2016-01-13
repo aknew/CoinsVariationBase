@@ -61,3 +61,23 @@ void CBAttachmentsProvider::saveAttributes(){
     QJsonDocument saveDoc(QJsonArray::fromVariantList(attributes));
     saveFile.write(saveDoc.toJson());
 }
+
+void CBAttachmentsProvider::updateAttributes(QVariantMap newAttributes){
+    QVariant &fileName = newAttributes["file"];
+    int index = -1;
+    for (int i = 0; i<attributes.size(); ++i){
+        QVariantMap map = attributes.at(i).toMap();
+        if (map["file"] == fileName){
+            index = i;
+            break;
+        }
+    }
+    if (index == -1){
+        attributes.append(newAttributes);
+    }
+    else{
+        attributes.replace(index, newAttributes);
+    }
+    saveAttributes();
+    emit attributesChanged();
+}

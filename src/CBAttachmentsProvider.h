@@ -19,7 +19,7 @@ public:
     void selectID(const QString &newID);
 
     void insertNewNote(const QString &notePath); ///< note will copied into record folder, attributes will push into json
-    void saveAttributes(); ///<saves json with note's attributes to file into record folder
+    Q_INVOKABLE void updateAttributes(QVariantMap newAttributes); ///< note field list was changed ingui and it chould be saved
 
 signals:
     void attributesChanged();
@@ -36,6 +36,7 @@ private:
         return _basePath+*_selectedID + "/attributes.json";
     }
     QVariantList attributes;///< List of attachments for selected id with attributes, json array
+    void saveAttributes(); ///<saves json with note's attributes to file into record folder
 
 };
 
