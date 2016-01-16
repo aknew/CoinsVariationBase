@@ -18,8 +18,8 @@ public:
      */
     void selectID(const QString &newID);
 
-    void insertNewNote(const QString &notePath); ///< note will copied into record folder, attributes will push into json
-    Q_INVOKABLE void updateAttributes(QVariantMap newAttributes); ///< note field list was changed ingui and it chould be saved
+    Q_INVOKABLE QVariantMap insertNewAttach(QString notePath); ///< new attach will copied into record folder, attributes will push into json
+    Q_INVOKABLE void updateAttributes(QVariantMap newAttributes); ///< attribute field list was changed in gui and it chould be saved
 
 signals:
     void attributesChanged();

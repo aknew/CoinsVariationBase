@@ -4,6 +4,9 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QVariantMap>
+#include <QDebug>
+
+#include "CBUtils.h"
 
 CBAttachmentsProvider::CBAttachmentsProvider(const QString &basePath, QObject *parent) : QObject(parent)
 {
@@ -36,21 +39,26 @@ void CBAttachmentsProvider::selectID(const QString &newID){
     emit attributesChanged();
 }
 
-void CBAttachmentsProvider::insertNewNote(const QString &notePath){
+QVariantMap CBAttachmentsProvider::insertNewAttach(QString notePath){
+    CBUtils::FromQmlFilePath(&notePath);
+    // TODO: add checking that file was realy copied
     QString dirPath = _basePath+*_selectedID;
     if (!QDir(dirPath).exists()){
         QDir().mkdir(dirPath);
     }
     QString fileName = QFileInfo(notePath).fileName();
-    QFile::copy(notePath,dirPath+fileName);
+    QFile file(notePath);
+    if (!file.copy(dirPath+"/"+fileName)){
+        qDebug() << file.errorString();
+    }
+
     QVariantMap newNote;
     newNote["file"]=QVariant(fileName);
-    newNote["description"]=QVariant("");
-    newNote["source"]=QVariant("");
-    newNote["comment"]=QVariant("");
+    newNote["about"]=QVariant(fileName);
     attributes.append(newNote);
     saveAttributes();
     emit attributesChanged();
+    return newNote;
 }
 
 void CBAttachmentsProvider::saveAttributes(){
