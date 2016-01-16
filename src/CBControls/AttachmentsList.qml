@@ -47,7 +47,7 @@ Rectangle {
                     height: 100
                 }
                 Text {
-                    text: modelData.about
+                    text: modelData.about === undefined ? modelData.file : modelData.about
                 }
             }
             MouseArea{

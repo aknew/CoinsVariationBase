@@ -54,7 +54,6 @@ QVariantMap CBAttachmentsProvider::insertNewAttach(QString notePath){
 
     QVariantMap newNote;
     newNote["file"]=QVariant(fileName);
-    newNote["about"]=QVariant(fileName);
     attributes.append(newNote);
     saveAttributes();
     emit attributesChanged();
