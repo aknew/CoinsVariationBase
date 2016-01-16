@@ -4,10 +4,14 @@
 #include <QObject>
 #include <QVariantList>
 
+class CBImageProvider;
+
 class CBAttachmentsProvider : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList attributes MEMBER attributes NOTIFY attributesChanged())
+
+    friend class CBImageProvider; // For using currentPath
 
 public:
     explicit CBAttachmentsProvider(const QString &basePath,QObject *parent = 0);
@@ -32,11 +36,14 @@ signals:
 private:
     QString _basePath; ///< root path of Attachments
     QString *_selectedID = NULL;
-    QString attributePath(){
-        return _basePath+*_selectedID + "/attributes.json";
+    inline QString attributePath(){
+        return currentPath()+ "attributes.json";
     }
     QVariantList attributes;///< List of attachments for selected id with attributes, json array
     void saveAttributes(); ///<saves json with note's attributes to file into record folder
+    inline QString currentPath(){
+        return _basePath+*_selectedID + "/";
+    }
 
 };
 

@@ -12,7 +12,7 @@ QImage CBImageProvider::requestImage(const QString& id, QSize* size, const QSize
 {
     Q_UNUSED(size)
     Q_UNUSED(requestedSize)
-    return QImage(imageFolder+id);
+    return QImage(attachmentsProvider->currentPath()+id);
 }
 
 QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSize& requestedSize)
@@ -20,9 +20,7 @@ QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSi
     Q_UNUSED(size)
     Q_UNUSED(requestedSize)
 
-    //FIXME: need conver to jpg or use not only it
-    qDebug()<<imageFolder+id+".jpg";
-    QPixmap result= QPixmap(imageFolder+id+".jpg");
+    QPixmap result= QPixmap(attachmentsProvider->currentPath()+id);
 
     if (result.isNull()){
         result=QPixmap("://no_image.png");
@@ -35,7 +33,7 @@ QString CBImageProvider::saveImage(QByteArray attach){
 
     QString md5=QCryptographicHash::hash(attach,QCryptographicHash::Md5).toHex();
 
-    QString str=imageFolder + md5 + ".jpg";
+    QString str=attachmentsProvider->currentPath() + md5 + ".jpg";
     QFile file(str);
 
     if (!file.open(QIODevice::WriteOnly)) return "NULL";

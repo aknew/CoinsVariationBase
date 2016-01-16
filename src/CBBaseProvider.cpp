@@ -54,12 +54,12 @@ void CBBaseProvider::startWithPath(const QString &path){
      // create and init imageProvider
 
      imageProvider= new CBImageProvider(QQuickImageProvider::Pixmap);
-     imageProvider->imageFolder = rootPath+"images/";
      m_imageModel = new CBSqlRelationalTableModel(this,db);
      m_imageModel->setTable("Images");
      m_imageModel->applyRoles();
 
      attachmentsProvider = new CBAttachmentsProvider(rootPath);
+     imageProvider->attachmentsProvider =attachmentsProvider;
 
      QJsonArray nodes = baseStruct.value("nodes").toArray();
 

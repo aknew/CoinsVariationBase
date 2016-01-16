@@ -39,12 +39,16 @@ Rectangle {
             BackgroundRect {
             }
             Row {
+                anchors.topMargin: 5
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.leftMargin: 5
                 anchors.fill: parent
-                //Image{ // In future there will be icon or image
-                Rectangle {
-                    color: "red"
-                    width: 100
-                    height: 100
+                Image{
+                    width: 90
+                    height: 90
+                    source: "image://imageProvider/" + modelData.file
+                    fillMode: Image.PreserveAspectFit
                 }
                 Text {
                     text: modelData.about === undefined ? modelData.file : modelData.about

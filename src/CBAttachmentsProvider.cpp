@@ -17,7 +17,7 @@ CBAttachmentsProvider::CBAttachmentsProvider(const QString &basePath, QObject *p
 void CBAttachmentsProvider::selectID(const QString &newID){
     _selectedID = new QString(newID);
 
-    if (QDir(_basePath+*_selectedID).exists()){
+    if (QDir(currentPath()).exists()){
         QString filename=attributePath();
          QFile file(filename);
          if (!file.open(QIODevice::ReadOnly)){
@@ -42,7 +42,7 @@ void CBAttachmentsProvider::selectID(const QString &newID){
 QVariantMap CBAttachmentsProvider::insertNewAttach(QString notePath){
     CBUtils::FromQmlFilePath(&notePath);
     // TODO: add checking that file was realy copied
-    QString dirPath = _basePath+*_selectedID;
+    QString dirPath = currentPath();
     if (!QDir(dirPath).exists()){
         QDir().mkdir(dirPath);
     }
