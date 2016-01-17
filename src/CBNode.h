@@ -15,7 +15,6 @@ class CBNode : public QObject
     Q_PROPERTY(QStringList nextLevelList READ getNextLevelList  FINAL)
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
     Q_PROPERTY(QObject* listModel READ listModel FINAL)
-    Q_PROPERTY(bool hasImages MEMBER hasImages FINAL)
     Q_PROPERTY(bool usesUUIDs MEMBER usesUUIDs FINAL)
 
 public:
@@ -46,8 +45,6 @@ public:
        list.append("not equal");
        return list;
     }
-
-    bool hasImages;
 
     Q_INVOKABLE QStringList listFromQuery(QString query);
 

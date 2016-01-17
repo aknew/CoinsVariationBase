@@ -51,14 +51,9 @@ void CBBaseProvider::startWithPath(const QString &path){
 
      startTable = baseStruct.value("startTable").toString();
 
-     // create and init imageProvider
+     attachmentsProvider = new CBAttachmentsProvider(rootPath);
 
      imageProvider= new CBImageProvider(QQuickImageProvider::Pixmap);
-     m_imageModel = new CBSqlRelationalTableModel(this,db);
-     m_imageModel->setTable("Images");
-     m_imageModel->applyRoles();
-
-     attachmentsProvider = new CBAttachmentsProvider(rootPath);
      imageProvider->attachmentsProvider =attachmentsProvider;
 
      QJsonArray nodes = baseStruct.value("nodes").toArray();
@@ -70,12 +65,6 @@ void CBBaseProvider::startWithPath(const QString &path){
          if (node->usesUUIDs){
              connect(node,&CBNode::idWasSelected,this,&CBBaseProvider::idWasSelected);
          }
-         //bool isSystem=obj.value("isSystem").toBool();
-
-//         if (isSystem){
-//             systemTables.append(node->tableName);
-//         }
-
          nodeMap.insert(node->tableName,node);
      }
 
@@ -111,87 +100,8 @@ void CBBaseProvider::startWithPath(const QString &path){
 
  void CBBaseProvider::idWasSelected(const QString &id){
      // FIXME: need add stack of previous selected ids whenwe go back from some node
-     QString filter = QString("\"ParentID\"=\"%1\"").arg(id);
-     m_imageModel->setFilter(filter);
-     m_imageModel->select();
      attachmentsProvider->selectID(id);
  }
-
- void CBBaseProvider::saveImageInfo(QVariantMap imageInfo){
-         QSqlQuery query(db);
-
-         // FIXME: to const
-         if (imageInfo["idToDelete"].toString()!="NothingToDelete"){
-             query.prepare("DELETE FROM Images WHERE \"id\"=:id");
-             query.bindValue(":id",imageInfo["idToDelete"]);
-             if (!query.exec()){
-                 qDebug()<<query.lastError();
-             }
-
-         }
-
-         query.prepare("INSERT OR REPLACE INTO Images(\"id\",\"comment\",\"source\",\"ParentID\") VALUES(:id,:comment,:source,:ParentID)");
-         query.bindValue(":id",imageInfo["id"]);
-         query.bindValue(":ParentID",imageInfo["ParentID"]);
-         query.bindValue(":comment",imageInfo["comment"]);
-         query.bindValue(":source",imageInfo["source"]);
-         if (!query.exec()){
-             qDebug()<<query.lastError();
-         }
-         m_imageModel->select();
-}
-
-void CBBaseProvider::saveImage(QString imageId, QString savingPath){
-
-
-    QSize size=QSize();
-    QImage img = imageProvider->requestImage(imageId,&size,size);
-
-    // TODO: need check that savingPath is file and it has correct extantion. Maybe also need sheck that file does not exist
-    CBUtils::FromQmlFilePath(&savingPath);
-
-    img.save(savingPath);
-
-}
-
-QString CBBaseProvider::loadImage(QString imagePath){
-
-    CBUtils::FromQmlFilePath(&imagePath);
-    QFile file(imagePath);
-
-    if (file.open(QIODevice::ReadOnly)){
-
-        QByteArray byteArray = file.readAll();
-
-        return imageProvider->saveImage(byteArray);
-    }
-    // FIXME: to const
-    return "*error*";
-}
-
-void CBBaseProvider::copyImageToClipboard(QString imageId){
-    QSize size=QSize();
-    QImage img = imageProvider->requestImage(imageId,&size,size);
-    QClipboard *clipboard = QApplication::clipboard();
-    clipboard->setImage(img);
-}
-
-QString CBBaseProvider::importImageFromClipboard(){
-    QClipboard *clipboard = QApplication::clipboard();
-    QPixmap pix = clipboard->pixmap();
-    if (!pix.isNull()){
-
-        QByteArray byteArray;
-        QBuffer buffer( &byteArray );
-        buffer.open( QIODevice::WriteOnly );
-        pix.save( &buffer, "JPG" );
-
-        return imageProvider->saveImage(byteArray);
-    }
-    // FIXME: to const
-    return "*error*";
-}
-
 
  CBBaseProvider::~CBBaseProvider(){
      db.close();

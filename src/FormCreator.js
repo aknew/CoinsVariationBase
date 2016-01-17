@@ -180,39 +180,6 @@ function createFullForm(node) {
         onNodeChangedString +=field_id + ".value =  node.selectedItem." + field + ";\n";
     }
 
-    if (node.hasImages){
-        qmlString += "Row{"
-        qmlString +="   Label{text: qsTr(\"Images\"); font.pixelSize: 16; font.bold: true;}\n"
-        qmlString += "  Button{iconSource:  \"/icons/add.png\"; onClicked: mainWindow.addNewImage()}\n"
-        qmlString += "}\n"
-
-
-        qmlString+= "   GridView {\n" +
-                    "       id: grid;\n" +
-                    "       height: 275;\n" +
-                    "       width: parent.width;\n" +
-                    "       cellWidth: 250; cellHeight: 250;\n" +
-                    "       delegate: imageDelegate;\n" +
-                    "       model:CBApi.baseProvider.images;\n" +
-                    "       clip: true;\n" +
-                    " }\n";
-
-
-        qmlString += "  Component {\n       id: imageDelegate;\n";
-
-        qmlString += "      Item {\n"+
-                     "          width: grid.cellWidth; height: grid.cellHeight;\n";
-        qmlString += "          Column{anchors.fill: parent;\n"
-        qmlString += "          Text{text: comment;  font.pixelSize: 16; anchors.horizontalCenter: parent.horizontalCenter} \n"
-        qmlString += "          Image{ width: parent.width \n" +
-                     "          anchors.horizontalCenter: parent.horizontalCenter;\n"+
-                     "          source: \"image://imageProvider/\"+id\n" +
-                     "          fillMode: Image.PreserveAspectFit}\n";
-        qmlString += "       }\n";
-        qmlString += "          MouseArea {anchors.fill: parent; onClicked: { mainWindow.showFullImageInfo(index);} }\n";
-        qmlString += "       }\n";
-        qmlString += "  }\n";
-    }
     if (node.usesUUIDs){
         qmlString += "AttachmentsList{}";
     }

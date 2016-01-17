@@ -20,7 +20,6 @@ class CBBaseProvider : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString baseTitle MEMBER m_baseTitle FINAL)
-    Q_PROPERTY(QObject* images READ getImages())
     Q_PROPERTY(CBAttachmentsProvider *attachmentsProvider MEMBER attachmentsProvider FINAL)
 
 public:
@@ -39,22 +38,7 @@ public:
 
 
     CBAttachmentsProvider *attachmentsProvider;
-
-    // Working with images
     CBImageProvider *imageProvider;
-    QObject *getImages(){
-        return m_imageModel;
-    }
-    Q_INVOKABLE QVariantMap imageFullInfo(int index){
-        m_imageModel->selectedRow = index;
-        return m_imageModel->selectedItem();
-    }
-
-    Q_INVOKABLE void saveImageInfo(QVariantMap imageInfo);
-    Q_INVOKABLE void saveImage(QString imageId, QString savingPath);
-    Q_INVOKABLE QString loadImage(QString imagePath);
-    Q_INVOKABLE void copyImageToClipboard(QString imageId);
-    Q_INVOKABLE QString importImageFromClipboard();
 
     //! path to about page for qml
     Q_INVOKABLE QString getAbout(){
@@ -69,9 +53,7 @@ private:
     QSqlDatabase db;
     QMap<QString,CBNode*> nodeMap;//< Map which contains all node and uses for gwtting it by name
 
-
-    CBSqlRelationalTableModel *m_imageModel; //< model for reading images list from base
-    void idWasSelected(const QString &id); //<when we set some record as selected, we need find Images and Notes for it
+    void idWasSelected(const QString &id); //<when we set some record as selected, we need find attachments for it
 
 signals:
     void readyToWork();

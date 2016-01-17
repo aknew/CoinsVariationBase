@@ -83,16 +83,6 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
     else {
         this->fullFormFields =this->model->fieldList;
     }
-
-    QJsonValue json_hasImages = obj.value("hasImages");
-
-    if (json_hasImages.isBool()){
-        hasImages = json_hasImages.toBool();
-    }
-    else{
-        hasImages = false;
-    }
-
 }
 
 QObject *CBNode::listModel(){

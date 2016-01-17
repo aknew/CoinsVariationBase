@@ -13,7 +13,6 @@
         <file alias="icons/back.png">../resources/icons/back.png</file>
         <file alias="icons/edit.png">../resources/icons/edit.png</file>
         <file alias="icons/delete.png">../resources/icons/delete.png</file>
-        <file>CBControls/FullImageInfo.qml</file>
         <file>CBControls/FilterDialog.qml</file>
         <file alias="no_image.png">../resources/no_image.png</file>
         <file>CBControls/LabeledDateInput.qml</file>
