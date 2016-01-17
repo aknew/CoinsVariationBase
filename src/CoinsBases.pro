@@ -16,7 +16,6 @@ DISTFILES += \
     main.qml \
     CBControls/qmldir \
     CBControls/BackgroundRect.qml \
-    CBControls/FullImageInfo.qml \
     CBControls/FilterDialog.qml \
     CBControls/LabeledComboBoxInput.qml \
     CBControls/LabeledTextInput.qml \
