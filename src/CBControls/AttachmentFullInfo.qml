@@ -116,6 +116,18 @@ Rectangle {
                 id: attachImage
                 width: parent.width
                 fillMode: Image.PreserveAspectFit
+                MouseArea{
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    onClicked: {
+                        if (mouse.button == Qt.RightButton){
+                            openMenu.popup()
+                        }
+                        else {
+                            CBApi.baseProvider.attachmentsProvider.openAttach(attachmentInfo.file)
+                        }
+                    }
+                }
             }
         }
     }
@@ -211,6 +223,22 @@ Rectangle {
                 onClicked: {
                     editRowDialog.close()
                 }
+            }
+        }
+    }
+
+    Menu{
+        id: openMenu
+        MenuItem{
+            text: qsTr("Open file")
+            onTriggered: {
+                CBApi.baseProvider.attachmentsProvider.openAttach(attachmentInfo.file)
+            }
+        }
+        MenuItem{
+            text: qsTr("Open contains folder")
+            onTriggered: {
+                CBApi.baseProvider.attachmentsProvider.openFolder()
             }
         }
     }

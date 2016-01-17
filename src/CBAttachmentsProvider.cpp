@@ -5,6 +5,8 @@
 #include <QJsonObject>
 #include <QVariantMap>
 #include <QDebug>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "CBUtils.h"
 
@@ -87,4 +89,13 @@ void CBAttachmentsProvider::updateAttributes(QVariantMap newAttributes){
     }
     saveAttributes();
     emit attributesChanged();
+}
+
+void CBAttachmentsProvider::openAttach(const QString &attachID){
+    QDesktopServices::openUrl(QUrl("file:///"+currentPath()+attachID));
+}
+
+void CBAttachmentsProvider::openFolder(){
+    QDesktopServices::openUrl(QUrl("file:///"+_basePath+*_selectedID, QUrl::TolerantMode));
+    //QDesktopServices::openUrl(QUrl("file:///c:/Qt"));
 }
