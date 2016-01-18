@@ -27,6 +27,10 @@ Rectangle {
             }
             addInfoField(name, attachmentInfo[name])
         }
+        updateLitsViewSize()
+    }
+
+    function updateLitsViewSize(){
         attachmentsInfoListView.height = Math.min(300,listModel.count*50)
     }
 
@@ -36,6 +40,7 @@ Rectangle {
             value: value
         }
         listModel.append(val)
+        updateLitsViewSize()
     }
 
     function cnangeInfoField(name, value, index) {
@@ -44,6 +49,7 @@ Rectangle {
             value: value
         }
         listModel.set(index, val)
+        updateLitsViewSize()
     }
 
     function collectData() {
@@ -66,66 +72,65 @@ Rectangle {
         clip: true
         width: parent.width
         height: editing ? parent.height - bottomBar.height : parent.height
-        Column {
+        contentHeight: attachImage.height+attachImage.y
+        ListView {
             width: parent.width
-            ListView {
+            id: attachmentsInfoListView
+            clip: true
+            model: listModel
+            delegate: Rectangle {
                 width: parent.width
-                id: attachmentsInfoListView
-                clip: true
-                model: listModel
-                delegate: Rectangle {
-                    width: parent.width
-                    height: Math.max(rowText.height, btnEdit.height)
-                    Text {
-                        id: rowText
-                        text: "<b>" + name + ":</b> " + value
-                        anchors.left: parent.left
-                        anchors.right: editing ? btnEdit.left : parent.right
-                        wrapMode: Text.Wrap
+                height: Math.max(rowText.height, btnEdit.height)
+                Text {
+                    id: rowText
+                    text: "<b>" + name + ":</b> " + value
+                    anchors.left: parent.left
+                    anchors.right: editing ? btnEdit.left : parent.right
+                    wrapMode: Text.Wrap
+                }
+                Button {
+                    id: btnEdit
+                    iconSource: "/icons/edit.png"
+                    visible: editing
+                    anchors.right: btnRemove.left
+                    anchors.leftMargin: 5
+                    anchors.verticalCenter: parent.verticalCenter
+                    onClicked: {
+                        editRowDialog.index = index
+                        editRowDialog.name = name
+                        editRowDialog.value = value
+                        editRowDialog.open()
                     }
-                    Button {
-                        id: btnEdit
-                        iconSource: "/icons/edit.png"
-                        visible: editing
-                        anchors.right: btnRemove.left
-                        anchors.leftMargin: 5
-                        anchors.verticalCenter: parent.verticalCenter
-                        onClicked: {
-                            editRowDialog.index = index
-                            editRowDialog.name = name
-                            editRowDialog.value = value
-                            editRowDialog.open()
-                        }
-                    }
-                    Button {
-                        id: btnRemove
-                        iconSource: "/icons/delete.png"
-                        visible: editing
-                        anchors.right: parent.right
-                        anchors.leftMargin: 5
-                        anchors.verticalCenter: parent.verticalCenter
-                        onClicked: {
-                            deleteRowDialog.index = index
-                            deleteRowDialog.open()
-                        }
+                }
+                Button {
+                    id: btnRemove
+                    iconSource: "/icons/delete.png"
+                    visible: editing
+                    anchors.right: parent.right
+                    anchors.leftMargin: 5
+                    anchors.verticalCenter: parent.verticalCenter
+                    onClicked: {
+                        deleteRowDialog.index = index
+                        deleteRowDialog.open()
                     }
                 }
             }
+        }
 
-            Image {
-                id: attachImage
-                width: parent.width
-                fillMode: Image.PreserveAspectFit
-                MouseArea{
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    onClicked: {
-                        if (mouse.button == Qt.RightButton){
-                            openMenu.popup()
-                        }
-                        else {
-                            CBApi.baseProvider.attachmentsProvider.openAttach(attachmentInfo.file)
-                        }
+        Image {
+            id: attachImage
+            anchors.top: attachmentsInfoListView.bottom
+            width: parent.width
+            fillMode: Image.PreserveAspectFit
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onClicked: {
+                    if (mouse.button == Qt.RightButton) {
+                        openMenu.popup()
+                    } else {
+                        CBApi.baseProvider.attachmentsProvider.openAttach(
+                                    attachmentInfo.file)
                     }
                 }
             }
@@ -166,6 +171,7 @@ Rectangle {
         modality: Qt.WindowModal
         onAccepted: {
             listModel.remove(index)
+            updateLitsViewSize()
         }
     }
 
@@ -227,15 +233,16 @@ Rectangle {
         }
     }
 
-    Menu{
+    Menu {
         id: openMenu
-        MenuItem{
+        MenuItem {
             text: qsTr("Open file")
             onTriggered: {
-                CBApi.baseProvider.attachmentsProvider.openAttach(attachmentInfo.file)
+                CBApi.baseProvider.attachmentsProvider.openAttach(
+                            attachmentInfo.file)
             }
         }
-        MenuItem{
+        MenuItem {
             text: qsTr("Open contains folder")
             onTriggered: {
                 CBApi.baseProvider.attachmentsProvider.openFolder()
