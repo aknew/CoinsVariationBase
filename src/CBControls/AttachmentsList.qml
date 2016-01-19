@@ -7,21 +7,21 @@ import CB.api 1.0
 Rectangle {
     width: parent.width
     height: 500
-    Rectangle{
+    Rectangle {
         id: attachBar
         width: parent.width
         height: 100
-        anchors.top:parent.top
-        Button{
+        anchors.top: parent.top
+        Button {
             id: btnAddField
             iconSource: "/icons/add.png"
             anchors.left: parent.left
             anchors.leftMargin: 5
-            anchors.top:parent.top
+            anchors.top: parent.top
             anchors.topMargin: 5
-            height:parent.height - 10
+            height: parent.height - 10
             width: parent.height - 10
-            onClicked:{
+            onClicked: {
                 attachDialog.open()
             }
         }
@@ -38,39 +38,52 @@ Rectangle {
             height: 100
             BackgroundRect {
             }
-            Row {
+
+            Image {
+                id: imgAttach
                 anchors.topMargin: 5
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.leftMargin: 5
-                anchors.fill: parent
-                Image{
-                    width: 90
-                    height: 90
-                    source: "image://imageProvider/" + modelData.file
-                    fillMode: Image.PreserveAspectFit
-                }
-                Text {
-                    text: modelData.about === undefined ? modelData.file : modelData.about
-                }
+                width: 90
+                height: 90
+                source: "image://imageProvider/" + modelData.file
+                fillMode: Image.PreserveAspectFit
             }
-            MouseArea{
+            Text {
+                anchors.topMargin: 5
+                anchors.top: parent.top
+                anchors.left: imgAttach.right
+                anchors.leftMargin: 5
+                anchors.right: editing? btnRemove.left : parent.right
+                text: modelData.about === undefined ? modelData.file : modelData.about
+            }
+            MouseArea {
                 anchors.fill: parent
                 onClicked: {
                     var component = Qt.createComponent("AttachmentFullInfo.qml")
-                    switch (component.status){
+                    switch (component.status) {
                     case Component.Ready:
                         var form = component.createObject()
                         form.attachmentInfo = modelData
                         mainWindow.pushToStackView(form)
-                        break;
-
+                        break
                     case Component.Error:
-                        console.log(component.errorString());
-                        break;
-
+                        console.log(component.errorString())
+                        break
                     }
                 }
+            }
+            Button {
+                // TODO: add confirm dialog
+                id: btnRemove
+                iconSource: "/icons/delete.png"
+                visible: editing
+                anchors.right: parent.right
+                anchors.leftMargin: 5
+                anchors.verticalCenter: parent.verticalCenter
+                onClicked: CBApi.baseProvider.attachmentsProvider.deleteAttach(
+                               modelData.file)
             }
         }
     }
@@ -81,19 +94,18 @@ Rectangle {
         title: qsTr("Choose a file to load as attach")
         selectMultiple: false
         onAccepted: {
-            var modelData = CBApi.baseProvider.attachmentsProvider.insertNewAttach(fileUrls[0])
+            var modelData = CBApi.baseProvider.attachmentsProvider.insertNewAttach(
+                        fileUrls[0])
             var component = Qt.createComponent("AttachmentFullInfo.qml")
-            switch (component.status){
+            switch (component.status) {
             case Component.Ready:
                 var form = component.createObject()
                 form.attachmentInfo = modelData
                 mainWindow.pushToStackView(form)
-                break;
-
+                break
             case Component.Error:
-                console.log(component.errorString());
-                break;
-
+                console.log(component.errorString())
+                break
             }
         }
     }

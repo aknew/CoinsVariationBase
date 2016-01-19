@@ -43,7 +43,7 @@ void CBAttachmentsProvider::selectID(const QString &newID){
 
 QVariantMap CBAttachmentsProvider::insertNewAttach(QString notePath){
     CBUtils::FromQmlFilePath(&notePath);
-    // TODO: add checking that file was realy copied
+    // TODO: add checking that file was realy copied and that name is unique
     QString dirPath = currentPath();
     if (!QDir(dirPath).exists()){
         QDir().mkdir(dirPath);
@@ -60,6 +60,26 @@ QVariantMap CBAttachmentsProvider::insertNewAttach(QString notePath){
     saveAttributes();
     emit attributesChanged();
     return newNote;
+}
+
+void CBAttachmentsProvider::deleteAttach(const QString& noteID){
+    int index = -1;
+    for (int i = 0; i<attributes.size(); ++i){
+        QVariantMap map = attributes.at(i).toMap();
+        if (map["file"] == noteID){
+            index = i;
+            break;
+        }
+    }
+    if (index==-1){
+        qWarning()<<"Can't find attributes for "<< noteID;
+    }
+    else{
+        QFile::remove(currentPath()+"/"+noteID);
+        attributes.removeAt(index);
+        saveAttributes();
+        emit attributesChanged();
+    }
 }
 
 void CBAttachmentsProvider::saveAttributes(){
