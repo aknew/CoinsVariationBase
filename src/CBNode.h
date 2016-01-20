@@ -16,6 +16,8 @@ class CBNode : public QObject
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
     Q_PROPERTY(QObject* listModel READ listModel FINAL)
     Q_PROPERTY(bool usesUUIDs MEMBER usesUUIDs FINAL)
+    Q_PROPERTY(bool useFullForm MEMBER useFullForm FINAL)
+    Q_PROPERTY(bool useListForm MEMBER useListForm FINAL)
 
 public:
     explicit CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent = 0);
@@ -65,6 +67,9 @@ public:
       no need to do this. Usually this tables are affiliated like references list
     */
     bool usesUUIDs = true;
+
+    bool useFullForm = false;
+    bool useListForm = false;
 
 
 signals:

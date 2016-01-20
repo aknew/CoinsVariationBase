@@ -30,6 +30,16 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
         usesUUIDs = json_usesUUIDs.toBool();
     }
 
+    QJsonValue json_useFullForm = obj.value("useFullForm");
+    if (!json_useFullForm.isUndefined()){
+            useFullForm = json_useFullForm.toBool();
+    }
+
+    QJsonValue json_useListForm = obj.value("useListForm");
+    if (!json_useListForm.isUndefined()){
+            useListForm = json_useListForm.toBool();
+    }
+
     QJsonValue json_listModel = obj.value("listModel");
 
     if (!json_listModel.isUndefined()){

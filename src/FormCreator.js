@@ -70,6 +70,19 @@ function createListForm(node) {
 
 function createTable(node){
 
+    if (node.useListForm){
+        var component = Qt.createComponent("file:///" + CBApi.baseProvider.listFormPath(node))
+        switch (component.status) {
+        case Component.Ready:
+            var form = component.createObject()
+            form.node = node;
+            return form;
+        case Component.Error:
+            console.log(component.errorString())
+            return;
+        }
+    }
+
     var qmlString
 
     qmlString = "import QtQuick 2.0;\n" +

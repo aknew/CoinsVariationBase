@@ -88,13 +88,19 @@ void CBBaseProvider::startWithPath(const QString &path){
 }
 
  void CBBaseProvider::saveListForm(const QString& qmlString, CBNode *node){
-     QString filePath=rootPath+"forms/"+node->listFormName();
-     CBUtils::SaveStringToFile(qmlString,filePath);
+     CBUtils::SaveStringToFile(qmlString,listFormPath(node));
  }
 
  void CBBaseProvider::saveFullForm(const QString& qmlString, CBNode *node){
-     QString filePath=rootPath+"forms/"+node->fullFormName();
-     CBUtils::SaveStringToFile(qmlString,filePath);
+     CBUtils::SaveStringToFile(qmlString,fullFormPath(node));
+ }
+
+ QString CBBaseProvider::listFormPath(CBNode *node){
+     return rootPath+"forms/"+node->listFormName();
+ }
+
+ QString CBBaseProvider::fullFormPath(CBNode *node){
+     return rootPath+"forms/"+node->fullFormName();
  }
 
 
