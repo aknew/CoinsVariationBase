@@ -27,12 +27,8 @@ Rectangle {
             }
             addInfoField(name, attachmentInfo[name])
         }
-        updateLitsViewSize()
     }
 
-    function updateLitsViewSize(){
-        attachmentsInfoListView.height = Math.min(300,listModel.count*50)
-    }
 
     function addInfoField(name, value) {
         var val = {
@@ -40,7 +36,6 @@ Rectangle {
             value: value
         }
         listModel.append(val)
-        updateLitsViewSize()
     }
 
     function cnangeInfoField(name, value, index) {
@@ -49,7 +44,6 @@ Rectangle {
             value: value
         }
         listModel.set(index, val)
-        updateLitsViewSize()
     }
 
     function collectData() {
@@ -75,6 +69,7 @@ Rectangle {
         contentHeight: attachImage.height+attachImage.y
         ListView {
             width: parent.width
+            height: Math.min(contentHeight,300)
             id: attachmentsInfoListView
             clip: true
             model: listModel
@@ -171,7 +166,6 @@ Rectangle {
         modality: Qt.WindowModal
         onAccepted: {
             listModel.remove(index)
-            updateLitsViewSize()
         }
     }
 

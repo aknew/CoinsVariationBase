@@ -6,7 +6,7 @@ import CB.api 1.0
 
 Rectangle {
     width: parent.width
-    height: 500
+    height: attachmentsListView.height+attachBar.height
     Rectangle {
         id: attachBar
         width: parent.width
@@ -31,7 +31,7 @@ Rectangle {
         clip: true
         width: parent.width
         anchors.top: attachBar.bottom
-        height: 400
+        height: Math.min(contentHeight,300)
         model: CBApi.baseProvider.attachmentsProvider.attributes
         delegate: Rectangle {
             width: parent.width
