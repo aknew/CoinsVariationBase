@@ -82,9 +82,24 @@ Rectangle {
                 anchors.right: parent.right
                 anchors.leftMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
-                onClicked: CBApi.baseProvider.attachmentsProvider.deleteAttach(
-                               modelData.file)
+                onClicked: {
+                    deleteDialog.attachID = modelData.file;
+                    deleteDialog.open()
+                }
             }
+        }
+    }
+
+    MessageDialog {
+        id: deleteDialog
+        text: qsTr("Do you realy want to delete this attach?")
+        icon: StandardIcon.Warning
+        standardButtons: StandardButton.Ok | StandardButton.Cancel
+        property string attachID: ""
+        modality: Qt.WindowModal
+        onAccepted: {
+            CBApi.baseProvider.attachmentsProvider.deleteAttach(
+                                           attachID)
         }
     }
 
