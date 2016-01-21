@@ -7,6 +7,7 @@ import CB.api 1.0
 Rectangle {
     width: parent.width
     height: attachmentsListView.height+attachBar.height
+    property bool editing: false
     Rectangle {
         id: attachBar
         width: parent.width
@@ -21,6 +22,7 @@ Rectangle {
             anchors.topMargin: 5
             height: parent.height - 10
             width: parent.height - 10
+            visible: !editing
             onClicked: {
                 attachDialog.open()
             }

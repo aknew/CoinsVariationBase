@@ -194,7 +194,8 @@ function createFullForm(node) {
     }
 
     if (node.usesUUIDs){
-        qmlString += "AttachmentsList{}";
+        qmlString += "AttachmentsList{id:attachList}";
+        stateEditableString += "PropertyChanges { target:attachList;editing:true }"
     }
 
     qmlString += "      }\n" //Column {
