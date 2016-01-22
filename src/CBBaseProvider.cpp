@@ -75,6 +75,18 @@ void CBBaseProvider::startWithPath(const QString &path){
 
      qDebug() << db.connectOptions();
 
+     // load translator for specific base termins (mostly fieldnames)
+     // FIXME: Need 2 translators - one for base termins (this one) and one for system messages
+
+     QString locale = QLocale::system().name();
+     filename = QString("languages/") + locale+".json";
+
+     translator.m_needCollect = settings->needCollect;
+     if( translator.load(filename, rootPath) ){
+         QApplication::instance()->installTranslator(&translator);
+     } else
+         qDebug() << "Translation file not loaded:" << filename << "  dir:"<<rootPath;
+
      emit readyToWork();
 }
 
@@ -112,4 +124,6 @@ void CBBaseProvider::startWithPath(const QString &path){
  CBBaseProvider::~CBBaseProvider(){
      db.close();
      db.removeDatabase(rootPath + "base.sqlite");
+
+     QApplication::instance()->removeTranslator(&translator);
  }

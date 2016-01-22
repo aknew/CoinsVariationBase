@@ -6,6 +6,7 @@
 #include "CBNode.h"
 #include "CBImageProvider.h"
 #include "CBAttachmentsProvider.h"
+#include "CBTranslator.h"
 
 class CBBaseProvider : public QObject
 /*! \brief implement base logic - reading/writing data, loading/saving images, transitions between tables, etc
@@ -46,6 +47,8 @@ public:
     Q_INVOKABLE QString getAbout(){
         return "file:///" + rootPath + "about.html";
     }
+
+    CBTranslator translator;
 
 
 private:

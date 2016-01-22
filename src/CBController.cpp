@@ -2,8 +2,6 @@
 
 #include <QtWidgets/QApplication>
 
-#include "CBUtils.h"
-#include "CBTranslator.h"
 #include "CBSettings.h"
 
 CBController::CBController(QObject *parent) : QObject(parent)
@@ -42,7 +40,7 @@ void CBController::openBase(QString basePath){
 
     CBSettings *settings = CBSettings::settingsInstance();
 
-    bool needCollect = settings->needCollect; //FIXME: It should be not here
+    bool needCollect = settings->needCollect;
 
     this->applicationWindow->setProperty("needCollect", QVariant(needCollect));
 
@@ -50,24 +48,6 @@ void CBController::openBase(QString basePath){
         //FIXME: need check that new baseProvider can be created before terminate old one
         delete m_baseProvider;
     }
-
-    CBUtils::FromQmlFilePath(&basePath);
-
-    // load translator for specific base termins (mostly fieldnames)
-    // FIXME: Need 2 translator - one for base termins (this one) and one for system messages
-
-    QString locale = QLocale::system().name();
-    QString filename = QString("languages/") + locale+".json";
-    static CBTranslator translator;
-    translator.m_needCollect = needCollect;
-    if( translator.load(filename, basePath) ){
-        QApplication::instance()->installTranslator(&translator);
-        //QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
-        qDebug() << "Translation file loaded" << filename;
-    } else
-        qDebug() << "Translation file not loaded:" << filename << "  dir:"<<basePath;
-
-
 
     m_baseProvider=new CBBaseProvider();
     this->connect(m_baseProvider,SIGNAL(readyToWork()),this,SLOT(providerReadyToWork()));
