@@ -30,9 +30,6 @@ public:
 
     /// \brief redefined method from QTranslation
     virtual QString translate(const char *context, const char *sourceText, const char *disambiguation, int n) const;
-signals:
-
-public slots:
 
 };
 

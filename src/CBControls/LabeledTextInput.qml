@@ -2,16 +2,15 @@ import QtQuick 2.3
 
 FocusScope {
     width: parent.width
-    height:titleLabel.height + input.height
-    signal
-    accepted
+    height: titleLabel.height + input.height
+    signal accepted
     property alias value: input.text
     property alias title: titleLabel.text
-    enabled: false;
-    property bool editing: false;
+    enabled: false
+    property bool editing: false
     onEditingChanged: {
-        enabled = editing;
-        editingBackgrouns.visible = editing;
+        enabled = editing
+        editingBackgrouns.visible = editing
     }
     Text {
         id: titleLabel

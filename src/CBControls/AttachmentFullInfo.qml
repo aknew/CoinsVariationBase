@@ -29,7 +29,6 @@ Rectangle {
         }
     }
 
-
     function addInfoField(name, value) {
         var val = {
             name: name,
@@ -66,10 +65,10 @@ Rectangle {
         clip: true
         width: parent.width
         height: editing ? parent.height - bottomBar.height : parent.height
-        contentHeight: attachImage.height+attachImage.y
+        contentHeight: attachImage.height + attachImage.y
         ListView {
             width: parent.width
-            height: Math.min(contentHeight,300)
+            height: Math.min(contentHeight, 300)
             id: attachmentsInfoListView
             clip: true
             model: listModel

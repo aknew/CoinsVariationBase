@@ -6,7 +6,7 @@ import CB.api 1.0
 
 Rectangle {
     width: parent.width
-    height: attachmentsListView.height+attachBar.height
+    height: attachmentsListView.height + attachBar.height
     property bool editing: false
     Rectangle {
         id: attachBar
@@ -33,7 +33,7 @@ Rectangle {
         clip: true
         width: parent.width
         anchors.top: attachBar.bottom
-        height: Math.min(contentHeight,300)
+        height: Math.min(contentHeight, 300)
         model: CBApi.baseProvider.attachmentsProvider.attributes
         delegate: Rectangle {
             width: parent.width
@@ -57,7 +57,7 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.left: imgAttach.right
                 anchors.leftMargin: 5
-                anchors.right: editing? btnRemove.left : parent.right
+                anchors.right: editing ? btnRemove.left : parent.right
                 text: modelData.about === undefined ? modelData.file : modelData.about
             }
             MouseArea {
@@ -85,7 +85,7 @@ Rectangle {
                 anchors.leftMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked: {
-                    deleteDialog.attachID = modelData.file;
+                    deleteDialog.attachID = modelData.file
                     deleteDialog.open()
                 }
             }
@@ -100,8 +100,7 @@ Rectangle {
         property string attachID: ""
         modality: Qt.WindowModal
         onAccepted: {
-            CBApi.baseProvider.attachmentsProvider.deleteAttach(
-                                           attachID)
+            CBApi.baseProvider.attachmentsProvider.deleteAttach(attachID)
         }
     }
 

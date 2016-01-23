@@ -5,7 +5,7 @@ Rectangle {
     height: listView1.height
     property var model
     onModelChanged: {
-        listView1.model = model;
+        listView1.model = model
     }
 
     ListView {
@@ -13,15 +13,16 @@ Rectangle {
         id: listView1
         delegate: nextLevelDelegate
         width: parent.width
-        height: Qt.platform.os == "android"?200:120//nextLevelList.count*40 //FIXME костыль, но без этого при попыткезадействовать contentHeight  получается binding loop и ничего невыводит
-        interactive:false
+        height: Qt.platform.os == "android" ? 200 : 120 //nextLevelList.count*40 //FIXME костыль, но без этого при попыткезадействовать contentHeight  получается binding loop и ничего невыводит
+        interactive: false
     }
     Component {
         id: nextLevelDelegate
         Item {
             width: parent.width
-            height: Qt.platform.os == "android"?100:40
-            BackgroundRect{}
+            height: Qt.platform.os == "android" ? 100 : 40
+            BackgroundRect {
+            }
             Text {
                 id: nextLevelButton
                 anchors.fill: parent
@@ -33,7 +34,7 @@ Rectangle {
                 anchors.fill: parent
                 id: mouseArea
                 onClicked: {
-                    mainWindow.showListForm(modelData, node);
+                    mainWindow.showListForm(modelData, node)
                 }
             }
         }

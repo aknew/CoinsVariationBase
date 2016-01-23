@@ -14,7 +14,6 @@ Item {
             filter: ""
             deletable: false
         }
-
     }
     TableView {
         height: 50
@@ -28,7 +27,7 @@ Item {
                 ComboBox {
 
                     model: node.listViewFields
-                    currentIndex:styleData.value;
+                    currentIndex: styleData.value
                     onCurrentIndexChanged: {
                         filterList.get(styleData.row).field = currentIndex
                     }
@@ -42,7 +41,7 @@ Item {
                 id: comboDelegate
                 ComboBox {
                     model: node.relationList()
-                    currentIndex:styleData.value;
+                    currentIndex: styleData.value
                     onCurrentIndexChanged: {
                         filterList.get(styleData.row).relation = currentIndex
                     }
@@ -57,18 +56,18 @@ Item {
                 TextField {
                     text: styleData.value
                     onEditingFinished: {
-                        var currentRow = filterList.get(styleData.row);
+                        var currentRow = filterList.get(styleData.row)
 
-                        if (currentRow.filter===""){
+                        if (currentRow.filter === "") {
 
                             filterList.append({
                                                   deletable: false,
                                                   field: 1,
                                                   relation: 1,
                                                   filter: ""
-                                              });
+                                              })
 
-                            currentRow.deletable = true;
+                            currentRow.deletable = true
                         }
                         currentRow.filter = text
                     }
@@ -82,39 +81,37 @@ Item {
             delegate: Component {
                 id: buttonDelegate
                 Button {
-                    iconSource:  "/icons/undo.png"
+                    iconSource: "/icons/undo.png"
                     visible: styleData.value
                     onClicked: {
                         filterList.remove(styleData.row)
                     }
-
                 }
             }
         }
     }
-    function applyFilters(){
+    function applyFilters() {
 
-        var conditions = [];
-        for (var i = 0; i < filterList.count; ++i){
-            var filter = filterList.get(i);
-            if (filter.deletable){
+        var conditions = []
+        for (var i = 0; i < filterList.count; ++i) {
+            var filter = filterList.get(i)
+            if (filter.deletable) {
                 var condition = "\"" + node.listViewFields[filter.field] + "\""
-                switch (filter.relation){
+                switch (filter.relation) {
                 case 0:
-                    condition += " = \"" + filter.filter + "\"";
-                    break;
+                    condition += " = \"" + filter.filter + "\""
+                    break
                 case 1:
-                    condition += " like \"%" + filter.filter + "%\"";
-                    break;
+                    condition += " like \"%" + filter.filter + "%\""
+                    break
                 case 2:
-                    condition += " = \"" + filter.filter + "\"";
-                    condition = "not " + condition;
-                    break;
+                    condition += " = \"" + filter.filter + "\""
+                    condition = "not " + condition
+                    break
                 }
-                conditions.push(condition);
+                conditions.push(condition)
             }
         }
-        node.addFilter(conditions.join(" and "));
+        node.addFilter(conditions.join(" and "))
     }
-
 }
