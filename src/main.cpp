@@ -45,7 +45,6 @@ int main(int argc, char *argv[])
     static CBTranslator translator;
     if( translator.load(filename, "") ){
         app.installTranslator(&translator);
-        qDebug() << "Translation file loaded" << filename;
     } else
         qDebug() << "Translation file not loaded:" << filename << "  dir:"<< ".";
 

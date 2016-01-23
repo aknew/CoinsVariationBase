@@ -31,7 +31,6 @@ void CBBaseProvider::startWithPath(const QString &path){
 
     QString filename=rootPath+"struct.json";
 
-    qDebug()<<"parser start - ok";
      QFile file(filename);
      if (!file.open(QIODevice::ReadOnly)){
          qDebug() << "Cannot open json";
@@ -72,8 +71,6 @@ void CBBaseProvider::startWithPath(const QString &path){
      settings->lastBasePath = rootPath;
      settings->addRecentBase(m_baseTitle,rootPath);
      settings->saveSetting();
-
-     qDebug() << db.connectOptions();
 
      // load translator for specific base termins (mostly fieldnames)
      // FIXME: Need 2 translators - one for base termins (this one) and one for system messages
