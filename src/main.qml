@@ -8,7 +8,7 @@ import "FormCreator.js" as FormCreator
 
 ApplicationWindow {
     id: mainWindow
-    title: "Open base"
+    title: qsTr("Open a base")
 
     height: 500
     width: 1000
@@ -17,7 +17,7 @@ ApplicationWindow {
     menuBar: MenuBar {
         Menu {
             id: fileMenu
-            title: "File"
+            title: qsTr("File")
             MenuItem {
                 text: "Open..."
                 shortcut: "Ctrl+O"

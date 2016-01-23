@@ -38,6 +38,17 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
+    // load translator
+
+    QString locale = QLocale::system().name();
+    QString filename = locale+".json";
+    static CBTranslator translator;
+    if( translator.load(filename, "") ){
+        app.installTranslator(&translator);
+        qDebug() << "Translation file loaded" << filename;
+    } else
+        qDebug() << "Translation file not loaded:" << filename << "  dir:"<< ".";
+
     // Init GUI
     QQmlApplicationEngine engine(QUrl("qrc:/main.qml"));
     engine.addImportPath("qrc:/");

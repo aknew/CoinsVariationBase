@@ -24,7 +24,8 @@ DISTFILES += \
     CBControls/LabeledDateInput.qml \
     CBControls/AttachmentsList.qml \
     CBControls/AttachmentFullInfo.qml \
-    FormCreator.js
+    FormCreator.js \
+    ru_RU.json
 
 RESOURCES += \
     resources.qrc
