@@ -19,7 +19,7 @@ ApplicationWindow {
             id: fileMenu
             title: qsTr("File")
             MenuItem {
-                text: "Open..."
+                text: qsTr("Open...")
                 shortcut: "Ctrl+O"
                 onTriggered: openBase()
             }
@@ -27,10 +27,10 @@ ApplicationWindow {
             }
         }
         Menu {
-            title: "Filters"
+            title: qsTr("Filters")
             visible: tablesStack.currentItem.formType === CBApi.ListForm
             MenuItem {
-                text: "Set filters"
+                text: qsTr("Set filters")
                 onTriggered: {
                     var component = Qt.createComponent(
                                 "CBControls/FilterDialog.qml")
@@ -42,17 +42,17 @@ ApplicationWindow {
                 }
             }
             MenuItem {
-                text: "Drop filters"
+                text: qsTr("Drop filters")
                 onTriggered: {
                     tablesStack.currentItem.node.dropFilter()
                 }
             }
         }
         Menu {
-            title: "Change data"
+            title: qsTr("Change data")
             visible: tablesStack.currentItem.formType !== CBApi.FilterDialog
             MenuItem {
-                text: "Edit record"
+                text: qsTr("Edit record")
                 shortcut: "Ctrl+E"
                 visible: tablesStack.currentItem.formType !== CBApi.ListForm
                 iconSource: "/icons/edit.png"
@@ -62,7 +62,7 @@ ApplicationWindow {
                 }
             }
             MenuItem {
-                text: "Add new"
+                text: qsTr("Add new")
                 iconSource: "/icons/add.png"
                 shortcut: "Ctrl+N"
                 onTriggered: {
@@ -80,7 +80,7 @@ ApplicationWindow {
                 }
             }
             MenuItem {
-                text: "Delete"
+                text: qsTr("Delete")
                 iconSource: "/icons/delete.png"
                 visible: tablesStack.currentItem.formType !== CBApi.ListForm
                 onTriggered: {
@@ -152,7 +152,7 @@ ApplicationWindow {
     Action {
         id: actionApply
         iconSource: "/icons/apply.png"
-        text: "apply"
+        text: qsTr("apply")
         shortcut: "Ctrl+S"
         onTriggered: {
             windowToolbar.state = ""
@@ -163,7 +163,7 @@ ApplicationWindow {
     Action {
         id: actionUndo
         iconSource: "/icons/undo.png"
-        text: "undo"
+        text: qsTr("undo")
         onTriggered: {
             windowToolbar.state = ""
             tablesStack.currentItem.state = ""
@@ -179,7 +179,7 @@ ApplicationWindow {
     }
     Action {
         id: actionBack
-        text: "back"
+        text: qsTr("back")
         iconSource: "/icons/back.png"
         shortcut: Qt.BackButton
         onTriggered: {

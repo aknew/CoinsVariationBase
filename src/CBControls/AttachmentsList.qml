@@ -77,7 +77,6 @@ Rectangle {
                 }
             }
             Button {
-                // TODO: add confirm dialog
                 id: btnRemove
                 iconSource: "/icons/delete.png"
                 visible: editing

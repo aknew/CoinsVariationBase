@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
     QString locale = QLocale::system().name();
     QString filename = locale+".json";
     static CBTranslator translator;
+    translator.m_needCollect = true;
     if( translator.load(filename, "") ){
         app.installTranslator(&translator);
     } else
