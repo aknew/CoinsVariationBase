@@ -4,9 +4,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-//HOTFIX: I don't know how to solve passing 'const QVariant' as 'this' argument of 'QVariant& QVariant::operator=(const QVariant&)' discards qualifiers [-fpermissive]
-QVariantMap strings;
-
 CBTranslator::CBTranslator(QObject *parent) :
     QTranslator(parent)
 {
@@ -50,18 +47,34 @@ QString CBTranslator::translate(const char *context, const char *sourceText, con
     if (translation.isEmpty()){
         translation = original;
         if (m_needCollect){
-            strings[original] = QVariant(original);
-            this->save();
+            this->append(original);
         }
     }
     return translation;
 }
 
-void CBTranslator::save() const {
+void CBTranslator::append(QString original) const{
+    // XXX: All this method is hotfix: I can't change strings in load because it is constant method and I
+    // can't do it not constant because when I try to do it this method wasn't call anymore
     QFile saveFile(m_fullFileName);
-    if (!saveFile.open(QIODevice::WriteOnly)) {
-            qWarning("Couldn't open save file.");
+    if (!saveFile.open(QIODevice::ReadOnly)){
+        qDebug() << "Cannot open translation file to read";
+        return;
     }
-    QJsonDocument saveDoc(QJsonObject::fromVariantMap(strings));
+    QString jsonData = saveFile.readAll();
+    saveFile.close();
+
+    QJsonDocument sd = QJsonDocument::fromJson(jsonData.toUtf8());
+
+    if (sd.isNull()){
+        qDebug() << "Wrong translation file format";
+        return;
+    }
+    QVariantMap strings1 =sd.object().toVariantMap();
+    if (!saveFile.open(QIODevice::WriteOnly)) {
+            qWarning("Couldn't open translation file to right.");
+    }
+    strings1[original] = QVariant(original);
+    QJsonDocument saveDoc(QJsonObject::fromVariantMap(strings1));
     saveFile.write(saveDoc.toJson());
 }
