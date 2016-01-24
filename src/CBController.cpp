@@ -3,6 +3,7 @@
 #include <QtWidgets/QApplication>
 
 #include "CBSettings.h"
+#include "CBUtils.h"
 
 CBController::CBController(QObject *parent) : QObject(parent)
 {
@@ -37,7 +38,7 @@ void CBController::start(){
 
 void CBController::openBase(QString basePath){
 
-
+    CBUtils::FromQmlFilePath(&basePath);
     CBSettings *settings = CBSettings::settingsInstance();
 
     bool needCollect = settings->needCollect;
