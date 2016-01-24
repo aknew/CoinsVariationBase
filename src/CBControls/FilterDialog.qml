@@ -21,7 +21,7 @@ Item {
         anchors.fill: parent
         TableViewColumn {
             role: "field"
-            title: qsTr("field")
+            title: qsTr("Field")
             delegate: Component {
                 id: comboFieldDelegate
                 ComboBox {
@@ -36,7 +36,7 @@ Item {
         }
         TableViewColumn {
             role: "relation"
-            title: qsTr("relation")
+            title: qsTr("Relation")
             delegate: Component {
                 id: comboDelegate
                 ComboBox {
@@ -50,7 +50,7 @@ Item {
         }
         TableViewColumn {
             role: "filter"
-            title: qsTr("filter string")
+            title: qsTr("Filter string")
             delegate: Component {
                 id: textDelegate
                 TextField {

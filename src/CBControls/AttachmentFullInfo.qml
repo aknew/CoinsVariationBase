@@ -180,12 +180,12 @@ Rectangle {
             implicitHeight: 500
             LabeledTextInput {
                 id: edtName
-                title: qsTr("name")
+                title: qsTr("Field name:")
                 editing: true
             }
             LabeledTextInput {
                 id: edtValue
-                title: qsTr("value")
+                title: qsTr("Field value:")
                 editing: true
                 anchors.topMargin: 5
                 anchors.top: edtName.bottom

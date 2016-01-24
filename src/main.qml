@@ -49,7 +49,7 @@ ApplicationWindow {
             }
         }
         Menu {
-            title: qsTr("Change data")
+            title: qsTr("Work with data")
             visible: tablesStack.currentItem.formType !== CBApi.FilterDialog
             MenuItem {
                 text: qsTr("Edit record")
@@ -152,7 +152,7 @@ ApplicationWindow {
     Action {
         id: actionApply
         iconSource: "/icons/apply.png"
-        text: qsTr("apply")
+        text: qsTr("Apply")
         shortcut: "Ctrl+S"
         onTriggered: {
             windowToolbar.state = ""
@@ -163,7 +163,7 @@ ApplicationWindow {
     Action {
         id: actionUndo
         iconSource: "/icons/undo.png"
-        text: qsTr("undo")
+        text: qsTr("Undo")
         onTriggered: {
             windowToolbar.state = ""
             tablesStack.currentItem.state = ""
@@ -179,7 +179,7 @@ ApplicationWindow {
     }
     Action {
         id: actionBack
-        text: qsTr("back")
+        text: qsTr("Back")
         iconSource: "/icons/back.png"
         shortcut: Qt.BackButton
         onTriggered: {
@@ -201,7 +201,7 @@ ApplicationWindow {
         objectName: "tablesStack"
         initialItem: Text {
             property bool isListView: false
-            text: "Running on: " + Qt.platform.os + "\n" + "Open some base to start work"
+            text: "Running on: " + Qt.platform.os + "\n" + qsTr("Open some base to start work")
         }
     }
 
