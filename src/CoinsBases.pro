@@ -20,7 +20,6 @@ DISTFILES += \
     CBControls/LabeledComboBoxInput.qml \
     CBControls/LabeledTextInput.qml \
     CBControls/NextLevelList.qml \
-    CBControls/StyledText.qml \
     CBControls/LabeledDateInput.qml \
     CBControls/AttachmentsList.qml \
     CBControls/AttachmentFullInfo.qml \
