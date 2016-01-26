@@ -126,6 +126,7 @@ function createTable(node){
 
 function createFullForm(node) {
 
+    //TODO: check dynamic model for indents
     if (node.useFullForm){
         var component = Qt.createComponent("file:///" + CBApi.baseProvider.fullFormPath(node))
         switch (component.status) {
@@ -139,7 +140,6 @@ function createFullForm(node) {
         }
     }
 
-    //FIXME: need rewrite collect data, comboboxes
 
     var qmlString
 
@@ -201,7 +201,7 @@ function createFullForm(node) {
                     + ";\n   anchors.fill: parent.widths;\n"
                     + "title: qsTr(\"" + field + "\");\n    editing:false\n}\n"
         }
-
+        // TODO: Do something better that a lot of this property
         stateEditableString += "PropertyChanges { target:" + field_id  + ";editing:true }"
         collectDataString += field + ": " + field_id  + ".value,"
         onNodeChangedString +=field_id + ".value =  node.selectedItem." + field + ";\n";

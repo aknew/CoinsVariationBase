@@ -280,10 +280,6 @@ ApplicationWindow {
 
     function openBase() {
 
-        //HOTFIX: for android
-        //        if (Qt.platform.os == "android") {
-        //            CBApi.openBase("/storage/sdcard0/VariationBase/")
-        //        }
         openBaseDialog.open()
     }
 
