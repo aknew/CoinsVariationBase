@@ -188,18 +188,18 @@ function createFullForm(node) {
         switch (fieldType) {
         case "combo":
             qmlString += "LabeledComboBoxInput {\n  id:" + field_id + ";\n  title: qsTr(\"" + field + "\");\n   "
-            qmlString += "anchors.fill: parent.widths;\n z:15;\n editing:false \n}\n"
+            qmlString += "anchors.fill: parent.widths; \n}\n"
             onNodeChangedString += field_id + ".model=node.listFromQuery(\"" + fieldStruct["query"]
                     + "\");\n"
             break
         case "date":
             qmlString += "LabeledDateInput {\n  id:" + field_id + ";\n  title: qsTr(\"" + field + "\");\n   "
-            qmlString += "anchors.fill: parent.widths;\n z:15;\n editing:false \n}\n"
+            qmlString += "anchors.fill: parent.widths;\n}\n"
             break
         default:
             qmlString += "LabeledTextInput {id:" + field_id
                     + ";\n   anchors.fill: parent.widths;\n"
-                    + "title: qsTr(\"" + field + "\");\n    editing:false\n}\n"
+                    + "title: qsTr(\"" + field + "\");\n}\n"
         }
         // TODO: Do something better that a lot of this property
         stateEditableString += "PropertyChanges { target:" + field_id  + ";editing:true }"
