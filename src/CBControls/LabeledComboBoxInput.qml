@@ -9,6 +9,7 @@ FocusScope {
     property alias model: valuelist.model
     property alias value: textInput.value
     property alias title: textInput.title
+    property alias color: textInput.color
     property bool editing: false
     onEditingChanged: {
         textInput.editing = editing

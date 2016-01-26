@@ -6,6 +6,7 @@ FocusScope {
     signal accepted
     property alias value: input.text
     property alias title: titleLabel.text
+    property alias color: input.color
     enabled: false
     property bool editing: false
     onEditingChanged: {

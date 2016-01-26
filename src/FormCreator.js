@@ -125,6 +125,20 @@ function createTable(node){
 }
 
 function createFullForm(node) {
+
+    if (node.useFullForm){
+        var component = Qt.createComponent("file:///" + CBApi.baseProvider.fullFormPath(node))
+        switch (component.status) {
+        case Component.Ready:
+            var form = component.createObject()
+            form.node = node;
+            return form;
+        case Component.Error:
+            console.log(component.errorString())
+            return;
+        }
+    }
+
     //FIXME: need rewrite collect data, comboboxes
 
     var qmlString
@@ -220,7 +234,7 @@ function createFullForm(node) {
         CBApi.baseProvider.saveFullForm(qmlString,node)
     }
 
-    var component = Qt.createQmlObject(qmlString,tablesStack, "dynamicFull");
+    component = Qt.createQmlObject(qmlString,tablesStack, "dynamicFull");
     component.node = node;
 
     return component;
