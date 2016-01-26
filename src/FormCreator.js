@@ -62,7 +62,7 @@ function createListForm(node) {
         CBApi.baseProvider.saveListForm(qmlString,node)
     }
 
-    var component = Qt.createQmlObject(qmlString,tablesStack, "dynamicList");
+    var component = Qt.createQmlObject(qmlString,tablesStack, "dynamicList"+node.tableName);
     component.node = node;
 
     return component;
@@ -126,7 +126,6 @@ function createTable(node){
 
 function createFullForm(node) {
 
-    //TODO: check dynamic model for indents
     if (node.useFullForm){
         var component = Qt.createComponent("file:///" + CBApi.baseProvider.fullFormPath(node))
         switch (component.status) {
@@ -154,17 +153,21 @@ function createFullForm(node) {
 
     var onNodeChangedString = "  onNodeChanged:{\n";
 
-    qmlString += "  Flickable {\n"+
+    qmlString += "   Flickable {\n"+
                  "       clip: true;\n"+
                  "       anchors.fill:parent;\n";
 
     qmlString += "       contentHeight: contentColumn.height + nextlevel.height;\n"
 
-    qmlString += "      Column {id: contentColumn;y: 0;width: parent.width;"
+    qmlString += "       Column {\n" +
+                 "            id: contentColumn\n"+
+                 "            width: parent.width\n"
 
-    var collectDataString = "function collectData() { var returnedMap = {"
+    var collectDataString = "    function collectData() {"+
+                            "        var returnedMap = {"
 
-    var stateEditableString = "states: State { name: \"editing\";"
+    var stateEditableString = "    states: State {\n"+
+                              "        name: \"editing\";"
 
     var fullFormFields = node.fullFormFields;
 
@@ -187,46 +190,58 @@ function createFullForm(node) {
 
         switch (fieldType) {
         case "combo":
-            qmlString += "LabeledComboBoxInput {\n  id:" + field_id + ";\n  title: qsTr(\"" + field + "\");\n   "
-            qmlString += "anchors.fill: parent.widths; \n}\n"
-            onNodeChangedString += field_id + ".model=node.listFromQuery(\"" + fieldStruct["query"]
+            qmlString += "            LabeledComboBoxInput {\n"+
+                         "                id:" + field_id + ";\n"+
+                         "                title: qsTr(\"" + field + "\");\n"+
+                         "            }\n"
+
+            onNodeChangedString +="        "+ field_id + ".model=node.listFromQuery(\"" + fieldStruct["query"]
                     + "\");\n"
             break
         case "date":
-            qmlString += "LabeledDateInput {\n  id:" + field_id + ";\n  title: qsTr(\"" + field + "\");\n   "
-            qmlString += "anchors.fill: parent.widths;\n}\n"
+            qmlString += "            LabeledDateInput {\n" +
+                         "                id:" + field_id + ";\n"+
+                         "                title: qsTr(\"" + field + "\");\n" +
+                         "            }\n"
             break
         default:
-            qmlString += "LabeledTextInput {id:" + field_id
-                    + ";\n   anchors.fill: parent.widths;\n"
-                    + "title: qsTr(\"" + field + "\");\n}\n"
+            qmlString += "            LabeledTextInput {id:" + field_id + ";\n"+
+                    "                title: qsTr(\"" + field + "\");\n" +
+                    "            }\n"
         }
         // TODO: Do something better that a lot of this property
-        stateEditableString += "PropertyChanges { target:" + field_id  + ";editing:true }"
-        collectDataString += field + ": " + field_id  + ".value,"
-        onNodeChangedString +=field_id + ".value =  node.selectedItem." + field + ";\n";
+        stateEditableString += "        PropertyChanges { target:" + field_id  + ";editing:true }"
+        collectDataString +="            "+field + ": " + field_id  + ".value,"
+        onNodeChangedString +="        "+field_id + ".value =  node.selectedItem." + field + ";\n";
     }
 
     if (node.usesUUIDs){
-        qmlString += "AttachmentsList{id:attachList}";
-        stateEditableString += "PropertyChanges { target:attachList;editing:true }"
+        qmlString += "            AttachmentsList{\n"+
+                     "                  id:attachList;\n"+
+                     "            }\n";
+        stateEditableString += "        PropertyChanges {target:attachList;editing:true }"
     }
 
-    qmlString += "      }\n" //Column {
-    qmlString += "NextLevelList { id:nextlevel; y: contentColumn.childrenRect.height+contentColumn.y }"
-    qmlString += "  }\n" //Flickable {
+    qmlString += "        }\n" //Column {
+    qmlString += "        NextLevelList {\n"+
+                 "            id:nextlevel;\n"+
+                 "            y: contentColumn.childrenRect.height+contentColumn.y\n"+
+                 "        }"
+    qmlString += "    }\n" //Flickable {
 
-    stateEditableString += "PropertyChanges { target: nextlevel; visible:false }"
+    stateEditableString += "        PropertyChanges { target: nextlevel; visible:false }"
     stateEditableString += "}\n\n"
     qmlString += stateEditableString
 
-    onNodeChangedString +="nextlevel.model = node.nextLevelList}\n\n";
+    onNodeChangedString +="        nextlevel.model = node.nextLevelList}\n\n";
     qmlString += onNodeChangedString;
 
     //FIXME: change string this coma deletion to Array.join
     collectDataString = collectDataString.substring(
                 0, collectDataString.length - 1)
-    collectDataString += "}; node.applyChanges(returnedMap); }"
+    collectDataString += "        }\n"+
+                         "        node.applyChanges(returnedMap)\n"+
+                         "    }\n"
     qmlString += collectDataString
     qmlString += "}" // mainRect
 
@@ -234,7 +249,7 @@ function createFullForm(node) {
         CBApi.baseProvider.saveFullForm(qmlString,node)
     }
 
-    component = Qt.createQmlObject(qmlString,tablesStack, "dynamicFull");
+    component = Qt.createQmlObject(qmlString,tablesStack, "dynamicFull"+node.tableName);
     component.node = node;
 
     return component;
