@@ -5,16 +5,15 @@ import CB.api 1.0
 Item {
     property var node
     property var formType: CBApi.FilterDialog
+    property var filterList: ListModel {
+                                 ListElement {
+                                     field: 0
+                                     relation: 0
+                                     filter: ""
+                                     deletable: false
+                                 }
+                             }
 
-    ListModel {
-        id: filterList
-        ListElement {
-            field: 0
-            relation: 0
-            filter: ""
-            deletable: false
-        }
-    }
     TableView {
         height: 50
         model: filterList
