@@ -62,17 +62,24 @@ Rectangle {
             }
             MouseArea {
                 anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
                 onClicked: {
-                    var component = Qt.createComponent("AttachmentFullInfo.qml")
-                    switch (component.status) {
-                    case Component.Ready:
-                        var form = component.createObject()
-                        form.attachmentInfo = modelData
-                        mainWindow.pushToStackView(form)
-                        break
-                    case Component.Error:
-                        console.log(component.errorString())
-                        break
+                    if (mouse.button == Qt.RightButton) {
+                        openMenu.file = modelData.file
+                        openMenu.popup()
+                    } else {
+                        var component = Qt.createComponent(
+                                    "AttachmentFullInfo.qml")
+                        switch (component.status) {
+                        case Component.Ready:
+                            var form = component.createObject()
+                            form.attachmentInfo = modelData
+                            mainWindow.pushToStackView(form)
+                            break
+                        case Component.Error:
+                            console.log(component.errorString())
+                            break
+                        }
                     }
                 }
             }
@@ -121,6 +128,23 @@ Rectangle {
             case Component.Error:
                 console.log(component.errorString())
                 break
+            }
+        }
+    }
+
+    Menu {
+        id: openMenu
+        property string file: ""
+        MenuItem {
+            text: qsTr("Open file")
+            onTriggered: {
+                CBApi.baseProvider.attachmentsProvider.openAttach(openMenu.file)
+            }
+        }
+        MenuItem {
+            text: qsTr("Open contains folder")
+            onTriggered: {
+                CBApi.baseProvider.attachmentsProvider.openFolder()
             }
         }
     }
