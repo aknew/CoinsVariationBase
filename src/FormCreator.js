@@ -1,4 +1,17 @@
 function createListForm(node) {
+
+    if (node.useListForm){
+        var component = Qt.createComponent("file:///" + CBApi.baseProvider.listFormPath(node))
+        switch (component.status) {
+        case Component.Ready:
+            var form = component.createObject()
+            form.node = node;
+            return form;
+        case Component.Error:
+            console.log(component.errorString())
+        }
+    }
+
     var qmlString
 
     qmlString = "import QtQuick 2.0;\n" +
@@ -79,7 +92,6 @@ function createTable(node){
             return form;
         case Component.Error:
             console.log(component.errorString())
-            return;
         }
     }
 
@@ -135,7 +147,6 @@ function createFullForm(node) {
             return form;
         case Component.Error:
             console.log(component.errorString())
-            return;
         }
     }
 
