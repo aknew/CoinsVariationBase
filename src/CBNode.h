@@ -18,11 +18,12 @@ class CBNode : public QObject
     Q_PROPERTY(bool usesUUIDs MEMBER usesUUIDs FINAL)
     Q_PROPERTY(bool useFullForm MEMBER useFullForm FINAL)
     Q_PROPERTY(bool useListForm MEMBER useListForm FINAL)
+    Q_PROPERTY(QObject* filterList MEMBER filterList)
 
 public:
     explicit CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent = 0);
 
-
+    QObject *filterList = NULL; //< Uses for save listModel between filter dialog showing
     QString tableName;
 
     QString listFormName(); //< name of list form qml file for saving and loading

@@ -4,6 +4,12 @@ import CB.api 1.0
 
 Item {
     property var node
+    onNodeChanged: {
+        if (node.filterList){
+            filterList = node.filterList;
+        }
+    }
+
     property var formType: CBApi.FilterDialog
     property var filterList: ListModel {
                                  ListElement {
@@ -90,7 +96,8 @@ Item {
         }
     }
     function applyFilters() {
-
+        node.dropFilter()
+        node.filterList = filterList;
         var conditions = []
         for (var i = 0; i < filterList.count; ++i) {
             var filter = filterList.get(i)
