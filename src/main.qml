@@ -209,12 +209,7 @@ ApplicationWindow {
         tablesStack.pop(tablesStack.initialItem)
         title = CBApi.baseProvider.baseTitle
         var node = CBApi.baseProvider.getStartNode()
-        var listForm
-        if (Qt.platform.os == "android") {
-            listForm = FormCreator.createListForm(node)
-        } else {
-            listForm = FormCreator.createTable(node)
-        }
+        var listForm = FormCreator.createListForm(node)
         tablesStack.push(listForm)
     }
 
@@ -228,12 +223,8 @@ ApplicationWindow {
 
     function showListForm(nodeName, currentNode) {
         var node = CBApi.baseProvider.getNode(nodeName, currentNode)
-        var listForm
-        if (Qt.platform.os == "android") {
-            listForm = FormCreator.createListForm(node)
-        } else {
-            listForm = FormCreator.createTable(node)
-        }
+        var listForm = FormCreator.createListForm(node)
+
         tablesStack.push(listForm)
     }
 
