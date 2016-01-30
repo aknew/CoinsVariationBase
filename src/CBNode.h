@@ -41,14 +41,6 @@ public:
     Q_INVOKABLE void addFilter(const QString &filterString); //< add any other filters, uses for selection from related record
     Q_INVOKABLE void dropFilter(); //< drop all filters excapt level
 
-    Q_INVOKABLE static QStringList relationList(){
-       QStringList list;
-       list.append("is equal");
-       list.append("like");
-       list.append("not equal");
-       return list;
-    }
-
     Q_INVOKABLE QStringList listFromQuery(QString query);
 
     Q_INVOKABLE void prepareToNewItem();

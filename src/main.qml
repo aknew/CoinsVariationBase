@@ -32,12 +32,16 @@ ApplicationWindow {
             MenuItem {
                 text: qsTr("Set filters")
                 onTriggered: {
-                    var component = Qt.createComponent(
-                                "CBControls/FilterDialog.qml")
-                    if (component.status === Component.Ready) {
+                    var component = Qt.createComponent("CBControls/FilterDialog.qml")
+                    switch (component.status) {
+                    case Component.Ready:
                         var form = component.createObject()
                         form.node = tablesStack.currentItem.node
                         tablesStack.push(form)
+                        break
+                    case Component.Error:
+                        console.log(component.errorString())
+                        break
                     }
                 }
             }

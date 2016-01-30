@@ -1,8 +1,10 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import QtQuick.Controls 1.4
+import QtQuick.Dialogs 1.2
 import CB.api 1.0
 
 Item {
+    id: root
     property var node
     onNodeChanged: {
         if (node.filterList){
@@ -11,112 +13,182 @@ Item {
     }
 
     property var formType: CBApi.FilterDialog
-    property var filterList: ListModel {
-                                 ListElement {
-                                     field: 0
-                                     relation: 0
-                                     filter: ""
-                                     deletable: false
-                                 }
-                             }
+    property var filterList: ListModel { }
 
-    TableView {
-        height: 50
+    ListModel{
+        id: realtions
+        ListElement{ text:"is equal"}
+        ListElement{ text:"like"}
+        ListElement{ text:"not equal"}
+    }
+
+    ListView {
+        id: listView
         model: filterList
-        anchors.fill: parent
-        TableViewColumn {
-            role: "field"
-            title: qsTr("Field")
-            delegate: Component {
-                id: comboFieldDelegate
-                ComboBox {
+        anchors.top: parent.top
+        anchors.bottom:bar.bottom
+        width: parent.width
+        delegate: Item{
+            height:100
+            width: parent.width
+            BackgroundRect{}
+            MouseArea{
+                anchors.fill: parent
+                onClicked:{
+                    editRowDialog.field = field;
+                    editRowDialog.filter = filter
+                    editRowDialog.relation = relation
+                    editRowDialog.index = index;
+                    editRowDialog.open()
+                }
+            }
 
-                    model: node.listViewFields
-                    currentIndex: styleData.value
-                    onCurrentIndexChanged: {
-                        filterList.get(styleData.row).field = currentIndex
-                    }
+            Text {
+                text: node.listViewFields[field] + " <b>" + realtions.get(relation).text + "</b> " +filter
+                wrapMode: Text.Wrap
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                anchors.right: btnRemove.left
+                anchors.rightMargin: 5
+            }
+            Button {
+                id: btnRemove
+                anchors.right: parent.right
+                iconSource: "/icons/undo.png"
+                onClicked: {
+                    filterList.remove(index)
                 }
             }
         }
-        TableViewColumn {
-            role: "relation"
-            title: qsTr("Relation")
-            delegate: Component {
-                id: comboDelegate
-                ComboBox {
-                    model: node.relationList()
-                    currentIndex: styleData.value
-                    onCurrentIndexChanged: {
-                        filterList.get(styleData.row).relation = currentIndex
-                    }
-                }
+
+    }
+    Rectangle {
+        id: bar
+        width: parent.width
+        height: 100
+        anchors.bottom: parent.bottom
+        Button {
+            id: btnAddField
+            iconSource: "/icons/add.png"
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            anchors.top: parent.top
+            anchors.topMargin: 5
+            height: parent.height - 10
+            width: parent.height - 10
+            onClicked: {
+                editRowDialog.field = 0
+                editRowDialog.filter = ""
+                editRowDialog.relation = 0
+                editRowDialog.index = -1;
+                editRowDialog.open()
             }
         }
-        TableViewColumn {
-            role: "filter"
-            title: qsTr("Filter string")
-            delegate: Component {
-                id: textDelegate
-                TextField {
-                    text: styleData.value
-                    onEditingFinished: {
-                        var currentRow = filterList.get(styleData.row)
+    }
 
-                        if (currentRow.filter === "") {
+    Dialog {
+        id: editRowDialog
+        property int index: -1
+        property alias field: edtField.currentIndex
+        property alias relation: edtRelation.currentIndex
+        property alias filter: edtFilter.value
 
-                            filterList.append({
-                                                  deletable: false,
-                                                  field: 1,
-                                                  relation: 1,
-                                                  filter: ""
-                                              })
-
-                            currentRow.deletable = true
-                        }
-                        currentRow.filter = text
-                    }
+        contentItem: Rectangle {
+            implicitWidth: 400
+            implicitHeight: 500
+            Column{
+                anchors.top:parent.top
+                anchors.bottom:btnApply.top
+                anchors.bottomMargin: 5
+                width:parent.width
+                Row{
+                   width: parent.width
+                   Text{
+                      text: qsTr("Field:")
+                   }
+                   ComboBox{
+                       id: edtField
+                       model: node.listViewFields
+                   }
+                }
+                Row{
+                   width: parent.width
+                   Text{
+                      text: qsTr("Relation:")
+                   }
+                   ComboBox{
+                       id: edtRelation
+                       model: realtions
+                   }
+                }
+                LabeledTextInput {
+                    id: edtFilter
+                    title: qsTr("Filter string:")
+                    editing: true
                 }
             }
-        }
-        TableViewColumn {
-            role: "deletable"
-            title: ""
-            width: 25
-            delegate: Component {
-                id: buttonDelegate
-                Button {
-                    iconSource: "/icons/undo.png"
-                    visible: styleData.value
-                    onClicked: {
-                        filterList.remove(styleData.row)
+
+            Button {
+                id: btnApply
+                width: (parent.width - 15) / 2
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 5
+                height: 40
+                text: qsTr("Apply")
+                onClicked: {
+                    var val = {
+                        field: editRowDialog.field,
+                        relation: editRowDialog.relation,
+                        filter: editRowDialog.filter
                     }
+                    if (editRowDialog.index === -1) {
+                        filterList.append(val)
+                    } else {
+                        filterList.set(editRowDialog.index, val)
+                    }
+                    editRowDialog.close()
+                    console.log(filterList.count)
+                }
+            }
+            Button {
+                width: (parent.width - 15) / 2
+                anchors.left: btnApply.right
+                anchors.leftMargin: 5
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 5
+                height: 40
+                text: qsTr("Cancel")
+                onClicked: {
+                    editRowDialog.close()
                 }
             }
         }
     }
+
+
     function applyFilters() {
         node.dropFilter()
         node.filterList = filterList;
         var conditions = []
         for (var i = 0; i < filterList.count; ++i) {
             var filter = filterList.get(i)
-            if (filter.deletable) {
-                var condition = "\"" + node.listViewFields[filter.field] + "\""
-                switch (filter.relation) {
-                case 0:
-                    condition += " = \"" + filter.filter + "\""
-                    break
-                case 1:
-                    condition += " like \"%" + filter.filter + "%\""
-                    break
-                case 2:
-                    condition += " = \"" + filter.filter + "\""
-                    condition = "not " + condition
-                    break
-                }
-                conditions.push(condition)
+            var condition = "\"" + node.listViewFields[filter.field] + "\""
+            // TODO: remove magic numbers
+            switch (filter.relation) {
+            case 0:
+                condition += " = \"" + filter.filter + "\""
+                break
+            case 1:
+                condition += " like \"%" + filter.filter + "%\""
+                break
+            case 2:
+                condition += " = \"" + filter.filter + "\""
+                condition = "not " + condition
+                break
             }
+            conditions.push(condition)
         }
         node.addFilter(conditions.join(" and "))
     }
