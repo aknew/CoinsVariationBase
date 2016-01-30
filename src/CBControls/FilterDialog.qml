@@ -18,7 +18,7 @@ Item {
     ListModel{
         id: realtions
         ListElement{ text:"is equal"}
-        ListElement{ text:"like"}
+        ListElement{ text:"contains"}
         ListElement{ text:"not equal"}
     }
 
@@ -79,7 +79,7 @@ Item {
             onClicked: {
                 editRowDialog.field = 0
                 editRowDialog.filter = ""
-                editRowDialog.relation = 0
+                editRowDialog.relation = 1
                 editRowDialog.index = -1;
                 editRowDialog.open()
             }
