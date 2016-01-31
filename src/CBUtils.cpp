@@ -3,8 +3,16 @@
 #include <QTextStream>
 
 void CBUtils::FromQmlFilePath(QString *str){
-    if (str->startsWith("file:///")){
-        str->remove("file:///");
+
+    // HOTFIX: QFile won't open places like /D:/
+#ifdef Q_OS_WIN32
+    const QString kPrefix = "file:///";
+#else
+    const QString kPrefix = "file://";
+#endif
+
+    if (str->startsWith(kPrefix)){
+        str->remove(kPrefix);
     }
 }
 
