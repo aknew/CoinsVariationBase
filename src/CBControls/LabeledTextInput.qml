@@ -19,6 +19,8 @@ FocusScope {
         font.bold: true
         anchors.left: parent.left
         anchors.leftMargin: 5
+        height: parent.height
+        verticalAlignment : Text.AlignVCenter
     }
     TextField {
         id: input
