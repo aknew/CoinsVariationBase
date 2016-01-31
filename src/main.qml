@@ -207,6 +207,12 @@ ApplicationWindow {
             property bool isListView: false
             text: "Running on: " + Qt.platform.os + "\n" + qsTr("Open some base to start work")
         }
+
+        // Implements back key navigation
+        focus: true
+        Keys.onBackPressed: {
+            actionBack.trigger()
+        }
     }
 
     function providerReadyToWork() {
