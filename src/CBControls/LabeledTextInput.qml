@@ -1,4 +1,5 @@
-import QtQuick 2.3
+import QtQuick 2.5
+import QtQuick.Controls 1.4
 
 FocusScope {
     width: parent.width
@@ -6,33 +7,25 @@ FocusScope {
     signal accepted
     property alias value: input.text
     property alias title: titleLabel.text
-    property alias color: input.color
-    enabled: false
+    property alias color: input.textColor
     property bool editing: false
     onEditingChanged: {
-        enabled = editing
-        editingBackgrouns.visible = editing
+        input.readOnly = !editing
     }
-    Text {
+    Label {
         id: titleLabel
         text: ""
-        font.pixelSize: 16
+        //font.pixelSize: 32
         font.bold: true
+        anchors.left: parent.left
+        anchors.leftMargin: 5
     }
-    Rectangle {
-        id: editingBackgrouns
-        border.color: "black"
-        radius: 1
-        visible: false
-        width: parent.width
-        height: input.height
-        anchors.top: titleLabel.bottom
-    }
-    TextEdit {
+    TextField {
         id: input
-        font.pixelSize: 16
-        width: parent.width
-        anchors.top: titleLabel.bottom
-        wrapMode: Text.Wrap
+        anchors.left: titleLabel.right
+        anchors.leftMargin: 5
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+        readOnly: true
     }
 }
