@@ -153,22 +153,29 @@ function createFullForm(node) {
 
             onNodeChangedString +="        "+ field_id + ".model=node.listFromQuery(\"" + fieldStruct["query"]
                     + "\");\n"
+
+            collectDataString +="            "+field + ": " + field_id  + ".getValue(),"
+            onNodeChangedString +="        "+field_id + ".setValue(node.selectedItem." + field + ");\n";
             break
         case "date":
             qmlString += "            LabeledDateInput {\n" +
                          "                id:" + field_id + ";\n"+
                          "                title: qsTr(\"" + field + "\");\n" +
                          "            }\n"
+
+            collectDataString +="            "+field + ": " + field_id  + ".value,"
+            onNodeChangedString +="        "+field_id + ".value =  node.selectedItem." + field + ";\n";
             break
         default:
             qmlString += "            LabeledTextInput {id:" + field_id + ";\n"+
                     "                title: qsTr(\"" + field + "\");\n" +
                     "            }\n"
+
+            collectDataString +="            "+field + ": " + field_id  + ".value,"
+            onNodeChangedString +="        "+field_id + ".value =  node.selectedItem." + field + ";\n";
         }
         // TODO: Do something better that a lot of this property
         stateEditableString += "        PropertyChanges { target:" + field_id  + ";editing:true }"
-        collectDataString +="            "+field + ": " + field_id  + ".value,"
-        onNodeChangedString +="        "+field_id + ".value =  node.selectedItem." + field + ";\n";
     }
 
     if (node.usesUUIDs){
