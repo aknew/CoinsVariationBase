@@ -18,5 +18,6 @@
         <file>CBControls/LabeledDateInput.qml</file>
         <file>CBControls/AttachmentsList.qml</file>
         <file>CBControls/AttachmentFullInfo.qml</file>
+        <file>CBControls/LabeledLongText.qml</file>
     </qresource>
 </RCC>

@@ -166,6 +166,15 @@ function createFullForm(node) {
             collectDataString +="            "+field + ": " + field_id  + ".value,"
             onNodeChangedString +="        "+field_id + ".value =  node.selectedItem." + field + ";\n";
             break
+        case "long text":
+            qmlString += "            LabeledLongText {id:" + field_id + ";\n"+
+                    "                title: qsTr(\"" + field + "\");\n" +
+                    "            }\n"
+
+            collectDataString +="            "+field + ": " + field_id  + ".value,"
+            onNodeChangedString +="        "+field_id + ".value =  node.selectedItem." + field + ";\n";
+            break;
+
         default:
             qmlString += "            LabeledTextInput {id:" + field_id + ";\n"+
                     "                title: qsTr(\"" + field + "\");\n" +

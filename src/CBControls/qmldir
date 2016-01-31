@@ -3,6 +3,7 @@ NextLevelList 1.0 NextLevelList.qml
 StyledText 1.0 StyledText.qml
 LabeledComboBoxInput 1.0 LabeledComboBoxInput.qml
 LabeledTextInput 1.0 LabeledTextInput.qml
+LabeledLongText 1.0 LabeledLongText.qml
 BackgroundRect 1.0 BackgroundRect.qml
 FilterDialog 1.0 FilterDialog.qml
 LabeledDateInput 1.0 LabeledDateInput.qml

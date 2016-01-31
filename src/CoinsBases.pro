@@ -18,6 +18,7 @@ DISTFILES += \
     CBControls/BackgroundRect.qml \
     CBControls/FilterDialog.qml \
     CBControls/LabeledComboBoxInput.qml \
+    CBControls/LabeledLongText.qml \
     CBControls/LabeledTextInput.qml \
     CBControls/NextLevelList.qml \
     CBControls/LabeledDateInput.qml \

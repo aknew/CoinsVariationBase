@@ -3,7 +3,7 @@ import QtQuick.Controls 1.4
 
 FocusScope {
     width: parent.width
-    height: input.height
+    height: titleLabel.height + input.height
     signal accepted
     property alias value: input.text
     property alias title: titleLabel.text
@@ -15,19 +15,20 @@ FocusScope {
     Label {
         id: titleLabel
         text: ""
-        //font.pixelSize: 32
         font.bold: true
         anchors.left: parent.left
         anchors.leftMargin: 5
-        height: parent.height
-        verticalAlignment : Text.AlignVCenter
+        anchors.right: parent.right
+        anchors.rightMargin: 5
     }
-    TextField {
+    TextArea {
         id: input
-        anchors.left: titleLabel.right
+        anchors.top: titleLabel.bottom
+        anchors.left: parent.left
         anchors.leftMargin: 5
         anchors.right: parent.right
         anchors.rightMargin: 5
         readOnly: true
+        wrapMode:TextEdit.Wrap
     }
 }
