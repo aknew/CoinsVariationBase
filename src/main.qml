@@ -4,6 +4,7 @@ import QtQuick.Dialogs 1.2
 
 //import QtWebKit 3.0
 import CB.api 1.0
+//import CBControls 1.0
 import "FormCreator.js" as FormCreator
 
 ApplicationWindow {
@@ -203,9 +204,34 @@ ApplicationWindow {
         id: tablesStack
         anchors.fill: parent
         objectName: "tablesStack"
-        initialItem: Text {
-            property bool isListView: false
-            text: "Running on: " + Qt.platform.os + "\n" + qsTr("Open some base to start work")
+        initialItem: GridView {
+            model: CBSettings.recentBases
+            cellHeight: 200
+            cellWidth: 200
+            delegate: Rectangle{
+                height: 200
+                width: 200
+                MouseArea{
+                    anchors.fill: parent
+                    //TODO: opening base
+                }
+                Image {
+                    source: "image://baseIconProvider/" + modelData
+                    width: parent.width
+                    anchors.top:parent.top
+                    anchors.bottom: baseTitle.top
+                    anchors.bottomMargin: 5
+                    fillMode: Image.PreserveAspectFit
+
+                }
+                Text{
+                    id: baseTitle
+                    anchors.bottom: parent.bottom
+                    width: parent.width
+                    text: modelData
+                    wrapMode: Text.Wrap
+                }
+            }
         }
 
         // Implements back key navigation

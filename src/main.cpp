@@ -3,6 +3,7 @@
 
 #include "CBController.h"
 #include "CBSettings.h"
+#include "CBBaseIconProvider.h"
 
 static QObject *cbApiObjectSingleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
@@ -52,6 +53,11 @@ int main(int argc, char *argv[])
     // Init GUI
     QQmlApplicationEngine engine(QUrl("qrc:/main.qml"));
     engine.addImportPath("qrc:/");
+
+    CBBaseIconProvider *baseIconProvider = new CBBaseIconProvider(QQuickImageProvider::Pixmap);
+
+    engine.addImageProvider(QLatin1String("baseIconProvider"),baseIconProvider);
+
     QObject *topLevel = engine.rootObjects().value(0);
     QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
     if ( !window ) {

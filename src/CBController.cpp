@@ -12,6 +12,7 @@ CBController::CBController(QObject *parent) : QObject(parent)
 
 
 void CBController::start(){
+    return;
     QString basePath;
     CBSettings *settings =  CBSettings::settingsInstance();
 
