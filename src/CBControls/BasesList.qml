@@ -8,6 +8,7 @@ GridView {
     cellHeight: 200
     cellWidth: 200
     delegate: Rectangle {
+        color: "transparent"
         height: 200
         width: 200
         MouseArea {
@@ -24,18 +25,27 @@ GridView {
         }
         Image {
             source: "image://baseIconProvider/" + modelData
-            width: parent.width
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            anchors.right: parent.right
+            anchors.rightMargin: 5
             anchors.top: parent.top
+            anchors.topMargin: 5
             anchors.bottom: baseTitle.top
             anchors.bottomMargin: 5
             fillMode: Image.PreserveAspectFit
         }
         Text {
             id: baseTitle
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            anchors.right: parent.right
+            anchors.rightMargin: 5
             anchors.bottom: parent.bottom
             width: parent.width
             text: modelData
             wrapMode: Text.Wrap
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 
