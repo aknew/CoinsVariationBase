@@ -16,7 +16,7 @@ function createListForm(node) {
 
     qmlString = "import QtQuick 2.0;\n" +
                 "import CB.api 1.0;\n" +
-                "\n" +
+                "import CBControls 1.0;\n" +
                 "Rectangle {\n" +
                 "   id: mainRect;\n" +
                 "   property var formType: CBApi.ListForm\n" +

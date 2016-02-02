@@ -22,9 +22,7 @@ ApplicationWindow {
             MenuItem {
                 text: qsTr("Open...")
                 shortcut: "Ctrl+O"
-                onTriggered: openBase()
-            }
-            MenuSeparator {
+                onTriggered: tablesStack.pop(tablesStack.initialItem)
             }
         }
         Menu {
@@ -214,7 +212,6 @@ ApplicationWindow {
     }
 
     function providerReadyToWork() {
-        tablesStack.pop(tablesStack.initialItem)
         title = CBApi.baseProvider.baseTitle
         var node = CBApi.baseProvider.getStartNode()
         var listForm = FormCreator.createListForm(node)
@@ -240,31 +237,6 @@ ApplicationWindow {
         tablesStack.push(view)
     }
 
-    // Dialogs
-    FileDialog {
-        id: openBaseDialog
-        modality: Qt.WindowModal
-        title: qsTr("Choose a base's folder")
-        selectExisting: true
-        selectMultiple: false
-        selectFolder: true
-        onAccepted: {
-            CBApi.openBase(fileUrls[0])
-        }
-    }
-
-    MessageDialog {
-        id: messageDialog
-        title: qsTr("Base open error")
-        text: qsTr("Something wrong during opening base. Would you like to open another?")
-        icon: StandardIcon.Warning
-        standardButtons: StandardButton.Ok | StandardButton.Cancel
-        modality: Qt.WindowModal
-        onAccepted: {
-            openBase()
-        }
-    }
-
     MessageDialog {
         id: deleteRowDialog
         text: qsTr("Do you realy want to delete this row?")
@@ -274,35 +246,6 @@ ApplicationWindow {
         onAccepted: {
             tablesStack.currentItem.node.deleteSelectedItem()
             actionBack.trigger()
-        }
-    }
-
-    function openBase() {
-
-        openBaseDialog.open()
-    }
-
-    function openBaseAlert() {
-        messageDialog.open()
-    }
-    Connections {
-        target: CBSettings
-        onRecentBasesChanged: {
-            var count = fileMenu.items.length
-            for (var i = count - 1; i > 1; --i) {
-                fileMenu.removeItem(fileMenu.items[i])
-            }
-
-            var recentBases = CBSettings.recentBases
-            for (i = 0; i < recentBases.length; ++i) {
-                var base = recentBases[i]
-                var qmlString = "import QtQuick 2.2\nimport QtQuick.Controls 1.2\nimport CB.api 1.0\n"
-                qmlString += "MenuItem {text:\"" + base + "\"; "
-                qmlString += "onTriggered: CBApi.openRecentBase(\"" + base + "\")}"
-                var component = Qt.createQmlObject(qmlString, tablesStack,
-                                                   "menuItem")
-                fileMenu.insertItem(fileMenu.items.length, component)
-            }
         }
     }
 
