@@ -19,5 +19,6 @@
         <file>CBControls/AttachmentsList.qml</file>
         <file>CBControls/AttachmentFullInfo.qml</file>
         <file>CBControls/LabeledLongText.qml</file>
+        <file>CBControls/BasesList.qml</file>
     </qresource>
 </RCC>

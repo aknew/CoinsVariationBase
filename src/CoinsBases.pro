@@ -26,7 +26,8 @@ DISTFILES += \
     CBControls/AttachmentsList.qml \
     CBControls/AttachmentFullInfo.qml \
     FormCreator.js \
-    ru_RU.json
+    ru_RU.json \
+    CBControls/BasesList.qml
 
 RESOURCES += \
     resources.qrc

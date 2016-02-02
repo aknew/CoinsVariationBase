@@ -4,8 +4,8 @@ import QtQuick.Dialogs 1.2
 
 //import QtWebKit 3.0
 import CB.api 1.0
-//import CBControls 1.0
 import "FormCreator.js" as FormCreator
+import "qrc:/CBControls" //HOTFIX: I don't find how load it another way
 
 ApplicationWindow {
     id: mainWindow
@@ -204,35 +204,7 @@ ApplicationWindow {
         id: tablesStack
         anchors.fill: parent
         objectName: "tablesStack"
-        initialItem: GridView {
-            model: CBSettings.recentBases
-            cellHeight: 200
-            cellWidth: 200
-            delegate: Rectangle{
-                height: 200
-                width: 200
-                MouseArea{
-                    anchors.fill: parent
-                    //TODO: opening base
-                }
-                Image {
-                    source: "image://baseIconProvider/" + modelData
-                    width: parent.width
-                    anchors.top:parent.top
-                    anchors.bottom: baseTitle.top
-                    anchors.bottomMargin: 5
-                    fillMode: Image.PreserveAspectFit
-
-                }
-                Text{
-                    id: baseTitle
-                    anchors.bottom: parent.bottom
-                    width: parent.width
-                    text: modelData
-                    wrapMode: Text.Wrap
-                }
-            }
-        }
+        initialItem: BasesList{}
 
         // Implements back key navigation
         focus: true
