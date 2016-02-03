@@ -172,16 +172,23 @@ Rectangle {
         id: editRowDialog
         title: qsTr("Select value for field: ")
         property int index: -1
-        property alias name: edtName.value
+        property string name: ""
+        onNameChanged: {
+            edtName.setValue(name)
+        }
+
         property alias value: edtValue.value
 
         contentItem: Rectangle {
             implicitWidth: 400
             implicitHeight: 500
-            LabeledTextInput {
+            LabeledComboBoxInput {
                 id: edtName
                 title: qsTr("Field name:")
                 editing: true
+                anchors.topMargin: 5
+                anchors.top: parent.top
+                model:[qsTr("source"), qsTr("about")]
             }
             LabeledTextInput {
                 id: edtValue
@@ -198,13 +205,12 @@ Rectangle {
                 anchors.leftMargin: 5
                 anchors.top: edtValue.bottom
                 anchors.topMargin: 5
-                height: 40
                 text: qsTr("Apply")
                 onClicked: {
                     if (editRowDialog.index === -1) {
-                        addInfoField(edtName.value, edtValue.value)
+                        addInfoField(edtName.getValue(), edtValue.value)
                     } else {
-                        cnangeInfoField(edtName.value, edtValue.value,
+                        cnangeInfoField(edtName.getValue(), edtValue.value,
                                         editRowDialog.index)
                     }
 
@@ -217,7 +223,6 @@ Rectangle {
                 anchors.leftMargin: 5
                 anchors.top: edtValue.bottom
                 anchors.topMargin: 5
-                height: 40
                 text: qsTr("Cancel")
                 onClicked: {
                     editRowDialog.close()

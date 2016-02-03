@@ -58,7 +58,19 @@ Rectangle {
                 anchors.left: imgAttach.right
                 anchors.leftMargin: 5
                 anchors.right: editing ? btnRemove.left : parent.right
-                text: modelData.about === undefined ? modelData.file : modelData.about
+                text: {
+                    if (modelData.about !== undefined){
+                        modelData.about
+                    }
+                    else{
+                        if (modelData[qsTr("about")]!== undefined){
+                           modelData[qsTr("about")]
+                        }
+                        else{
+                            modelData.file
+                        }
+                    }
+                }
             }
             MouseArea {
                 anchors.fill: parent

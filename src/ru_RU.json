@@ -49,5 +49,7 @@
     "Something wrong during opening base. Would you like to open another?": "Something wrong during opening base. Would you like to open another?",
     "ViewTransition is only available via attached properties": "ViewTransition is only available via attached properties",
     "is not a type": "is not a type",
-    "Undo": "Отменить"
+    "Undo": "Отменить",
+    "about":"описание",
+    "source":"источник"
 }
