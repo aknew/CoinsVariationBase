@@ -51,12 +51,13 @@ int main(int argc, char *argv[])
         qDebug() << "Translation file not loaded:" << filename << "  dir:"<< ".";
 
     // Init GUI
-    QQmlApplicationEngine engine(QUrl("qrc:/main.qml"));
+    QQmlApplicationEngine engine;
     engine.addImportPath("qrc:/");
 
     CBBaseIconProvider *baseIconProvider = new CBBaseIconProvider(QQuickImageProvider::Pixmap);
 
     engine.addImageProvider(QLatin1String("baseIconProvider"),baseIconProvider);
+    engine.load(QUrl("qrc:/main.qml"));
 
     QObject *topLevel = engine.rootObjects().value(0);
     QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
