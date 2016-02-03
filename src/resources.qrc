@@ -20,5 +20,7 @@
         <file>CBControls/AttachmentFullInfo.qml</file>
         <file>CBControls/LabeledLongText.qml</file>
         <file>CBControls/BasesList.qml</file>
+        <file alias="add_database.png">../resources/add_database.png</file>
+        <file alias="database.png">../resources/database.png</file>
     </qresource>
 </RCC>

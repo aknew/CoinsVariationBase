@@ -15,7 +15,7 @@ GridView {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                //TODO: need move use some constants instead string
+                //TODO: need use some constants instead string
                 if (modelData === qsTr("Open new base")){
                     openBase()
                 }

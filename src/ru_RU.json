@@ -36,6 +36,7 @@
     "LayoutMirroring is only available via attached properties": "LayoutMirroring is only available via attached properties",
     "Locale cannot be instantiated.  Use Qt.locale()": "Locale cannot be instantiated.  Use Qt.locale()",
     "Open a base": "Откройте базу",
+    "Open new base":"Добавить новую базу",
     "Open contains folder":"Открыть папку с файлом",
     "Open file":"Открыть файл",
     "Open some base to start work":"Откройте какую-нибудь базу для начала работы",

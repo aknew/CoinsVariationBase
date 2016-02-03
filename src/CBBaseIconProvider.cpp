@@ -1,5 +1,4 @@
 #include "CBBaseIconProvider.h"
-
 #include "CBSettings.h"
 
 CBBaseIconProvider::CBBaseIconProvider(ImageType type): QQuickImageProvider(type)
@@ -21,8 +20,15 @@ QPixmap CBBaseIconProvider::requestPixmap(const QString& id, QSize* size, const 
     QString fullFilePath = CBSettings::settingsInstance()->recentPathByName(id)+"icon.png";
     QPixmap result= QPixmap(fullFilePath);
 
+
     if (result.isNull()){
-        result=QPixmap("://no_image.png");
+        //TODO: need use some constants instead string
+        if (id == QObject::tr("Open new base")){
+                result=QPixmap("://add_database.png");
+        }
+        else{
+            result=QPixmap("://database.png");
+        }
     }
 
     return result;

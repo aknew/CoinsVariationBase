@@ -68,9 +68,9 @@ void CBSettings::addRecentBase(const QString &name,const QString &path){
 
 QStringList CBSettings::recentBases(){
     QStringList bases;
-    for (auto base = recentBasesMap.begin(); base!= recentBasesMap.end(); ++base){
-        bases.append(base.key());
-    }
+    bases.append(recentBasesMap.keys());
+    //TODO: need use some constants instead string
+    bases.append(tr("Open new base"));
     return bases;
 }
 
