@@ -5,12 +5,13 @@ import CB.api 1.0
 
 GridView {
     model: CBSettings.recentBases
-    cellHeight: 200
-    cellWidth: 200
+    id: root
+    cellHeight: width/4
+    cellWidth: width/4
     delegate: Rectangle {
         color: "transparent"
-        height: 200
-        width: 200
+        height: root.width/4
+        width: root.width/4
         MouseArea {
             anchors.fill: parent
             onClicked: {
