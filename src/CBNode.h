@@ -9,15 +9,15 @@
 class CBNode : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QVariant fullFormFields MEMBER fullFormFields FINAL)
-    Q_PROPERTY(QVariant listViewFields MEMBER listViewFields FINAL)
-    Q_PROPERTY(QString tableName MEMBER tableName FINAL)
-    Q_PROPERTY(QStringList nextLevelList READ getNextLevelList  FINAL)
+    Q_PROPERTY(QVariant fullFormFields MEMBER fullFormFields CONSTANT)
+    Q_PROPERTY(QVariant listViewFields MEMBER listViewFields CONSTANT)
+    Q_PROPERTY(QString tableName MEMBER tableName CONSTANT)
+    Q_PROPERTY(QStringList nextLevelList READ getNextLevelList  CONSTANT)
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
-    Q_PROPERTY(QObject* listModel READ listModel FINAL)
-    Q_PROPERTY(bool usesUUIDs MEMBER usesUUIDs FINAL)
-    Q_PROPERTY(bool useFullForm MEMBER useFullForm FINAL)
-    Q_PROPERTY(bool useListForm MEMBER useListForm FINAL)
+    Q_PROPERTY(QObject* listModel READ listModel CONSTANT)
+    Q_PROPERTY(bool usesUUIDs MEMBER usesUUIDs CONSTANT)
+    Q_PROPERTY(bool useFullForm MEMBER useFullForm CONSTANT)
+    Q_PROPERTY(bool useListForm MEMBER useListForm CONSTANT)
     Q_PROPERTY(QObject* filterList MEMBER filterList)
 
 public:

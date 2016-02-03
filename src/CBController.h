@@ -15,7 +15,7 @@ class CBController : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(CBBaseProvider *baseProvider MEMBER m_baseProvider FINAL)
+    Q_PROPERTY(CBBaseProvider *baseProvider MEMBER m_baseProvider CONSTANT)
 
 public:
     explicit CBController(QObject *parent = 0);

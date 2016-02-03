@@ -20,8 +20,8 @@ class CBBaseProvider : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString baseTitle MEMBER m_baseTitle FINAL)
-    Q_PROPERTY(CBAttachmentsProvider *attachmentsProvider MEMBER attachmentsProvider FINAL)
+    Q_PROPERTY(QString baseTitle MEMBER m_baseTitle CONSTANT)
+    Q_PROPERTY(CBAttachmentsProvider *attachmentsProvider MEMBER attachmentsProvider CONSTANT)
 
 public:
     explicit CBBaseProvider(QObject *parent = 0):QObject(parent){}
