@@ -95,7 +95,7 @@ Item {
 
         contentItem: Rectangle {
             implicitWidth: 400
-            implicitHeight: 500
+            implicitHeight: btnApply.height + btnApply.y+ btnApply.anchors.bottomMargin
             Column{
                 anchors.top:parent.top
                 anchors.bottom:btnApply.top
@@ -135,7 +135,6 @@ Item {
                 anchors.leftMargin: 5
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 5
-                height: 40
                 text: qsTr("Apply")
                 onClicked: {
                     var val = {
@@ -158,7 +157,6 @@ Item {
                 anchors.leftMargin: 5
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 5
-                height: 40
                 text: qsTr("Cancel")
                 onClicked: {
                     editRowDialog.close()

@@ -181,7 +181,7 @@ Rectangle {
 
         contentItem: Rectangle {
             implicitWidth: 400
-            implicitHeight: 500
+            implicitHeight: btnApply.height + btnApply.y+ btnApply.anchors.bottomMargin
             LabeledComboBoxInput {
                 id: edtName
                 title: qsTr("Field name:")
