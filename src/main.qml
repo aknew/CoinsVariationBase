@@ -136,6 +136,7 @@ ApplicationWindow {
             ToolButton {
                 id: backButton
                 action: actionBack
+                visible: tablesStack.depth > 2
             }
         }
         Row {
@@ -172,7 +173,7 @@ ApplicationWindow {
             tablesStack.currentItem.state = ""
             tablesStack.currentItem.node.dropChanges()
             if (isInsertingNew) {
-                actionBack.trigger()
+                tablesStack.pop()
                 isInsertingNew = false
             } else {
                 //HOTFIX: to update data after dropping
@@ -187,11 +188,16 @@ ApplicationWindow {
         shortcut: Qt.BackButton
         onTriggered: {
             if (tablesStack.depth > 2) {
-                if (tablesStack.currentItem.formType === CBApi.FilterDialog) {
-                    tablesStack.currentItem.applyFilters()
+                var currentItem = tablesStack.currentItem;
+                if (currentItem.formType === CBApi.FilterDialog) {
+                    currentItem.applyFilters()
                 }
-
-                tablesStack.pop()
+                if (currentItem.state === "editing"){
+                    goBackDialog.open();
+                }
+                else{
+                    tablesStack.pop()
+                }
             }
         }
     }
@@ -246,6 +252,23 @@ ApplicationWindow {
         onAccepted: {
             tablesStack.currentItem.node.deleteSelectedItem()
             actionBack.trigger()
+        }
+    }
+
+    MessageDialog {
+        id: goBackDialog
+        text: qsTr("Do you realy want to go back and drop all changes?")
+        icon: StandardIcon.Warning
+        standardButtons: StandardButton.Ok | StandardButton.Cancel
+        modality: Qt.WindowModal
+        onAccepted: {
+            windowToolbar.state = ""
+            tablesStack.currentItem.state = ""
+            // TODO: move it to form because some form can  have state editing, but don't have node
+            // For example it is AttachmentFullInfo and FilterDialog
+            tablesStack.currentItem.node.dropChanges()
+            isInsertingNew = false
+            tablesStack.pop()
         }
     }
 
