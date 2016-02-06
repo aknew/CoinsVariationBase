@@ -94,8 +94,8 @@ Item {
         property alias filter: edtFilter.value
 
         contentItem: Rectangle {
-            implicitWidth: 400
-            implicitHeight: btnApply.height + btnApply.y+ btnApply.anchors.bottomMargin
+            implicitWidth: 600
+            implicitHeight:300
             Column{
                 anchors.top:parent.top
                 anchors.bottom:btnApply.top

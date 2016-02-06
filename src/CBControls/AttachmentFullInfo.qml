@@ -180,8 +180,8 @@ Rectangle {
         property alias value: edtValue.value
 
         contentItem: Rectangle {
-            implicitWidth: 400
-            implicitHeight: btnApply.height + btnApply.y+ btnApply.anchors.bottomMargin
+            implicitWidth: 600
+            implicitHeight:300
             LabeledComboBoxInput {
                 id: edtName
                 title: qsTr("Field name:")
