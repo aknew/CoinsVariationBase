@@ -24,5 +24,6 @@
         <file alias="database.png">../resources/database.png</file>
         <file alias="next">../resources/next-128.png</file>
         <file alias="previous">../resources/previous-128.png</file>
+        <file alias="right">../resources/right-64.png</file>
     </qresource>
 </RCC>

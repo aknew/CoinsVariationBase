@@ -2,3 +2,4 @@ https://www.iconfinder.com/icons/174880/database_icon#size=256
 https://www.iconfinder.com/icons/175091/add_database_icon#size=256
 https://www.iconfinder.com/icons/308956/arrow_next_icon#size=128
 https://www.iconfinder.com/icons/308957/arrow_previous_icon#size=128
+https://www.iconfinder.com/icons/308950/arrow_right_icon#size=64
