@@ -95,7 +95,7 @@ Item {
 
         contentItem: Rectangle {
             implicitWidth: 600
-            implicitHeight:Qt.platform.os == "android" ? 300 : 115
+            implicitHeight:Qt.platform.os == "android" ? 315 : 115
             Column{
                 anchors.top:parent.top
                 anchors.topMargin: 5
