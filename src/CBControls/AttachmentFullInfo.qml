@@ -18,7 +18,7 @@ Rectangle {
     }
 
     property var model
-    property int index
+    property int index: -1
 
     onIndexChanged: {
         attachmentInfo = model[index]
