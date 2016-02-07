@@ -11,7 +11,14 @@ FocusScope {
         return input.editText
     }
     function setValue(val){
-        input.currentIndex = model.indexOf(val)
+        var index = model.indexOf(val)
+        if (index === -1){
+            input.editText = val
+        }
+        else{
+
+            input.currentIndex = index
+        }
     }
     property alias title: titleLabel.text
     //property alias color: input.
