@@ -17,10 +17,18 @@ Rectangle {
         }
     }
 
+    property var model
+    property int index
+
+    onIndexChanged: {
+        attachmentInfo = model[index]
+    }
+
     property var attachmentInfo
 
     onAttachmentInfoChanged: {
         attachImage.source = "image://imageProvider/" + attachmentInfo.file
+        listModel.clear()
         for (var name in attachmentInfo) {
             if (name === "file") {
                 continue
@@ -126,6 +134,34 @@ Rectangle {
                         CBApi.baseProvider.attachmentsProvider.openAttach(
                                     attachmentInfo.file)
                     }
+                }
+            }
+            MouseArea{
+                height: 128
+                width:128
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                visible:!editing && index>0
+                onClicked: {
+                    index = index -1
+                }
+                Image {
+                    source: "/previous"
+                }
+            }
+            MouseArea{
+                height: 128
+                width:128
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.rightMargin: 5
+                visible:!editing && index<model.length-1
+                onClicked: {
+                    index = index + 1
+                }
+                Image {
+                    source: "/next"
                 }
             }
         }

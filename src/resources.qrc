@@ -22,5 +22,7 @@
         <file>CBControls/BasesList.qml</file>
         <file alias="add_database.png">../resources/add_database.png</file>
         <file alias="database.png">../resources/database.png</file>
+        <file alias="next">../resources/next-128.png</file>
+        <file alias="previous">../resources/previous-128.png</file>
     </qresource>
 </RCC>

@@ -85,7 +85,8 @@ Rectangle {
                         switch (component.status) {
                         case Component.Ready:
                             var form = component.createObject()
-                            form.attachmentInfo = modelData
+                            form.model = attachmentsListView.model
+                            form.index = index
                             mainWindow.pushToStackView(form)
                             break
                         case Component.Error:
