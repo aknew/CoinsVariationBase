@@ -95,30 +95,54 @@ Item {
 
         contentItem: Rectangle {
             implicitWidth: 600
-            implicitHeight:300
+            implicitHeight:Qt.platform.os == "android" ? 300 : 115
             Column{
                 anchors.top:parent.top
+                anchors.topMargin: 5
                 anchors.bottom:btnApply.top
                 anchors.bottomMargin: 5
                 width:parent.width
-                Row{
+                spacing: 5
+                Item{
                    width: parent.width
-                   Text{
+                   height: edtField.height
+                   Label{
+                      id: lblField
                       text: qsTr("Field:")
+                      font.bold: true
+                      anchors.left: parent.left
+                      anchors.leftMargin: 5
+                      height: parent.height
+                      verticalAlignment : Text.AlignVCenter
                    }
                    ComboBox{
                        id: edtField
                        model: node.listViewFields
+                       anchors.left: lblField.right
+                       anchors.leftMargin: 5
+                       anchors.right: parent.right
+                       anchors.rightMargin: 5
                    }
                 }
-                Row{
+                Item{
                    width: parent.width
-                   Text{
+                   height: edtRelation.height
+                   Label{
+                      id: lblRelation
                       text: qsTr("Relation:")
+                      font.bold: true
+                      anchors.left: parent.left
+                      anchors.leftMargin: 5
+                      height: parent.height
+                      verticalAlignment : Text.AlignVCenter
                    }
                    ComboBox{
                        id: edtRelation
                        model: realtions
+                       anchors.left: lblRelation.right
+                       anchors.leftMargin: 5
+                       anchors.right: parent.right
+                       anchors.rightMargin: 5
                    }
                 }
                 LabeledTextInput {

@@ -217,7 +217,7 @@ Rectangle {
 
         contentItem: Rectangle {
             implicitWidth: 600
-            implicitHeight:300
+            implicitHeight:Qt.platform.os == "android" ? 300 :100
             LabeledComboBoxInput {
                 id: edtName
                 title: qsTr("Field name:")
