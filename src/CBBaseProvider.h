@@ -12,10 +12,6 @@ class CBBaseProvider : public QObject
 /*! \brief implement base logic - reading/writing data, loading/saving images, transitions between tables, etc
  * It actually should have abstact parent, but I have only one kind of database now and don't think that will be use
  * more kinds in the nearest future
- *
- * Known limitations:
- *
- * each table has to contains primary key field called "id" and this field is used for navigation between nodes
 */
 {
     Q_OBJECT
@@ -44,9 +40,7 @@ public:
     CBImageProvider *imageProvider;
 
     //! path to about page for qml
-    Q_INVOKABLE QString getAbout(){
-        return "file:///" + rootPath + "about.html";
-    }
+    Q_INVOKABLE QString getAbout();
 
     CBTranslator translator;
 
@@ -56,7 +50,7 @@ private:
     QString m_baseTitle;
     QString startTable;
     QSqlDatabase db;
-    QMap<QString,CBNode*> nodeMap;//< Map which contains all node and uses for gwtting it by name
+    QMap<QString,CBNode*> nodeMap;//< Map which contains all node and uses for getting it by name
 
     void idWasSelected(const QString &id); //<when we set some record as selected, we need find attachments for it
 

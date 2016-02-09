@@ -112,6 +112,19 @@ void CBBaseProvider::startWithPath(const QString &path){
      return rootPath+"forms/"+node->fullFormName();
  }
 
+ QString CBBaseProvider::getAbout(){
+     //return "file:///" + rootPath + "about.html";
+     QFile file(rootPath + "about.html");
+     QString about = "";
+     if (!file.open(QIODevice::ReadOnly)){
+         qDebug() << "Cannot open about.html from "<<rootPath;
+     }else{
+         about = file.readAll();
+         file.close();
+     }
+     return about;
+ }
+
 
  void CBBaseProvider::idWasSelected(const QString &id){
      // FIXME: need add stack of previous selected ids whenwe go back from some node
