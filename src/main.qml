@@ -57,7 +57,7 @@ ApplicationWindow {
                 text: qsTr("Edit record")
                 shortcut: "Ctrl+E"
                 visible: tablesStack.currentItem.formType !== CBApi.ListForm
-                iconSource: "/icons/edit.png"
+                iconSource: "/edit"
                 onTriggered: {
                     windowToolbar.state = "editing"
                     tablesStack.currentItem.state = "editing"
@@ -65,7 +65,7 @@ ApplicationWindow {
             }
             MenuItem {
                 text: qsTr("Add new")
-                iconSource: "/icons/add.png"
+                iconSource: "/add"
                 shortcut: "Ctrl+N"
                 onTriggered: {
 
@@ -83,7 +83,7 @@ ApplicationWindow {
             }
             MenuItem {
                 text: qsTr("Delete")
-                iconSource: "/icons/delete.png"
+                iconSource: "/delete"
                 visible: tablesStack.currentItem.formType !== CBApi.ListForm
                 onTriggered: {
                     deleteRowDialog.open()
@@ -154,7 +154,7 @@ ApplicationWindow {
 
     Action {
         id: actionApply
-        iconSource: "/icons/apply.png"
+        iconSource: "/apply"
         text: qsTr("Apply")
         shortcut: "Ctrl+S"
         onTriggered: {
@@ -165,7 +165,7 @@ ApplicationWindow {
     }
     Action {
         id: actionUndo
-        iconSource: "/icons/undo.png"
+        iconSource: "/undo"
         text: qsTr("Undo")
         onTriggered: {
             windowToolbar.state = ""
@@ -183,7 +183,7 @@ ApplicationWindow {
     Action {
         id: actionBack
         text: qsTr("Back")
-        iconSource: "/icons/back.png"
+        iconSource: "/back"
         shortcut: Qt.BackButton
         onTriggered: {
             if (tablesStack.depth > 2) {

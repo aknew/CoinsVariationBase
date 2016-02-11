@@ -54,7 +54,7 @@ Item {
             Button {
                 id: btnRemove
                 anchors.right: parent.right
-                iconSource: "/icons/undo.png"
+                iconSource: "/delete"
                 onClicked: {
                     filterList.remove(index)
                 }
@@ -69,7 +69,7 @@ Item {
         anchors.bottom: parent.bottom
         Button {
             id: btnAddField
-            iconSource: "/icons/add.png"
+            iconSource: "/add"
             anchors.left: parent.left
             anchors.leftMargin: 5
             anchors.top: parent.top

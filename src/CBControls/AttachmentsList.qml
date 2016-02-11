@@ -15,7 +15,7 @@ Rectangle {
         anchors.top: parent.top
         Button {
             id: btnAddField
-            iconSource: "/icons/add.png"
+            iconSource: "/add"
             anchors.left: parent.left
             anchors.leftMargin: 5
             anchors.top: parent.top
@@ -98,7 +98,7 @@ Rectangle {
             }
             Button {
                 id: btnRemove
-                iconSource: "/icons/delete.png"
+                iconSource: "/delete"
                 visible: editing
                 anchors.right: parent.right
                 anchors.leftMargin: 5

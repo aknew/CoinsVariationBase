@@ -92,7 +92,7 @@ Rectangle {
                 }
                 Button {
                     id: btnEdit
-                    iconSource: "/icons/edit.png"
+                    iconSource: "/edit"
                     visible: editing
                     anchors.right: btnRemove.left
                     anchors.leftMargin: 5
@@ -106,7 +106,7 @@ Rectangle {
                 }
                 Button {
                     id: btnRemove
-                    iconSource: "/icons/delete.png"
+                    iconSource: "/delete"
                     visible: editing
                     anchors.right: parent.right
                     anchors.leftMargin: 5
@@ -176,7 +176,7 @@ Rectangle {
         height: 100
         Button {
             id: btnAddField
-            iconSource: "/icons/add.png"
+            iconSource: "/add"
             anchors.left: parent.left
             anchors.leftMargin: 5
             anchors.top: parent.top
