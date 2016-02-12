@@ -7,6 +7,7 @@ Item {
     id: root
     property var node
     onNodeChanged: {
+        edtField.model=node.listViewFields
         if (node.filterList){
             filterList = node.filterList;
         }
@@ -117,7 +118,6 @@ Item {
                    }
                    ComboBox{
                        id: edtField
-                       model: node.listViewFields
                        anchors.left: lblField.right
                        anchors.leftMargin: 5
                        anchors.right: parent.right
@@ -172,7 +172,6 @@ Item {
                         filterList.set(editRowDialog.index, val)
                     }
                     editRowDialog.close()
-                    console.log(filterList.count)
                 }
             }
             Button {
