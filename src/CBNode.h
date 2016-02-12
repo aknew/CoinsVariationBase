@@ -26,8 +26,8 @@ public:
     QObject *filterList = NULL; //< Uses for save listModel between filter dialog showing
     QString tableName;
 
-    QString listFormName(); //< name of list form qml file for saving and loading
-    QString fullFormName(); //< name of full form qml file for saving and loading
+    Q_INVOKABLE QString listFormName(); //< name of list form qml file for saving and loading
+    Q_INVOKABLE QString fullFormName(); //< name of full form qml file for saving and loading
 
 
     QVariant listViewFields; //< describe which fields and how should be shown in list form

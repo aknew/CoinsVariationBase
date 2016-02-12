@@ -75,7 +75,7 @@ function createListForm(node) {
         CBApi.baseProvider.saveListForm(qmlString,node)
     }
 
-    var component = Qt.createQmlObject(qmlString,tablesStack, "dynamicList"+node.tableName);
+    var component = Qt.createQmlObject(qmlString,tablesStack, node.listFormName());
     component.node = node;
 
     return component;
@@ -231,7 +231,7 @@ function createFullForm(node) {
         CBApi.baseProvider.saveFullForm(qmlString,node)
     }
 
-    component = Qt.createQmlObject(qmlString,tablesStack, "dynamicFull"+node.tableName);
+    component = Qt.createQmlObject(qmlString,tablesStack, node.fullFormName());
     component.node = node;
 
     return component;
