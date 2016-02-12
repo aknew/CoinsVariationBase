@@ -69,9 +69,43 @@ Rectangle {
         id: listModel
     }
 
+    MouseArea{
+        height: parent.height
+        width:64
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.leftMargin: 5
+        visible:!editing && index>0
+        onClicked: {
+            index = index -1
+        }
+        Image {
+            width:64
+            source: "/previous"
+            anchors.centerIn: parent
+        }
+    }
+    MouseArea{
+        height: parent.height
+        width:64
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+        visible:!editing && index<model.length-1
+        onClicked: {
+            index = index + 1
+        }
+        Image {
+            width:64
+            source: "/next"
+            anchors.centerIn: parent
+        }
+    }
+
     Flickable {
         clip: true
-        width: parent.width
+        width: parent.width-64*2
+        x: 64
         height: editing ? parent.height - bottomBar.height : parent.height
         contentHeight: attachImage.height + attachImage.y
         ListView {
@@ -134,34 +168,6 @@ Rectangle {
                         CBApi.baseProvider.attachmentsProvider.openAttach(
                                     attachmentInfo.file)
                     }
-                }
-            }
-            MouseArea{
-                height: 128
-                width:128
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 5
-                visible:!editing && index>0
-                onClicked: {
-                    index = index -1
-                }
-                Image {
-                    source: "/previous"
-                }
-            }
-            MouseArea{
-                height: 128
-                width:128
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                anchors.rightMargin: 5
-                visible:!editing && index<model.length-1
-                onClicked: {
-                    index = index + 1
-                }
-                Image {
-                    source: "/next"
                 }
             }
         }
