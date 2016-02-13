@@ -9,6 +9,7 @@ function createListForm(node) {
             return form;
         case Component.Error:
             console.log(component.errorString())
+            return;
         }
     }
 
@@ -32,7 +33,7 @@ function createListForm(node) {
     qmlString += "  Component {\n       id: delegate;\n";
 
     qmlString += "      Item {\n"+
-                 "          id: recipe;\n"+
+                 "          id: delegateItem;\n"+
                  "          width: listView.width;\n"+
                  "          height: Math.max(100,topLayout.height+10);\n";
 
@@ -92,6 +93,7 @@ function createFullForm(node) {
             return form;
         case Component.Error:
             console.log(component.errorString())
+            return;
         }
     }
 
