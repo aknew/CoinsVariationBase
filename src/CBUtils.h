@@ -6,6 +6,7 @@
 namespace CBUtils {
 void FromQmlFilePath(QString *str);
 void SaveStringToFile(const QString &stringToSave, const QString &filePath);
+void collectTranslation(const QString &original);
 
 }
 

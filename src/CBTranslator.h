@@ -11,8 +11,6 @@ class CBTranslator : public QTranslator
     Q_OBJECT
 
 private:
-    QString m_fullFileName; ///< path to load and save translation
-    void append (QString original) const; ///< add new translation
     QVariantMap strings;
 
 public:
