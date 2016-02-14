@@ -42,11 +42,8 @@ QString CBTranslator::translate(const char *context, const char *sourceText, con
     Q_UNUSED(n);
     QString original = QString(sourceText);
     QString translation = strings[original].toString();
-    if (translation.isEmpty()){
-        translation = original;
-        if (m_needCollect){
+    if (translation.isEmpty()&& m_needCollect){
             CBUtils::collectTranslation(original);
-        }
     }
     return translation;
 }
