@@ -19,7 +19,7 @@ ApplicationWindow {
             id: fileMenu
             title: qsTr("File")
             MenuItem {
-                text: qsTr("Open...")
+                text: qsTr("Open")
                 shortcut: "Ctrl+O"
                 onTriggered: tablesStack.pop(tablesStack.initialItem)
             }
