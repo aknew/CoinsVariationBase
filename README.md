@@ -1,17 +1,16 @@
 CoinsVariationBase
 ==================
 
-Assign the application - working with the database of stamp varieties of coins of the Russian Empire.
-Cause the data structure is often changed along the way, was created the system which makes easy to change it.
-Because the application is written mostly in the evenings after work, and because app was redone from qwidgwts to qml (and this process wasn't completly), and just because app is in a state "proof of concept", there is a lot of dirty hacks and just bad code in it. I will try fix the most it. The most obvious bad things:
--a very poor job with the conservation and adding values ​​in the foreign key
--there is no any processing which checks that images using in any table
--very bad user interface
+When I started this project I just wanted to create a database of Russian Imperia's coins with sqlite as data storage. After that I wanted to have ability to change database structure simple way, so I added some structure description in code and used QTableView to display data. Next step was creating struct.json as separate base structure description instead hardcoded one (because I didn't want to recompile all if I just need add one field to table, especially for few platforms - I used Windows and Ubuntu and also started to use Android) and using dinamicly generated qml as GUI (QTableView wasn't good on Android and styling didn't working, butit was in Necessitas time and Android port of Qt actually wasn't beta yet). Next I just began used my application with few bases and got something like simplify (or reduced? :) ) MS Access.
+
+If someone plans to look throw sources, he should remember that this project is just pet project (so I can't spend a lot time to it), it was started with Qt 4.7 and a lot of used components (like Qt.Controls and android support) were unstable when it was firtly used, so it can be a lot dirty hacks in code (I tryed to remove it, but I don't sure that I removed all). Also a documentation (except doxyged comments) is in Russian because I am working alone and it is my native language. English translation is just in plans
 
 
-Назначение приложения - работа с базой данных штемпельных разновидностей монет Российской Империи.
-Так как структура данных часто менялась по ходу, была придумана система позволяющая  относительно легко ее менять.
-Поскольку приложение пишется в основном вечерами после работы и из-за того что по ходу оно было переделано, да и просто по большому счету находится в данный момент в состоянии Proof of concept, в нем порядочное количество грязных хаков и просто говнокода, которые я постараюсь со временем исправить, из наиболее очевидных вещей:
--очень плохая работа с сохранением и подставновкой значений во внешние ключи
--нет обработки ненужности изображений
--совершенно никакой интерфейс сляпанный на коленке
+
+
+
+
+
+Изначально я собирался сделать для себя базу данных по разновидностям монет Российской империи с sqlite в качестве хранилища, но так уж получилось по ряду причин что в процессе мне захотелось иметь возможность быстро поменять структуру базы. Так в коде появилось формальное описание структуры базы, на основании которого данные изначально отрисовываись в QTableView. Позже это описание было вынесено в файл struct.json, за отображение данных стали отвечать динамически сгенеренные qml-файлы, оба этих изменения свзаны с портированием на Android: хотя формально QTableView и работал, он был совершенно не предназначен под мобильные устройства, в частности, скролбары были слишком мелкими, а изменение их с помощью стилей на Android'е не срабатывало (стоит отметить что это было во времена Necessitas, когда порт Qt на Android был даже не в бете), ну а вынесение struct.json связано просто с нежеланием перекомпилировать программу при каждом изменении структуры базы для нескольких платфор. Ну а дальше я просто стал использовать паралельно несколько баз с разной структурой и по факту программа превратилась в некое упрощенное подобие MS Access
+
+Если вдруг кто-то решит заглянуть в исходники, не забывайте что программа пишется в свободное время, к тому же начала писаться еще во времена Qt 4.7 и бет различных компонентов, так что там может быть изрядное количество костылей (я  пытался их убрать, но не уверен что убрал все). Также поскольку я работаю один, зачатки документации есть только на родном для меня русском языке, а перевод на английский пока только в отдаленных планах
