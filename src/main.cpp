@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     // load translator
 
     QString locale = QLocale::system().name();
-    QString filename = locale+".json";
+    QString filename = ":/"+locale+".json";
     static CBTranslator translator;
     translator.m_needCollect = true;
     if( translator.load(filename, "") ){
