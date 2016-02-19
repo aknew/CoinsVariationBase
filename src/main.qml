@@ -276,11 +276,12 @@ ApplicationWindow {
             height: 500
             width: 800
             property alias aboutHtml: aboutView.text
-            contentItem:Rectangle{ //HOTFIX: if I use text as contentItem, dialog became extremly long
+            contentItem:Flickable{
                 anchors.fill: parent
+                contentHeight: aboutView.height
                 Text{
                     id: aboutView
-                    anchors.fill: parent
+                    width: parent.width
                     wrapMode: Text.Wrap
                     onLinkActivated: Qt.openUrlExternally(link)
                 }
