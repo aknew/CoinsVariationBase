@@ -51,20 +51,16 @@ function createListForm(node) {
         var field = fieldList[i]
         qmlString += "              Text {text:"
 
-        var fieldTitleLength = 0
-
         if (fieldList.length !== 1) {
             // add field name only if we have more then 1 field in item
             qmlString += " \"<b>\"+"
             qmlString += "qsTr(\"" + field + "\")"
             qmlString += "+\":</b>\"+"
-            fieldTitleLength = field.length + 8
         }
 
         qmlString += field + ";"
 
-        qmlString += " width: parent.width; wrapMode: Text.Wrap; visible: text.length >"
-                + fieldTitleLength + ";}\n"
+        qmlString += " width: parent.width; wrapMode: Text.Wrap; visible: " + field +".length !==0;}\n"
     }
 
     qmlString += "          }\n" //Column {
