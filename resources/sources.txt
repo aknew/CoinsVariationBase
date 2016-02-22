@@ -9,3 +9,4 @@ https://www.iconfinder.com/icons/308959/arrow_left_icon#size=64
 https://www.iconfinder.com/icons/308948/arrow_undo_icon#size=128
 https://www.iconfinder.com/icons/309084/plus_icon#size=128
 https://www.iconfinder.com/icons/309090/close_cross_delete_icon#size=128
+https://www.iconfinder.com/icons/510932/calendar_date_event_schedule_icon#size=64

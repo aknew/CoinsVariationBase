@@ -26,5 +26,6 @@
         <file alias="previous">../resources/previous-128.png</file>
         <file alias="right">../resources/right-64.png</file>
         <file alias="ru_RU.json">../translations/ru_RU.json</file>
+        <file alias="calendar">../resources/calendar.png</file>
     </qresource>
 </RCC>

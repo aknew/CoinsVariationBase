@@ -17,21 +17,30 @@ FocusScope {
         id: textInput
         anchors.fill: parent
         editing: false
-    }
-    MouseArea {
-        id: mouseArea
-        enabled: false
-        anchors.fill: parent
-        onClicked: {
+        MouseArea{
+            id:mouseArea
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            anchors.rightMargin: 5
+            height: parent.height
+            width: parent.height
+            onClicked: {
+                var timestamp = Date.parse(textInput.value)
+                var d = new Date()
+                if (isNaN(timestamp) === false) {
+                    d = new Date(timestamp)
+                }
 
-            var timestamp = Date.parse(textInput.value)
-            var d = new Date()
-            if (isNaN(timestamp) === false) {
-                d = new Date(timestamp)
+                dialog.selectedDate = d
+                dialog.open()
             }
-
-            dialog.selectedDate = d
-            dialog.open()
+            Image{
+                visible: editing
+                source: "/calendar"
+                anchors.centerIn: parent
+                height: parent.height/2
+                width: parent.width/2
+            }
         }
     }
 
