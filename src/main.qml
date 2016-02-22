@@ -273,17 +273,22 @@ ApplicationWindow {
 
         Dialog {
             id: aboutDialog
-            height: 500
-            width: 800
             property alias aboutHtml: aboutView.text
-            contentItem:Flickable{
-                anchors.fill: parent
-                contentHeight: aboutView.height
-                Text{
-                    id: aboutView
-                    width: parent.width
-                    wrapMode: Text.Wrap
-                    onLinkActivated: Qt.openUrlExternally(link)
+            contentItem:Rectangle{
+                color: "white"
+                implicitHeight: mainWindow.height-100
+                implicitWidth: mainWindow.width-100
+                Flickable{
+                    clip: true
+                    anchors.fill: parent
+                    contentHeight: aboutView.height
+                    Text{
+                        id: aboutView
+                        width: parent.width
+                        wrapMode: Text.Wrap
+                        onLinkActivated: Qt.openUrlExternally(link)
+                    }
+
                 }
             }
         }
