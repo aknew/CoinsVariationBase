@@ -116,21 +116,17 @@ Rectangle {
             model: listModel
             delegate: Rectangle {
                 width: parent.width
-                height: Math.max(rowText.height, btnEdit.height)
+                height: Math.max(rowText.height, btnRemove.height)
                 Text {
                     id: rowText
                     text: "<b>" + name + ":</b> " + value
                     anchors.left: parent.left
-                    anchors.right: editing ? btnEdit.left : parent.right
+                    anchors.right: editing ? btnRemove.left : parent.right
                     wrapMode: Text.Wrap
                 }
-                Button {
-                    id: btnEdit
-                    iconSource: "/edit"
-                    visible: editing
-                    anchors.right: btnRemove.left
-                    anchors.leftMargin: 5
-                    anchors.verticalCenter: parent.verticalCenter
+                MouseArea {
+                    anchors.fill: parent
+                    enabled: editing
                     onClicked: {
                         editRowDialog.index = index
                         editRowDialog.name = name
