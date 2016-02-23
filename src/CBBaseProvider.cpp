@@ -5,6 +5,8 @@
 #include "CBUtils.h"
 #include "CBSettings.h"
 
+const QString kFormDir = "forms/";
+
 void CBBaseProvider::startWithPath(const QString &path){
 
     rootPath = path;
@@ -84,6 +86,16 @@ void CBBaseProvider::startWithPath(const QString &path){
      } else
          qDebug() << "Translation file not loaded:" << filename << "  dir:"<<rootPath;
 
+     // Creating dirs if not exists
+
+     if (!QDir(attachmentsProvider->_basePath).exists()){
+         QDir().mkdir(attachmentsProvider->_basePath);
+     }
+
+     if (!QDir(rootPath+kFormDir).exists()){
+         QDir().mkdir(rootPath+kFormDir);
+     }
+
      emit readyToWork();
 }
 
@@ -105,11 +117,11 @@ void CBBaseProvider::startWithPath(const QString &path){
  }
 
  QString CBBaseProvider::listFormPath(CBNode *node){
-     return rootPath+"forms/"+node->listFormName();
+     return rootPath+kFormDir+node->listFormName();
  }
 
  QString CBBaseProvider::fullFormPath(CBNode *node){
-     return rootPath+"forms/"+node->fullFormName();
+     return rootPath+kFormDir+node->fullFormName();
  }
 
  QString CBBaseProvider::getAbout(){

@@ -5,13 +5,15 @@
 #include <QVariantList>
 
 class CBImageProvider;
+class CBBaseProvider;
 
 class CBAttachmentsProvider : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList attributes MEMBER attributes NOTIFY attributesChanged())
 
-    friend class CBImageProvider; // For using currentPath
+    friend class CBImageProvider; //! for using currentPath
+    friend class CBBaseProvider; //! for using _basePath
 
 public:
     explicit CBAttachmentsProvider(const QString &basePath,QObject *parent = 0);
