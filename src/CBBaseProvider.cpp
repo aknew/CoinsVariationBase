@@ -75,7 +75,6 @@ void CBBaseProvider::startWithPath(const QString &path){
      settings->saveSetting();
 
      // load translator for specific base termins (mostly fieldnames)
-     // FIXME: Need 2 translators - one for base termins (this one) and one for system messages
 
      QString locale = QLocale::system().name();
      filename = QString("languages/") + locale+".json";
@@ -125,7 +124,6 @@ void CBBaseProvider::startWithPath(const QString &path){
  }
 
  QString CBBaseProvider::getAbout(){
-     //return "file:///" + rootPath + "about.html";
      QFile file(rootPath + "about.html");
      QString about = "";
      if (!file.open(QIODevice::ReadOnly)){

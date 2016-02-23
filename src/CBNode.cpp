@@ -17,12 +17,11 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
     // TODO: Добавить проверку что все хорошо прошло, проще здесь найти что таблица называется не так как в struct.json чем отлавливать это в qml
     tableName=obj.value("name").toString();
 
-    //FIXME: Cтоит создавать модели только тогда, когда они нужны и выгружать потом
+    //TODO: Need create model only when it used and delete it when we don't use it
     model=new CBSqlRelationalTableModel(this,db);
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
     model->setTable(this->tableName);
     model->applyRoles();
-    //filterParam.first = kNotValidPair;
     _listModel = NULL;
 
     QJsonValue json_usesUUIDs = obj.value("usesUUIDs");
@@ -153,7 +152,6 @@ void CBNode::applyFilters(){
         }
     }
 
-    // TODO: need analyze what it will happend if we will use filter that is defined only in one of models
     model->setFilter(fullFilterString);
     model->select();
 

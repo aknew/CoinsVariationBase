@@ -55,7 +55,7 @@ QVariantMap CBSqlRelationalTableModel::selectedItem(){
 }
 
 void CBSqlRelationalTableModel::setSelectedItem(const QVariantMap &map){
-    //FIXME: refactoring is needed
+
     QSqlRecord record=this->record(selectedRow);
     QStringList keys=map.keys();
     for (int i=0;i<keys.count();++i){

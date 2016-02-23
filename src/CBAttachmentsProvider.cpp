@@ -117,5 +117,4 @@ void CBAttachmentsProvider::openAttach(const QString &attachID){
 
 void CBAttachmentsProvider::openFolder(){
     QDesktopServices::openUrl(QUrl("file:///"+_basePath+*_selectedID, QUrl::TolerantMode));
-    //QDesktopServices::openUrl(QUrl("file:///c:/Qt"));
 }

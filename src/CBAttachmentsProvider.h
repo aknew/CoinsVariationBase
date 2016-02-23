@@ -33,10 +33,6 @@ public:
 signals:
     void attributesChanged();
 
-    /* TODO:
-     * note export
-     */
-
 private:
     QString _basePath; ///< root path of Attachments
     QString *_selectedID = NULL;
