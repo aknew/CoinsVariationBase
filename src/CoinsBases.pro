@@ -27,7 +27,9 @@ DISTFILES += \
     CBControls/AttachmentFullInfo.qml \
     FormCreator.js \
     ../translations/ru_RU.json \
-    CBControls/BasesList.qml
+    CBControls/BasesList.qml \
+    DesktopMenu.qml  \
+    AndroidMenu.qml
 
 RESOURCES += \
     resources.qrc
