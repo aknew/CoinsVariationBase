@@ -102,6 +102,94 @@ ApplicationWindow {
         }
     }
 
+    Action {
+        id: aboutDBAction
+        text: qsTr("About base")
+        onTriggered: {
+            aboutDialog.aboutHtml = CBApi.baseProvider.getAbout()
+            aboutDialog.open()
+        }
+    }
+    Action {
+        id: cloneAction
+        text: qsTr("Clone")
+        onTriggered: {
+            tablesStack.currentItem.node.cloneItem()
+            //HOTFIX: to update data after dropping
+            tablesStack.currentItem.node = tablesStack.currentItem.node
+            windowToolbar.state = "editing"
+            tablesStack.currentItem.state = "editing"
+            isInsertingNew = true
+        }
+    }
+    Action{
+        id: editAction
+        text: qsTr("Edit record")
+        shortcut: "Ctrl+E"
+        iconSource: "/edit"
+        onTriggered: {
+            windowToolbar.state = "editing"
+            tablesStack.currentItem.state = "editing"
+        }
+    }
+    Action{
+        id: newRecordAction
+        text: qsTr("Add new")
+        iconSource: "/add"
+        shortcut: "Ctrl+N"
+        onTriggered: {
+            tablesStack.currentItem.node.prepareToNewItem()
+            if (tablesStack.currentItem.formType === CBApi.ListForm) {
+                showFullForm(tablesStack.currentItem.node)
+            } else {
+                //HOTFIX: to update data after dropping
+                tablesStack.currentItem.node = tablesStack.currentItem.node
+            }
+            windowToolbar.state = "editing"
+            tablesStack.currentItem.state = "editing"
+            isInsertingNew = true
+        }
+    }
+    Action{
+        id:deleteRowAction
+        text: qsTr("Delete")
+        iconSource: "/delete"
+        onTriggered: {
+            deleteRowDialog.open()
+        }
+    }
+    Action{
+        id: openAction
+        text: qsTr("Open")
+        shortcut: "Ctrl+O"
+        onTriggered: tablesStack.pop(tablesStack.initialItem)
+    }
+    Action{
+        id: setFiltersAction
+        text: qsTr("Set filters")
+        onTriggered: {
+            var component = Qt.createComponent("CBControls/FilterDialog.qml")
+            switch (component.status) {
+            case Component.Ready:
+                var form = component.createObject()
+                form.node = tablesStack.currentItem.node
+                tablesStack.push(form)
+                break
+            case Component.Error:
+                console.log(component.errorString())
+                break
+            }
+        }
+    }
+    Action{
+        id: dropFiltersAction
+        text: qsTr("Drop filters")
+        onTriggered: {
+            tablesStack.currentItem.node.dropFilter()
+        }
+
+    }
+
     property bool needCollect: false
 
     StackView {
