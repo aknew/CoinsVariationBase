@@ -30,7 +30,8 @@ public:
     enum FormType{
         ListForm,
         FullForm,
-        FilterDialog
+        FilterDialog,
+        AttachForm
     };
     Q_ENUM(FormType)
 

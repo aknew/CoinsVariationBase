@@ -22,16 +22,21 @@ MenuBar {
         }
         Menu {
             title: qsTr("Work with data")
-            visible: tablesStack.currentItem.formType !== CBApi.FilterDialog
+            visible: tablesStack.currentItem.formType === CBApi.ListForm ||
+                     tablesStack.currentItem.formType === CBApi.FullForm ||
+                     tablesStack.currentItem.formType === CBApi.AttachForm
             MenuItem {
                 action: editAction
-                visible: tablesStack.currentItem.formType !== CBApi.ListForm
+                visible: tablesStack.currentItem.formType === CBApi.FullForm ||
+                         tablesStack.currentItem.formType === CBApi.AttachForm
             }
             MenuItem {
                 action: newRecordAction
+                visible: tablesStack.currentItem.formType === CBApi.ListForm ||
+                         tablesStack.currentItem.formType === CBApi.FullForm
             }
             MenuItem {                
-                visible: tablesStack.currentItem.formType !== CBApi.ListForm
+                visible: tablesStack.currentItem.formType === CBApi.FullForm
                 action:  deleteRowAction
             }
             MenuItem {
