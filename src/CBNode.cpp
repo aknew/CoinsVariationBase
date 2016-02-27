@@ -130,6 +130,7 @@ void CBNode::addFilter(const QString &filterString){
 }
 
 void CBNode::dropFilter(){
+    filterList = NULL;
     filter = "";
     applyFilters();
 }
