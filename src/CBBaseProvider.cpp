@@ -137,8 +137,15 @@ void CBBaseProvider::startWithPath(const QString &path){
 
 
  void CBBaseProvider::idWasSelected(const QString &id){
-     // FIXME: need add stack of previous selected ids whenwe go back from some node
+     ids.push(id);
      attachmentsProvider->selectID(id);
+ }
+
+ void CBBaseProvider::deselectCurrentId(){
+     ids.pop();
+     if (!ids.empty()){
+         attachmentsProvider->selectID(ids.top());
+     }
  }
 
  CBBaseProvider::~CBBaseProvider(){

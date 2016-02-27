@@ -96,6 +96,9 @@ ApplicationWindow {
                     goBackDialog.open();
                 }
                 else{
+                    if (currentItem.formType === CBApi.FullForm && currentItem.node.usesUUIDs){
+                        CBApi.baseProvider.deselectCurrentId();
+                    }
                     tablesStack.pop()
                 }
             }
@@ -256,6 +259,9 @@ ApplicationWindow {
             // For example it is AttachmentFullInfo and FilterDialog
             tablesStack.currentItem.node.dropChanges()
             isInsertingNew = false
+            if (currentItem.formType === CBApi.FullForm && currentItem.node.usesUUIDs){
+                CBApi.baseProvider.deselectCurrentId();
+            }
             tablesStack.pop()
         }
     }
