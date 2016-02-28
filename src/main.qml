@@ -99,6 +99,10 @@ ApplicationWindow {
                     if (currentItem.formType === CBApi.FullForm && currentItem.node.usesUUIDs){
                         CBApi.baseProvider.deselectCurrentId();
                     }
+                    if (currentItem.formType === CBApi.ListForm){
+                        tablesStack.currentItem.node.dropFilter();
+                    }
+
                     tablesStack.pop()
                 }
             }
