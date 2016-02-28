@@ -15,8 +15,6 @@ Item {
             translatedFields.append({text:qsTr(field)})
         }
 
-        console.log(translatedFields.get(2).text)
-
         if (node.filterList){
             filterList = node.filterList;
         }
