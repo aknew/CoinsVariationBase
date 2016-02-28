@@ -7,7 +7,16 @@ Item {
     id: root
     property var node
     onNodeChanged: {
-        edtField.model=node.listViewFields
+
+        translatedFields.clear();
+        var fieldList = node.listViewFields;
+        for (var i = 0; i < fieldList.length; ++i) {
+            var field = fieldList[i]
+            translatedFields.append({text:qsTr(field)})
+        }
+
+        console.log(translatedFields.get(2).text)
+
         if (node.filterList){
             filterList = node.filterList;
         }
@@ -18,9 +27,9 @@ Item {
 
     ListModel{
         id: realtions
-        ListElement{ text:"is equal"}
-        ListElement{ text:"contains"}
-        ListElement{ text:"not equal"}
+        ListElement{ text:qsTr("is equal")}
+        ListElement{ text:qsTr("contains")}
+        ListElement{ text:qsTr("not equal")}
     }
 
     ListView {
@@ -45,7 +54,7 @@ Item {
             }
 
             Text {
-                text: node.listViewFields[field] + " <b>" + realtions.get(relation).text + "</b> " +filter
+                text: qsTr(node.listViewFields[field]) + " <b>" + realtions.get(relation).text + "</b> " +filter
                 wrapMode: Text.Wrap
                 anchors.left: parent.left
                 anchors.leftMargin: 5
@@ -122,6 +131,9 @@ Item {
                        anchors.leftMargin: 5
                        anchors.right: parent.right
                        anchors.rightMargin: 5
+                       model: ListModel{
+                           id: translatedFields
+                       }
                    }
                 }
                 Item{
