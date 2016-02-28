@@ -37,6 +37,7 @@
     "about":"описание",
     "contains":"содержит",
     "is equal":"равно",
+    "not contains":"не содержит",
     "not equal":"не равно",
     "source":"источник"
 }

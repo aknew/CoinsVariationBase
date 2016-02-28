@@ -30,6 +30,7 @@ Item {
         ListElement{ text:qsTr("is equal")}
         ListElement{ text:qsTr("contains")}
         ListElement{ text:qsTr("not equal")}
+        ListElement{ text:qsTr("not contains")}
     }
 
     ListView {
@@ -219,6 +220,9 @@ Item {
             case 2:
                 condition += " = \"" + filter.filter + "\""
                 condition = "not " + condition
+                break
+            case 3:
+                condition += "not like \"%" + filter.filter + "%\""
                 break
             }
             conditions.push(condition)
