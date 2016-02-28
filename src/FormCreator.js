@@ -107,15 +107,13 @@ function createFullForm(node) {
 
     var onNodeChangedString = "  onNodeChanged:{\n";
 
-    qmlString += "   Flickable {\n"+
+    qmlString += "   ScrollView {\n"+
                  "       clip: true;\n"+
                  "       anchors.fill:parent;\n";
 
-    qmlString += "       contentHeight: contentColumn.height + nextlevel.height;\n"
-
     qmlString += "       Column {\n" +
                  "            id: contentColumn\n"+
-                 "            width: parent.width\n"
+                 "            width: mainRect.width - 20\n"
 
     var collectDataString = "    function collectData() {"+
                             "        var returnedMap = {"
@@ -202,11 +200,11 @@ function createFullForm(node) {
         stateEditableString += "        PropertyChanges {target:attachList;editing:true }"
     }
 
+
+    qmlString += "            NextLevelList {\n"+
+                 "                id:nextlevel;\n"+
+                 "            }"
     qmlString += "        }\n" //Column {
-    qmlString += "        NextLevelList {\n"+
-                 "            id:nextlevel;\n"+
-                 "            y: contentColumn.childrenRect.height+contentColumn.y\n"+
-                 "        }"
     qmlString += "    }\n" //Flickable {
 
     stateEditableString += "        PropertyChanges { target: nextlevel; visible:false }"
@@ -216,7 +214,7 @@ function createFullForm(node) {
     onNodeChangedString +="        nextlevel.model = node.nextLevelList}\n\n";
     qmlString += onNodeChangedString;
 
-    //FIXME: change string this coma deletion to Array.join
+    //FIXME: change this coma deletion to Array.join
     collectDataString = collectDataString.substring(
                 0, collectDataString.length - 1)
     collectDataString += "        }\n"+
