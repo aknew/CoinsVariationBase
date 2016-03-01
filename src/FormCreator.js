@@ -144,12 +144,16 @@ function createFullForm(node) {
         case "combo":
             qmlString += "            LabeledComboBoxInput {\n"+
                          "                id:" + field_id + ";\n"+
-                         "                title: qsTr(\"" + field + "\");\n"+
-                         "            }\n"
+                         "                title: qsTr(\"" + field + "\");\n";
 
-            onNodeChangedString +="        "+ field_id + ".model=node.listFromQuery(\"" + fieldStruct["query"]
+            if (fieldStruct["query"]){
+                onNodeChangedString +="        "+ field_id + ".model=node.listFromQuery(\"" + fieldStruct["query"]
                     + "\");\n"
-
+            }
+            else{
+                qmlString+="                model:" + fieldStruct["list"]
+            }
+            qmlString += "            }\n"
             collectDataString +="            "+field + ": " + field_id  + ".getValue(),"
             onNodeChangedString +="        "+field_id + ".setValue(node.selectedItem." + field + ");\n";
             break
