@@ -37,12 +37,12 @@ void CBSettings::saveSetting(){
     settings.setValue(kLastBasePath,QVariant(lastBasePath));
 
     settings.beginWriteArray(kRecent);
-    auto base = recentBasesMap.begin();
-    for (int i = 0; i < recentBasesMap.size(); ++i) {
+    int i = 0;
+    for (auto base = recentBasesMap.begin(); base!= recentBasesMap.end(); ++base){
         settings.setArrayIndex(i);
         settings.setValue(kBaseName, base.key());
         settings.setValue(kBasePath, base.value());
-        ++base;
+        ++i;
     }
     settings.endArray();
 }
