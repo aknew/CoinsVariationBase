@@ -46,7 +46,7 @@ void CBController::openBase(QString basePath){
     this->applicationWindow->setProperty("needCollect", QVariant(needCollect));
 
     if (m_baseProvider) {
-        //FIXME: need check that new baseProvider can be created before terminate old one
+        //TODO: need check that new baseProvider can be created before terminate old one
         delete m_baseProvider;
     }
 

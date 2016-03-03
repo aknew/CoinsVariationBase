@@ -20,7 +20,7 @@ void CBBaseProvider::startWithPath(const QString &path){
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(rootPath + "base.sqlite");
     if (!db.open()) {
-        // FIXME: need cleanup logging and excapting
+        // TODO: need cleanup logging and excaptioning
         qDebug() << "Cannot open database:" << db.lastError();
         exit(-1);
     }

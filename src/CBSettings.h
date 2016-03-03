@@ -35,7 +35,7 @@ signals:
 
 
 private:
-    //FIXME: need add operator= and copyed constructor
+    //TODO: need add operator= and copyed constructor
     explicit CBSettings(QObject *parent = 0);
     QSettings settings;
     QMap<QString, QString> recentBasesMap;

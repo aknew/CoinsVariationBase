@@ -13,7 +13,7 @@ Rectangle {
         id: listView1
         delegate: nextLevelDelegate
         width: parent.width
-        height: Qt.platform.os == "android" ? 200 : 120 //nextLevelList.count*40 //FIXME костыль, но без этого при попыткезадействовать contentHeight  получается binding loop и ничего невыводит
+        height: Qt.platform.os == "android" ? 200 : 120
         interactive: false
     }
     Component {

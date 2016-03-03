@@ -75,7 +75,7 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
         }
     }
 
-    // FIXME: need generate listViewFields and fullFormFields only when it need if it doesn't exists into json
+    // TODO: need generate listViewFields and fullFormFields only when it need if it doesn't exists into json
     QJsonValue  json_listViewFields = obj.value("listViewFields");
     if ( json_listViewFields.isArray()){
         this->listViewFields = json_listViewFields.toVariant();
