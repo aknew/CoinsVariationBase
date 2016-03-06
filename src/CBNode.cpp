@@ -174,8 +174,15 @@ QStringList CBNode::listFromQuery(QString queryString){
     }
 
     QStringList list;
+    list << "";
     while (query.next()) {
-        list<<query.value(0).toString();
+        QString str = query.value(0).toString();
+        // HOTFIX: For default empty string. I don't use sql condition because I don't want to add
+        // restrictions to query field of struct json
+        if (str == ""){
+           continue;
+        }
+        list<<str;
     }
 
     return list;

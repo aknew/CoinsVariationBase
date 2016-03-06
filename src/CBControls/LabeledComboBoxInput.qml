@@ -7,16 +7,18 @@ FocusScope {
     width: parent.width
     height: input.height
     property alias model: input.model
+
     function getValue(){
         return input.editText
     }
     function setValue(val){
         var index = model.indexOf(val)
-        if (index === -1){
+        // HOTFIX: val==="" was added because ComboBox actually don't want to set "" as curretnText from code
+        // I also create a bug in their bugtracker https://bugreports.qt.io/browse/QTBUG-51698
+        if (index === -1 || val === ""){
             input.editText = val
         }
         else{
-
             input.currentIndex = index
         }
     }
