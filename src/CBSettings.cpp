@@ -8,6 +8,7 @@ const QString kBaseName = "baseName"; //!Base name for recent, this name is show
 const QString kBasePath = "basePath"; //!Base path for recent
 const QString kIsFirstRan = "isFirstRan"; ///< hack to init settings if we ran app first time
 const QString kDefaultPath = "defaultPath"; ///< default path where will be file dialog when we want to open new base
+const QString kAttachSearchPath = "attachSearchPath"; ///< default path where we try to find attach
 
 CBSettings::CBSettings(QObject *parent) : QObject(parent),
     settings("settings.ini",QSettings::IniFormat)
@@ -23,6 +24,10 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent),
         if (!paths.empty()){
             settings.setValue(kDefaultPath,"file:///"+paths.at(0)+"/Bases/");
         }
+        paths = QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
+        if (!paths.empty()){
+            settings.setValue(kAttachSearchPath,"file:///"+paths.at(0)+"/");
+        }
 #endif
 
 #ifdef  Q_OS_ANDROID
@@ -33,6 +38,7 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent),
     lastBasePath = settings.value(kLastBasePath,"").toString();
     needCollect = settings.value(kNeedCollect,false).toBool();
     m_defaultPath = settings.value(kDefaultPath,"").toString();
+    m_attachSearchPath = settings.value(kAttachSearchPath,"").toString();
 
     int size = settings.beginReadArray(kRecent);
     for (int i = 0; i < size; ++i) {

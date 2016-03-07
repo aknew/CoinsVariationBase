@@ -128,6 +128,7 @@ Rectangle {
         modality: Qt.WindowModal
         title: qsTr("Choose a file to load as attach")
         selectMultiple: false
+        folder: CBSettings.attachSearchPath
         onAccepted: {
             var modelData = CBApi.baseProvider.attachmentsProvider.insertNewAttach(
                         fileUrls[0])
