@@ -1,6 +1,11 @@
 #include "CBSettings.h"
 #include <QStandardPaths>
 
+#ifdef  Q_OS_ANDROID
+#include <QtAndroidExtras/QAndroidJniObject>
+#include <QtAndroidExtras/QAndroidJniEnvironment>
+#endif
+
 const QString kLastBasePath="base"; //! path to last used base
 const QString kNeedCollect="needCollect"; //! determines need application collect forms and translations or not
 const QString kRecent = "recent"; //! list of previosly openned bases
@@ -31,7 +36,17 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent),
 #endif
 
 #ifdef  Q_OS_ANDROID
-        settings.setValue(kDefaultPath,"file:///storage/sdcard0/Bases");
+
+        QAndroidJniObject mediaDir = QAndroidJniObject::callStaticObjectMethod("android/os/Environment", "getExternalStorageDirectory", "()Ljava/io/File;");
+        QAndroidJniObject mediaPath = mediaDir.callObjectMethod( "getAbsolutePath", "()Ljava/lang/String;" );
+        QString dataAbsPath = "file://" + mediaPath.toString();
+        settings.setValue(kDefaultPath,dataAbsPath +"/Bases/");
+        settings.setValue(kAttachSearchPath,dataAbsPath+"/Downloads/");
+        QAndroidJniEnvironment env;
+        if (env->ExceptionCheck()) {
+                // Handle exception here.
+                env->ExceptionClear();
+        }
 #endif
     }
 

@@ -1,5 +1,9 @@
 QT       += core gui sql qml quick widgets
 
+android{
+    QT += androidextras
+}
+
 SOURCES += \
     main.cpp \
     CBController.cpp \
