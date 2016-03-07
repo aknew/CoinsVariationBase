@@ -58,6 +58,7 @@ GridView {
         selectExisting: true
         selectMultiple: false
         selectFolder: true
+        folder:CBSettings.defaultPath
         onAccepted: {
             CBApi.openBase(fileUrls[0])
         }

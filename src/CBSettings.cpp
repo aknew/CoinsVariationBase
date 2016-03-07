@@ -1,4 +1,5 @@
 #include "CBSettings.h"
+#include <QStandardPaths>
 
 const QString kLastBasePath="base"; //! path to last used base
 const QString kNeedCollect="needCollect"; //! determines need application collect forms and translations or not
@@ -6,6 +7,7 @@ const QString kRecent = "recent"; //! list of previosly openned bases
 const QString kBaseName = "baseName"; //!Base name for recent, this name is shown in GUI
 const QString kBasePath = "basePath"; //!Base path for recent
 const QString kIsFirstRan = "isFirstRan"; ///< hack to init settings if we ran app first time
+const QString kDefaultPath = "defaultPath"; ///< default path where will be file dialog when we want to open new base
 
 CBSettings::CBSettings(QObject *parent) : QObject(parent),
     settings("settings.ini",QSettings::IniFormat)
@@ -16,10 +18,21 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent),
         // we have never use settings before,let's init them
         settings.setValue(kIsFirstRan,false);
         settings.setValue(kNeedCollect,true);
+#ifdef Q_OS_WIN32
+        QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+        if (!paths.empty()){
+            settings.setValue(kDefaultPath,"file:///"+paths.at(0)+"/Bases/");
+        }
+#endif
+
+#ifdef  Q_OS_ANDROID
+        settings.setValue(kDefaultPath,"file:///storage/sdcard0/Bases");
+#endif
     }
 
     lastBasePath = settings.value(kLastBasePath,"").toString();
     needCollect = settings.value(kNeedCollect,false).toBool();
+    m_defaultPath = settings.value(kDefaultPath,"").toString();
 
     int size = settings.beginReadArray(kRecent);
     for (int i = 0; i < size; ++i) {

@@ -11,6 +11,7 @@ class CBSettings : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QStringList recentBases READ recentBases NOTIFY recentBasesChanged)
+    Q_PROPERTY(QString defaultPath MEMBER m_defaultPath CONSTANT)
 public:
     void saveSetting();
 
@@ -19,6 +20,7 @@ public:
 
     void addRecentBase(const QString &name,const QString &path);
     QStringList recentBases();
+    QString m_defaultPath;
     QString recentPathByName(const QString &name);
 
 
