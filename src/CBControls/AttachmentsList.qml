@@ -127,22 +127,11 @@ Rectangle {
         id: attachDialog
         modality: Qt.WindowModal
         title: qsTr("Choose a file to load as attach")
-        selectMultiple: false
+        selectMultiple: true
         folder: CBSettings.attachSearchPath
         onAccepted: {
-            var modelData = CBApi.baseProvider.attachmentsProvider.insertNewAttach(
-                        fileUrls[0])
-            var component = Qt.createComponent("AttachmentFullInfo.qml")
-            switch (component.status) {
-            case Component.Ready:
-                var form = component.createObject()
-                form.model = attachmentsListView.model
-                form.index = form.model.length -1
-                mainWindow.pushToStackView(form)
-                break
-            case Component.Error:
-                console.log(component.errorString())
-                break
+            for (var i =0; i< fileUrls.length; ++i){
+                CBApi.baseProvider.attachmentsProvider.insertNewAttach(fileUrls[i])
             }
         }
     }
