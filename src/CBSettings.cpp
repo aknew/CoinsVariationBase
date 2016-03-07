@@ -1,11 +1,11 @@
 #include "CBSettings.h"
 
-const QString kLastBasePath="global/base";
-const QString kNeedCollect="global/needCollect";
-const QString kRecent = "recent";
-const QString kBaseName = "baseName";
-const QString kBasePath = "basePath";
-const QString kIsFirstRan = "isFirstRan"; ///< hack to init settings if we ran it first time
+const QString kLastBasePath="base"; //! path to last used base
+const QString kNeedCollect="needCollect"; //! determines need application collect forms and translations or not
+const QString kRecent = "recent"; //! list of previosly openned bases
+const QString kBaseName = "baseName"; //!Base name for recent, this name is shown in GUI
+const QString kBasePath = "basePath"; //!Base path for recent
+const QString kIsFirstRan = "isFirstRan"; ///< hack to init settings if we ran app first time
 
 CBSettings::CBSettings(QObject *parent) : QObject(parent),
     settings("settings.ini",QSettings::IniFormat)
