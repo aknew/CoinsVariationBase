@@ -1,0 +1,5 @@
+My current goal is supporting only two system: Win 8.1 64 bit and Android 5.x, so all notes about other system mean that i tried to run app on it ones or twice, maybe fix some crashes, but they don't mean that application works well on it
+
+Known issues:
+
+I don't know why, but I can't run this project on iOs Simulator with Qt Creator. Solution: create Xcode project with ~/Qt/5.5/ios/bin/qmake -spec macx-xcode CoinsBases.pro

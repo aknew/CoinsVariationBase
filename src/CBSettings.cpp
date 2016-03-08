@@ -1,5 +1,6 @@
 #include "CBSettings.h"
 #include <QStandardPaths>
+#include <QDebug>
 
 #ifdef  Q_OS_ANDROID
 #include <QtAndroidExtras/QAndroidJniObject>
@@ -24,7 +25,7 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent),
         // we have never use settings before,let's init them
         settings.setValue(kIsFirstRan,false);
         settings.setValue(kNeedCollect,true);
-#ifdef Q_OS_WIN32
+#if defined(Q_OS_WIN32) || defined(Q_OS_MAC) || defined(Q_OS_IOS)
         QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
         if (!paths.empty()){
             settings.setValue(kDefaultPath,"file:///"+paths.at(0)+"/Bases/");
@@ -54,6 +55,8 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent),
     needCollect = settings.value(kNeedCollect,false).toBool();
     m_defaultPath = settings.value(kDefaultPath,"").toString();
     m_attachSearchPath = settings.value(kAttachSearchPath,"").toString();
+
+    qDebug()<<"Bases path: "<<m_defaultPath;
 
     int size = settings.beginReadArray(kRecent);
     for (int i = 0; i < size; ++i) {
