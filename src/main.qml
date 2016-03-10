@@ -277,6 +277,7 @@ ApplicationWindow {
                 color: "white"
                 implicitHeight: mainWindow.height-100
                 implicitWidth: mainWindow.width-100
+                Keys.onBackPressed: aboutDialog.close()
                 Flickable{
                     clip: true
                     anchors.fill: parent
@@ -287,7 +288,6 @@ ApplicationWindow {
                         wrapMode: Text.Wrap
                         onLinkActivated: Qt.openUrlExternally(link)
                     }
-
                 }
             }
         }
