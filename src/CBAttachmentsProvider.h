@@ -27,6 +27,9 @@ public:
     Q_INVOKABLE QVariantMap insertNewAttach(QString notePath); ///< new attach will copied into record folder, attributes will push into json
     Q_INVOKABLE void updateAttributes(QVariantMap newAttributes); ///< attribute field list was changed in gui and it chould be saved
     Q_INVOKABLE void openAttach(const QString &attachID); ///< open attachment file in default external application
+    /*! set this attachment file as default image (rename file to Main.jpg)
+     * */
+    Q_INVOKABLE void setMain(const QString &attachID);
     Q_INVOKABLE void openFolder();///< open attachment's folder
     Q_INVOKABLE void deleteAttach(const QString& noteID); ///< delete attach and it's attributes
 

@@ -118,3 +118,19 @@ void CBAttachmentsProvider::openAttach(const QString &attachID){
 void CBAttachmentsProvider::openFolder(){
     QDesktopServices::openUrl(QUrl("file:///"+_basePath+*_selectedID, QUrl::TolerantMode));
 }
+
+void CBAttachmentsProvider::setMain(const QString &attachID){
+    // TODO: add checking that file Main.jpg doesn't exist and this is realy jpeg
+    QFile::rename(currentPath()+attachID,currentPath()+"Main.jpg");
+    QVariant fileName = QVariant(attachID);
+    for (int i = 0; i<attributes.size(); ++i){
+        QVariantMap map = attributes.at(i).toMap();
+        if (map["file"] == fileName){
+            map["file"] = QVariant("Main.jpg");
+            attributes.replace(i, map);
+            break;
+        }
+    }
+    saveAttributes();
+    emit attributesChanged();
+}

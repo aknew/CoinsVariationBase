@@ -151,5 +151,11 @@ Rectangle {
                 CBApi.baseProvider.attachmentsProvider.openFolder()
             }
         }
+        MenuItem {
+            text: qsTr("Make this image default record image")
+            onTriggered: {
+                CBApi.baseProvider.attachmentsProvider.setMain(openMenu.file)
+            }
+        }
     }
 }
