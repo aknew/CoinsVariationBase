@@ -52,10 +52,13 @@ void CBBaseProvider::startWithPath(const QString &path){
 
      startTable = baseStruct.value("startTable").toString();
 
-     attachmentsProvider = new CBAttachmentsProvider(rootPath);
+     attachmentsProvider = new CBAttachmentsProvider(rootPath); //FIXME: memory leak
 
      imageProvider= new CBImageProvider(QQuickImageProvider::Pixmap);
      imageProvider->attachmentsProvider =attachmentsProvider;
+
+     mainProvider= new CBImageProvider(QQuickImageProvider::Pixmap, true);
+     mainProvider->attachmentsProvider =attachmentsProvider;
 
      QJsonArray nodes = baseStruct.value("nodes").toArray();
 
@@ -151,6 +154,9 @@ void CBBaseProvider::startWithPath(const QString &path){
  CBBaseProvider::~CBBaseProvider(){
      db.close();
      db.removeDatabase(rootPath + "base.sqlite");
+
+     delete imageProvider;
+     delete mainProvider;
 
      QApplication::instance()->removeTranslator(&translator);
  }

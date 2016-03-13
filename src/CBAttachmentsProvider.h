@@ -16,7 +16,7 @@ class CBAttachmentsProvider : public QObject
     friend class CBBaseProvider; //! for using _basePath
 
 public:
-    explicit CBAttachmentsProvider(const QString &basePath,QObject *parent = 0);
+    explicit CBAttachmentsProvider(const QString &basePath, QObject *parent = 0);
 
     /**
      * @brief selectID
@@ -42,6 +42,12 @@ private:
     inline QString attributePath(){
         return currentPath()+ "attributes.json";
     }
+    QString mainImagePath(QString id){
+        id.replace("%7B","{");
+        id.replace("%7D","}");
+        return _basePath + id + "/Main.jpg";
+    }
+
     QVariantList attributes;///< List of attachments for selected id with attributes, json array
     void saveAttributes(); ///<saves json with note's attributes to file into record folder
     inline QString currentPath(){

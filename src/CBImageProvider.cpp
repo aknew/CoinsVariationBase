@@ -3,7 +3,9 @@
 #include <QFile>
 #include <QFileIconProvider>
 
-CBImageProvider::CBImageProvider(ImageType type): QQuickImageProvider(type)
+CBImageProvider::CBImageProvider(ImageType type, bool _isMainProvider):
+    QQuickImageProvider(type),
+    isMainProvider(_isMainProvider)
 {
 
 }
@@ -19,7 +21,7 @@ QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSi
 {
     Q_UNUSED(size)
     Q_UNUSED(requestedSize)
-    QString fullFilePath = attachmentsProvider->currentPath()+id;
+    QString fullFilePath = isMainProvider?attachmentsProvider->mainImagePath(id):attachmentsProvider->currentPath()+id;
     QPixmap result= QPixmap(fullFilePath);
 
     if (result.isNull()){
