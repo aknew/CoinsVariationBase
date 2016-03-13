@@ -152,7 +152,7 @@ Rectangle {
             }
         }
         MenuItem {
-            text: qsTr("Make this image default record image")
+            text: qsTr("Make default image")
             onTriggered: {
                 CBApi.baseProvider.attachmentsProvider.setMain(openMenu.file)
             }
