@@ -48,7 +48,11 @@ QVariantMap CBAttachmentsProvider::insertNewAttach(QString notePath){
     if (!QDir(dirPath).exists()){
         QDir().mkdir(dirPath);
     }
-    QString fileName = QFileInfo(notePath).fileName();
+    QFileInfo fileInfo(notePath);
+    QString fileName = fileInfo.fileName();
+    if(fileInfo.completeSuffix() == "jpg" && !QFileInfo(dirPath+ "/Main.jpg").exists()){
+        fileName = "Main.jpg";
+    }
     QFile file(notePath);
     if (!file.copy(dirPath+"/"+fileName)){
         qDebug() << file.errorString();

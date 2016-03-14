@@ -24,7 +24,12 @@ public:
      */
     void selectID(const QString &newID);
 
-    Q_INVOKABLE QVariantMap insertNewAttach(QString notePath); ///< new attach will copied into record folder, attributes will push into json
+    /*! \brief new attach will copied into record folder, name will push into json
+     * If there wasn't Main.jpg and insertion is jpeg, new attach will renamed to Main.jpg.
+     * It is not good practice that provider does it without notification to user, but my usual use case -
+     * only one attach, this attach is image and I want to see it in listview
+    */
+    Q_INVOKABLE QVariantMap insertNewAttach(QString notePath);
     Q_INVOKABLE void updateAttributes(QVariantMap newAttributes); ///< attribute field list was changed in gui and it chould be saved
     Q_INVOKABLE void openAttach(const QString &attachID); ///< open attachment file in default external application
     /*! set this attachment file as default image (rename file to Main.jpg)
