@@ -39,11 +39,35 @@ function createListForm(node) {
 
     qmlString += "          BackgroundRect{}\n";
     qmlString += "          MouseArea {anchors.fill: parent; onClicked: { mainWindow.showFullForm(node,index);} }\n";
+    if (node.usesUUIDs){
+        qmlString += "        Image {\n"+
+                     "            id: image\n"+
+                     "            source: \"image://mainProvider/\" + id\n"+
+                     "            height: 90\n"+
+                     "            width: 180\n"+
+                     "            fillMode: Image.PreserveAspectFit\n"+
+                     "            anchors.left: parent.left\n"+
+                     "            anchors.leftMargin: 5\n"+
+                     "            anchors.top: parent.top\n"+
+                     "            anchors.topMargin: 5\n"+
+                     "            anchors.bottom: parent.bottom\n"+
+                     "            anchors.bottomMargin: 5\n"+
+                     "            }\n"+
+                     "         Column {\n"+
+                     "            id: topLayout;\n"+
+                     "            anchors.left: image.right\n"+
+                     "            anchors.right: parent.right\n"+
+                     "            anchors.leftMargin: 5\n"+
+                     "            anchors.rightMargin: 5\n"+
+                     "            anchors.verticalCenter: parent.verticalCenter\n";
+    }
+    else{
 
     qmlString += "          Column {\n"+
                  "          id: topLayout;\n"+
                  "          anchors.centerIn:parent;\n"+
                  "          width: listView.width-10;\n";
+        }
 
     var fieldList = node.listViewFields;
     for (var i = 0; i < fieldList.length; ++i) {
