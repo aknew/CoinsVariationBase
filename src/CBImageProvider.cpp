@@ -25,14 +25,19 @@ QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSi
     QPixmap result= QPixmap(fullFilePath);
 
     if (result.isNull()){
-        QFileIconProvider provider;
-        QIcon icon = provider.icon(fullFilePath);
-        if (icon.isNull()){
+        if (isMainProvider){
             result=QPixmap("://no_image.png");
+        }else{
+            QFileIconProvider provider;
+            QIcon icon = provider.icon(fullFilePath);
+            if (icon.isNull()){ // FIXME: not null, but icon is wrong
+                result=QPixmap("://no_image.png");
+            }
+            else{
+                result = icon.pixmap(90,90);
+            }
         }
-        else{
-            result = icon.pixmap(90,90);
-        }
+
     }
 
     return result;
