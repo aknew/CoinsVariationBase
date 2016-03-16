@@ -51,6 +51,7 @@ Rectangle {
                 height: 90
                 source: "image://imageProvider/" + modelData.file
                 fillMode: Image.PreserveAspectFit
+                cache: false
             }
             Text {
                 anchors.topMargin: 5

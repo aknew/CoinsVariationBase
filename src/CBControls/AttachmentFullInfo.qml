@@ -84,6 +84,7 @@ Rectangle {
             width:64
             source: "/previous"
             anchors.centerIn: parent
+            cache: false
         }
     }
     MouseArea{
