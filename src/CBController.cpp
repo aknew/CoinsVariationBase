@@ -46,7 +46,8 @@ void CBController::openBase(QString basePath){
     this->applicationWindow->setProperty("needCollect", QVariant(needCollect));
 
     if (m_baseProvider) {
-        //TODO: need check that new baseProvider can be created before terminate old one
+        engine->removeImageProvider(QLatin1String("imageProvider"));
+        engine->removeImageProvider(QLatin1String("mainProvider"));
         delete m_baseProvider;
     }
 
@@ -56,7 +57,6 @@ void CBController::openBase(QString basePath){
 }
 
 void CBController::providerReadyToWork(){
-
     engine->addImageProvider(QLatin1String("imageProvider"),m_baseProvider->imageProvider);
     engine->addImageProvider(QLatin1String("mainProvider"),m_baseProvider->mainProvider);
     QMetaObject::invokeMethod(this->applicationWindow,

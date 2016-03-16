@@ -52,7 +52,7 @@ void CBBaseProvider::startWithPath(const QString &path){
 
      startTable = baseStruct.value("startTable").toString();
 
-     attachmentsProvider = new CBAttachmentsProvider(rootPath); //FIXME: memory leak
+     attachmentsProvider = new CBAttachmentsProvider(rootPath,this);
 
      imageProvider= new CBImageProvider(QQuickImageProvider::Pixmap);
      imageProvider->attachmentsProvider =attachmentsProvider;
@@ -155,8 +155,7 @@ void CBBaseProvider::startWithPath(const QString &path){
      db.close();
      db.removeDatabase(rootPath + "base.sqlite");
 
-     delete imageProvider;
-     delete mainProvider;
+     //XXX: I don't destroy imageProviders here because QQmlApplicationEngine destroy it
 
      QApplication::instance()->removeTranslator(&translator);
  }
