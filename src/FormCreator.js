@@ -139,6 +139,16 @@ function createFullForm(node) {
     qmlString += "       Column {\n" +
                  "            id: contentColumn\n"+
                  "            width: mainRect.width - 20\n"
+    if (node.usesUUIDs){
+        qmlString += "            Image {\n"+
+                     "                  id: image\n"+
+                     "                  width: parent.width\n"+
+                     "                  height: Math.min(parent.width/2,300)\n"+
+                     "                  fillMode: Image.PreserveAspectFit\n"+
+                     "                  cache: false\n"+
+                     "            }\n";
+        onNodeChangedString +="        image.source =  \"image://mainProvider/\"+node.selectedItem.id\n";
+    }
 
     var collectDataString = "    function collectData() {"+
                             "        var returnedMap = {"
