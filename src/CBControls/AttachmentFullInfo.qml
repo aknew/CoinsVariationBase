@@ -84,7 +84,6 @@ Rectangle {
             width:64
             source: "/previous"
             anchors.centerIn: parent
-            cache: false
         }
     }
     MouseArea{
@@ -156,6 +155,7 @@ Rectangle {
             anchors.top: attachmentsInfoListView.bottom
             width: parent.width
             fillMode: Image.PreserveAspectFit
+            cache: false
             MouseArea {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
