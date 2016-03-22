@@ -18,12 +18,7 @@ void CBController::start(){
 
     basePath= settings->lastBasePath;
 
-    if (basePath.isEmpty()){
-        QMetaObject::invokeMethod(this->applicationWindow,
-                                  "openBase"
-                                  );
-    }
-    else {
+    if (!basePath.isEmpty()){
         try {
             this->openBase(basePath);
         }
@@ -33,7 +28,6 @@ void CBController::start(){
                                       );
         }
     }
-
 }
 
 void CBController::openBase(QString basePath){
