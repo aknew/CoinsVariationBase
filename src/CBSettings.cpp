@@ -112,5 +112,5 @@ QStringList CBSettings::recentBases(){
 }
 
 QString CBSettings::recentPathByName(const QString &name){
-    return recentBasesMap[name];
+    return recentBasesMap.contains(name)?recentBasesMap[name]:"";
 }
