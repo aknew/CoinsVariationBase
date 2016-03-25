@@ -58,11 +58,14 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 5
                 anchors.right: btnRemove.left
+                anchors.verticalCenter: parent.verticalCenter
                 anchors.rightMargin: 5
             }
             Button {
                 id: btnRemove
                 anchors.right: parent.right
+                anchors.rightMargin: 5
+                anchors.verticalCenter: parent.verticalCenter
                 iconSource: "/delete"
                 onClicked: {
                     filterList.remove(index)

@@ -102,7 +102,7 @@ Rectangle {
                 iconSource: "/delete"
                 visible: editing
                 anchors.right: parent.right
-                anchors.leftMargin: 5
+                anchors.rightMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked: {
                     deleteDialog.attachID = modelData.file
