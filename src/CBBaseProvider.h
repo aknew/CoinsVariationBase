@@ -38,7 +38,7 @@ public:
 
     CBAttachmentsProvider *attachmentsProvider;///< stores attachments information, can work with attach
     CBImageProvider *imageProvider;///< provider of images for record, shows content of image file or icon (if attach is not image)
-    CBImageProvider *mainProvider;///< provider of main images for record
+
 
     //! path to about page for qml
     Q_INVOKABLE QString getAbout();

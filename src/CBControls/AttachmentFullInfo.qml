@@ -27,8 +27,10 @@ Rectangle {
 
     property var attachmentInfo
 
+    property string currentID: CBApi.baseProvider.attachmentsProvider.currentId
+
     onAttachmentInfoChanged: {
-        attachImage.source = "image://imageProvider/" + attachmentInfo.file
+        attachImage.source = "image://imageProvider/" + currentID + "/" + attachmentInfo.file
         listModel.clear()
         for (var name in attachmentInfo) {
             if (name === "file") {
@@ -155,7 +157,6 @@ Rectangle {
             anchors.top: attachmentsInfoListView.bottom
             width: parent.width
             fillMode: Image.PreserveAspectFit
-            cache: false
             MouseArea {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton | Qt.RightButton

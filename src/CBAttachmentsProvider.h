@@ -11,6 +11,7 @@ class CBAttachmentsProvider : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList attributes MEMBER attributes NOTIFY attributesChanged())
+    Q_PROPERTY(QString currentId READ getCurrentID() NOTIFY attributesChanged())
 
     friend class CBImageProvider; //! for using currentPath
     friend class CBBaseProvider; //! for using _basePath
@@ -38,6 +39,10 @@ public:
     Q_INVOKABLE void openFolder();///< open attachment's folder
     Q_INVOKABLE void deleteAttach(const QString& noteID); ///< delete attach and it's attributes
 
+    QString getCurrentID(){
+        return *_selectedID;
+    }
+
 signals:
     void attributesChanged();
 
@@ -46,11 +51,6 @@ private:
     QString *_selectedID = NULL;
     inline QString attributePath(){
         return currentPath()+ "attributes.json";
-    }
-    QString mainImagePath(QString id){
-        id.replace("%7B","{");
-        id.replace("%7D","}");
-        return _basePath + id + "/Main.jpg";
     }
 
     QVariantList attributes;///< List of attachments for selected id with attributes, json array

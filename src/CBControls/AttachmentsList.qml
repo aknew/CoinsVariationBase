@@ -36,6 +36,8 @@ Rectangle {
         height: Math.min(contentHeight, 300)
         model: CBApi.baseProvider.attachmentsProvider.attributes
         delegate: Rectangle {
+
+            property string currentID: CBApi.baseProvider.attachmentsProvider.currentId
             width: parent.width
             height: 100
             BackgroundRect {
@@ -49,9 +51,8 @@ Rectangle {
                 anchors.leftMargin: 5
                 width: 90
                 height: 90
-                source: "image://imageProvider/" + modelData.file
+                source: "image://imageProvider/" + currentID + "/" + modelData.file
                 fillMode: Image.PreserveAspectFit
-                cache: false
             }
             Text {
                 anchors.topMargin: 5

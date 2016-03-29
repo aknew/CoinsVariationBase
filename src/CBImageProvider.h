@@ -10,13 +10,11 @@ class CBImageProvider : public QQuickImageProvider
 {
 
 public:
-    CBImageProvider( ImageType type, bool _isMainProvider = false);
+    CBImageProvider(ImageType type);
     virtual QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize);
     virtual QPixmap requestPixmap(const QString& id, QSize* size, const QSize& requestedSize);
 
     CBAttachmentsProvider *attachmentsProvider;
-private:
-    bool isMainProvider; ///<if this provider is main provider, it should show files by record UUID + Main.jpg
 };
 
 #endif // CBIMAGEPROVIDER_H

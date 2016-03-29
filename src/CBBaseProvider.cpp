@@ -57,9 +57,6 @@ void CBBaseProvider::startWithPath(const QString &path){
      imageProvider= new CBImageProvider(QQuickImageProvider::Pixmap);
      imageProvider->attachmentsProvider =attachmentsProvider;
 
-     mainProvider= new CBImageProvider(QQuickImageProvider::Pixmap, true);
-     mainProvider->attachmentsProvider =attachmentsProvider;
-
      QJsonArray nodes = baseStruct.value("nodes").toArray();
 
      foreach (QJsonValue value1,nodes) {

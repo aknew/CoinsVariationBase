@@ -42,7 +42,7 @@ function createListForm(node) {
     if (node.usesUUIDs){
         qmlString += "        Image {\n"+
                      "            id: image\n"+
-                     "            source: \"image://mainProvider/\" + id\n"+
+                     "            source: \"image://imageProvider/\" + id + \"/Main.jpg\"\n"+
                      "            height: 90\n"+
                      "            width: 180\n"+
                      "            fillMode: Image.PreserveAspectFit\n"+
@@ -52,7 +52,6 @@ function createListForm(node) {
                      "            anchors.topMargin: 5\n"+
                      "            anchors.bottom: parent.bottom\n"+
                      "            anchors.bottomMargin: 5\n"+
-                     "            cache: false\n"+
                      "            }\n"+
                      "         Column {\n"+
                      "            id: topLayout;\n"+
@@ -145,9 +144,8 @@ function createFullForm(node) {
                      "                  width: parent.width\n"+
                      "                  height: Math.min(parent.width/2,300)\n"+
                      "                  fillMode: Image.PreserveAspectFit\n"+
-                     "                  cache: false\n"+
                      "            }\n";
-        onNodeChangedString +="        image.source =  \"image://mainProvider/\"+node.selectedItem.id\n";
+        onNodeChangedString +="        image.source =  \"image://imageProvider/\"+node.selectedItem.id + \"/Main.jpg\"\n";
     }
 
     var collectDataString = "    function collectData() {"+
