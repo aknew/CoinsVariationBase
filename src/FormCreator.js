@@ -96,7 +96,7 @@ function createListForm(node) {
         CBApi.baseProvider.saveListForm(qmlString,node)
     }
 
-    var component = Qt.createQmlObject(qmlString,tablesStack, node.listFormName());
+    component = Qt.createQmlObject(qmlString,tablesStack, node.listFormName());
     component.node = node;
 
     return component;
@@ -277,7 +277,6 @@ function createMenu(){
     case Component.Ready:
         var menu = component.createObject()
         return menu;
-        break
     case Component.Error:
         console.log(component.errorString())
         break
