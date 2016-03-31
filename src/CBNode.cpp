@@ -190,9 +190,22 @@ QStringList CBNode::listFromQuery(QString queryString){
 }
 
 void CBNode::selectItemWithIndex(int index){
-        //* Uses for set selecteditem from qml
+    if (_listModel){
+        _listModel->selectedRow = index;
+        QString selId = _listModel->selectedItemId();
+        for (int i = 0; i< model->rowCount(); ++i){
+            QSqlRecord record=model->record(i);
+            QSqlField id=record.field("id");
+            if (id.value().toString() == selId){
+                model->selectedRow =i;
+                break;
+            }
+        }
+    }
+    else{
         model->selectedRow = index;
-        emit idWasSelected(model->selectedItemId());
+    }
+    emit idWasSelected(model->selectedItemId());
 
 }
 

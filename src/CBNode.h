@@ -33,7 +33,7 @@ public:
     QVariant listViewFields; //< describe which fields and how should be shown in list form
     QVariant fullFormFields; //< describe which fields and how should be shown in full form
 
-    Q_INVOKABLE void selectItemWithIndex(int index);
+    Q_INVOKABLE void selectItemWithIndex(int index); //< Uses for set selecteditem from qml
 
     QPair<QString,QString> filterForChildNode(const QString& childNodeName);
 
