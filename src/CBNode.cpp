@@ -190,7 +190,7 @@ QStringList CBNode::listFromQuery(QString queryString){
 }
 
 void CBNode::selectItemWithIndex(int index){
-    if (_listModel){
+    if (_listModel && !insertingNewRow){
         _listModel->selectedRow = index;
         QString selId = _listModel->selectedItemId();
         for (int i = 0; i< model->rowCount(); ++i){
