@@ -76,8 +76,6 @@ int main(int argc, char *argv[])
 
     QObject::connect(&app,&QApplication::aboutToQuit,cvbAPI,&CBController::appWillTerminate);
 
-    emit CBSettings::settingsInstance()->recentBasesChanged();
-
     cvbAPI->start();
 
     return app.exec();
