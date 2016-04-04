@@ -8,6 +8,7 @@
 const QString kFormDir = "forms/";
 
 void CBBaseProvider::startWithPath(const QString &path){
+    // TODO: need rewrite this method: controller should know was base loading succesed and push error messages to GUI
 
     rootPath = path;
 
@@ -22,7 +23,7 @@ void CBBaseProvider::startWithPath(const QString &path){
     if (!db.open()) {
         // TODO: need cleanup logging and excaptioning
         qDebug() << "Cannot open database:" << db.lastError();
-        exit(-1);
+        return;
     }
 
     //enable foreign key
@@ -36,7 +37,7 @@ void CBBaseProvider::startWithPath(const QString &path){
      QFile file(filename);
      if (!file.open(QIODevice::ReadOnly)){
          qDebug() << "Cannot open json";
-         exit(-1);
+         return;
      }
      QString jsonData = file.readAll();
      file.close();
@@ -45,7 +46,7 @@ void CBBaseProvider::startWithPath(const QString &path){
 
      if (sd.isNull()){
         qDebug()<<"Wrong file json format";
-        exit(-1);
+        return;
      }
      QJsonObject baseStruct = sd.object();
      m_baseTitle = baseStruct.value("baseTitle").toString();
@@ -127,7 +128,8 @@ void CBBaseProvider::startWithPath(const QString &path){
      QFile file(rootPath + "about.html");
      QString about = "";
      if (!file.open(QIODevice::ReadOnly)){
-         qDebug() << "Cannot open about.html from "<<rootPath;
+         about = m_baseTitle;
+         // When I add base backuping, I will add last backup data here
      }else{
          about = file.readAll();
          file.close();

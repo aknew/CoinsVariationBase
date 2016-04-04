@@ -1,6 +1,5 @@
 #include "CBSettings.h"
 #include <QStandardPaths>
-#include <QDebug>
 
 #ifdef  Q_OS_ANDROID
 #include <QtAndroidExtras/QAndroidJniObject>
@@ -55,8 +54,6 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent),
     needCollect = settings.value(kNeedCollect,false).toBool();
     m_defaultPath = settings.value(kDefaultPath,"").toString();
     m_attachSearchPath = settings.value(kAttachSearchPath,"").toString();
-
-    qDebug()<<"Bases path: "<<m_defaultPath;
 
     int size = settings.beginReadArray(kRecent);
     for (int i = 0; i < size; ++i) {

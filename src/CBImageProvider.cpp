@@ -1,5 +1,4 @@
 #include "CBImageProvider.h"
-#include <QDebug>
 #include <QFile>
 #include <QFileIconProvider>
 
