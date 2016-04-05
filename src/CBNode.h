@@ -69,8 +69,9 @@ signals:
     void idWasSelected(QString id);
 
     /** \brief means data was changed and qml should redraw table.
-     * this signal is emited only if we use listModel, reason - if we just use tandart model - all changes
-     *  will be emited by model,
+     * this signal is emited only if we use listModel, reason - if we just use standart model - all changes
+     *  will be emited by model, but if we use separate lit model for list representation these signals will not
+     * be accepted by qml (and actually, we have to force run listModel update)
      */
     void dataChanged();
 
