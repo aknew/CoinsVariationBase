@@ -12,9 +12,9 @@ class CBNode : public QObject
     Q_PROPERTY(QVariant fullFormFields MEMBER fullFormFields CONSTANT)
     Q_PROPERTY(QVariant listViewFields MEMBER listViewFields CONSTANT)
     Q_PROPERTY(QString tableName MEMBER tableName CONSTANT)
-    Q_PROPERTY(QStringList nextLevelList READ getNextLevelList  CONSTANT)
+    Q_PROPERTY(QStringList nextLevelList READ getNextLevelList CONSTANT)
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
-    Q_PROPERTY(QObject* listModel READ listModel CONSTANT)
+    Q_PROPERTY(QObject* listModel READ listModel NOTIFY dataChanged)
     Q_PROPERTY(bool usesUUIDs MEMBER usesUUIDs CONSTANT)
     Q_PROPERTY(bool useFullForm MEMBER useFullForm CONSTANT)
     Q_PROPERTY(bool useListForm MEMBER useListForm CONSTANT)
@@ -67,6 +67,12 @@ public:
 
 signals:
     void idWasSelected(QString id);
+
+    /** \brief means data was changed and qml should redraw table.
+     * this signal is emited only if we use listModel, reason - if we just use tandart model - all changes
+     *  will be emited by model,
+     */
+    void dataChanged();
 
 protected:
 

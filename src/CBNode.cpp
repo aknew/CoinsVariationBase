@@ -254,6 +254,10 @@ void CBNode::applyChanges(QVariantMap changedItem){
     if (insertingNewRow){
         insertingNewRow = false;
     }
+    if (_listModel){
+        _listModel->select();
+        emit dataChanged();
+    }
 }
 
 void CBNode::dropChanges(){
@@ -265,4 +269,8 @@ void CBNode::dropChanges(){
 
 void CBNode::deleteSelectedItem(){
     model->removeCurrentItem();
+    if (_listModel){
+        _listModel->select();
+        emit dataChanged();
+    }
 }
