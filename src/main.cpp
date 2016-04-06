@@ -5,6 +5,34 @@
 #include "CBSettings.h"
 #include "CBBaseIconProvider.h"
 
+void logHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    Q_UNUSED(context)
+    static QString logName = "CoinsBase" + QDateTime::currentDateTime().toString("yyyy-MM-dd-HH-mm") + ".log";
+    QString txt;
+    switch (type) {
+    case QtInfoMsg:
+        txt = QString("Info: %1").arg(msg);
+        break;
+    case QtDebugMsg:
+        txt = QString("Debug: %1").arg(msg);
+        break;
+    case QtWarningMsg:
+        txt = QString("Warning: %1").arg(msg);
+    break;
+    case QtCriticalMsg:
+        txt = QString("Critical: %1").arg(msg);
+    break;
+    case QtFatalMsg:
+        txt = QString("Fatal: %1").arg(msg);
+        abort();
+    }
+    QFile outFile(logName);
+    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+    QTextStream ts(&outFile);
+    ts << txt << endl;
+}
+
 static QObject *cbApiObjectSingleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
     Q_UNUSED(engine)
@@ -30,6 +58,7 @@ static QObject *cbSettingsObjectSingleton(QQmlEngine *engine, QJSEngine *scriptE
 int main(int argc, char *argv[])
 {
     qSetMessagePattern("%{file}(%{line}): %{message}"); //show line and file in qDebug messages
+    qInstallMessageHandler(logHandler);
 
     qmlRegisterSingletonType<CBController>("CB.api", 1, 0, "CBApi", cbApiObjectSingleton);
     qmlRegisterSingletonType<CBSettings>("CB.api", 1, 0, "CBSettings", cbSettingsObjectSingleton);
