@@ -144,6 +144,12 @@ function createFullForm(node) {
                      "                  width: parent.width\n"+
                      "                  height: Math.min(parent.width/2,300)\n"+
                      "                  fillMode: Image.PreserveAspectFit\n"+
+                     "                  MouseArea {\n"+
+                     "                             anchors.fill: parent\n"+
+                     "                             onClicked: {\n"+
+                     "                                         CBApi.baseProvider.attachmentsProvider.openAttach(\"Main.jpg\")\n"+
+                     "                                         }\n"+
+                     "                            }\n" +
                      "            }\n";
         onNodeChangedString +="        image.source =  \"image://imageProvider/\"+node.selectedItem.id + \"/Main.jpg\"\n";
     }
