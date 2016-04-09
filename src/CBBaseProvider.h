@@ -35,15 +35,11 @@ public:
     Q_INVOKABLE QString listFormPath(CBNode *node);
     Q_INVOKABLE QString fullFormPath(CBNode *node);
 
-
-    CBAttachmentsProvider *attachmentsProvider;///< stores attachments information, can work with attach
     CBImageProvider *imageProvider;///< provider of images for record, shows content of image file or icon (if attach is not image)
 
 
     //! path to about page for qml
     Q_INVOKABLE QString getAbout();
-
-    CBTranslator translator;
 
     Q_INVOKABLE void deselectCurrentId();
 
@@ -58,6 +54,10 @@ private:
     void idWasSelected(const QString &id); //<when we set some record as selected, we need find attachments for it
     void currentItemWillBeRemoved(); //< needs to recutrently remove all related items and attachment of removing item
     QStack<QString> ids;/// stack of selected ids, needs to reselect previous when we go back from full form
+
+    CBAttachmentsProvider *attachmentsProvider;///< stores attachments information, can work with attach
+
+    CBTranslator translator;
 
 signals:
     void readyToWork();

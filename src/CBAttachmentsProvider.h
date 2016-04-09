@@ -4,17 +4,11 @@
 #include <QObject>
 #include <QVariantList>
 
-class CBImageProvider;
-class CBBaseProvider;
-
 class CBAttachmentsProvider : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList attributes MEMBER attributes NOTIFY attributesChanged())
     Q_PROPERTY(QString currentId READ getCurrentID() NOTIFY attributesChanged())
-
-    friend class CBImageProvider; //! for using currentPath
-    friend class CBBaseProvider; //! for using _basePath
 
 public:
     explicit CBAttachmentsProvider(const QString &basePath, QObject *parent = 0);
@@ -44,12 +38,12 @@ public:
     }
 
     void removeSelectedIdAttaches();
+    QString _basePath; ///< root path of Attachments
 
 signals:
     void attributesChanged();
 
 private:
-    QString _basePath; ///< root path of Attachments
     QString *_selectedID = NULL;
     inline QString attributePath(){
         return currentPath()+ "attributes.json";
