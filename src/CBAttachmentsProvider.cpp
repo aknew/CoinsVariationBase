@@ -138,3 +138,10 @@ void CBAttachmentsProvider::setMain(const QString &attachID){
     saveAttributes();
     emit attributesChanged();
 }
+
+void CBAttachmentsProvider::removeSelectedIdAttaches(){
+    QDir dir(currentPath());
+    if (!dir.removeRecursively()){
+        qWarning() << "Can't remove folder at " << currentPath();
+    }
+}

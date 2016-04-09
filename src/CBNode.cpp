@@ -268,6 +268,11 @@ void CBNode::dropChanges(){
 }
 
 void CBNode::deleteSelectedItem(){
+    // FIXME: rename from delete to remove
+    if (usesUUIDs){
+        emit currentItemWillBeRemoved();
+    }
+
     model->removeCurrentItem();
     if (_listModel){
         _listModel->select();

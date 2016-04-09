@@ -43,6 +43,8 @@ public:
         return *_selectedID;
     }
 
+    void removeSelectedIdAttaches();
+
 signals:
     void attributesChanged();
 

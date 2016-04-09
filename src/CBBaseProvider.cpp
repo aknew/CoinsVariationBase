@@ -66,6 +66,7 @@ void CBBaseProvider::startWithPath(const QString &path){
          CBNode *node=new CBNode(obj,db, this);
          if (node->usesUUIDs){
              connect(node,&CBNode::idWasSelected,this,&CBBaseProvider::idWasSelected);
+             connect(node,&CBNode::currentItemWillBeRemoved,this,&CBBaseProvider::currentItemWillBeRemoved);
          }
          nodeMap.insert(node->tableName,node);
      }
@@ -141,6 +142,14 @@ void CBBaseProvider::startWithPath(const QString &path){
  void CBBaseProvider::idWasSelected(const QString &id){
      ids.push(id);
      attachmentsProvider->selectID(id);
+ }
+
+ void CBBaseProvider::currentItemWillBeRemoved(){
+     // TODO: recurently remove all related items
+
+     attachmentsProvider->removeSelectedIdAttaches();
+     deselectCurrentId();
+
  }
 
  void CBBaseProvider::deselectCurrentId(){

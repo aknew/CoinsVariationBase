@@ -68,6 +68,11 @@ public:
 signals:
     void idWasSelected(QString id);
 
+    /**
+     * This signal is recieved by BaseController and baseController removes attachs and removes all related rows in subnodes
+   */
+    void currentItemWillBeRemoved();
+
     /** \brief means data was changed and qml should redraw table.
      * this signal is emited only if we use listModel, reason - if we just use standart model - all changes
      *  will be emited by model, but if we use separate lit model for list representation these signals will not

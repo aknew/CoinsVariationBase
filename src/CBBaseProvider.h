@@ -56,6 +56,7 @@ private:
     QMap<QString,CBNode*> nodeMap;//< Map which contains all node and uses for getting it by name
 
     void idWasSelected(const QString &id); //<when we set some record as selected, we need find attachments for it
+    void currentItemWillBeRemoved(); //< needs to recutrently remove all related items and attachment of removing item
     QStack<QString> ids;/// stack of selected ids, needs to reselect previous when we go back from full form
 
 signals:
