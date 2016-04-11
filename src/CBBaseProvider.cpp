@@ -163,9 +163,11 @@ void CBBaseProvider::startWithPath(const QString &path){
  }
 
  void CBBaseProvider::deselectCurrentId(){
-     ids.pop();
      if (!ids.empty()){
-         attachmentsProvider->selectID(ids.top());
+         ids.pop();
+         if (!ids.empty()){
+             attachmentsProvider->selectID(ids.top());
+         }
      }
  }
 
