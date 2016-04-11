@@ -145,7 +145,17 @@ void CBBaseProvider::startWithPath(const QString &path){
  }
 
  void CBBaseProvider::currentItemWillBeRemoved(){
-     // TODO: recurently remove all related items
+     //Recurently remove all related items
+
+     CBNode* node = qobject_cast<CBNode*>(sender());
+
+     for (auto subnodeName : node->getNextLevelList()){
+         CBNode *subnode = getNode(subnodeName,node);
+         while(subnode->model->rowCount()){
+             subnode->selectItemWithIndex(0);
+             subnode->deleteSelectedItem();
+         }
+     }
 
      attachmentsProvider->removeSelectedIdAttaches();
      deselectCurrentId();

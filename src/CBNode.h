@@ -5,9 +5,13 @@
 
 #include "CBSqlRelationalTableModel.h"
 
+class CBBaseProvider;
+
 
 class CBNode : public QObject
 {
+    friend class CBBaseProvider;
+
     Q_OBJECT
     Q_PROPERTY(QVariant fullFormFields MEMBER fullFormFields CONSTANT)
     Q_PROPERTY(QVariant listViewFields MEMBER listViewFields CONSTANT)
