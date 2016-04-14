@@ -1,5 +1,6 @@
 #include <QtQml>
 #include <QtWidgets/QApplication>
+#include <iostream>
 
 #include "CBController.h"
 #include "CBSettings.h"
@@ -31,6 +32,12 @@ void logHandler(QtMsgType type, const QMessageLogContext &context, const QString
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
     ts << txt << endl;
+    if (type == QtInfoMsg){
+        std::cout << txt.toStdString() << std::endl;
+    }
+    else{
+        std::cerr << txt.toStdString() << std::endl;
+    }
 }
 
 static QObject *cbApiObjectSingleton(QQmlEngine *engine, QJSEngine *scriptEngine)
