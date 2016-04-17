@@ -53,9 +53,10 @@ QVariantMap CBAttachmentsProvider::insertNewAttach(QString notePath){
     if(fileInfo.completeSuffix().toLower() == "jpg" && !QFileInfo(dirPath+ "/Main.jpg").exists()){
         fileName = "Main.jpg";
     }
-    QFile file(notePath);
-    if (!file.copy(dirPath+"/"+fileName)){
-        qDebug() << file.errorString();
+
+    bool flag = CBUtils::copyRecursively(notePath,dirPath+"/"+fileName);
+    if (!flag){
+        qDebug() << "Attach wasn't copy";
     }
 
     QVariantMap newNote;
