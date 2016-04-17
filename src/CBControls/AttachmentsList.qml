@@ -14,7 +14,7 @@ Rectangle {
         height: 100
         anchors.top: parent.top
         Button {
-            id: btnAddField
+            id: btnAddFile
             iconSource: "/add"
             anchors.left: parent.left
             anchors.leftMargin: 5
@@ -24,6 +24,23 @@ Rectangle {
             width: parent.height - 10
             visible: !editing
             onClicked: {
+                attachDialog.selectFolder = false;
+                attachDialog.selectMultiple = true;
+                attachDialog.open()
+            }
+        }
+        Button {
+            id: btnAddFolder
+            iconSource: "/add_folder"
+            anchors.left: btnAddFile.right
+            anchors.leftMargin: 5
+            anchors.top: parent.top
+            anchors.topMargin: 5
+            height: parent.height - 10
+            width: parent.height - 10
+            visible: !editing
+            onClicked: {
+                attachDialog.selectFolder = true;
                 attachDialog.open()
             }
         }
@@ -129,7 +146,6 @@ Rectangle {
         id: attachDialog
         modality: Qt.WindowModal
         title: qsTr("Choose a file to load as attach")
-        selectMultiple: true
         folder: CBSettings.attachSearchPath
         onAccepted: {
             for (var i =0; i< fileUrls.length; ++i){

@@ -29,5 +29,6 @@
         <file alias="calendar">../resources/calendar.png</file>
         <file>DesktopMenu.qml</file>
         <file>AndroidMenu.qml</file>
+        <file alias="add_folder">../resources/1460912108_add_folder.png</file>
     </qresource>
 </RCC>
