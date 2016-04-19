@@ -41,7 +41,6 @@ void CBController::openBase(QString basePath){
 
     if (m_baseProvider) {
         engine->removeImageProvider(QLatin1String("imageProvider"));
-        engine->removeImageProvider(QLatin1String("mainProvider"));
         delete m_baseProvider;
     }
 
