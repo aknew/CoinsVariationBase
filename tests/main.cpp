@@ -1,6 +1,9 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
+#include <QTest>
+
+#include <CBBaseProviderTester.h>
 
 
 int main(int argc, char *argv[])
@@ -19,6 +22,8 @@ int main(int argc, char *argv[])
     system("\"c:\\Program Files\\7-Zip\\7z.exe\" x ../testData/TestBase.zip");
 
     qInfo() << "Base has been prepared, starting tests";
+
+    QTest::qExec(new CBBaseProviderTester, argc, argv);
 
     return 0;
 }
