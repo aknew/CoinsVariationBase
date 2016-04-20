@@ -25,6 +25,7 @@ private slots:
     void initTestCase(){}
     void openningBaseTest();
     void wrongSubNodes();
+    void clonningTest();
     void goToSubnode();
     void cleanupTestCase(){}
 };

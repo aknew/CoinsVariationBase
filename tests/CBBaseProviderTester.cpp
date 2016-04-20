@@ -25,6 +25,37 @@ void CBBaseProviderTester::wrongSubNodes(){
     QVERIFY(wrongSubNode == NULL);
 }
 
+void CBBaseProviderTester::clonningTest(){
+    m_current_node->selectItemWithIndex(2);
+    QVariantMap default_item = m_current_node->selectedItem();
+    m_current_node->cloneItem();
+    QVariantMap clonned_item = m_current_node->selectedItem();
+    for (auto iter: default_item.keys()){
+        if (iter == "id"){
+            QVERIFY(clonned_item[iter]!=default_item[iter]);
+        }
+        else{
+            QVERIFY(clonned_item[iter]==default_item[iter]);
+        }
+    }
+
+    clonned_item["nominal"]=QVariant("Test insert");
+
+    m_current_node->applyChanges(clonned_item);
+
+
+    m_current_node->cloneItem();
+    QVariantMap clonned_item2 = m_current_node->selectedItem();
+    for (auto iter: clonned_item.keys()){
+        if (iter == "id"){
+            QVERIFY(clonned_item2[iter]!=clonned_item[iter]);
+        }
+        else{
+            QVERIFY(clonned_item2[iter]==clonned_item[iter]);
+        }
+    }
+}
+
 
 void CBBaseProviderTester::goToSubnode(){
     QVERIFY(baseWasOpened);

@@ -72,6 +72,14 @@ public:
         return getNextLevelList().contains(name);
     }
 
+    /** \brief return selected item (i.e. sql resord) as variant map
+    * is used from qml, in future will be used for exporting record as json
+    */
+    QVariantMap selectedItem(){
+        return model->selectedItem();
+    }
+
+
 
 signals:
     void idWasSelected(QString id);
@@ -104,10 +112,6 @@ protected:
 
     QStringList getNextLevelList(){
         return childNodes.keys();
-    }
-
-    QVariantMap selectedItem(){
-        return model->selectedItem();
     }
 
     void applyFilters();
