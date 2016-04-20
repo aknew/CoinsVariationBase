@@ -68,6 +68,10 @@ public:
     bool useFullForm = false;
     bool useListForm = false;
 
+    bool containsSubnode(const QString &name){
+        return getNextLevelList().contains(name);
+    }
+
 
 signals:
     void idWasSelected(QString id);
