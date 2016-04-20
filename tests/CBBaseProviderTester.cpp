@@ -13,7 +13,16 @@ void CBBaseProviderTester::checkOpenedBase(){
     baseWasOpened = true;
 
     m_current_node = m_baseProvider->getStartNode();
+}
 
+void CBBaseProviderTester::wrongSubNodes(){
+    // try to get node which does not exist
+    CBNode *wrongSubNode = m_baseProvider->getNode("Wrong subnode",m_current_node);
+    QVERIFY(wrongSubNode == NULL);
+
+    // try to get node which exists, but not subnode of start node
+    wrongSubNode = m_baseProvider->getNode("ConcreteCoins",m_current_node);
+    QVERIFY(wrongSubNode == NULL);
 }
 
 
