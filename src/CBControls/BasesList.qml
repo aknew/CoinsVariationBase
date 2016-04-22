@@ -1,26 +1,32 @@
 import QtQuick 2.5
 import QtQuick.Dialogs 1.2
+import QtQuick.Controls 1.4
 
 import CB.api 1.0
 
 GridView {
     model: CBSettings.recentBases
     id: root
-    cellHeight: width/4
-    cellWidth: width/4
+    cellHeight: width / 4
+    cellWidth: width / 4
     delegate: Rectangle {
         color: "transparent"
-        height: root.width/4
-        width: root.width/4
+        height: root.width / 4
+        width: root.width / 4
         MouseArea {
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: {
-                //TODO: need use some constants instead string
-                if (modelData === qsTr("Open new base")){
-                    openBase()
-                }
-                else{
-                   CBApi.openRecentBase(modelData)
+                if (mouse.button === Qt.RightButton) {
+                    baseMenu.file = modelData
+                    baseMenu.popup()
+                } else {
+                    //TODO: need use some constants instead string
+                    if (modelData === qsTr("Open new base")) {
+                        openBase()
+                    } else {
+                        CBApi.openRecentBase(modelData)
+                    }
                 }
             }
         }
@@ -58,7 +64,7 @@ GridView {
         selectExisting: true
         selectMultiple: false
         selectFolder: true
-        folder:CBSettings.defaultPath
+        folder: CBSettings.defaultPath
         onAccepted: {
             CBApi.openBase(fileUrls[0])
         }
@@ -82,5 +88,17 @@ GridView {
 
     function openBaseAlert() {
         messageDialog.open()
+    }
+
+    Menu {
+        id: baseMenu
+        property string file: ""
+        MenuItem {
+            text: qsTr("Remove base from recent")
+            onTriggered: {
+                // I don't ask user is he sure because is action just remove link to base, but not data from disk
+                CBSettings.removeRecentWithName(baseMenu.file)
+            }
+        }
     }
 }
