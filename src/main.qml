@@ -121,11 +121,12 @@ ApplicationWindow {
         id: cloneAction
         text: qsTr("Clone")
         onTriggered: {
-            tablesStack.currentItem.node.cloneItem()
-            //HOTFIX: to update data after dropping
-            tablesStack.currentItem.node = tablesStack.currentItem.node
+            var currentItem = tablesStack.currentItem;
+            currentItem.node.cloneItem()
+            //HOTFIX: to update data after clonning
+            currentItem.node = currentItem.node
             windowToolbar.state = "editing"
-            tablesStack.currentItem.state = "editing"
+            currentItem.state = "editing"
             isInsertingNew = true
         }
     }

@@ -95,7 +95,7 @@ Rectangle {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                 onClicked: {
-                    if (mouse.button == Qt.RightButton) {
+                    if (mouse.button === Qt.RightButton) {
                         openMenu.file = modelData.file
                         openMenu.popup()
                     } else {
