@@ -43,8 +43,8 @@ function createListForm(node) {
         qmlString += "        Image {\n"+
                      "            id: image\n"+
                      "            source: \"image://imageProvider/\" + id + \"/Main.jpg\"\n"+
-                     "            height: 90\n"+
-                     "            width: 180\n"+
+                     "            height: parent.height-10\n"+
+                     "            width: height*2\n"+
                      "            fillMode: Image.PreserveAspectFit\n"+
                      "            anchors.left: parent.left\n"+
                      "            anchors.leftMargin: 5\n"+
