@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 
 import CB.api 1.0
+import "." // QTBUG-34418, singletons require explicit import to load qmldir file
 
 Rectangle {
 
@@ -222,7 +223,7 @@ Rectangle {
 
         contentItem: Rectangle {
             implicitWidth: 600
-            implicitHeight:Qt.platform.os == "android" ? 285 :100
+            implicitHeight: GUIStyle.isMobile ? 285 :100
             LabeledComboBoxInput {
                 id: edtName
                 title: qsTr("Field name:")

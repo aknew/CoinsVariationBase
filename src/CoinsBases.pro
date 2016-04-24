@@ -33,7 +33,8 @@ DISTFILES += \
     ../translations/ru_RU.json \
     CBControls/BasesList.qml \
     DesktopMenu.qml  \
-    AndroidMenu.qml
+    AndroidMenu.qml \
+    CBControls/GUIStyle.qml
 
 RESOURCES += \
     resources.qrc

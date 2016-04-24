@@ -10,3 +10,4 @@ LabeledDateInput 1.0 LabeledDateInput.qml
 AttachmentsList 1.0 AttachmentsList.qml
 AttachmentFullInfo 1.0 AttachmentFullInfo.qml
 BasesList 1.0 BasesList.qml
+singleton GUIStyle 1.0 GUIStyle.qml

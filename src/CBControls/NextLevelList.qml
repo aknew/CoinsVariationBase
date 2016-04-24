@@ -1,4 +1,6 @@
-import QtQuick 2.0
+import QtQuick 2.5
+import "." // QTBUG-34418, singletons require explicit import to load qmldir file
+
 
 Rectangle {
     width: parent.width
@@ -13,14 +15,14 @@ Rectangle {
         id: listView1
         delegate: nextLevelDelegate
         width: parent.width
-        height: Qt.platform.os == "android" ? 200 : 120
+        height: Math.min(contentHeight, GUIStyle.isMobile ? 200 : 120) // i.e. nextLevelDelegate.height *3
         interactive: false
     }
     Component {
         id: nextLevelDelegate
         Item {
             width: parent.width
-            height: Qt.platform.os == "android" ? 100 : 40
+            height: GUIStyle.isMobile ? 100 : 40
             BackgroundRect {
             }
             Text {

@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls 1.4
+import "." // QTBUG-34418, singletons require explicit import to load qmldir file
 
 import CB.api 1.0
 
@@ -11,7 +12,7 @@ Rectangle {
     Rectangle {
         id: attachBar
         width: parent.width
-        height: 100
+        height: GUIStyle.barHeight
         anchors.top: parent.top
         Button {
             id: btnAddFile
@@ -24,6 +25,9 @@ Rectangle {
             width: parent.height - 10
             visible: !editing
             onClicked: {
+                console.log(GUIStyle.isMobile)
+                console.log(GUIStyle.barHeight)
+                return;
                 attachDialog.selectFolder = false;
                 attachDialog.selectMultiple = true;
                 attachDialog.open()
@@ -66,8 +70,8 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.leftMargin: 5
-                width: 90
-                height: 90
+                height: parent.height-10
+                width: height*2
                 source: "image://imageProvider/" + currentID + "/" + modelData.file
                 fillMode: Image.PreserveAspectFit
             }
