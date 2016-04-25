@@ -25,9 +25,6 @@ Rectangle {
             width: parent.height - 10
             visible: !editing
             onClicked: {
-                console.log(GUIStyle.isMobile)
-                console.log(GUIStyle.barHeight)
-                return;
                 attachDialog.selectFolder = false;
                 attachDialog.selectMultiple = true;
                 attachDialog.open()

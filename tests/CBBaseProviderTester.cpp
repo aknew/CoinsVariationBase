@@ -43,17 +43,10 @@ void CBBaseProviderTester::clonningTest(){
 
     m_current_node->applyChanges(clonned_item);
 
+    // check that selected item was not changed after appliing changes
+    QVariantMap clonned_item_after_saving = m_current_node->selectedItem();
+    QVERIFY(clonned_item["id"]!=clonned_item_after_saving["id"]);
 
-    m_current_node->cloneItem();
-    QVariantMap clonned_item2 = m_current_node->selectedItem();
-    for (auto iter: clonned_item.keys()){
-        if (iter == "id"){
-            QVERIFY(clonned_item2[iter]!=clonned_item[iter]);
-        }
-        else{
-            QVERIFY(clonned_item2[iter]==clonned_item[iter]);
-        }
-    }
 }
 
 
