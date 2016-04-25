@@ -189,18 +189,25 @@ QStringList CBNode::listFromQuery(QString queryString){
 
 }
 
+void CBNode::selectItemWithID(const QString &selID)
+{
+    for (int i = 0; i< model->rowCount(); ++i){
+        QSqlRecord record=model->record(i);
+        QSqlField id=record.field("id");
+        if (id.value().toString() == selID){
+            model->selectedRow =i;
+            return;
+        }
+    }
+    //XXX: Maybe not best practice, rewrite with exaption?
+    qWarning()<<"There is no record with id "<<selID;
+}
+
 void CBNode::selectItemWithIndex(int index){
     if (_listModel && !insertingNewRow){
         _listModel->selectedRow = index;
         QString selId = _listModel->selectedItemId();
-        for (int i = 0; i< model->rowCount(); ++i){
-            QSqlRecord record=model->record(i);
-            QSqlField id=record.field("id");
-            if (id.value().toString() == selId){
-                model->selectedRow =i;
-                break;
-            }
-        }
+        selectItemWithID(selId);
     }
     else{
         model->selectedRow = index;
@@ -250,7 +257,9 @@ void CBNode::cloneItem(){
 }
 
 void CBNode::applyChanges(QVariantMap changedItem){
+    QString uuid = model->selectedItemId();
     model->setSelectedItem(changedItem);
+    selectItemWithID(uuid);
     if (insertingNewRow){
         insertingNewRow = false;
     }

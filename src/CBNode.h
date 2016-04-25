@@ -116,6 +116,8 @@ protected:
 
     void applyFilters();
 
+private:
+    void selectItemWithID(const QString &id);
 };
 
 #endif // CBNODE_H

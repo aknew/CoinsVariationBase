@@ -40,12 +40,13 @@ void CBBaseProviderTester::clonningTest(){
     }
 
     clonned_item["nominal"]=QVariant("Test insert");
+    clonned_item["firstYear"]=QVariant(1000);
 
     m_current_node->applyChanges(clonned_item);
 
     // check that selected item was not changed after appliing changes
     QVariantMap clonned_item_after_saving = m_current_node->selectedItem();
-    QVERIFY(clonned_item["id"]!=clonned_item_after_saving["id"]);
+    QVERIFY(clonned_item["id"]==clonned_item_after_saving["id"]);
 
 }
 
