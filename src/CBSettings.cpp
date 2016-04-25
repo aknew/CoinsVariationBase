@@ -112,7 +112,7 @@ QString CBSettings::recentPathByName(const QString &name){
     return recentBasesMap.contains(name)?recentBasesMap[name]:"";
 }
 
-QString CBSettings::removeRecentWithName(const QString &name){
+void CBSettings::removeRecentWithName(const QString &name){
     recentBasesMap.remove(name);
     saveSetting();
     emit recentBasesChanged();

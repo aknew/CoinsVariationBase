@@ -24,7 +24,7 @@ public:
     QString m_defaultPath;
     QString m_attachSearchPath = "";
     QString recentPathByName(const QString &name);
-    Q_INVOKABLE QString removeRecentWithName(const QString &name);
+    Q_INVOKABLE void removeRecentWithName(const QString &name);
 
 
     static CBSettings *settingsInstance(){
