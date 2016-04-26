@@ -179,7 +179,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        height: 100
+        height: GUIStyle.barHeight
         Button {
             id: btnAddField
             iconSource: "/add"

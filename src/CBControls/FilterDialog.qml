@@ -3,6 +3,8 @@ import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import CB.api 1.0
 
+import "." // QTBUG-34418, singletons require explicit import to load qmldir file
+
 Item {
     id: root
     property var node
@@ -77,7 +79,7 @@ Item {
     Rectangle {
         id: bar
         width: parent.width
-        height: 100
+        height: GUIStyle.barHeight
         anchors.bottom: parent.bottom
         Button {
             id: btnAddField
