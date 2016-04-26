@@ -149,7 +149,6 @@ void CBBaseProvider::startWithPath(const QString &path){
      CBNode* node = qobject_cast<CBNode*>(sender());
      selectedDescription.push(node->selectedItemDescription());
      attachmentsProvider->selectID(id);
-     qDebug() << getSelectedWay();
  }
 
  void CBBaseProvider::currentItemWillBeRemoved(){
@@ -178,7 +177,6 @@ void CBBaseProvider::startWithPath(const QString &path){
              attachmentsProvider->selectID(ids.top());
          }
      }
-     qDebug() << getSelectedWay();
  }
 
  QString CBBaseProvider::getSelectedWay(){

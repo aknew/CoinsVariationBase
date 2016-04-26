@@ -118,6 +118,14 @@ ApplicationWindow {
         }
     }
     Action {
+        id: aboutCurrentSelectedItem
+        text: qsTr("How have I came here?") // Mean what item have I selected before current form
+        onTriggered: {
+            aboutDialog.aboutHtml = CBApi.baseProvider.getSelectedWay()
+            aboutDialog.open()
+        }
+    }
+    Action {
         id: cloneAction
         text: qsTr("Clone")
         onTriggered: {

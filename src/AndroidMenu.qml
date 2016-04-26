@@ -36,6 +36,9 @@ MenuBar {
             MenuItem {
                 action: aboutDBAction
             }
+            MenuItem {
+                action: aboutCurrentSelectedItem
+            }
         }
     }
 

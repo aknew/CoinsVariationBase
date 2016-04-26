@@ -290,12 +290,12 @@ void CBNode::deleteSelectedItem(){
 }
 
 QString CBNode::selectedItemDescription(){
-    QString str = "<b>"+tr(tableName.toStdString().c_str()) + "</b>:\n";
+    QString str = "<b>"+tr(tableName.toStdString().c_str()) + "</b>:<br>";
     QVariantMap selected = this->selectedItem();
     for (auto iter: listViewFields.toStringList()){
         // TODO: need load formated string from json and fill it
         if (selected.contains(iter)){
-            str = str + tr(iter.toStdString().c_str())+": " + selected[iter].toString() + "\n";
+            str = str + tr(iter.toStdString().c_str())+": " + selected[iter].toString() + "<br>";
         }
     }
     return str;
