@@ -79,6 +79,11 @@ public:
         return model->selectedItem();
     }
 
+    /** \brief create string which describe selected item
+     * usually it is just concatineted listview fields from current node tables
+     */
+    QString selectedItemDescription();
+
 
 
 signals:

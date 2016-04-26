@@ -146,7 +146,10 @@ void CBBaseProvider::startWithPath(const QString &path){
 
  void CBBaseProvider::idWasSelected(const QString &id){
      ids.push(id);
+     CBNode* node = qobject_cast<CBNode*>(sender());
+     selectedDescription.push(node->selectedItemDescription());
      attachmentsProvider->selectID(id);
+     qDebug() << getSelectedWay();
  }
 
  void CBBaseProvider::currentItemWillBeRemoved(){
@@ -170,10 +173,20 @@ void CBBaseProvider::startWithPath(const QString &path){
  void CBBaseProvider::deselectCurrentId(){
      if (!ids.empty()){
          ids.pop();
+         selectedDescription.pop();
          if (!ids.empty()){
              attachmentsProvider->selectID(ids.top());
          }
      }
+     qDebug() << getSelectedWay();
+ }
+
+ QString CBBaseProvider::getSelectedWay(){
+     QString str = "";
+     for (auto iter: selectedDescription){
+         str += iter;
+     }
+     return str;
  }
 
  CBBaseProvider::~CBBaseProvider(){
@@ -184,3 +197,4 @@ void CBBaseProvider::startWithPath(const QString &path){
 
      QApplication::instance()->removeTranslator(&translator);
  }
+
