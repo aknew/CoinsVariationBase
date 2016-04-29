@@ -53,41 +53,45 @@ function createListForm(node) {
                      "            anchors.bottom: parent.bottom\n"+
                      "            anchors.bottomMargin: 5\n"+
                      "            }\n"+
-                     "         Column {\n"+
+                     "         Text {\n"+
                      "            id: topLayout;\n"+
                      "            anchors.left: image.right\n"+
                      "            anchors.right: parent.right\n"+
                      "            anchors.leftMargin: 5\n"+
                      "            anchors.rightMargin: 5\n"+
-                     "            anchors.verticalCenter: parent.verticalCenter\n";
+                     "            anchors.verticalCenter: parent.verticalCenter\n" +
+                     "            text:"
     }
     else{
 
-    qmlString += "          Column {\n"+
-                 "          id: topLayout;\n"+
-                 "          anchors.centerIn:parent;\n"+
-                 "          width: listView.width-10;\n";
+    qmlString += "          Text {\n"+
+                 "              id: topLayout;\n"+
+                 "              anchors.centerIn:parent;\n"+
+                 "              width: listView.width-10;\n"+
+                 "              text:"
         }
 
     var fieldList = node.listViewFields;
+    var arr = [];
     for (var i = 0; i < fieldList.length; ++i) {
 
         var field = fieldList[i]
-        qmlString += "              Text {text:"
+        if (field.length !==0){
+            var str = "";
 
-        if (fieldList.length !== 1) {
-            // add field name only if we have more then 1 field in item
-            qmlString += " \"<b>\"+"
-            qmlString += "qsTr(\"" + field + "\")"
-            qmlString += "+\":</b>\"+"
+            if (fieldList.length !== 1) {
+                // add field name only if we have more then 1 field in item
+                str += " \"<b>\"+"
+                str += "qsTr(\"" + field + "\")"
+                str += "+\":</b>\"+"
+            }
+            str += field
+            arr.push(str)
         }
-
-        qmlString += field + ";"
-
-        qmlString += " width: parent.width; wrapMode: Text.Wrap; visible: " + field +".length !==0;}\n"
     }
+    qmlString += arr.join("+\"<br>\"+\n") + "\n"
+    qmlString += "              wrapMode: Text.Wrap;}\n"
 
-    qmlString += "          }\n" //Column {
     qmlString += "      }\n" //Item {
     qmlString += "  }\n" //Component {
     qmlString += "}" // mainRect
