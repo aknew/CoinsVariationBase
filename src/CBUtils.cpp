@@ -79,3 +79,8 @@ bool CBUtils::copyRecursively(const QString &srcFilePath,
     }
     return true;
 }
+
+void CBUtils::stringDifference(QString &string1,QString &string2, QString &diff1, QString &diff2){
+    const QString startDifference = "<font color=\"red\">";
+    const QString endDifference =   "</font>";
+}
