@@ -96,11 +96,12 @@ function createListForm(node) {
     qmlString += "  }\n" //Component {
     qmlString += "}" // mainRect
 
+    var formName = node.listFormName();
     if (needCollect) {
-        CBApi.baseProvider.saveListForm(qmlString,node)
+        CBApi.saveForm(qmlString,formName)
     }
 
-    component = Qt.createQmlObject(qmlString,tablesStack, node.listFormName());
+    component = Qt.createQmlObject(qmlString,tablesStack, formName);
     component.node = node;
 
     return component;
@@ -270,11 +271,12 @@ function createFullForm(node) {
     qmlString += collectDataString
     qmlString += "}" // mainRect
 
+    var formName =  node.fullFormName()
     if (needCollect) {
-        CBApi.baseProvider.saveFullForm(qmlString,node)
+        CBApi.saveForm(qmlString,formName)
     }
 
-    component = Qt.createQmlObject(qmlString,tablesStack, node.fullFormName());
+    component = Qt.createQmlObject(qmlString,tablesStack, formName);
     component.node = node;
 
     return component;

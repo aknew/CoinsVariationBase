@@ -27,6 +27,8 @@ public:
     Q_INVOKABLE void openBase(QString basePath); ///< open base with path, is usualy called from qml openDialog and from start method
     Q_INVOKABLE void openRecentBase(QString baseName); ///< try to open recent base by name, its path will be got from settings
 
+    Q_INVOKABLE void saveForm(const QString& qmlString, const QString& formName);
+
     enum FormType{
         ListForm,
         FullForm,

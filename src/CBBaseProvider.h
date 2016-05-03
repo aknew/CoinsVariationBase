@@ -30,8 +30,6 @@ public:
         return getNode(startTable);
     }
 
-    Q_INVOKABLE void saveListForm(const QString& qmlString, CBNode *node);
-    Q_INVOKABLE void saveFullForm(const QString& qmlString, CBNode *node);
     Q_INVOKABLE QString listFormPath(CBNode *node);
     Q_INVOKABLE QString fullFormPath(CBNode *node);
 

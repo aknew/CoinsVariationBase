@@ -68,3 +68,11 @@ void CBController::appWillTerminate(){
         delete m_baseProvider;
     }
 }
+
+void CBController::saveForm(const QString& qmlString, const QString& formName){
+    const QString formRoot = "generatedForms/";
+    if (!QDir(formRoot).exists()){
+        QDir().mkdir(formRoot);
+    }
+    CBUtils::SaveStringToFile(qmlString,formRoot + formName);
+}

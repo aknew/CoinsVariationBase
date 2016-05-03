@@ -114,14 +114,6 @@ void CBBaseProvider::startWithPath(const QString &path){
     return node;
 }
 
- void CBBaseProvider::saveListForm(const QString& qmlString, CBNode *node){
-     CBUtils::SaveStringToFile(qmlString,listFormPath(node));
- }
-
- void CBBaseProvider::saveFullForm(const QString& qmlString, CBNode *node){
-     CBUtils::SaveStringToFile(qmlString,fullFormPath(node));
- }
-
  QString CBBaseProvider::listFormPath(CBNode *node){
      return rootPath+kFormDir+node->listFormName();
  }
