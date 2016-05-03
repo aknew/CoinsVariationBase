@@ -197,7 +197,7 @@ function createFullForm(node) {
                 qmlString+="                model:" + fieldStruct["list"]
             }
             qmlString += "            }\n"
-            collectDataString +="            "+field + ": " + field_id  + ".getValue(),"
+            collectDataString +="            "+field + ": " + field_id  + ".getValue(),\n"
             onNodeChangedString +="        "+field_id + ".setValue(node.selectedItem." + field + ");\n";
             break
         case "date":
@@ -206,7 +206,7 @@ function createFullForm(node) {
                          "                title: qsTr(\"" + field + "\");\n" +
                          "            }\n"
 
-            collectDataString +="            "+field + ": " + field_id  + ".value,"
+            collectDataString +="            "+field + ": " + field_id  + ".value,\n"
             onNodeChangedString +="        "+field_id + ".value =  node.selectedItem." + field + ";\n";
             break
         case "long text":
@@ -214,7 +214,7 @@ function createFullForm(node) {
                     "                title: qsTr(\"" + field + "\");\n" +
                     "            }\n"
 
-            collectDataString +="            "+field + ": " + field_id  + ".value,"
+            collectDataString +="            "+field + ": " + field_id  + ".value,\n"
             onNodeChangedString +="        "+field_id + ".value =  node.selectedItem." + field + ";\n";
             break;
 
@@ -224,7 +224,7 @@ function createFullForm(node) {
                     "                linkable: true\n" +
                     "            }\n"
 
-            collectDataString +="            "+field + ": " + field_id  + ".value,"
+            collectDataString +="            "+field + ": " + field_id  + ".value,\n"
             onNodeChangedString +="        "+field_id + ".value =  node.selectedItem." + field + ";\n";
             break;
         default:
@@ -232,7 +232,7 @@ function createFullForm(node) {
                     "                title: qsTr(\"" + field + "\");\n" +
                     "            }\n"
 
-            collectDataString +="            "+field + ": " + field_id  + ".value,"
+            collectDataString +="            "+field + ": " + field_id  + ".value,\n"
             onNodeChangedString +="        "+field_id + ".value =  node.selectedItem." + field + ";\n";
         }
 
@@ -263,8 +263,8 @@ function createFullForm(node) {
 
     //TODO: change this coma deletion to Array.join
     collectDataString = collectDataString.substring(
-                0, collectDataString.length - 1)
-    collectDataString += "        }\n"+
+                0, collectDataString.length - 2) // remove coma and \n
+    collectDataString += "\n        }\n"+
                          "        node.applyChanges(returnedMap)\n"+
                          "    }\n"
     qmlString += collectDataString
