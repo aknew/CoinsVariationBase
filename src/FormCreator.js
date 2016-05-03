@@ -76,12 +76,12 @@ function createListForm(node) {
     for (var i = 0; i < fieldList.length; ++i) {
 
         var field = fieldList[i]
-        if (field.length !==0){
+        if (field.length !==0){ // FIXME: this if actually always true because it check only that field name is not null
             var str = "";
 
             if (fieldList.length !== 1) {
                 // add field name only if we have more then 1 field in item
-                str += " \"<b>\"+"
+                str += "                  \"<b>\"+"
                 str += "qsTr(\"" + field + "\")"
                 str += "+\":</b>\"+"
             }
@@ -90,7 +90,7 @@ function createListForm(node) {
         }
     }
     qmlString += arr.join("+\"<br>\"+\n") + "\n"
-    qmlString += "              wrapMode: Text.Wrap;}\n"
+    qmlString += "            wrapMode: Text.Wrap;}\n"
 
     qmlString += "      }\n" //Item {
     qmlString += "  }\n" //Component {
@@ -162,7 +162,7 @@ function createFullForm(node) {
                             "        var returnedMap = {"
 
     var stateEditableString = "    states: State {\n"+
-                              "        name: \"editing\";"
+                              "        name: \"editing\"\n"
 
     var fullFormFields = node.fullFormFields;
 
@@ -237,14 +237,14 @@ function createFullForm(node) {
         }
 
         // TODO: Do something better that a lot of this property
-        stateEditableString += "        PropertyChanges { target:" + field_id  + ";editing:true }"
+        stateEditableString += "        PropertyChanges { target:" + field_id  + ";editing:true }\n"
     }
 
     if (node.usesUUIDs){
         qmlString += "            AttachmentsList{\n"+
                      "                  id:attachList;\n"+
                      "            }\n";
-        stateEditableString += "        PropertyChanges {target:attachList;editing:true }"
+        stateEditableString += "        PropertyChanges {target:attachList;editing:true }\n"
     }
 
 
@@ -254,8 +254,8 @@ function createFullForm(node) {
     qmlString += "        }\n" //Column {
     qmlString += "    }\n" //Flickable {
 
-    stateEditableString += "        PropertyChanges { target: nextlevel; visible:false }"
-    stateEditableString += "}\n\n"
+    stateEditableString += "        PropertyChanges { target: nextlevel; visible:false }\n"
+    stateEditableString += "    }\n\n"
     qmlString += stateEditableString
 
     onNodeChangedString +="        nextlevel.model = node.nextLevelList}\n\n";
