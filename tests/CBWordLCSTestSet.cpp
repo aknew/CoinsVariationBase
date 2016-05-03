@@ -16,8 +16,12 @@ void CBWordLCSTestSet::stringDifference(){
 
     CBWordLCS wordLCS(str1, str2);
 
+    qDebug() << wordLCS.getHighlitedFirst();
+
     QCOMPARE(exceptedResult1, wordLCS.getHighlitedFirst());
     QCOMPARE(exceptedResult2, wordLCS.getHighlitedSecond());
     QCOMPARE(exceptedDiff1, wordLCS.getDifferenceFirst());
     QCOMPARE(exceptedDiff2, wordLCS.getDifferenceSecond());
+
+    // TODO: check ending and beginning not common elements
 }
