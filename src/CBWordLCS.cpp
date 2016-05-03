@@ -83,6 +83,19 @@ QString CBWordLCS::generateString(const QStringList &list, bool generateDiff){
     bool stackingDiff = false;
     auto clIter = commonList.begin();
     for(auto iter = list.begin(); iter!= list.end(); ++iter){
+        if (clIter == commonList.end()){
+            // push all remaining elements to result
+            if (!generateDiff && !stackingDiff){
+                result.push_back(kStartDifference);
+            }
+            for(auto subIter = iter; subIter!= list.end(); ++ subIter){
+                result.push_back(*subIter);
+            }
+            if (!generateDiff){
+                result.push_back(kEndDifference);
+            }
+            break;
+        }
         if (*iter == *clIter){
             if (!generateDiff){
                 if (stackingDiff){
@@ -92,19 +105,6 @@ QString CBWordLCS::generateString(const QStringList &list, bool generateDiff){
                 result.push_back(*iter);
             }
             ++clIter;
-            if (clIter == commonList.end()){
-                // push all remaining elements to result
-                if (!generateDiff && !stackingDiff){
-                    result.push_back(kStartDifference);
-                }
-                for(auto subIter = iter; subIter!= list.end(); ++ subIter){
-                    result.push_back(*subIter);
-                }
-                if (!generateDiff){
-                    result.push_back(kEndDifference);
-                }
-                break;
-            }
         }
         else{
             if (!generateDiff){
