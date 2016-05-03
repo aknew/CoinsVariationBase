@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     ../src/CBUtils.cpp \
     ../src/CBSettings.cpp \
     ../src/CBSqlRelationalTableModel.cpp \
-    CBUTilsTestSet.cpp
+    ../src/CBWordLCS.cpp \
+    CBWordLCSTestSet.cpp
 
 HEADERS += \
     CBBaseProviderTester.h \
@@ -30,4 +31,5 @@ HEADERS += \
     ../src/CBUtils.h \
     ../src/CBSettings.h \
     ../src/CBSqlRelationalTableModel.h \
-    CBUTilsTestSet.h
+    ../src/CBWordLCS.h \
+    CBWordLCSTestSet.h

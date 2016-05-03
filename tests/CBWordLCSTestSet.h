@@ -3,11 +3,11 @@
 
 #include <QObject>
 
-class CBUTilsTestSet : public QObject
+class CBWordLCSTestSet : public QObject
 {
     Q_OBJECT
 public:
-    explicit CBUTilsTestSet(QObject *parent = 0):QObject(parent){}
+    explicit CBWordLCSTestSet(QObject *parent = 0):QObject(parent){}
 
 private slots:
     void stringDifference();
