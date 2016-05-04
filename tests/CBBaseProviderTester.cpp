@@ -49,8 +49,3 @@ void CBBaseProviderTester::clonningTest(){
     QVERIFY(clonned_item["id"]==clonned_item_after_saving["id"]);
 
 }
-
-
-void CBBaseProviderTester::goToSubnode(){
-    QVERIFY(baseWasOpened);
-}

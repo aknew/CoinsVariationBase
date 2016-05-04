@@ -16,9 +16,6 @@ void CBWordLCSTestSet::stringDifference(){
 
     CBWordLCS wordLCS(str1, str2);
 
-    qDebug() << wordLCS.getHighlitedFirst();
-    qDebug() << exceptedResult1;
-
     QCOMPARE(exceptedResult1, wordLCS.getHighlitedFirst());
     QCOMPARE(exceptedResult2, wordLCS.getHighlitedSecond());
     QCOMPARE(exceptedDiff1, wordLCS.getDifferenceFirst());
