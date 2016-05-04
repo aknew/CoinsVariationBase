@@ -216,6 +216,11 @@ void CBNode::selectItemWithIndex(int index){
 
 }
 
+QVariantMap CBNode::itemAtIndex(int index){
+    QVariantMap map;
+    return map;
+}
+
 void CBNode::prepareToNewItem(){
     insertingNewRow = true;
 

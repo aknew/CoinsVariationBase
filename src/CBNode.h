@@ -79,6 +79,13 @@ public:
         return model->selectedItem();
     }
 
+    /**
+     * @brief itemAtIndex
+     * @param index - index of row in listView
+     * @return record as variant map
+     */
+    QVariantMap itemAtIndex(int index);
+
     /** \brief create string which describe selected item
      * usually it is just concatineted listview fields from current node tables
      */

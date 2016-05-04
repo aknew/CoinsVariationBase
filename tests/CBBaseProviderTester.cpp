@@ -23,6 +23,8 @@ void CBBaseProviderTester::wrongSubNodes(){
     // try to get node which exists, but not subnode of start node
     wrongSubNode = m_baseProvider->getNode("ConcreteCoins",m_current_node);
     QVERIFY(wrongSubNode == NULL);
+
+    // TODO: add test to check what will happend if I try to get subnode with relation but without selection item on current node
 }
 
 void CBBaseProviderTester::clonningTest(){
@@ -47,5 +49,24 @@ void CBBaseProviderTester::clonningTest(){
     // check that selected item was not changed after appliing changes
     QVariantMap clonned_item_after_saving = m_current_node->selectedItem();
     QVERIFY(clonned_item["id"]==clonned_item_after_saving["id"]);
+
+}
+
+void CBBaseProviderTester::jsonFromNode(){
+
+    // I especially use Varieties because this node contains both listModel and model
+    m_current_node->selectItemWithIndex(2);
+    CBNode *subNode = m_baseProvider->getNode("Varieties",m_current_node);
+
+    QVariantMap etalon;
+    etalon["year"] = "1798";
+    etalon["mintmark"] = "КМ";
+
+    QVariantMap map = subNode->itemAtIndex(2);
+
+    for (auto iter: etalon.keys()){
+        QVERIFY(etalon[iter]==map[iter]);
+
+    }
 
 }
