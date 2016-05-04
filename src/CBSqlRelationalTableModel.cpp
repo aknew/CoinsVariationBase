@@ -44,9 +44,12 @@ QVariant CBSqlRelationalTableModel::data(const QModelIndex &index, int role= Qt:
 }
 
 QVariantMap CBSqlRelationalTableModel::selectedItem(){
+    return itemForRow(selectedRow);
+}
 
+QVariantMap CBSqlRelationalTableModel::itemForRow(int index){
     QVariantMap myMap;
-    QSqlRecord record=this->record(selectedRow);
+    QSqlRecord record=this->record(index);
 
     for (int i=0;i<record.count();++i){
         myMap[record.fieldName(i)]=record.field(i).value();

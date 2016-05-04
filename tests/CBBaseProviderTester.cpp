@@ -59,7 +59,7 @@ void CBBaseProviderTester::jsonFromNode(){
     CBNode *subNode = m_baseProvider->getNode("Varieties",m_current_node);
 
     QVariantMap etalon;
-    etalon["year"] = "1798";
+    etalon["year"] = "1797";
     etalon["mintmark"] = "КМ";
 
     QVariantMap map = subNode->itemAtIndex(2);
