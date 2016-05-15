@@ -249,7 +249,17 @@ ApplicationWindow {
 
     function showDifference(node, index1, index2){
         var diffList = node.recordDifference(index1,index2);
-        console.log(diffList);
+        var component = Qt.createComponent("CBControls/DiffView.qml")
+        switch (component.status) {
+        case Component.Ready:
+            var form = component.createObject()
+            form.model = diffList
+            tablesStack.push(form)
+            break
+        case Component.Error:
+            console.log(component.errorString())
+            break
+        }
     }
 
     MessageDialog {
