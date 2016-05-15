@@ -22,7 +22,9 @@ function createListForm(node) {
                 "   id: mainRect;\n" +
                 "   property var formType: CBApi.ListForm\n" +
                 "   property var node;\n"+
-                "   onNodeChanged:{listView.model = node.listModel;}\n";
+                "   onNodeChanged:{listView.model = node.listModel;}\n" +
+                "   property int firstIndex:-1\n"+
+                "   property bool compareMode: false\n"
 
     qmlString+= "   ListView {\n" +
                 "       id:listView;\n" +
@@ -38,7 +40,23 @@ function createListForm(node) {
                  "          height: Math.max(100,topLayout.height+10);\n";
 
     qmlString += "          BackgroundRect{}\n";
-    qmlString += "          MouseArea {anchors.fill: parent; onClicked: { mainWindow.showFullForm(node,index);} }\n";
+    qmlString += "          MouseArea {anchors.fill: parent\n"+
+                 "                     onClicked: {\n" +
+                 "                                 if (compareMode){\n"+
+                 "                                      if (mainRect.firstIndex === -1){\n"+
+                 "                                          mainRect.firstIndex = index;\n"+
+                 "                                      }\n"+
+                 "                                      else{\n"+
+                 "                                          mainWindow.showDifference(mainRect.node,mainRect.firstIndex,index);\n"+
+                 "                                          mainRect.firstIndex = -1;\n"+
+                 "                                          mainRect.compareMode = false;\n"+
+                 "                                      }\n"+
+                 "                                 }\n"+
+                 "                                 else{\n"+
+                 "                                      mainWindow.showFullForm(node,index);\n"+
+                 "                                 }\n"+
+                 "                              }\n"+
+                 "          }\n";
     if (node.usesUUIDs){
         qmlString += "        Image {\n"+
                      "            id: image\n"+

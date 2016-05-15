@@ -205,6 +205,11 @@ ApplicationWindow {
         }
 
     }
+    Action{
+        id: compareRecords
+        text: qsTr("Record comparation")
+        onTriggered: tablesStack.currentItem.compareMode = true;
+    }
 
     property bool needCollect: false
 

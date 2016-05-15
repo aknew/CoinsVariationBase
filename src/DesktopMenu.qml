@@ -26,6 +26,10 @@ MenuBar {
                      tablesStack.currentItem.formType === CBApi.FullForm ||
                      tablesStack.currentItem.formType === CBApi.AttachForm
             MenuItem {
+                action: compareRecords
+                visible: tablesStack.currentItem.formType === CBApi.ListForm
+            }
+            MenuItem {
                 action: editAction
                 visible: tablesStack.currentItem.formType === CBApi.FullForm ||
                          tablesStack.currentItem.formType === CBApi.AttachForm
