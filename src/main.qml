@@ -253,12 +253,12 @@ ApplicationWindow {
     }
 
     function showDifference(node, index1, index2){
-        var diffList = node.recordDifference(index1,index2);
+        var diff = node.recordDifference(index1,index2);
         var component = Qt.createComponent("CBControls/DiffView.qml")
         switch (component.status) {
         case Component.Ready:
             var form = component.createObject()
-            form.model = diffList
+            form.model = diff.diffFieldsModel
             tablesStack.push(form)
             break
         case Component.Error:

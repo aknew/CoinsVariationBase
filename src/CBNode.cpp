@@ -7,6 +7,7 @@
 
 #include "CBBaseProvider.h"
 #include "CBFieldDifference.h"
+#include "CBItemDifference.h"
 #include "CBWordLCS.h"
 
 const QString kWrongString = "*wrongString*"; //< marker that some string wasn't filled
@@ -315,18 +316,29 @@ QString CBNode::selectedItemDescription(){
     return str;
 }
 
-QList<QObject*> CBNode::recordDifference(int index1, int index2){
+CBItemDifference *CBNode::recordDifference(int index1, int index2){
     QVariantMap map1 = itemAtIndex(index1);
     QVariantMap map2 = itemAtIndex(index2);
 
-    QList<QObject*> result;
+    CBItemDifference *difference = new CBItemDifference(this);
+    difference->id1 = map1["id"].toString();
+    difference->id2 = map2["id"].toString();
+
+    QList<QObject*> all;
+    QList<QObject*> diff;
     for (auto iter: map1.keys()){
         CBWordLCS wordLCS(map1[iter].toString(),map2[iter].toString());
-        CBFieldDifference *fd = new CBFieldDifference(); // FIXME: memory leak?
+        CBFieldDifference *fd = new CBFieldDifference(difference); // TODO: Need check: possible memory leak?
         fd->_name = iter;
         fd->_highlightedFirst = wordLCS.getHighlitedFirst();
         fd->_highlightedSecond = wordLCS.getHighlitedSecond();
-        result.append(fd);
+        all.append(fd);
+        if (!(wordLCS.getDifferenceFirst() == "" && wordLCS.getDifferenceSecond() == "")){
+            diff.append(fd);
+        }
     }
-    return result;
+
+    difference->diffFieldsModel = diff;
+    difference->allFieldsModel = all;
+    return difference;
 }

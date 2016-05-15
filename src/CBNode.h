@@ -6,7 +6,7 @@
 #include "CBSqlRelationalTableModel.h"
 
 class CBBaseProvider;
-class CBFieldDifference;
+class CBItemDifference;
 
 class CBNode : public QObject
 {
@@ -91,7 +91,7 @@ public:
      */
     QString selectedItemDescription();
 
-    Q_INVOKABLE QList<QObject*> recordDifference(int index1, int index2);
+    Q_INVOKABLE CBItemDifference *recordDifference(int index1, int index2);
 
 
 

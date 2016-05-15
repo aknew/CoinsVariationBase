@@ -17,7 +17,8 @@ SOURCES += \
     CBAttachmentsProvider.cpp \
     CBBaseIconProvider.cpp \
     CBWordLCS.cpp \
-    CBFieldDifference.cpp
+    CBFieldDifference.cpp \
+    CBItemDifference.cpp
 
 DISTFILES += \
     main.qml \
@@ -54,6 +55,7 @@ HEADERS += \
     CBAttachmentsProvider.h \
     CBBaseIconProvider.h \
     CBWordLCS.h \
-    CBFieldDifference.h
+    CBFieldDifference.h \
+    CBItemDifference.h
 
 CONFIG += c++11
