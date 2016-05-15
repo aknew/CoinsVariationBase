@@ -6,7 +6,7 @@
 #include "CBSqlRelationalTableModel.h"
 
 class CBBaseProvider;
-
+class CBFieldDifference;
 
 class CBNode : public QObject
 {
@@ -90,6 +90,8 @@ public:
      * usually it is just concatineted listview fields from current node tables
      */
     QString selectedItemDescription();
+
+    Q_INVOKABLE QList<QObject*> recordDifference(int index1, int index2);
 
 
 

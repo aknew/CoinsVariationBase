@@ -5,6 +5,7 @@
 #include "CBController.h"
 #include "CBSettings.h"
 #include "CBBaseIconProvider.h"
+#include "CBFieldDifference.h"
 
 void logHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -72,6 +73,7 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<CBBaseProvider>("CB.api", 1, 0, "CBBaseProvider", "The object of this class should be obtained from CBApi.baseProvider");
     qmlRegisterUncreatableType<CBNode>("CB.api", 1, 0, "CBNode", "The object of this class should be obtained from CBApi.baseProvider.getNode(name) or CBApi.baseProvider.getStartNode()");
     qmlRegisterUncreatableType<CBAttachmentsProvider>("CB.api", 1, 0, "CBAttachmentsProvider", "The object of this class should be obtained from CBApi.baseProvider.notesProvider");
+    qmlRegisterType<CBFieldDifference>("CB.api", 1, 0, "CBFieldDifference");
 
     QApplication app(argc, argv);
 

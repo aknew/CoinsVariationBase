@@ -15,7 +15,9 @@ SOURCES += \
     CBImageProvider.cpp \
     CBSettings.cpp \
     CBAttachmentsProvider.cpp \
-    CBBaseIconProvider.cpp
+    CBBaseIconProvider.cpp \
+    CBWordLCS.cpp \
+    CBFieldDifference.cpp
 
 DISTFILES += \
     main.qml \
@@ -34,7 +36,8 @@ DISTFILES += \
     CBControls/BasesList.qml \
     DesktopMenu.qml  \
     AndroidMenu.qml \
-    CBControls/GUIStyle.qml
+    CBControls/GUIStyle.qml \
+    CBControls/DiffView.qml
 
 RESOURCES += \
     resources.qrc
@@ -49,6 +52,8 @@ HEADERS += \
     CBImageProvider.h \
     CBSettings.h \
     CBAttachmentsProvider.h \
-    CBBaseIconProvider.h
+    CBBaseIconProvider.h \
+    CBWordLCS.h \
+    CBFieldDifference.h
 
 CONFIG += c++11
