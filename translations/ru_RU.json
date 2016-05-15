@@ -42,5 +42,7 @@
     "not equal":"не равно",
     "source":"источник",
     "How have I came here?" : "Как я сюда попал?",
-    "Record comparation" : "Сравнение записей"
+    "Record comparation" : "Сравнение записей",
+    "Show all fields":"Показывать все поля",
+    "Show different fields":"Показывать отличающиеся поля"
 }

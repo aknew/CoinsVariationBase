@@ -258,7 +258,7 @@ ApplicationWindow {
         switch (component.status) {
         case Component.Ready:
             var form = component.createObject()
-            form.model = diff.diffFieldsModel
+            form.itemDifference = diff
             tablesStack.push(form)
             break
         case Component.Error:
