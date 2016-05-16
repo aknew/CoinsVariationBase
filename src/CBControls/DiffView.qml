@@ -40,7 +40,6 @@ Rectangle{
         anchors.rightMargin: 5
         anchors.top: image1.bottom
         anchors.topMargin: 5
-        height: 25
         model: [qsTr("Show different fields"),qsTr("Show all fields")]
         onCurrentIndexChanged: {
             if (typeof(itemDifference) == "undefined"){
@@ -80,7 +79,7 @@ Rectangle{
                     anchors.top: parent.top
                     anchors.topMargin: 5
                     anchors.right: parent.right
-                    height: 25
+                    height: lblName.height + 10
                     Text{
                         id: lblName
                         text: qsTr(modelData.name)+":"
