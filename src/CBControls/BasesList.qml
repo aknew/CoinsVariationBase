@@ -3,16 +3,18 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Controls 1.4
 
 import CB.api 1.0
+import "." // QTBUG-34418, singletons require explicit import to load qmldir file
 
 GridView {
     model: CBSettings.recentBases
     id: root
-    cellHeight: width / 4
-    cellWidth: width / 4
+    // TODO: check on tablet
+    cellHeight: GUIStyle.isMobile? width/2 : width / 4
+    cellWidth: GUIStyle.isMobile? width/2 :width / 4
     delegate: Rectangle {
         color: "transparent"
-        height: root.width / 4
-        width: root.width / 4
+        height: GUIStyle.isMobile? root.width/2 :root.width / 4
+        width: GUIStyle.isMobile? root.width/2 :root.width / 4
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton

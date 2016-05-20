@@ -62,7 +62,7 @@ function createListForm(node) {
                      "            id: image\n"+
                      "            source: \"image://imageProvider/\" + id + \"/Main.jpg\"\n"+
                      "            height: parent.height-10\n"+
-                     "            width: height*2\n"+
+                     "            width: Math.min(height*2,parent.width/3)\n"+
                      "            fillMode: Image.PreserveAspectFit\n"+
                      "            anchors.left: parent.left\n"+
                      "            anchors.leftMargin: 5\n"+
