@@ -342,3 +342,23 @@ CBItemDifference *CBNode::recordDifference(int index1, int index2){
     difference->allFieldsModel = all;
     return difference;
 }
+
+void CBNode::exportListToFile(const QString &path){
+
+    QJsonArray arr;
+
+    for (int i = 0; i < this->model->rowCount(); ++i){
+        QVariantMap map = itemAtIndex(i);
+        arr.append(QJsonObject::fromVariantMap(map));
+    }
+
+    QFile saveFile(path);
+
+    if (!saveFile.open(QIODevice::WriteOnly)) {
+            qWarning("Couldn't open translation file to right.");
+    }
+
+    QJsonDocument saveDoc(arr);
+    saveFile.write(saveDoc.toJson());
+
+}

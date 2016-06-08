@@ -18,6 +18,7 @@
     "Do you realy want to go back and drop all changes?": "Вы действительно хотите сбросить все изменения и уйти назад?",
     "Drop filters": "Сбросить фильтры",
     "Edit record": "Редактировать запись",
+    "Export to json":"Экспортировать в json",
     "Field":"Поле",
     "Field name:":"Название поля:",
     "Field value:":"Значение поля:",

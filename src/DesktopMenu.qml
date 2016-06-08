@@ -55,6 +55,13 @@ MenuBar {
                     action: dropFiltersAction
                 }
             }
+            MenuItem {
+                text:qsTr("Export to json")
+                visible: tablesStack.currentItem.formType === CBApi.ListForm
+                onTriggered: {
+                    tablesStack.currentItem.node.exportListToFile("export.json")
+                }
+            }
         }
         Menu {
             title: qsTr("About")

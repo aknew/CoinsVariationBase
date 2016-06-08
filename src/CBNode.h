@@ -93,6 +93,8 @@ public:
 
     Q_INVOKABLE CBItemDifference *recordDifference(int index1, int index2);
 
+    Q_INVOKABLE void exportListToFile(const QString &path);
+
 
 
 signals:
