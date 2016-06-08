@@ -32,5 +32,7 @@
         <file alias="add_folder">../resources/1460912108_add_folder.png</file>
         <file>CBControls/GUIStyle.qml</file>
         <file>CBControls/DiffView.qml</file>
+        <file alias="clone">../resources/clone.png</file>
+        <file alias="filter">../resources/filter.png</file>
     </qresource>
 </RCC>

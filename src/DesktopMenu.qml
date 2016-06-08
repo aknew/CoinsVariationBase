@@ -9,15 +9,8 @@ MenuBar {
             MenuItem {
                 action: openAction
             }
-        }
-        Menu {
-            title: qsTr("Filters")
-            visible: tablesStack.currentItem.formType === CBApi.ListForm
             MenuItem {
-                action: setFiltersAction
-            }
-            MenuItem {
-                action: dropFiltersAction
+                action: aboutCurrentSelectedItem
             }
         }
         Menu {
@@ -29,32 +22,44 @@ MenuBar {
                 action: compareRecords
                 visible: tablesStack.currentItem.formType === CBApi.ListForm
             }
-            MenuItem {
-                action: editAction
-                visible: tablesStack.currentItem.formType === CBApi.FullForm ||
-                         tablesStack.currentItem.formType === CBApi.AttachForm
+            Menu {
+                title: qsTr("Record managing")
+                MenuItem {
+                    action: editAction
+                    visible: tablesStack.currentItem.formType === CBApi.FullForm ||
+                             tablesStack.currentItem.formType === CBApi.AttachForm
+                }
+                MenuItem {
+                    action: newRecordAction
+                    visible: tablesStack.currentItem.formType === CBApi.ListForm ||
+                             tablesStack.currentItem.formType === CBApi.FullForm
+                }
+                MenuItem {
+                    visible: tablesStack.currentItem.formType === CBApi.FullForm
+                    action:  deleteRowAction
+                }
+                MenuItem {
+                    action: cloneAction
+                    visible: tablesStack.currentItem.formType === CBApi.FullForm
+                }
             }
-            MenuItem {
-                action: newRecordAction
-                visible: tablesStack.currentItem.formType === CBApi.ListForm ||
-                         tablesStack.currentItem.formType === CBApi.FullForm
-            }
-            MenuItem {                
-                visible: tablesStack.currentItem.formType === CBApi.FullForm
-                action:  deleteRowAction
-            }
-            MenuItem {
-                action: cloneAction
-                visible: tablesStack.currentItem.formType === CBApi.FullForm
+
+            Menu {
+                title: qsTr("Filters")
+                iconSource: "/filter"
+                visible: tablesStack.currentItem.formType === CBApi.ListForm
+                MenuItem {
+                    action: setFiltersAction
+                }
+                MenuItem {
+                    action: dropFiltersAction
+                }
             }
         }
         Menu {
             title: qsTr("About")
             MenuItem {
                 action: aboutDBAction
-            }
-            MenuItem {
-                action: aboutCurrentSelectedItem
             }
         }
     }

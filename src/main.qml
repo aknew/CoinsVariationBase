@@ -128,6 +128,7 @@ ApplicationWindow {
     Action {
         id: cloneAction
         text: qsTr("Clone")
+        iconSource: "/clone"
         onTriggered: {
             var currentItem = tablesStack.currentItem;
             currentItem.node.cloneItem()
@@ -182,7 +183,8 @@ ApplicationWindow {
     }
     Action{
         id: setFiltersAction
-        text: qsTr("Set filters")
+        text: qsTr("Set/edit filters")
+        iconSource: "/edit"
         onTriggered: {
             var component = Qt.createComponent("CBControls/FilterDialog.qml")
             switch (component.status) {
@@ -200,6 +202,7 @@ ApplicationWindow {
     Action{
         id: dropFiltersAction
         text: qsTr("Drop filters")
+        iconSource: "/delete"
         onTriggered: {
             tablesStack.currentItem.node.dropFilter()
         }
