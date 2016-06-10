@@ -44,6 +44,9 @@ public:
 
     Q_INVOKABLE void deselectCurrentId();
 
+    CBAttachmentsProvider *attachmentsProvider;///< stores attachments information, can work with attach
+
+
 
 private:
     QString rootPath; //< root folder
@@ -56,8 +59,6 @@ private:
     void currentItemWillBeRemoved(); //< needs to recutrently remove all related items and attachment of removing item
     QStack<QString> ids;/// stack of selected ids, needs to reselect previous when we go back from full form
     QStack<QString> selectedDescription; /// stack of selected items description, needs what we selected before came to curret node
-
-    CBAttachmentsProvider *attachmentsProvider;///< stores attachments information, can work with attach
 
     CBTranslator translator;
 

@@ -9,6 +9,7 @@
 #include "CBFieldDifference.h"
 #include "CBItemDifference.h"
 #include "CBWordLCS.h"
+#include "CBUtils.h"
 
 const QString kWrongString = "*wrongString*"; //< marker that some string wasn't filled
 
@@ -345,14 +346,45 @@ CBItemDifference *CBNode::recordDifference(int index1, int index2){
 
 void CBNode::exportListToFile(const QString &path){
 
+    // TODO: export can be long and should be async
+
     QJsonArray arr;
+    CBBaseProvider *bp = qobject_cast<CBBaseProvider *>(parent());
+    QString &attachBasePath = bp->attachmentsProvider->_basePath;
 
     for (int i = 0; i < this->model->rowCount(); ++i){
         QVariantMap map = itemAtIndex(i);
+
+        // FIXME: do "id" and "attributes.json" constant strings
+        QString id = map["id"].toString();
+
+        // add attachments if they are exist
+        QString recordAttachPath = attachBasePath  + id;
+
+        if (QDir(recordAttachPath).exists()){
+            QFile file( recordAttachPath +"/"+ "attributes.json");
+            if (!file.open(QIODevice::ReadOnly)){
+                qDebug() << "Cannot open attach file to read";
+            }
+            QString jsonData = file.readAll();
+            file.close();
+
+            QJsonDocument sd = QJsonDocument::fromJson(jsonData.toUtf8());
+
+            if (sd.isNull()){
+               qWarning("Wrong file attribute json format");
+            }
+
+            map["attachments"] = sd.array().toVariantList();
+
+            CBUtils::copyRecursively(recordAttachPath,path+"/"+id);
+
+        }
+
         arr.append(QJsonObject::fromVariantMap(map));
     }
 
-    QFile saveFile(path);
+    QFile saveFile(path+"/export.json");
 
     if (!saveFile.open(QIODevice::WriteOnly)) {
             qWarning("Couldn't open translation file to right.");

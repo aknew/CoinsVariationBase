@@ -59,7 +59,7 @@ MenuBar {
                 text:qsTr("Export to json")
                 visible: tablesStack.currentItem.formType === CBApi.ListForm
                 onTriggered: {
-                    tablesStack.currentItem.node.exportListToFile("export.json")
+                    tablesStack.currentItem.node.exportListToFile("export")
                 }
             }
         }
