@@ -348,7 +348,21 @@ void CBNode::exportListToFile(const QString &path){
 
     // TODO: export can be long and should be async
 
-    QJsonArray arr;
+    QFile saveFile(path+"/export.json");
+
+    if (!saveFile.open(QIODevice::WriteOnly)) {
+            qWarning("Couldn't open translation file to right.");
+    }
+
+    QJsonDocument saveDoc(QJsonArray::fromVariantList(listForExport(path)));
+    saveFile.write(saveDoc.toJson());
+
+}
+
+QVariantList CBNode::listForExport(const QString &path){
+
+    QVariantList vl;
+
     CBBaseProvider *bp = qobject_cast<CBBaseProvider *>(parent());
     QString &attachBasePath = bp->attachmentsProvider->_basePath;
 
@@ -380,17 +394,7 @@ void CBNode::exportListToFile(const QString &path){
             CBUtils::copyRecursively(recordAttachPath,path+"/"+id);
 
         }
-
-        arr.append(QJsonObject::fromVariantMap(map));
+        vl.append(map);
     }
-
-    QFile saveFile(path+"/export.json");
-
-    if (!saveFile.open(QIODevice::WriteOnly)) {
-            qWarning("Couldn't open translation file to right.");
-    }
-
-    QJsonDocument saveDoc(arr);
-    saveFile.write(saveDoc.toJson());
-
+    return vl;
 }

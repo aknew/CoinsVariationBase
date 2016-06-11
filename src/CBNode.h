@@ -95,6 +95,14 @@ public:
 
     Q_INVOKABLE void exportListToFile(const QString &path);
 
+    /**
+     * @brief listForExport generate variant list which will be saved as json
+     * this methods mostly needs for exporting subnodes
+     * @param path - needs to copy attachments
+     * @return
+     */
+    QVariantList listForExport(const QString &path);
+
 
 
 signals:
