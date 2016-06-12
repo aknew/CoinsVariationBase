@@ -402,6 +402,7 @@ QVariantList CBNode::listForExport(const QString &path){
             map["attachments"] = sd.array().toVariantList();
 
             CBUtils::copyRecursively(recordAttachPath,path+"/"+id);
+            QFile::remove(path+"/"+id+"/"+ "attributes.json"); // remove attributes,json - it merget with main json
 
         }
 
