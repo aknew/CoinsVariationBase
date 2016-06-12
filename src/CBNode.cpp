@@ -366,16 +366,26 @@ QVariantList CBNode::listForExport(const QString &path){
     CBBaseProvider *bp = qobject_cast<CBBaseProvider *>(parent());
     QString &attachBasePath = bp->attachmentsProvider->_basePath;
 
+    QList<CBNode *> exportingSubnodes;
+
+    for (auto it : childNodes.keys()){
+        CBNode * cn = bp->getNode(it);
+        if (!cn->usesUUIDs){
+            // TODO: need create way to select which subnodes will be exported as graph
+            exportingSubnodes.append(cn);
+        }
+    }
+
     for (int i = 0; i < this->model->rowCount(); ++i){
         QVariantMap map = itemAtIndex(i);
 
         // FIXME: do "id" and "attributes.json" constant strings
-        QString id = map["id"].toString();
+        QString id = map.contains("id")?map["id"].toString():"";
 
         // add attachments if they are exist
         QString recordAttachPath = attachBasePath  + id;
 
-        if (QDir(recordAttachPath).exists()){
+        if (usesUUIDs && QDir(recordAttachPath).exists()){
             QFile file( recordAttachPath +"/"+ "attributes.json");
             if (!file.open(QIODevice::ReadOnly)){
                 qDebug() << "Cannot open attach file to read";
@@ -393,6 +403,14 @@ QVariantList CBNode::listForExport(const QString &path){
 
             CBUtils::copyRecursively(recordAttachPath,path+"/"+id);
 
+        }
+
+        for (CBNode *node : exportingSubnodes){
+            QString str=childNodes.value(node->tableName);
+            if (str!=""){
+                node->setLevelFilter(QPair<QString, QString>(str,id));
+            }
+            map[node->tableName] = node->listForExport(path);
         }
         vl.append(map);
     }
