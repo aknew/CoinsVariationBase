@@ -411,7 +411,10 @@ QVariantList CBNode::listForExport(const QString &path){
             if (str!=""){
                 node->setLevelFilter(QPair<QString, QString>(str,id));
             }
-            map[node->tableName] = node->listForExport(path);
+            QVariantList list = node->listForExport(path);
+            if (!list.empty()){
+                map[node->tableName] = list;
+            }
         }
         vl.append(map);
     }
