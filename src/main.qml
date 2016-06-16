@@ -1,6 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
+import QtQml 2.2
 
 import CB.api 1.0
 import "FormCreator.js" as FormCreator
@@ -213,6 +214,30 @@ ApplicationWindow {
         text: qsTr("Record comparation")
         onTriggered: tablesStack.currentItem.compareMode = true;
     }
+    Action{
+        id: predefinedFiltersAction
+        text: qsTr("Predefined filters")
+        onTriggered: {
+            predefinedContextMenu.popup()
+        }
+    }
+
+    Menu {
+            id: predefinedContextMenu
+
+            Instantiator {
+                model: tablesStack.currentItem.node.predefinedFiltesList
+
+                MenuItem {
+                    text: modelData
+                    onTriggered: {
+                        tablesStack.currentItem.node.applyPredefinedFilter(modelData)
+                    }
+                }
+                onObjectAdded: predefinedContextMenu.insertItem(index, object)
+                onObjectRemoved: predefinedContextMenu.removeItem(object)
+            }
+        }
 
     property bool needCollect: false
 

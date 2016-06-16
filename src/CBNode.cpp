@@ -79,6 +79,15 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
         }
     }
 
+    QJsonArray json_filters = obj.value("filters").toArray();
+    foreach (QJsonValue value1,json_filters) {
+        QJsonObject obj=value1.toObject();
+        this->predefinedFiltes.insert(
+                obj.value("name").toString(),
+                obj.value("condition").toString()
+                );
+    }
+
     // TODO: need generate listViewFields and fullFormFields only when it need if it doesn't exists into json
     QJsonValue  json_listViewFields = obj.value("listViewFields");
     if ( json_listViewFields.isArray()){
@@ -419,4 +428,10 @@ QVariantList CBNode::listForExport(const QString &path){
         vl.append(map);
     }
     return vl;
+}
+
+void CBNode::applyPredefinedFilter(const QString &f){
+    filterList = NULL;
+    filter = predefinedFiltes[f];
+    applyFilters();
 }

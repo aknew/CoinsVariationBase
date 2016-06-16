@@ -17,6 +17,7 @@ class CBNode : public QObject
     Q_PROPERTY(QVariant listViewFields MEMBER listViewFields CONSTANT)
     Q_PROPERTY(QString tableName MEMBER tableName CONSTANT)
     Q_PROPERTY(QStringList nextLevelList READ getNextLevelList CONSTANT)
+    Q_PROPERTY(QStringList predefinedFiltesList READ getPredefinedFiltesList CONSTANT)
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
     Q_PROPERTY(QObject* listModel READ listModel NOTIFY dataChanged)
     Q_PROPERTY(bool usesUUIDs MEMBER usesUUIDs CONSTANT)
@@ -51,6 +52,8 @@ public:
     Q_INVOKABLE void applyChanges(QVariantMap changedItem);
     Q_INVOKABLE void dropChanges();
     Q_INVOKABLE void deleteSelectedItem();
+
+    Q_INVOKABLE void applyPredefinedFilter(const QString &f);
 
     /** \brief: clone current selected item as new item
      *  If node has UUID's id, new item will have it's own. Need use applyChanges();
@@ -128,6 +131,11 @@ protected:
     CBSqlRelationalTableModel *model;//< real table or view
     CBSqlRelationalTableModel *_listModel;//< presentation view
     QMap<QString, QString> childNodes;//< list of nodes where we can go from current
+    QMap<QString, QString> predefinedFiltes;//< predefined filters from struct.json
+
+    QStringList getPredefinedFiltesList(){
+         return predefinedFiltes.keys();
+    }
 
     QObject* listModel();
 

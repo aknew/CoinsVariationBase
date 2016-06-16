@@ -54,6 +54,11 @@ MenuBar {
                 MenuItem {
                     action: dropFiltersAction
                 }
+                MenuItem {
+                    action: predefinedFiltersAction
+                    visible: tablesStack.currentItem.node.predefinedFiltesList.length>0
+                }
+
             }
             MenuItem {
                 text:qsTr("Export to json")
