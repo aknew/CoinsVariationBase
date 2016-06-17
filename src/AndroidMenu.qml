@@ -11,9 +11,16 @@ MenuBar {
             }
             MenuItem {
                 action: setFiltersAction
+                visible: tablesStack.currentItem.formType === CBApi.ListForm
             }
             MenuItem {
                 action: dropFiltersAction
+                visible: tablesStack.currentItem.formType === CBApi.ListForm
+            }
+            MenuItem {
+                action: predefinedFiltersAction
+                visible: tablesStack.currentItem.formType === CBApi.ListForm &&
+                         tablesStack.currentItem.node.predefinedFiltesList.length>0
             }
             MenuItem {
                 action: compareRecords
