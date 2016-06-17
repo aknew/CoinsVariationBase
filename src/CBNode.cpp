@@ -166,12 +166,13 @@ void CBNode::applyFilters(){
         }
     }
 
-    model->setFilter(fullFilterString);
-    model->select();
-
     if(_listModel){
         _listModel->setFilter(fullFilterString);
         _listModel->select();
+    }
+    else{
+        model->setFilter(fullFilterString);
+        model->select();
     }
 
 }
