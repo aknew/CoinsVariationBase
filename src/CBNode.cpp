@@ -169,6 +169,9 @@ void CBNode::applyFilters(){
     if(_listModel){
         _listModel->setFilter(fullFilterString);
         _listModel->select();
+        if (s_levelFilter!=kWrongString){
+            model->setFilter(s_levelFilter);
+        }
     }
     else{
         model->setFilter(fullFilterString);
