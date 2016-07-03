@@ -169,9 +169,6 @@ void CBNode::applyFilters(){
     if(_listModel){
         _listModel->setFilter(fullFilterString);
         _listModel->select();
-        if (s_levelFilter!=kWrongString){
-            model->setFilter(s_levelFilter);
-        }
     }
     else{
         model->setFilter(fullFilterString);
@@ -208,16 +205,10 @@ QStringList CBNode::listFromQuery(QString queryString){
 
 int CBNode::findRowWithID(const QString &selID)
 {
-    for (int i = 0; i< model->rowCount(); ++i){
-        QSqlRecord record=model->record(i);
-        QSqlField id=record.field("id");
-        if (id.value().toString() == selID){            
-            return i;
-        }
-    }
-    //XXX: Maybe not best practice, rewrite with exaption?
-    qCritical()<<"There is no record with id "<<selID;
-    return -1;
+    //HOTFIX: If I use listModel, model will not load records after 256, so I just select only that record that I realy need
+    model->setFilter("id =\""+selID+"\"");
+    model->select();
+    return model->rowCount()==1?0:-1;
 }
 
 void CBNode::selectItemWithIndex(int index){
