@@ -19,6 +19,7 @@ function createListForm(node) {
                 "import CB.api 1.0;\n" +
                 "import CBControls 1.0;\n" +
                 "Rectangle {\n" +
+                "   Component.onDestruction: console.log(\""+node.listFormName()+" Destruction Beginning!\")\n"+
                 "   id: mainRect;\n" +
                 "   property var formType: CBApi.ListForm\n" +
                 "   property var node;\n"+
@@ -70,6 +71,7 @@ function createListForm(node) {
                      "            anchors.topMargin: 5\n"+
                      "            anchors.bottom: parent.bottom\n"+
                      "            anchors.bottomMargin: 5\n"+
+                     "            cache: false\n"+
                      "            }\n"+
                      "         Text {\n"+
                      "            id: topLayout;\n"+
@@ -148,6 +150,7 @@ function createFullForm(node) {
                 "import CBControls 1.0;\n" +
                 "import QtQuick.Controls 1.4\n\n"+
                 "Rectangle {\n" +
+                "   Component.onDestruction: console.log(\""+node.fullFormName()+" Destruction Beginning!\")\n"+
                 "   id: mainRect;\n" +
                 "   property var formType: CBApi.FullForm\n" +
                 "   property var node;\n";

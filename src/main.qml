@@ -192,7 +192,7 @@ ApplicationWindow {
             case Component.Ready:
                 var form = component.createObject()
                 form.node = tablesStack.currentItem.node
-                tablesStack.push(form)
+                pushToStackView(form)
                 break
             case Component.Error:
                 console.log(component.errorString())
@@ -258,7 +258,7 @@ ApplicationWindow {
         title = CBApi.baseProvider.baseTitle
         var node = CBApi.baseProvider.getStartNode()
         var listForm = FormCreator.createListForm(node)
-        tablesStack.push(listForm)
+        pushToStackView(listForm)
     }
 
     function showFullForm(node, index) {
@@ -266,18 +266,18 @@ ApplicationWindow {
             node.selectItemWithIndex(index)
         }
         var fullForm = FormCreator.createFullForm(node)
-        tablesStack.push(fullForm)
+        pushToStackView(fullForm)
     }
 
     function showListForm(nodeName, currentNode) {
         var node = CBApi.baseProvider.getNode(nodeName, currentNode)
         var listForm = FormCreator.createListForm(node)
 
-        tablesStack.push(listForm)
+        pushToStackView(listForm)
     }
 
     function pushToStackView(view) {
-        tablesStack.push(view)
+        tablesStack.push({item: view, destroyOnPop: true})
     }
 
     function showDifference(node, index1, index2){
@@ -287,7 +287,7 @@ ApplicationWindow {
         case Component.Ready:
             var form = component.createObject()
             form.itemDifference = diff
-            tablesStack.push(form)
+            pushToStackView(form)
             break
         case Component.Error:
             console.log(component.errorString())
