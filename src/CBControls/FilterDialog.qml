@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.0
 import QtQuick.Dialogs 1.2
 import CB.api 1.0
 
@@ -68,7 +68,9 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
-                iconSource: "/delete"
+                contentItem: Image{
+                    source: "/delete"
+                }
                 onClicked: {
                     filterList.remove(index)
                 }
@@ -83,7 +85,9 @@ Item {
         anchors.bottom: parent.bottom
         Button {
             id: btnAddField
-            iconSource: "/add"
+            contentItem: Image{
+                source: "/add"
+            }
             anchors.left: parent.left
             anchors.leftMargin: 5
             anchors.top: parent.top

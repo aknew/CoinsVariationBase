@@ -1,5 +1,5 @@
-import QtQuick 2.3
-import QtQuick.Controls 1.4
+import QtQuick 2.5
+import QtQuick.Controls 2.0
 import QtQuick.Dialogs 1.2
 
 import CB.api 1.0
@@ -10,7 +10,7 @@ Rectangle {
     id: attachmentRootRect
 
     property bool editing: false
-    property var formType: CBApi.AttachForm
+    property int formType: CBApi.AttachForm
     states: State {
         name: "editing"
         PropertyChanges {
@@ -140,7 +140,9 @@ Rectangle {
                 }
                 Button {
                     id: btnRemove
-                    iconSource: "/delete"
+                    contentItem: Image{
+                        source: "/delete"
+                    }
                     visible: editing
                     anchors.right: parent.right
                     anchors.leftMargin: 5
@@ -182,7 +184,9 @@ Rectangle {
         height: GUIStyle.barHeight
         Button {
             id: btnAddField
-            iconSource: "/add"
+            contentItem: Image{
+                source: "/add"
+            }
             anchors.left: parent.left
             anchors.leftMargin: 5
             anchors.top: parent.top

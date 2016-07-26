@@ -1,6 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Dialogs 1.2
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.0
 
 import CB.api 1.0
 import "." // QTBUG-34418, singletons require explicit import to load qmldir file

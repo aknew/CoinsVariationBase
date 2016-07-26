@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.0
 
 FocusScope {
     width: parent.width
@@ -7,7 +7,7 @@ FocusScope {
     signal accepted
     property alias value: input.text
     property alias title: titleLabel.text
-    property alias color: input.textColor
+    property alias color: input.color
     property bool editing: false
     onEditingChanged: {
         input.readOnly = !editing

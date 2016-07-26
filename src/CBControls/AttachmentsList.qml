@@ -1,6 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Dialogs 1.2
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.0
 import "." // QTBUG-34418, singletons require explicit import to load qmldir file
 
 import CB.api 1.0
@@ -16,7 +16,9 @@ Rectangle {
         anchors.top: parent.top
         Button {
             id: btnAddFile
-            iconSource: "/add"
+            contentItem: Image{
+                source: "/add"
+            }
             anchors.left: parent.left
             anchors.leftMargin: 5
             anchors.top: parent.top
@@ -32,7 +34,9 @@ Rectangle {
         }
         Button {
             id: btnAddFolder
-            iconSource: "/add_folder"
+            contentItem: Image{
+                source: "/add_folder"
+            }
             anchors.left: btnAddFile.right
             anchors.leftMargin: 5
             anchors.top: parent.top
@@ -118,7 +122,9 @@ Rectangle {
             }
             Button {
                 id: btnRemove
-                iconSource: "/delete"
+                contentItem: Image{
+                    source: "/delete"
+                }
                 visible: editing
                 anchors.right: parent.right
                 anchors.rightMargin: 5
