@@ -34,6 +34,7 @@ Item {
     }
 
     ListView {
+        ScrollBar.vertical: ScrollBar { }
         id: listView
         model: filterList
         anchors.top: parent.top

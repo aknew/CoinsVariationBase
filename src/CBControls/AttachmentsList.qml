@@ -51,6 +51,7 @@ Rectangle {
         }
     }
     ListView {
+        ScrollBar.vertical: ScrollBar { }
         id: attachmentsListView
         clip: true
         width: parent.width

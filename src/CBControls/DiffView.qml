@@ -57,6 +57,7 @@ Rectangle{
     ListView {
         id: listView
         clip: true
+        ScrollBar.vertical: ScrollBar { }
         anchors.left: parent.left
         anchors.leftMargin: 5
         anchors.right: parent.right

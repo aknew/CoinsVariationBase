@@ -107,6 +107,7 @@ Rectangle {
     }
 
     Flickable {
+        ScrollBar.vertical: ScrollBar { }
         clip: true
         width: parent.width-64*2
         x: 64
