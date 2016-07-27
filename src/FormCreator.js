@@ -15,9 +15,10 @@ function createListForm(node) {
 
     var qmlString
 
-    qmlString = "import QtQuick 2.0;\n" +
+    qmlString = "import QtQuick 2.5;\n" +
                 "import CB.api 1.0;\n" +
                 "import CBControls 1.0;\n" +
+                "import QtQuick.Controls 2.0\n\n"+
                 "Rectangle {\n" +
                 "   Component.onDestruction: console.log(\""+node.listFormName()+" Destruction Beginning!\")\n"+
                 "   id: mainRect;\n" +
@@ -28,6 +29,7 @@ function createListForm(node) {
                 "   property bool compareMode: false\n"
 
     qmlString+= "   ListView {\n" +
+                "       ScrollBar.vertical: ScrollBar { }\n"+
                 "       id:listView;\n" +
                 "       anchors.fill: parent;\n" +
                 "       delegate: delegate;\n   }\n";
@@ -145,10 +147,10 @@ function createFullForm(node) {
 
     var qmlString
 
-    qmlString = "import QtQuick 2.0;\n" +
+    qmlString = "import QtQuick 2.5;\n" +
                 "import CB.api 1.0;\n" +
                 "import CBControls 1.0;\n" +
-                "import QtQuick.Controls 1.4\n\n"+
+                "import QtQuick.Controls 2.0\n\n"+
                 "Rectangle {\n" +
                 "   Component.onDestruction: console.log(\""+node.fullFormName()+" Destruction Beginning!\")\n"+
                 "   id: mainRect;\n" +
@@ -157,13 +159,15 @@ function createFullForm(node) {
 
     var onNodeChangedString = "  onNodeChanged:{\n";
 
-    qmlString += "   ScrollView {\n"+
+    qmlString += "   Flickable {\n"+
+                 "       ScrollBar.vertical: ScrollBar { }\n"+
                  "       clip: true;\n"+
+                 "       contentHeight: contentColumn.height\n"+
                  "       anchors.fill:parent;\n";
 
     qmlString += "       Column {\n" +
                  "            id: contentColumn\n"+
-                 "            width: mainRect.width - 20\n"
+                 "            width: mainRect.width\n"
     if (node.usesUUIDs){
         qmlString += "            Image {\n"+
                      "                  id: image\n"+
