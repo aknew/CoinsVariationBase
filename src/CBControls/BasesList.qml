@@ -21,7 +21,7 @@ GridView {
             onClicked: {
                 if (mouse.button === Qt.RightButton) {
                     baseMenu.file = modelData
-                    baseMenu.popup()
+                    baseMenu.open()
                 } else {
                     //TODO: need use some constants instead string
                     if (modelData === qsTr("Open new base")) {

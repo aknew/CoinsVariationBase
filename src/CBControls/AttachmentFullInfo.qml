@@ -166,7 +166,7 @@ Rectangle {
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                 onClicked: {
                     if (mouse.button === Qt.RightButton) {
-                        openMenu.popup()
+                        openMenu.open()
                     } else {
                         CBApi.baseProvider.attachmentsProvider.openAttach(
                                     attachmentInfo.file)

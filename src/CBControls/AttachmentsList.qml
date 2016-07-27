@@ -103,7 +103,7 @@ Rectangle {
                 onClicked: {
                     if (mouse.button === Qt.RightButton) {
                         openMenu.file = modelData.file
-                        openMenu.popup()
+                        openMenu.open()
                     } else {
                         var component = Qt.createComponent(
                                     "AttachmentFullInfo.qml")

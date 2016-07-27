@@ -218,7 +218,7 @@ ApplicationWindow {
         id: predefinedFiltersAction
         text: qsTr("Predefined filters")
         onTriggered: {
-            predefinedContextMenu.popup()
+            predefinedContextMenu.popup() // TODO: don't forget change to open after migrating to Controls 2
         }
     }
 
