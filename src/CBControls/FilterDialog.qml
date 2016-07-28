@@ -71,6 +71,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 contentItem: Image{
                     source: "/delete"
+                    fillMode: Image.Pad
                 }
                 onClicked: {
                     filterList.remove(index)
@@ -114,7 +115,7 @@ Item {
 
         contentItem: Rectangle {
             implicitWidth: 600
-            implicitHeight: GUIStyle.isMobile ? 315 : 115
+            implicitHeight: GUIStyle.isMobile ? 315 :200
             Column{
                 anchors.top:parent.top
                 anchors.topMargin: 5
