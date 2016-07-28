@@ -125,6 +125,7 @@ Rectangle {
                 id: btnRemove
                 contentItem: Image{
                     source: "/delete"
+                    fillMode: Image.Pad
                 }
                 visible: editing
                 anchors.right: parent.right

@@ -22,7 +22,7 @@ Item {
         }
     }
 
-    property var formType: CBApi.FilterDialog
+    property int formType: CBApi.FilterDialog
     property var filterList: ListModel { }
 
     ListModel{
