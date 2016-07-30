@@ -3,6 +3,8 @@ import QtQuick.Controls 2.0
 import QtQuick.Dialogs 1.2
 import CB.api 1.0
 
+import QtQuick.Controls 1.4 as OldControls
+
 import "." // QTBUG-34418, singletons require explicit import to load qmldir file
 
 Item {
@@ -135,7 +137,8 @@ Item {
                       height: parent.height
                       verticalAlignment : Text.AlignVCenter
                    }
-                   ComboBox{
+                   // HOTFIX: https://bugreports.qt.io/browse/QTBUG-55004 - ComboBox into Dialog doesn't show value list on Android
+                   OldControls.ComboBox{
                        id: edtField
                        anchors.left: lblField.right
                        anchors.leftMargin: 5
@@ -158,7 +161,8 @@ Item {
                       height: parent.height
                       verticalAlignment : Text.AlignVCenter
                    }
-                   ComboBox{
+                   // HOTFIX: https://bugreports.qt.io/browse/QTBUG-55004 - ComboBox into Dialog doesn't show value list on Android
+                   OldControls.ComboBox{
                        id: edtRelation
                        model: realtions
                        anchors.left: lblRelation.right
