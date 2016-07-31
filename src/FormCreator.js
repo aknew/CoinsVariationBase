@@ -306,16 +306,3 @@ function createFullForm(node) {
 
     return component;
 }
-
-function createMenu(){
-    var menuName = Qt.platform.os == "android" ? "AndroidMenu.qml":"DesktopMenu.qml"
-    var component = Qt.createComponent(menuName)
-    switch (component.status) {
-    case Component.Ready:
-        var menu = component.createObject()
-        return menu;
-    case Component.Error:
-        console.log(component.errorString())
-        break
-    }
-}
