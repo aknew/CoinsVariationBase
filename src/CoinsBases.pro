@@ -1,4 +1,4 @@
-QT       += core gui sql qml quick widgets
+QT       += core gui sql qml quick widgets quickcontrols2
 
 android{
     QT += androidextras

@@ -11,10 +11,10 @@ import "qrc:/CBControls" //HOTFIX: I don't find how load it another way
 
 ApplicationWindow {
     id: mainWindow
-    //title: qsTr("Open a base")
+    title: qsTr("Open a base")
 
-    //height: 500
-    //width: 1000
+    height: 500
+    width: 1000
     property bool isInsertingNew: false
 
     header:ToolBar {
@@ -76,6 +76,8 @@ ApplicationWindow {
                         contentItem: Image {
                             source: "/filter"
                             fillMode: Image.Pad
+                            horizontalAlignment: Image.AlignHCenter
+                            verticalAlignment: Image.AlignVCenter
                         }
                         visible: tablesStack.currentItem.formType === CBApi.ListForm
                         onClicked: menuFilters.open()
@@ -108,9 +110,11 @@ ApplicationWindow {
                     visible:false
 
                     ToolButton {
-                        contentItem: LabeledIcon {
-                            iconSource: "/apply"
-                            text: qsTr("Apply")
+                        contentItem: Image {
+                            source: "/apply"
+                            fillMode: Image.Pad
+                            horizontalAlignment: Image.AlignHCenter
+                            verticalAlignment: Image.AlignVCenter
                         }
 
                         //            shortcut: "Ctrl+S"
@@ -124,8 +128,9 @@ ApplicationWindow {
                         contentItem: Image {
                             source: "/undo"
                             fillMode: Image.Pad
+                            horizontalAlignment: Image.AlignHCenter
+                            verticalAlignment: Image.AlignVCenter
                         }
-                        text: qsTr("Undo")
                         onClicked: {
                             windowToolbar.state = ""
                             tablesStack.currentItem.state = ""
@@ -312,7 +317,7 @@ ApplicationWindow {
     }
 
     function providerReadyToWork() {
-        //title = CBApi.baseProvider.baseTitle
+        title = CBApi.baseProvider.baseTitle
         var node = CBApi.baseProvider.getStartNode()
         var listForm = FormCreator.createListForm(node)
         pushToStackView(listForm)
