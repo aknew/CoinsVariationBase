@@ -5,33 +5,34 @@
         <file>CBControls/LabeledComboBoxInput.qml</file>
         <file>CBControls/LabeledTextInput.qml</file>
         <file>CBControls/NextLevelList.qml</file>
-        <file>CBControls/qmldir</file>
-        <file>FormCreator.js</file>
-        <file alias="apply">../resources/1455160510_checkmark.png</file>
-        <file alias="add">../resources/1455160258_plus.png</file>
-        <file alias="undo">../resources/1455160394_undo.png</file>
-        <file alias="back">../resources/1455160200_left.png</file>
-        <file alias="edit">../resources/1455243681_create.png</file>
-        <file alias="delete">../resources/1455160380_close.png</file>
+        <file>CBControls/LabeledIcon.qml</file>
         <file>CBControls/FilterDialog.qml</file>
-        <file alias="no_image.png">../resources/no_image.png</file>
         <file>CBControls/LabeledDateInput.qml</file>
         <file>CBControls/AttachmentsList.qml</file>
         <file>CBControls/AttachmentFullInfo.qml</file>
         <file>CBControls/LabeledLongText.qml</file>
         <file>CBControls/BasesList.qml</file>
+        <file>CBControls/GUIStyle.qml</file>
+        <file>CBControls/DiffView.qml</file>
+        <file>CBControls/qmldir</file>
+        <file>FormCreator.js</file>        
+        <file alias="ru_RU.json">../translations/ru_RU.json</file>
+        <file alias="apply">../resources/1455160510_checkmark.png</file>
+        <file alias="add">../resources/1455160258_plus.png</file>
+        <file alias="undo">../resources/1455160394_undo.png</file>
+        <file alias="back">../resources/1455160200_left.png</file>
+        <file alias="edit">../resources/1455243681_create.png</file>
+        <file alias="delete">../resources/1455160380_close.png</file>        
+        <file alias="no_image.png">../resources/no_image.png</file>        
         <file alias="add_database.png">../resources/add_database.png</file>
         <file alias="database.png">../resources/database.png</file>
         <file alias="next">../resources/next-128.png</file>
         <file alias="previous">../resources/previous-128.png</file>
         <file alias="right">../resources/right-64.png</file>
-        <file alias="ru_RU.json">../translations/ru_RU.json</file>
         <file alias="calendar">../resources/calendar.png</file>
-        <file alias="add_folder">../resources/1460912108_add_folder.png</file>
-        <file>CBControls/GUIStyle.qml</file>
-        <file>CBControls/DiffView.qml</file>
+        <file alias="add_folder">../resources/1460912108_add_folder.png</file>        
         <file alias="clone">../resources/clone.png</file>
         <file alias="filter">../resources/filter.png</file>
-        <file>CBControls/LabeledIcon.qml</file>
+        
     </qresource>
 </RCC>
