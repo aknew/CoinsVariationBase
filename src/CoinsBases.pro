@@ -36,7 +36,8 @@ DISTFILES += \
     ../translations/ru_RU.json \
     CBControls/BasesList.qml \
     CBControls/GUIStyle.qml \
-    CBControls/DiffView.qml
+    CBControls/DiffView.qml \
+    CBControls/LabeledIcon.qml
 
 RESOURCES += \
     resources.qrc

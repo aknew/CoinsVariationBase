@@ -108,11 +108,11 @@ ApplicationWindow {
                     visible:false
 
                     ToolButton {
-                        contentItem: Image {
-                            source: "/apply"
-                            fillMode: Image.Pad
+                        contentItem: LabeledIcon {
+                            iconSource: "/apply"
+                            text: qsTr("Apply")
                         }
-                        text: qsTr("Apply")
+
                         //            shortcut: "Ctrl+S"
                         onClicked: {
                             windowToolbar.state = ""
@@ -156,12 +156,11 @@ ApplicationWindow {
                 }
                 Menu {
                     id: menuRecordManagment
-                    MenuItem {
-                        text: qsTr("Edit record")
+                    MenuItem {                        
                         //shortcut: "Ctrl+E"
-                        contentItem: Image {
-                            source: "/edit"
-                            fillMode: Image.Pad
+                        contentItem: LabeledIcon {
+                            iconSource: "/edit"
+                            text: qsTr("Edit record")
                         }
                         onTriggered: {
                             windowToolbar.state = "editing"
@@ -171,10 +170,10 @@ ApplicationWindow {
                                  || tablesStack.currentItem.formType === CBApi.AttachForm
                     }
                     MenuItem {
-                        text: qsTr("Add new")
-                        contentItem: Image {
-                            source: "/add"
-                            fillMode: Image.Pad
+
+                        contentItem: LabeledIcon {
+                            iconSource: "/add"
+                            text: qsTr("Add new")
                         }
                         //shortcut: "Ctrl+N"
                         onTriggered: {
@@ -194,20 +193,19 @@ ApplicationWindow {
                     }
                     MenuItem {
                         visible: tablesStack.currentItem.formType === CBApi.FullForm
-                        text: qsTr("Delete")
-                        contentItem: Image {
-                            source: "/delete"
-                            fillMode: Image.Pad
+
+                        contentItem: LabeledIcon {
+                            iconSource: "/delete"
+                            text: qsTr("Delete")
                         }
                         onTriggered: {
                             deleteRowDialog.open()
                         }
                     }
-                    MenuItem {
-                        text: qsTr("Clone")
-                        contentItem: Image {
-                            source: "/clone"
-                            fillMode: Image.Pad
+                    MenuItem {                        
+                        contentItem: LabeledIcon {
+                            iconSource: "/clone"
+                            text: qsTr("Clone")
                         }
                         onTriggered: {
                             var currentItem = tablesStack.currentItem
@@ -224,10 +222,9 @@ ApplicationWindow {
                 Menu {
                     id: menuFilters
                     MenuItem {
-                        text: qsTr("Set/edit filters")
-                        contentItem: Image {
-                            source: "/edit"
-                            fillMode: Image.Pad
+                        contentItem: LabeledIcon{
+                            iconSource: "/edit"
+                            text: qsTr("Set/edit filters")
                         }
                         onTriggered: {
                             var component = Qt.createComponent(
@@ -245,11 +242,10 @@ ApplicationWindow {
                         }
                     }
                     MenuItem {
-                        contentItem: Image {
-                            source: "/delete"
-                            fillMode: Image.Pad
+                        contentItem: LabeledIcon{
+                            iconSource: "/delete"
+                            text: qsTr("Drop filters")
                         }
-                        text: qsTr("Drop filters")
                         onTriggered: {
                             tablesStack.currentItem.node.dropFilter()
                         }

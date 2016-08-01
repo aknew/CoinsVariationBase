@@ -32,5 +32,6 @@
         <file>CBControls/DiffView.qml</file>
         <file alias="clone">../resources/clone.png</file>
         <file alias="filter">../resources/filter.png</file>
+        <file>CBControls/LabeledIcon.qml</file>
     </qresource>
 </RCC>
