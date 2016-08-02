@@ -4,10 +4,12 @@ import QtQuick.Layouts 1.3
 import QtQml 2.2
 import QtQuick.Dialogs 1.2
 
-
 import CB.api 1.0
 import "FormCreator.js" as FormCreator
-import "qrc:/CBControls" //HOTFIX: I don't find how load it another way
+
+//HOTFIX: I don't find how load it another way
+import "qrc:/CBControls"
+
 
 ApplicationWindow {
     id: mainWindow
@@ -17,135 +19,60 @@ ApplicationWindow {
     width: 1000
     property bool isInsertingNew: false
 
-    header:ToolBar {
-                // TODO: make shortcuts workable
-                id: windowToolbar
+    header: ToolBar {
+        // TODO: make shortcuts workable
+        id: windowToolbar
 
-                states: [
-                    State {
-                        name: "editing"
-                        PropertyChanges {
-                            target: defaultLayout
-                            visible: false
-                        }
-                        PropertyChanges {
-                            target: editingLayout
-                            visible: true
-                        }
-                    }
-                ]
-                RowLayout {
-                    id: defaultLayout
-                    anchors.fill: parent
-                    ToolButton {
-                        contentItem: Image {
-                            source: "/back"
-                            fillMode: Image.Pad
-                        }
-                        //shortcut: Qt.BackButton
-                        onClicked: {
-                            if (tablesStack.depth > 2) {
-                                var currentItem = tablesStack.currentItem
-                                if (currentItem.formType === CBApi.FilterDialog) {
-                                    currentItem.applyFilters()
-                                }
-                                if (currentItem.state === "editing") {
-                                    goBackDialog.open()
-                                } else {
-                                    if (currentItem.formType === CBApi.FullForm
-                                            && currentItem.node.usesUUIDs) {
-                                        CBApi.baseProvider.deselectCurrentId()
-                                    }
-                                    if (currentItem.formType === CBApi.ListForm) {
-                                        tablesStack.currentItem.node.dropFilter()
-                                    }
-
-                                    tablesStack.pop()
-                                }
-                            }
-                        }
-                    }
-                    ToolButton {
-                        contentItem: Text {
-                            text: qsTr("Work with data")
-                        }
-                        onClicked: menuWorkingWithData.open()
-                        visible: tablesStack.currentItem.formType === CBApi.ListForm
-                    }
-                    ToolButton {
-                        contentItem: Image {
-                            source: "/filter"
-                            fillMode: Image.Pad
-                            horizontalAlignment: Image.AlignHCenter
-                            verticalAlignment: Image.AlignVCenter
-                        }
-                        visible: tablesStack.currentItem.formType === CBApi.ListForm
-                        onClicked: menuFilters.open()
-                    }
-
-                    ToolButton {
-                        contentItem: Text {
-                            text: qsTr("Record managing")
-                        }
-                        onClicked: menuRecordManagment.open()
-                    }
-                    ToolButton {
-                        contentItem: Text {
-                            text: qsTr("Open")
-                        }
-                        onClicked: tablesStack.pop(tablesStack.initialItem)
-                        //shortcut: "Ctrl+O"
-                    }
-                    ToolButton {
-                        contentItem: Text {
-                            text: qsTr("Help")
-                        }
-                        onClicked: menuHelp.open()
-                    }
+        states: [
+            State {
+                name: "editing"
+                PropertyChanges {
+                    target: defaultLayout
+                    visible: false
                 }
-
-                RowLayout {
-                    anchors.fill: parent
-                    id: editingLayout
-                    visible:false
-
-                    ToolButton {
-                        contentItem: Image {
-                            source: "/apply"
-                            fillMode: Image.Pad
-                            horizontalAlignment: Image.AlignHCenter
-                            verticalAlignment: Image.AlignVCenter
+                PropertyChanges {
+                    target: editingLayout
+                    visible: true
+                }
+            }
+        ]
+        RowLayout {
+            id: defaultLayout
+            anchors.fill: parent
+            ToolButton {
+                contentItem: Image {
+                    source: "/back"
+                    fillMode: Image.Pad
+                }
+                //shortcut: Qt.BackButton
+                onClicked: {
+                    if (tablesStack.depth > 2) {
+                        var currentItem = tablesStack.currentItem
+                        if (currentItem.formType === CBApi.FilterDialog) {
+                            currentItem.applyFilters()
                         }
-
-                        //            shortcut: "Ctrl+S"
-                        onClicked: {
-                            windowToolbar.state = ""
-                            tablesStack.currentItem.state = ""
-                            tablesStack.currentItem.collectData()
-                        }
-                    }
-                    ToolButton {
-                        contentItem: Image {
-                            source: "/undo"
-                            fillMode: Image.Pad
-                            horizontalAlignment: Image.AlignHCenter
-                            verticalAlignment: Image.AlignVCenter
-                        }
-                        onClicked: {
-                            windowToolbar.state = ""
-                            tablesStack.currentItem.state = ""
-                            tablesStack.currentItem.node.dropChanges()
-                            if (isInsertingNew) {
-                                tablesStack.pop()
-                                isInsertingNew = false
-                            } else {
-                                //HOTFIX: to update data after dropping
-                                tablesStack.currentItem.node = tablesStack.currentItem.node
+                        if (currentItem.state === "editing") {
+                            goBackDialog.open()
+                        } else {
+                            if (currentItem.formType === CBApi.FullForm
+                                    && currentItem.node.usesUUIDs) {
+                                CBApi.baseProvider.deselectCurrentId()
                             }
+                            if (currentItem.formType === CBApi.ListForm) {
+                                tablesStack.currentItem.node.dropFilter()
+                            }
+
+                            tablesStack.pop()
                         }
                     }
                 }
-
+            }
+            ToolButton {
+                contentItem: Text {
+                    text: qsTr("Work with data")
+                }
+                onClicked: menuWorkingWithData.open()
+                visible: tablesStack.currentItem.formType === CBApi.ListForm
                 Menu {
                     id: menuWorkingWithData
                     MenuItem {
@@ -155,13 +82,90 @@ ApplicationWindow {
                     MenuItem {
                         text: qsTr("Export to json")
                         onTriggered: {
-                            tablesStack.currentItem.node.exportListToFile("export")
+                            tablesStack.currentItem.node.exportListToFile(
+                                        "export")
+                        }
+                    }
+                }
+            }
+            ToolButton {
+                contentItem: Image {
+                    source: "/filter"
+                    fillMode: Image.Pad
+                    horizontalAlignment: Image.AlignHCenter
+                    verticalAlignment: Image.AlignVCenter
+                }
+                visible: tablesStack.currentItem.formType === CBApi.ListForm
+                onClicked: menuFilters.open()
+
+                Menu {
+                    id: menuFilters
+                    MenuItem {
+                        contentItem: LabeledIcon {
+                            iconSource: "/edit"
+                            text: qsTr("Set/edit filters")
+                        }
+                        onTriggered: {
+                            var component = Qt.createComponent(
+                                        "CBControls/FilterDialog.qml")
+                            switch (component.status) {
+                            case Component.Ready:
+                                var form = component.createObject()
+                                form.node = tablesStack.currentItem.node
+                                pushToStackView(form)
+                                break
+                            case Component.Error:
+                                console.log(component.errorString())
+                                break
+                            }
+                        }
+                    }
+                    MenuItem {
+                        contentItem: LabeledIcon {
+                            iconSource: "/delete"
+                            text: qsTr("Drop filters")
+                        }
+                        onTriggered: {
+                            tablesStack.currentItem.node.dropFilter()
+                        }
+                    }
+                    MenuItem {
+                        text: qsTr("Predefined filters")
+                        visible: tablesStack.currentItem.node.predefinedFiltesList.length > 0
+                        onTriggered: {
+                            menuPredefinedFilters.open()
                         }
                     }
                 }
                 Menu {
+                    id: menuPredefinedFilters
+                    Instantiator {
+                        model: tablesStack.currentItem.node.predefinedFiltesList
+
+                        MenuItem {
+                            text: modelData
+                            onTriggered: {
+                                tablesStack.currentItem.node.applyPredefinedFilter(
+                                            modelData)
+                            }
+                        }
+                        onObjectAdded: menuPredefinedFilters.insertItem(index,
+                                                                        object)
+                        onObjectRemoved: menuPredefinedFilters.removeItem(
+                                             object)
+                    }
+                }
+            }
+
+            ToolButton {
+                contentItem: Text {
+                    text: qsTr("Record managing")
+                }
+                onClicked: menuRecordManagment.open()
+
+                Menu {
                     id: menuRecordManagment
-                    MenuItem {                        
+                    MenuItem {
                         //shortcut: "Ctrl+E"
                         contentItem: LabeledIcon {
                             iconSource: "/edit"
@@ -207,7 +211,7 @@ ApplicationWindow {
                             deleteRowDialog.open()
                         }
                     }
-                    MenuItem {                        
+                    MenuItem {
                         contentItem: LabeledIcon {
                             iconSource: "/clone"
                             text: qsTr("Clone")
@@ -224,58 +228,32 @@ ApplicationWindow {
                         visible: tablesStack.currentItem.formType === CBApi.FullForm
                     }
                 }
-                Menu {
-                    id: menuFilters
-                    MenuItem {
-                        contentItem: LabeledIcon{
-                            iconSource: "/edit"
-                            text: qsTr("Set/edit filters")
-                        }
-                        onTriggered: {
-                            var component = Qt.createComponent(
-                                        "CBControls/FilterDialog.qml")
-                            switch (component.status) {
-                            case Component.Ready:
-                                var form = component.createObject()
-                                form.node = tablesStack.currentItem.node
-                                pushToStackView(form)
-                                break
-                            case Component.Error:
-                                console.log(component.errorString())
-                                break
-                            }
-                        }
-                    }
-                    MenuItem {
-                        contentItem: LabeledIcon{
-                            iconSource: "/delete"
-                            text: qsTr("Drop filters")
-                        }
-                        onTriggered: {
-                            tablesStack.currentItem.node.dropFilter()
-                        }
-                    }
-                    MenuItem {
-                        text: qsTr("Predefined filters")
-                        visible: tablesStack.currentItem.node.predefinedFiltesList.length > 0
-                        onTriggered: {
-                            menuPredefinedFilters.open()
-                        }
-                    }
+            }
+            ToolButton {
+                contentItem: Text {
+                    text: qsTr("Open")
                 }
+                onClicked: tablesStack.pop(tablesStack.initialItem)
+                //shortcut: "Ctrl+O"
+            }
+            ToolButton {
+                contentItem: Text {
+                    text: qsTr("Help")
+                }
+                onClicked: menuHelp.open()
 
                 Menu {
                     id: menuHelp
                     MenuItem {
                         text: qsTr("About base")
                         onTriggered: {
-                            aboutDialog.aboutHtml = CBApi.baseProvider.getAbout()
+                            aboutDialog.aboutHtml = CBApi.baseProvider.getAbout(
+                                        )
                             aboutDialog.open()
                         }
                     }
                     MenuItem {
-                        text: qsTr(
-                                  "How have I came here?") // Mean what item have I selected before current form
+                        text: qsTr("How have I came here?") // Mean what item have I selected before current form
                         onTriggered: {
                             aboutDialog.aboutHtml = CBApi.baseProvider.getSelectedWay()
                             aboutDialog.open()
@@ -283,21 +261,48 @@ ApplicationWindow {
                     }
                 }
             }
+        }
+    }
 
-    Menu {
-        id: menuPredefinedFilters
-        Instantiator {
-            model: tablesStack.currentItem.node.predefinedFiltesList
+    RowLayout {
+        anchors.fill: parent
+        id: editingLayout
+        visible: false
 
-            MenuItem {
-                text: modelData
-                onTriggered: {
-                    tablesStack.currentItem.node.applyPredefinedFilter(
-                                modelData)
+        ToolButton {
+            contentItem: Image {
+                source: "/apply"
+                fillMode: Image.Pad
+                horizontalAlignment: Image.AlignHCenter
+                verticalAlignment: Image.AlignVCenter
+            }
+
+            //            shortcut: "Ctrl+S"
+            onClicked: {
+                windowToolbar.state = ""
+                tablesStack.currentItem.state = ""
+                tablesStack.currentItem.collectData()
+            }
+        }
+        ToolButton {
+            contentItem: Image {
+                source: "/undo"
+                fillMode: Image.Pad
+                horizontalAlignment: Image.AlignHCenter
+                verticalAlignment: Image.AlignVCenter
+            }
+            onClicked: {
+                windowToolbar.state = ""
+                tablesStack.currentItem.state = ""
+                tablesStack.currentItem.node.dropChanges()
+                if (isInsertingNew) {
+                    tablesStack.pop()
+                    isInsertingNew = false
+                } else {
+                    //HOTFIX: to update data after dropping
+                    tablesStack.currentItem.node = tablesStack.currentItem.node
                 }
             }
-            onObjectAdded: menuPredefinedFilters.insertItem(index, object)
-            onObjectRemoved: menuPredefinedFilters.removeItem(object)
         }
     }
 
@@ -307,7 +312,8 @@ ApplicationWindow {
         id: tablesStack
         anchors.fill: parent
         objectName: "tablesStack"
-        initialItem: BasesList{}
+        initialItem: BasesList {
+        }
 
         // Implements back key navigation
         focus: true
@@ -343,8 +349,8 @@ ApplicationWindow {
         tablesStack.push(view)
     }
 
-    function showDifference(node, index1, index2){
-        var diff = node.recordDifference(index1,index2);
+    function showDifference(node, index1, index2) {
+        var diff = node.recordDifference(index1, index2)
         var component = Qt.createComponent("CBControls/DiffView.qml")
         switch (component.status) {
         case Component.Ready:
@@ -383,32 +389,33 @@ ApplicationWindow {
             // For example it is AttachmentFullInfo and FilterDialog
             tablesStack.currentItem.node.dropChanges()
             isInsertingNew = false
-            if (currentItem.formType === CBApi.FullForm && currentItem.node.usesUUIDs){
-                CBApi.baseProvider.deselectCurrentId();
+            if (currentItem.formType === CBApi.FullForm
+                    && currentItem.node.usesUUIDs) {
+                CBApi.baseProvider.deselectCurrentId()
             }
             tablesStack.pop()
         }
     }
 
-        Dialog {
-            id: aboutDialog
-            property alias aboutHtml: aboutView.text
-            contentItem:Rectangle{
-                color: "white"
-                implicitHeight: mainWindow.height-100
-                implicitWidth: mainWindow.width-100
-                Keys.onBackPressed: aboutDialog.close()
-                Flickable{
-                    clip: true
-                    anchors.fill: parent
-                    contentHeight: aboutView.height
-                    Text{
-                        id: aboutView
-                        width: parent.width
-                        wrapMode: Text.Wrap
-                        onLinkActivated: Qt.openUrlExternally(link)
-                    }
+    Dialog {
+        id: aboutDialog
+        property alias aboutHtml: aboutView.text
+        contentItem: Rectangle {
+            color: "white"
+            implicitHeight: mainWindow.height - 100
+            implicitWidth: mainWindow.width - 100
+            Keys.onBackPressed: aboutDialog.close()
+            Flickable {
+                clip: true
+                anchors.fill: parent
+                contentHeight: aboutView.height
+                Text {
+                    id: aboutView
+                    width: parent.width
+                    wrapMode: Text.Wrap
+                    onLinkActivated: Qt.openUrlExternally(link)
                 }
             }
         }
+    }
 }
