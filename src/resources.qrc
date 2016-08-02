@@ -17,10 +17,10 @@
         <file>CBControls/qmldir</file>
         <file>FormCreator.js</file>        
         <file alias="ru_RU.json">../translations/ru_RU.json</file>
-        <file alias="apply">../resources/1455160510_checkmark.png</file>
+        <file alias="apply">../resources/apply.png</file>
         <file alias="add">../resources/1455160258_plus.png</file>
-        <file alias="undo">../resources/1455160394_undo.png</file>
-        <file alias="back">../resources/1455160200_left.png</file>
+        <file alias="undo">../resources/undo.png</file>
+        <file alias="back">../resources/back.png</file>
         <file alias="edit">../resources/1455243681_create.png</file>
         <file alias="delete">../resources/1455160380_close.png</file>        
         <file alias="no_image.png">../resources/no_image.png</file>        
