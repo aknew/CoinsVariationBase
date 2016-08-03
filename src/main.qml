@@ -237,8 +237,11 @@ ApplicationWindow {
                 //shortcut: "Ctrl+O"
             }
             ToolButton {
-                contentItem: Text {
-                    text: qsTr("Help")
+                contentItem: Image {
+                    source: "/help"
+                    fillMode: Image.Pad
+                    horizontalAlignment: Image.AlignHCenter
+                    verticalAlignment: Image.AlignVCenter
                 }
                 onClicked: menuHelp.open()
 

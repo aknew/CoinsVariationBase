@@ -18,6 +18,9 @@ Rectangle {
             id: btnAddFile
             contentItem: Image{
                 source: "/add"
+                fillMode: Image.Pad
+                horizontalAlignment: Image.AlignHCenter
+                verticalAlignment: Image.AlignVCenter
             }
             anchors.left: parent.left
             anchors.leftMargin: 5
@@ -36,6 +39,9 @@ Rectangle {
             id: btnAddFolder
             contentItem: Image{
                 source: "/add_folder"
+                fillMode: Image.Pad
+                horizontalAlignment: Image.AlignHCenter
+                verticalAlignment: Image.AlignVCenter
             }
             anchors.left: btnAddFile.right
             anchors.leftMargin: 5

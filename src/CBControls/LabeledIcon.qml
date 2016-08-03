@@ -11,7 +11,9 @@ Item {
         width:  parent.height
         anchors.left: parent.left
         anchors.leftMargin: 5
-        fillMode: Image.PreserveAspectFit
+        fillMode: Image.Pad
+        horizontalAlignment: Image.AlignHCenter
+        verticalAlignment: Image.AlignVCenter
     }
     Text{
         id:label

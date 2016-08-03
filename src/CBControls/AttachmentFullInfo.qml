@@ -144,6 +144,8 @@ Rectangle {
                     contentItem: Image{
                         source: "/delete"
                         fillMode: Image.Pad
+                        horizontalAlignment: Image.AlignHCenter
+                        verticalAlignment: Image.AlignVCenter
                     }
                     visible: editing
                     anchors.right: parent.right
@@ -188,6 +190,9 @@ Rectangle {
             id: btnAddField
             contentItem: Image{
                 source: "/add"
+                fillMode: Image.Pad
+                horizontalAlignment: Image.AlignHCenter
+                verticalAlignment: Image.AlignVCenter
             }
             anchors.left: parent.left
             anchors.leftMargin: 5
