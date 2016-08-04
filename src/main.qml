@@ -10,7 +10,6 @@ import "FormCreator.js" as FormCreator
 //HOTFIX: I don't find how load it another way
 import "qrc:/CBControls"
 
-
 ApplicationWindow {
     id: mainWindow
     title: qsTr("Open a base")
@@ -36,10 +35,13 @@ ApplicationWindow {
                 }
             }
         ]
-        RowLayout {
+        Item {
             id: defaultLayout
             anchors.fill: parent
             ToolButton {
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                visible: tablesStack.depth > 2
                 contentItem: Image {
                     source: "/back"
                     fillMode: Image.Pad
@@ -67,199 +69,204 @@ ApplicationWindow {
                     }
                 }
             }
-            ToolButton {
-                contentItem: Text {
-                    text: qsTr("Work with data")
-                }
-                onClicked: menuWorkingWithData.open()
-                visible: tablesStack.currentItem.formType === CBApi.ListForm
-                Menu {
-                    id: menuWorkingWithData
-                    MenuItem {
-                        text: qsTr("Record comparation")
-                        onTriggered: tablesStack.currentItem.compareMode = true
+            RowLayout {
+                height: parent.height
+                anchors.right: parent.right
+                anchors.rightMargin: 5
+                ToolButton {
+                    contentItem: Text {
+                        text: qsTr("Work with data")
                     }
-                    MenuItem {
-                        text: qsTr("Export to json")
-                        onTriggered: {
-                            tablesStack.currentItem.node.exportListToFile(
-                                        "export")
-                        }
-                    }
-                }
-            }
-            ToolButton {
-                contentItem: Image {
-                    source: "/filter"
-                    fillMode: Image.Pad
-                    horizontalAlignment: Image.AlignHCenter
-                    verticalAlignment: Image.AlignVCenter
-                }
-                visible: tablesStack.currentItem.formType === CBApi.ListForm
-                onClicked: menuFilters.open()
-
-                Menu {
-                    id: menuFilters
-                    MenuItem {
-                        contentItem: LabeledIcon {
-                            iconSource: "/edit"
-                            text: qsTr("Set/edit filters")
-                        }
-                        onTriggered: {
-                            var component = Qt.createComponent(
-                                        "CBControls/FilterDialog.qml")
-                            switch (component.status) {
-                            case Component.Ready:
-                                var form = component.createObject()
-                                form.node = tablesStack.currentItem.node
-                                pushToStackView(form)
-                                break
-                            case Component.Error:
-                                console.log(component.errorString())
-                                break
-                            }
-                        }
-                    }
-                    MenuItem {
-                        contentItem: LabeledIcon {
-                            iconSource: "/delete"
-                            text: qsTr("Drop filters")
-                        }
-                        onTriggered: {
-                            tablesStack.currentItem.node.dropFilter()
-                        }
-                    }
-                    MenuItem {
-                        text: qsTr("Predefined filters")
-                        visible: tablesStack.currentItem.node.predefinedFiltesList.length > 0
-                        onTriggered: {
-                            menuPredefinedFilters.open()
-                        }
-                    }
-                }
-                Menu {
-                    id: menuPredefinedFilters
-                    Instantiator {
-                        model: tablesStack.currentItem.node.predefinedFiltesList
-
+                    onClicked: menuWorkingWithData.open()
+                    visible: tablesStack.currentItem.formType === CBApi.ListForm
+                    Menu {
+                        id: menuWorkingWithData
                         MenuItem {
-                            text: modelData
+                            text: qsTr("Record comparation")
+                            onTriggered: tablesStack.currentItem.compareMode = true
+                        }
+                        MenuItem {
+                            text: qsTr("Export to json")
                             onTriggered: {
-                                tablesStack.currentItem.node.applyPredefinedFilter(
-                                            modelData)
+                                tablesStack.currentItem.node.exportListToFile(
+                                            "export")
                             }
                         }
-                        onObjectAdded: menuPredefinedFilters.insertItem(index,
-                                                                        object)
-                        onObjectRemoved: menuPredefinedFilters.removeItem(
-                                             object)
                     }
                 }
-            }
-
-            ToolButton {
-                contentItem: Text {
-                    text: qsTr("Record managing")
-                }
-                onClicked: menuRecordManagment.open()
-
-                Menu {
-                    id: menuRecordManagment
-                    MenuItem {
-                        //shortcut: "Ctrl+E"
-                        contentItem: LabeledIcon {
-                            iconSource: "/edit"
-                            text: qsTr("Edit record")
-                        }
-                        onTriggered: {
-                            windowToolbar.state = "editing"
-                            tablesStack.currentItem.state = "editing"
-                        }
-                        visible: tablesStack.currentItem.formType === CBApi.FullForm
-                                 || tablesStack.currentItem.formType === CBApi.AttachForm
+                ToolButton {
+                    contentItem: Image {
+                        source: "/filter"
+                        fillMode: Image.Pad
+                        horizontalAlignment: Image.AlignHCenter
+                        verticalAlignment: Image.AlignVCenter
                     }
-                    MenuItem {
+                    visible: tablesStack.currentItem.formType === CBApi.ListForm
+                    onClicked: menuFilters.open()
 
-                        contentItem: LabeledIcon {
-                            iconSource: "/add"
-                            text: qsTr("Add new")
-                        }
-                        //shortcut: "Ctrl+N"
-                        onTriggered: {
-                            tablesStack.currentItem.node.prepareToNewItem()
-                            if (tablesStack.currentItem.formType === CBApi.ListForm) {
-                                showFullForm(tablesStack.currentItem.node)
-                            } else {
-                                //HOTFIX: to update data after dropping
-                                tablesStack.currentItem.node = tablesStack.currentItem.node
+                    Menu {
+                        id: menuFilters
+                        MenuItem {
+                            contentItem: LabeledIcon {
+                                iconSource: "/edit"
+                                text: qsTr("Set/edit filters")
                             }
-                            windowToolbar.state = "editing"
-                            tablesStack.currentItem.state = "editing"
-                            isInsertingNew = true
+                            onTriggered: {
+                                var component = Qt.createComponent(
+                                            "CBControls/FilterDialog.qml")
+                                switch (component.status) {
+                                case Component.Ready:
+                                    var form = component.createObject()
+                                    form.node = tablesStack.currentItem.node
+                                    pushToStackView(form)
+                                    break
+                                case Component.Error:
+                                    console.log(component.errorString())
+                                    break
+                                }
+                            }
                         }
-                        visible: tablesStack.currentItem.formType === CBApi.ListForm
-                                 || tablesStack.currentItem.formType === CBApi.FullForm
+                        MenuItem {
+                            contentItem: LabeledIcon {
+                                iconSource: "/delete"
+                                text: qsTr("Drop filters")
+                            }
+                            onTriggered: {
+                                tablesStack.currentItem.node.dropFilter()
+                            }
+                        }
+                        MenuItem {
+                            text: qsTr("Predefined filters")
+                            visible: tablesStack.currentItem.node.predefinedFiltesList.length > 0
+                            onTriggered: {
+                                menuPredefinedFilters.open()
+                            }
+                        }
                     }
-                    MenuItem {
-                        visible: tablesStack.currentItem.formType === CBApi.FullForm
+                    Menu {
+                        id: menuPredefinedFilters
+                        Instantiator {
+                            model: tablesStack.currentItem.node.predefinedFiltesList
 
-                        contentItem: LabeledIcon {
-                            iconSource: "/delete"
-                            text: qsTr("Delete")
-                        }
-                        onTriggered: {
-                            deleteRowDialog.open()
+                            MenuItem {
+                                text: modelData
+                                onTriggered: {
+                                    tablesStack.currentItem.node.applyPredefinedFilter(
+                                                modelData)
+                                }
+                            }
+                            onObjectAdded: menuPredefinedFilters.insertItem(
+                                               index, object)
+                            onObjectRemoved: menuPredefinedFilters.removeItem(
+                                                 object)
                         }
                     }
-                    MenuItem {
-                        contentItem: LabeledIcon {
-                            iconSource: "/clone"
-                            text: qsTr("Clone")
-                        }
-                        onTriggered: {
-                            var currentItem = tablesStack.currentItem
-                            currentItem.node.cloneItem()
-                            //HOTFIX: to update data after clonning
-                            currentItem.node = currentItem.node
-                            windowToolbar.state = "editing"
-                            currentItem.state = "editing"
-                            isInsertingNew = true
-                        }
-                        visible: tablesStack.currentItem.formType === CBApi.FullForm
-                    }
                 }
-            }
-            ToolButton {
-                contentItem: Text {
-                    text: qsTr("Open")
-                }
-                onClicked: tablesStack.pop(tablesStack.initialItem)
-                //shortcut: "Ctrl+O"
-            }
-            ToolButton {
-                contentItem: Image {
-                    source: "/help"
-                    fillMode: Image.Pad
-                    horizontalAlignment: Image.AlignHCenter
-                    verticalAlignment: Image.AlignVCenter
-                }
-                onClicked: menuHelp.open()
 
-                Menu {
-                    id: menuHelp
-                    MenuItem {
-                        text: qsTr("About base")
-                        onTriggered: {
-                            aboutDialog.aboutHtml = CBApi.baseProvider.getAbout(
-                                        )
-                            aboutDialog.open()
+                ToolButton {
+                    contentItem: Text {
+                        text: qsTr("Record managing")
+                    }
+                    onClicked: menuRecordManagment.open()
+
+                    Menu {
+                        id: menuRecordManagment
+                        MenuItem {
+                            //shortcut: "Ctrl+E"
+                            contentItem: LabeledIcon {
+                                iconSource: "/edit"
+                                text: qsTr("Edit record")
+                            }
+                            onTriggered: {
+                                windowToolbar.state = "editing"
+                                tablesStack.currentItem.state = "editing"
+                            }
+                            visible: tablesStack.currentItem.formType === CBApi.FullForm
+                                     || tablesStack.currentItem.formType === CBApi.AttachForm
+                        }
+                        MenuItem {
+
+                            contentItem: LabeledIcon {
+                                iconSource: "/add"
+                                text: qsTr("Add new")
+                            }
+                            //shortcut: "Ctrl+N"
+                            onTriggered: {
+                                tablesStack.currentItem.node.prepareToNewItem()
+                                if (tablesStack.currentItem.formType === CBApi.ListForm) {
+                                    showFullForm(tablesStack.currentItem.node)
+                                } else {
+                                    //HOTFIX: to update data after dropping
+                                    tablesStack.currentItem.node = tablesStack.currentItem.node
+                                }
+                                windowToolbar.state = "editing"
+                                tablesStack.currentItem.state = "editing"
+                                isInsertingNew = true
+                            }
+                            visible: tablesStack.currentItem.formType === CBApi.ListForm
+                                     || tablesStack.currentItem.formType === CBApi.FullForm
+                        }
+                        MenuItem {
+                            visible: tablesStack.currentItem.formType === CBApi.FullForm
+
+                            contentItem: LabeledIcon {
+                                iconSource: "/delete"
+                                text: qsTr("Delete")
+                            }
+                            onTriggered: {
+                                deleteRowDialog.open()
+                            }
+                        }
+                        MenuItem {
+                            contentItem: LabeledIcon {
+                                iconSource: "/clone"
+                                text: qsTr("Clone")
+                            }
+                            onTriggered: {
+                                var currentItem = tablesStack.currentItem
+                                currentItem.node.cloneItem()
+                                //HOTFIX: to update data after clonning
+                                currentItem.node = currentItem.node
+                                windowToolbar.state = "editing"
+                                currentItem.state = "editing"
+                                isInsertingNew = true
+                            }
+                            visible: tablesStack.currentItem.formType === CBApi.FullForm
                         }
                     }
-                    MenuItem {
-                        text: qsTr("How have I came here?") // Mean what item have I selected before current form
-                        onTriggered: {
-                            aboutDialog.aboutHtml = CBApi.baseProvider.getSelectedWay()
-                            aboutDialog.open()
+                }
+                ToolButton {
+                    contentItem: Text {
+                        text: qsTr("Open")
+                    }
+                    onClicked: tablesStack.pop(tablesStack.initialItem)
+                    //shortcut: "Ctrl+O"
+                }
+
+                ToolButton {
+                    contentItem: Image {
+                        source: "/help"
+                        fillMode: Image.Pad
+                        horizontalAlignment: Image.AlignHCenter
+                        verticalAlignment: Image.AlignVCenter
+                    }
+                    onClicked: menuHelp.open()
+
+                    Menu {
+                        id: menuHelp
+                        MenuItem {
+                            text: qsTr("About base")
+                            onTriggered: {
+                                aboutDialog.aboutHtml = CBApi.baseProvider.getAbout()
+                                aboutDialog.open()
+                            }
+                        }
+                        MenuItem {
+                            text: qsTr("How have I came here?") // Mean what item have I selected before current form
+                            onTriggered: {
+                                aboutDialog.aboutHtml = CBApi.baseProvider.getSelectedWay()
+                                aboutDialog.open()
+                            }
                         }
                     }
                 }
