@@ -80,6 +80,8 @@ Rectangle {
                 anchors.leftMargin: 5
                 height: parent.height-10
                 width: height*2
+                sourceSize.height: height
+                sourceSize.width: width
                 source: "image://imageProvider/" + currentID + "/" + modelData.file
                 fillMode: Image.PreserveAspectFit
             }

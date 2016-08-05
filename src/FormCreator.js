@@ -66,6 +66,8 @@ function createListForm(node) {
                      "            source: \"image://imageProvider/\" + id + \"/Main.jpg\"\n"+
                      "            height: parent.height-10\n"+
                      "            width: Math.min(height*2,parent.width/3)\n"+
+                     "            sourceSize.height: height\n"+
+                     "            sourceSize.width: width\n"+
                      "            fillMode: Image.PreserveAspectFit\n"+
                      "            anchors.left: parent.left\n"+
                      "            anchors.leftMargin: 5\n"+
@@ -173,6 +175,8 @@ function createFullForm(node) {
                      "                  id: image\n"+
                      "                  width: parent.width\n"+
                      "                  height: Math.min(parent.width/2,300)\n"+
+                     "                  sourceSize.height: height\n"+
+                     "                  sourceSize.width: width\n"+
                      "                  fillMode: Image.PreserveAspectFit\n"+
                      "                  MouseArea {\n"+
                      "                             anchors.fill: parent\n"+

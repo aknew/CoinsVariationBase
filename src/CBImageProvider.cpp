@@ -18,7 +18,6 @@ QImage CBImageProvider::requestImage(const QString& id, QSize* size, const QSize
 QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSize& requestedSize)
 {
     Q_UNUSED(size)
-    Q_UNUSED(requestedSize)
     // unquoting {}
     QString _id = id;
     _id.replace("%7B","{");
@@ -33,6 +32,10 @@ QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSi
         if (result.isNull()){
             result=QPixmap("://no_image.png");
         }
+    }
+
+    if (requestedSize.width()>0 && requestedSize.height()>0){
+        result = result.scaled(requestedSize,Qt::KeepAspectRatio);
     }
 
     return result;
