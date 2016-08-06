@@ -43,6 +43,8 @@ GridView {
             anchors.bottom: baseTitle.top
             anchors.bottomMargin: 5
             fillMode: Image.PreserveAspectFit
+            sourceSize.height: height
+            sourceSize.width: width
         }
         Text {
             id: baseTitle
