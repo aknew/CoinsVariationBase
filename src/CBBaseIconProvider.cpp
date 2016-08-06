@@ -8,9 +8,8 @@ CBBaseIconProvider::CBBaseIconProvider(ImageType type): QQuickImageProvider(type
 
 QImage CBBaseIconProvider::requestImage(const QString& id, QSize* size, const QSize& requestedSize)
 {
-    Q_UNUSED(size)
-    Q_UNUSED(requestedSize)
-    return QImage(CBSettings::settingsInstance()->recentPathByName(id)+"/icon.png");
+    QPixmap px = requestPixmap(id,size,requestedSize);
+    return px.toImage();
 }
 
 QPixmap CBBaseIconProvider::requestPixmap(const QString& id, QSize* size, const QSize& requestedSize)

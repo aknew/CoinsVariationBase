@@ -10,9 +10,8 @@ CBImageProvider::CBImageProvider(ImageType type):
 
 QImage CBImageProvider::requestImage(const QString& id, QSize* size, const QSize& requestedSize)
 {
-    Q_UNUSED(size)
-    Q_UNUSED(requestedSize)
-    return QImage(attachmentsProvider->_basePath+id);
+    QPixmap px = requestPixmap(id,size,requestedSize);
+    return px.toImage();
 }
 
 QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSize& requestedSize)
