@@ -42,7 +42,7 @@ function createListForm(node) {
                  "          width: listView.width;\n"+
                  "          height: Math.max(100,topLayout.height+10);\n";
 
-    qmlString += "          BackgroundRect{}\n";
+    qmlString += "          BackgroundRect{selected:(index===mainRect.firstIndex)}\n";
     qmlString += "          MouseArea {anchors.fill: parent\n"+
                  "                     onClicked: {\n" +
                  "                                 if (compareMode){\n"+
