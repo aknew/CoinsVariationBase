@@ -272,50 +272,53 @@ ApplicationWindow {
                 }
             }
         }
-    }
+        Item {
+            anchors.fill: parent
+            id: editingLayout
+            visible: false
 
-    RowLayout {
-        anchors.fill: parent
-        id: editingLayout
-        visible: false
+            ToolButton {
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                contentItem: Image {
+                    source: "/apply"
+                    fillMode: Image.Pad
+                    horizontalAlignment: Image.AlignHCenter
+                    verticalAlignment: Image.AlignVCenter
+                }
 
-        ToolButton {
-            contentItem: Image {
-                source: "/apply"
-                fillMode: Image.Pad
-                horizontalAlignment: Image.AlignHCenter
-                verticalAlignment: Image.AlignVCenter
+                //            shortcut: "Ctrl+S"
+                onClicked: {
+                    windowToolbar.state = ""
+                    tablesStack.currentItem.state = ""
+                    tablesStack.currentItem.collectData()
+                }
             }
-
-            //            shortcut: "Ctrl+S"
-            onClicked: {
-                windowToolbar.state = ""
-                tablesStack.currentItem.state = ""
-                tablesStack.currentItem.collectData()
-            }
-        }
-        ToolButton {
-            contentItem: Image {
-                source: "/undo"
-                fillMode: Image.Pad
-                horizontalAlignment: Image.AlignHCenter
-                verticalAlignment: Image.AlignVCenter
-            }
-            onClicked: {
-                windowToolbar.state = ""
-                tablesStack.currentItem.state = ""
-                tablesStack.currentItem.node.dropChanges()
-                if (isInsertingNew) {
-                    tablesStack.pop()
-                    isInsertingNew = false
-                } else {
-                    //HOTFIX: to update data after dropping
-                    tablesStack.currentItem.node = tablesStack.currentItem.node
+            ToolButton {
+                anchors.right: parent.right
+                anchors.rightMargin: 5
+                contentItem: Image {
+                    source: "/undo"
+                    fillMode: Image.Pad
+                    horizontalAlignment: Image.AlignHCenter
+                    verticalAlignment: Image.AlignVCenter
+                }
+                onClicked: {
+                    windowToolbar.state = ""
+                    tablesStack.currentItem.state = ""
+                    tablesStack.currentItem.node.dropChanges()
+                    if (isInsertingNew) {
+                        tablesStack.pop()
+                        isInsertingNew = false
+                    } else {
+                        //HOTFIX: to update data after dropping
+                        tablesStack.currentItem.node = tablesStack.currentItem.node
+                    }
                 }
             }
         }
-    }
 
+    }
     property bool needCollect: false
 
     StackView {
