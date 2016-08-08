@@ -263,6 +263,7 @@ ApplicationWindow {
                         }
                         MenuItem {
                             text: qsTr("How have I came here?") // Mean what item have I selected before current form
+                            visible: tablesStack.currentItem.formType !== CBApi.OpenBaseForm
                             onTriggered: {
                                 aboutDialog.aboutHtml = CBApi.baseProvider.getSelectedWay()
                                 aboutDialog.open()

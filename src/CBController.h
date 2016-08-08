@@ -33,7 +33,8 @@ public:
         ListForm,
         FullForm,
         FilterDialog,
-        AttachForm
+        AttachForm,
+        OpenBaseForm
     };
     Q_ENUM(FormType)
 

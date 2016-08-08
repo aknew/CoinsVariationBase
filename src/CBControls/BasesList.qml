@@ -6,6 +6,7 @@ import CB.api 1.0
 import "." // QTBUG-34418, singletons require explicit import to load qmldir file
 
 GridView {
+    property int formType: CBApi.OpenBaseForm
     model: CBSettings.recentBases
     id: root
     // TODO: check on tablet
