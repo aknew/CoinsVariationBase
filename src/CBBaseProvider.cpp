@@ -176,6 +176,9 @@ void CBBaseProvider::startWithPath(const QString &path){
      for (auto iter: selectedDescription){
          str += iter;
      }
+     if (str ==""){
+         str = tr("You are at start level, nothing have been selected yet");
+     }
      return str;
  }
 

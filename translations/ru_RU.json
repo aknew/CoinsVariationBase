@@ -45,5 +45,6 @@
     "Record comparation" : "Сравнение записей",
     "Show all fields":"Показывать все поля",
     "Show different fields":"Показывать отличающиеся поля",
-    "Predefined filters":"Предопределенные фильтры"
+    "Predefined filters":"Предопределенные фильтры",
+    "You are at start level, nothing have been selected yet":"Вы на стартовом уровне, пока ничего не выбрано"
 }
