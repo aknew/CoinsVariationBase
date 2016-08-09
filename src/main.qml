@@ -137,7 +137,7 @@ ApplicationWindow {
                         }
                         MenuItem {
                             text: qsTr("Predefined filters")
-                            visible: tablesStack.currentItem.node.predefinedFiltesList.length > 0
+                            visible: tablesStack.currentItem.node!= null && tablesStack.currentItem.node.predefinedFiltesList.length > 0
                             onTriggered: {
                                 menuPredefinedFilters.open()
                             }
@@ -146,7 +146,9 @@ ApplicationWindow {
                     Menu {
                         id: menuPredefinedFilters
                         Instantiator {
-                            model: tablesStack.currentItem.node.predefinedFiltesList
+                            model: tablesStack.currentItem.node?
+                                       tablesStack.currentItem.node.predefinedFiltesList:
+                                       null
 
                             MenuItem {
                                 text: modelData
