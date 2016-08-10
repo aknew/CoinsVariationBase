@@ -70,6 +70,7 @@ ApplicationWindow {
                 }
             }
             RowLayout {
+                visible: tablesStack.currentItem.formType !== CBApi.OpenBaseForm
                 height: parent.height
                 anchors.right: parent.right
                 anchors.rightMargin: 5
@@ -238,8 +239,11 @@ ApplicationWindow {
                     }
                 }
                 ToolButton {
-                    contentItem: Text {
-                        text: qsTr("Open")
+                    contentItem: Image {
+                        source: "/open"
+                        fillMode: Image.Pad
+                        horizontalAlignment: Image.AlignHCenter
+                        verticalAlignment: Image.AlignVCenter
                     }
                     onClicked: tablesStack.pop(tablesStack.initialItem)
                     //shortcut: "Ctrl+O"
@@ -265,7 +269,6 @@ ApplicationWindow {
                         }
                         MenuItem {
                             text: qsTr("How have I came here?") // Mean what item have I selected before current form
-                            visible: tablesStack.currentItem.formType !== CBApi.OpenBaseForm
                             onTriggered: {
                                 aboutDialog.aboutHtml = CBApi.baseProvider.getSelectedWay()
                                 aboutDialog.open()

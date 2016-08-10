@@ -34,6 +34,7 @@
         <file alias="clone">../resources/clone.png</file>
         <file alias="filter">../resources/filter.png</file>
         <file alias="help">../resources/help.png</file>
+        <file alias="open">../resources/open.png</file>
         
     </qresource>
 </RCC>
