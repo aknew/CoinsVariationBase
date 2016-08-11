@@ -8,18 +8,18 @@ CBWordLCS::CBWordLCS(const QString &first, const QString &second)
     secondList = second.split(" ");
     _m = firstList.length();
     _n = secondList.length();
-    LCSTable = new size_t[(_m + 1) * (_n + 1)];
+    LCSTable = new int[(_m + 1) * (_n + 1)];
 
-    for (size_t i=0; i<=_m; ++i){
+    for (int i=0; i<=_m; ++i){
         setAt(i, 0, 0);
     }
 
-    for (size_t j=0; j<=_n; ++j){
+    for (int j=0; j<=_n; ++j){
         setAt(0, j, 0);
     }
 
-    for (size_t i = 0; i < _m; ++i){
-        for (size_t j = 0; j < _n; ++j){
+    for (int i = 0; i < _m; ++i){
+        for (int j = 0; j < _n; ++j){
             if (firstList.at(i) == secondList.at(j))
                 setAt(i+1, j+1, getAt(i, j)+1);
             else
@@ -48,17 +48,17 @@ QString CBWordLCS::getDifferenceSecond(){
     return generateString(secondList, true);
 }
 
-void CBWordLCS::setAt(size_t i, size_t j, size_t value)
+void CBWordLCS::setAt(int i, int j, int value)
 {
     LCSTable[i + j * (_m + 1)] = value;
 }
 
-size_t CBWordLCS::getAt(size_t i, size_t j) const
+int CBWordLCS::getAt(int i, int j) const
 {
     return LCSTable[i + j * (_m + 1)];
 }
 
-void CBWordLCS::backtrackOne(size_t i, size_t j){
+void CBWordLCS::backtrackOne(int i, int j){
         commonList.clear();
 
         if (i == 0 || j == 0)

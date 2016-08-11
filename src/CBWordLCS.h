@@ -22,17 +22,17 @@ private:
     QStringList firstList;
     QStringList secondList;
 
-    size_t   _m;
-    size_t   _n;
-    size_t *LCSTable;
+    int   _m;
+    int   _n;
+    int *LCSTable;
 
     // Difference markers
     const QString kStartDifference = "<font color=\"red\">";
     const QString kEndDifference =   "</font>";
 
-    size_t getAt(size_t i, size_t j) const;
-    void setAt(size_t i, size_t j, size_t value);
-    void backtrackOne(size_t i, size_t j);
+    int getAt(int i, int j) const;
+    void setAt(int i, int j, int value);
+    void backtrackOne(int i, int j);
 
     QStringList commonList;
 
