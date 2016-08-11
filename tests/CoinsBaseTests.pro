@@ -3,7 +3,7 @@ QT += testlib core gui sql qml quick widgets
 CONFIG += c++11
 
 TARGET = CoinsBaseTests
-CONFIG += console testcase
+CONFIG += console testcase no_batch
 CONFIG -= app_bundle
 
 TEMPLATE = app
@@ -19,7 +19,9 @@ SOURCES += main.cpp \
     ../src/CBSettings.cpp \
     ../src/CBSqlRelationalTableModel.cpp \
     ../src/CBWordLCS.cpp \
-    CBWordLCSTestSet.cpp
+    CBWordLCSTestSet.cpp \
+    ../src/CBFieldDifference.cpp \
+    ../src/CBItemDifference.cpp
 
 HEADERS += \
     CBBaseProviderTester.h \
@@ -32,4 +34,6 @@ HEADERS += \
     ../src/CBSettings.h \
     ../src/CBSqlRelationalTableModel.h \
     ../src/CBWordLCS.h \
-    CBWordLCSTestSet.h
+    CBWordLCSTestSet.h \
+    ../src/CBFieldDifference.h \
+    ../src/CBItemDifference.h
