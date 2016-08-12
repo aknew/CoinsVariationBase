@@ -21,6 +21,7 @@ ApplicationWindow {
     header: ToolBar {
         // TODO: make shortcuts workable
         id: windowToolbar
+        height: GUIStyle.barHeight
 
         states: [
             State {
@@ -41,6 +42,8 @@ ApplicationWindow {
             ToolButton {
                 anchors.left: parent.left
                 anchors.leftMargin: 5
+                height: parent.height
+                width: parent.height
                 visible: tablesStack.depth > 2
                 contentItem: Image {
                     source: "/back"
@@ -75,16 +78,21 @@ ApplicationWindow {
                 anchors.right: parent.right
                 anchors.rightMargin: 5
                 ToolButton {
-                    contentItem: Text {
-                        text: qsTr("Work with data")
+                    height: parent.height
+                    width: parent.height
+                    contentItem: Image {
+                        source: "/work_with_data"
+                        fillMode: Image.Pad
+                        horizontalAlignment: Image.AlignHCenter
+                        verticalAlignment: Image.AlignVCenter
                     }
                     onClicked: menuWorkingWithData.open()
-                    visible: tablesStack.currentItem.formType === CBApi.ListForm
                     Menu {
                         id: menuWorkingWithData
                         MenuItem {
                             text: qsTr("Record comparation")
                             onTriggered: tablesStack.currentItem.compareMode = true
+                            visible: tablesStack.currentItem.formType === CBApi.ListForm
                         }
                         MenuItem {
                             text: qsTr("Export to json")
@@ -92,10 +100,75 @@ ApplicationWindow {
                                 tablesStack.currentItem.node.exportListToFile(
                                             "export")
                             }
+                            visible: tablesStack.currentItem.formType === CBApi.ListForm
+                        }
+                        MenuItem {
+                            //shortcut: "Ctrl+E"
+                            contentItem: LabeledIcon {
+                                iconSource: "/edit"
+                                text: qsTr("Edit record")
+                            }
+                            onTriggered: {
+                                windowToolbar.state = "editing"
+                                tablesStack.currentItem.state = "editing"
+                            }
+                            visible: tablesStack.currentItem.formType === CBApi.FullForm
+                                     || tablesStack.currentItem.formType === CBApi.AttachForm
+                        }
+                        MenuItem {
+
+                            contentItem: LabeledIcon {
+                                iconSource: "/add"
+                                text: qsTr("Add new")
+                            }
+                            //shortcut: "Ctrl+N"
+                            onTriggered: {
+                                tablesStack.currentItem.node.prepareToNewItem()
+                                if (tablesStack.currentItem.formType === CBApi.ListForm) {
+                                    showFullForm(tablesStack.currentItem.node)
+                                } else {
+                                    //HOTFIX: to update data after dropping
+                                    tablesStack.currentItem.node = tablesStack.currentItem.node
+                                }
+                                windowToolbar.state = "editing"
+                                tablesStack.currentItem.state = "editing"
+                                isInsertingNew = true
+                            }
+                            visible: tablesStack.currentItem.formType === CBApi.ListForm
+                                     || tablesStack.currentItem.formType === CBApi.FullForm
+                        }
+                        MenuItem {
+                            visible: tablesStack.currentItem.formType === CBApi.FullForm
+
+                            contentItem: LabeledIcon {
+                                iconSource: "/delete"
+                                text: qsTr("Delete")
+                            }
+                            onTriggered: {
+                                deleteRowDialog.open()
+                            }
+                        }
+                        MenuItem {
+                            contentItem: LabeledIcon {
+                                iconSource: "/clone"
+                                text: qsTr("Clone")
+                            }
+                            onTriggered: {
+                                var currentItem = tablesStack.currentItem
+                                currentItem.node.cloneItem()
+                                //HOTFIX: to update data after clonning
+                                currentItem.node = currentItem.node
+                                windowToolbar.state = "editing"
+                                currentItem.state = "editing"
+                                isInsertingNew = true
+                            }
+                            visible: tablesStack.currentItem.formType === CBApi.FullForm
                         }
                     }
                 }
                 ToolButton {
+                    height: parent.height
+                    width: parent.height
                     contentItem: Image {
                         source: "/filter"
                         fillMode: Image.Pad
@@ -165,80 +238,9 @@ ApplicationWindow {
                         }
                     }
                 }
-
                 ToolButton {
-                    contentItem: Text {
-                        text: qsTr("Record managing")
-                    }
-                    onClicked: menuRecordManagment.open()
-
-                    Menu {
-                        id: menuRecordManagment
-                        MenuItem {
-                            //shortcut: "Ctrl+E"
-                            contentItem: LabeledIcon {
-                                iconSource: "/edit"
-                                text: qsTr("Edit record")
-                            }
-                            onTriggered: {
-                                windowToolbar.state = "editing"
-                                tablesStack.currentItem.state = "editing"
-                            }
-                            visible: tablesStack.currentItem.formType === CBApi.FullForm
-                                     || tablesStack.currentItem.formType === CBApi.AttachForm
-                        }
-                        MenuItem {
-
-                            contentItem: LabeledIcon {
-                                iconSource: "/add"
-                                text: qsTr("Add new")
-                            }
-                            //shortcut: "Ctrl+N"
-                            onTriggered: {
-                                tablesStack.currentItem.node.prepareToNewItem()
-                                if (tablesStack.currentItem.formType === CBApi.ListForm) {
-                                    showFullForm(tablesStack.currentItem.node)
-                                } else {
-                                    //HOTFIX: to update data after dropping
-                                    tablesStack.currentItem.node = tablesStack.currentItem.node
-                                }
-                                windowToolbar.state = "editing"
-                                tablesStack.currentItem.state = "editing"
-                                isInsertingNew = true
-                            }
-                            visible: tablesStack.currentItem.formType === CBApi.ListForm
-                                     || tablesStack.currentItem.formType === CBApi.FullForm
-                        }
-                        MenuItem {
-                            visible: tablesStack.currentItem.formType === CBApi.FullForm
-
-                            contentItem: LabeledIcon {
-                                iconSource: "/delete"
-                                text: qsTr("Delete")
-                            }
-                            onTriggered: {
-                                deleteRowDialog.open()
-                            }
-                        }
-                        MenuItem {
-                            contentItem: LabeledIcon {
-                                iconSource: "/clone"
-                                text: qsTr("Clone")
-                            }
-                            onTriggered: {
-                                var currentItem = tablesStack.currentItem
-                                currentItem.node.cloneItem()
-                                //HOTFIX: to update data after clonning
-                                currentItem.node = currentItem.node
-                                windowToolbar.state = "editing"
-                                currentItem.state = "editing"
-                                isInsertingNew = true
-                            }
-                            visible: tablesStack.currentItem.formType === CBApi.FullForm
-                        }
-                    }
-                }
-                ToolButton {
+                    height: parent.height
+                    width: parent.height
                     contentItem: Image {
                         source: "/open"
                         fillMode: Image.Pad
@@ -250,6 +252,8 @@ ApplicationWindow {
                 }
 
                 ToolButton {
+                    height: parent.height
+                    width: parent.height
                     contentItem: Image {
                         source: "/help"
                         fillMode: Image.Pad
@@ -284,6 +288,8 @@ ApplicationWindow {
             visible: false
 
             ToolButton {
+                height: parent.height
+                width: parent.height
                 anchors.left: parent.left
                 anchors.leftMargin: 5
                 contentItem: Image {
@@ -301,6 +307,8 @@ ApplicationWindow {
                 }
             }
             ToolButton {
+                height: parent.height
+                width: parent.height
                 anchors.right: parent.right
                 anchors.rightMargin: 5
                 contentItem: Image {

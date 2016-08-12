@@ -35,6 +35,7 @@
         <file alias="filter">../resources/filter.png</file>
         <file alias="help">../resources/help.png</file>
         <file alias="open">../resources/open.png</file>
+        <file alias="work_with_data">../resources/work_with_data.png</file>
         
     </qresource>
 </RCC>
