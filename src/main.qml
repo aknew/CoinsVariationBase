@@ -89,80 +89,82 @@ ApplicationWindow {
                     onClicked: menuWorkingWithData.open()
                     Menu {
                         id: menuWorkingWithData
-                        MenuItem {
-                            text: qsTr("Record comparation")
-                            onTriggered: tablesStack.currentItem.compareMode = true
-                            visible: tablesStack.currentItem.formType === CBApi.ListForm
-                        }
-                        MenuItem {
-                            text: qsTr("Export to json")
-                            onTriggered: {
-                                tablesStack.currentItem.node.exportListToFile(
-                                            "export")
+                        ColumnLayout {
+                            MenuItem {
+                                text: qsTr("Record comparation")
+                                onTriggered: tablesStack.currentItem.compareMode = true
+                                visible: tablesStack.currentItem.formType === CBApi.ListForm
                             }
-                            visible: tablesStack.currentItem.formType === CBApi.ListForm
-                        }
-                        MenuItem {
-                            //shortcut: "Ctrl+E"
-                            contentItem: LabeledIcon {
-                                iconSource: "/edit"
-                                text: qsTr("Edit record")
-                            }
-                            onTriggered: {
-                                windowToolbar.state = "editing"
-                                tablesStack.currentItem.state = "editing"
-                            }
-                            visible: tablesStack.currentItem.formType === CBApi.FullForm
-                                     || tablesStack.currentItem.formType === CBApi.AttachForm
-                        }
-                        MenuItem {
-
-                            contentItem: LabeledIcon {
-                                iconSource: "/add"
-                                text: qsTr("Add new")
-                            }
-                            //shortcut: "Ctrl+N"
-                            onTriggered: {
-                                tablesStack.currentItem.node.prepareToNewItem()
-                                if (tablesStack.currentItem.formType === CBApi.ListForm) {
-                                    showFullForm(tablesStack.currentItem.node)
-                                } else {
-                                    //HOTFIX: to update data after dropping
-                                    tablesStack.currentItem.node = tablesStack.currentItem.node
+                            MenuItem {
+                                text: qsTr("Export to json")
+                                onTriggered: {
+                                    tablesStack.currentItem.node.exportListToFile(
+                                                "export")
                                 }
-                                windowToolbar.state = "editing"
-                                tablesStack.currentItem.state = "editing"
-                                isInsertingNew = true
+                                visible: tablesStack.currentItem.formType === CBApi.ListForm
                             }
-                            visible: tablesStack.currentItem.formType === CBApi.ListForm
-                                     || tablesStack.currentItem.formType === CBApi.FullForm
-                        }
-                        MenuItem {
-                            visible: tablesStack.currentItem.formType === CBApi.FullForm
+                            MenuItem {
+                                //shortcut: "Ctrl+E"
+                                contentItem: LabeledIcon {
+                                    iconSource: "/edit"
+                                    text: qsTr("Edit record")
+                                }
+                                onTriggered: {
+                                    windowToolbar.state = "editing"
+                                    tablesStack.currentItem.state = "editing"
+                                }
+                                visible: tablesStack.currentItem.formType === CBApi.FullForm
+                                         || tablesStack.currentItem.formType === CBApi.AttachForm
+                            }
+                            MenuItem {
 
-                            contentItem: LabeledIcon {
-                                iconSource: "/delete"
-                                text: qsTr("Delete")
+                                contentItem: LabeledIcon {
+                                    iconSource: "/add"
+                                    text: qsTr("Add new")
+                                }
+                                //shortcut: "Ctrl+N"
+                                onTriggered: {
+                                    tablesStack.currentItem.node.prepareToNewItem()
+                                    if (tablesStack.currentItem.formType === CBApi.ListForm) {
+                                        showFullForm(tablesStack.currentItem.node)
+                                    } else {
+                                        //HOTFIX: to update data after dropping
+                                        tablesStack.currentItem.node = tablesStack.currentItem.node
+                                    }
+                                    windowToolbar.state = "editing"
+                                    tablesStack.currentItem.state = "editing"
+                                    isInsertingNew = true
+                                }
+                                visible: tablesStack.currentItem.formType === CBApi.ListForm
+                                         || tablesStack.currentItem.formType === CBApi.FullForm
                             }
-                            onTriggered: {
-                                deleteRowDialog.open()
+                            MenuItem {
+                                visible: tablesStack.currentItem.formType === CBApi.FullForm
+
+                                contentItem: LabeledIcon {
+                                    iconSource: "/delete"
+                                    text: qsTr("Delete")
+                                }
+                                onTriggered: {
+                                    deleteRowDialog.open()
+                                }
                             }
-                        }
-                        MenuItem {
-                            contentItem: LabeledIcon {
-                                iconSource: "/clone"
-                                text: qsTr("Clone")
+                            MenuItem {
+                                contentItem: LabeledIcon {
+                                    iconSource: "/clone"
+                                    text: qsTr("Clone")
+                                }
+                                onTriggered: {
+                                    var currentItem = tablesStack.currentItem
+                                    currentItem.node.cloneItem()
+                                    //HOTFIX: to update data after clonning
+                                    currentItem.node = currentItem.node
+                                    windowToolbar.state = "editing"
+                                    currentItem.state = "editing"
+                                    isInsertingNew = true
+                                }
+                                visible: tablesStack.currentItem.formType === CBApi.FullForm
                             }
-                            onTriggered: {
-                                var currentItem = tablesStack.currentItem
-                                currentItem.node.cloneItem()
-                                //HOTFIX: to update data after clonning
-                                currentItem.node = currentItem.node
-                                windowToolbar.state = "editing"
-                                currentItem.state = "editing"
-                                isInsertingNew = true
-                            }
-                            visible: tablesStack.currentItem.formType === CBApi.FullForm
                         }
                     }
                 }
@@ -180,49 +182,50 @@ ApplicationWindow {
 
                     Menu {
                         id: menuFilters
-                        MenuItem {
-                            contentItem: LabeledIcon {
-                                iconSource: "/edit"
-                                text: qsTr("Set/edit filters")
-                            }
-                            onTriggered: {
-                                var component = Qt.createComponent(
-                                            "CBControls/FilterDialog.qml")
-                                switch (component.status) {
-                                case Component.Ready:
-                                    var form = component.createObject()
-                                    form.node = tablesStack.currentItem.node
-                                    pushToStackView(form)
-                                    break
-                                case Component.Error:
-                                    console.log(component.errorString())
-                                    break
+                        ColumnLayout {
+                            MenuItem {
+                                contentItem: LabeledIcon {
+                                    iconSource: "/edit"
+                                    text: qsTr("Set/edit filters")
+                                }
+                                onTriggered: {
+                                    var component = Qt.createComponent(
+                                                "CBControls/FilterDialog.qml")
+                                    switch (component.status) {
+                                    case Component.Ready:
+                                        var form = component.createObject()
+                                        form.node = tablesStack.currentItem.node
+                                        pushToStackView(form)
+                                        break
+                                    case Component.Error:
+                                        console.log(component.errorString())
+                                        break
+                                    }
                                 }
                             }
-                        }
-                        MenuItem {
-                            contentItem: LabeledIcon {
-                                iconSource: "/delete"
-                                text: qsTr("Drop filters")
+                            MenuItem {
+                                contentItem: LabeledIcon {
+                                    iconSource: "/delete"
+                                    text: qsTr("Drop filters")
+                                }
+                                onTriggered: {
+                                    tablesStack.currentItem.node.dropFilter()
+                                }
                             }
-                            onTriggered: {
-                                tablesStack.currentItem.node.dropFilter()
-                            }
-                        }
-                        MenuItem {
-                            text: qsTr("Predefined filters")
-                            visible: tablesStack.currentItem.node!= null && tablesStack.currentItem.node.predefinedFiltesList.length > 0
-                            onTriggered: {
-                                menuPredefinedFilters.open()
+                            MenuItem {
+                                text: qsTr("Predefined filters")
+                                visible: tablesStack.currentItem.node != null
+                                         && tablesStack.currentItem.node.predefinedFiltesList.length > 0
+                                onTriggered: {
+                                    menuPredefinedFilters.open()
+                                }
                             }
                         }
                     }
                     Menu {
                         id: menuPredefinedFilters
                         Instantiator {
-                            model: tablesStack.currentItem.node?
-                                       tablesStack.currentItem.node.predefinedFiltesList:
-                                       null
+                            model: tablesStack.currentItem.node ? tablesStack.currentItem.node.predefinedFiltesList : null
 
                             MenuItem {
                                 text: modelData
@@ -331,7 +334,6 @@ ApplicationWindow {
                 }
             }
         }
-
     }
     property bool needCollect: false
 
