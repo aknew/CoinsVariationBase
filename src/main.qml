@@ -91,12 +91,16 @@ ApplicationWindow {
                         id: menuWorkingWithData
                         ColumnLayout {
                             MenuItem {
-                                text: qsTr("Record comparation")
+                                contentItem:  LabeledIcon {
+                                    text: qsTr("Record comparation")
+                                }
                                 onTriggered: tablesStack.currentItem.compareMode = true
                                 visible: tablesStack.currentItem.formType === CBApi.ListForm
                             }
                             MenuItem {
-                                text: qsTr("Export to json")
+                                contentItem:  LabeledIcon {
+                                    text: qsTr("Export to json")
+                                }
                                 onTriggered: {
                                     tablesStack.currentItem.node.exportListToFile(
                                                 "export")
@@ -213,7 +217,9 @@ ApplicationWindow {
                                 }
                             }
                             MenuItem {
-                                text: qsTr("Predefined filters")
+                                contentItem:  LabeledIcon {
+                                    text: qsTr("Predefined filters")
+                                }
                                 visible: tablesStack.currentItem.node != null
                                          && tablesStack.currentItem.node.predefinedFiltesList.length > 0
                                 onTriggered: {
