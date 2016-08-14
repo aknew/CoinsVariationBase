@@ -8,8 +8,8 @@ class CBNode;
 
 /**
  * @brief The CBBaseProviderTestSet class needs to test both CBBaseProvider and CBNode
- * I know that this is not corret in unit tests, but I am considering a bunch of these
- * two classes as a single entity and planing to make CBNode uncreatable not into base provider
+ * I know that this is not corect in unit tests, but I am considering a bunch of these
+ * two classes as a single entity and noone except CBBaseProvider can create new CBNode
  */
 
 class CBBaseProviderTestSet : public QObject

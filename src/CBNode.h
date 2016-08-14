@@ -26,7 +26,6 @@ class CBNode : public QObject
     Q_PROPERTY(QObject* filterList MEMBER filterList)
 
 public:
-    explicit CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent = 0);
 
     QObject *filterList = NULL; //< Uses for save listModel between filter dialog showing
     QString tableName;
@@ -127,6 +126,13 @@ signals:
     void dataChanged();
 
 protected:
+    /**
+     * @brief CBNode Protected constructor. Only CBBaseProvider can create new node, all other should ask it to get node
+     * @param obj
+     * @param db
+     * @param parent
+     */
+    explicit CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent = 0);
 
     bool insertingNewRow = false;
     QSqlDatabase &db;
