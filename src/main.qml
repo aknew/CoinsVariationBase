@@ -94,7 +94,10 @@ ApplicationWindow {
                                 contentItem:  LabeledIcon {
                                     text: qsTr("Record comparation")
                                 }
-                                onTriggered: tablesStack.currentItem.compareMode = true
+                                onTriggered: {
+                                    tablesStack.currentItem.compareMode = true
+                                    menuWorkingWithData.close()
+                                }
                                 visible: tablesStack.currentItem.formType === CBApi.ListForm
                             }
                             MenuItem {
@@ -102,8 +105,8 @@ ApplicationWindow {
                                     text: qsTr("Export to json")
                                 }
                                 onTriggered: {
-                                    tablesStack.currentItem.node.exportListToFile(
-                                                "export")
+                                    tablesStack.currentItem.node.exportListToFile("export")
+                                    menuWorkingWithData.close()
                                 }
                                 visible: tablesStack.currentItem.formType === CBApi.ListForm
                             }
@@ -116,6 +119,7 @@ ApplicationWindow {
                                 onTriggered: {
                                     windowToolbar.state = "editing"
                                     tablesStack.currentItem.state = "editing"
+                                    menuWorkingWithData.close()
                                 }
                                 visible: tablesStack.currentItem.formType === CBApi.FullForm
                                          || tablesStack.currentItem.formType === CBApi.AttachForm
@@ -138,6 +142,7 @@ ApplicationWindow {
                                     windowToolbar.state = "editing"
                                     tablesStack.currentItem.state = "editing"
                                     isInsertingNew = true
+                                    menuWorkingWithData.close()
                                 }
                                 visible: tablesStack.currentItem.formType === CBApi.ListForm
                                          || tablesStack.currentItem.formType === CBApi.FullForm
@@ -151,6 +156,7 @@ ApplicationWindow {
                                 }
                                 onTriggered: {
                                     deleteRowDialog.open()
+                                    menuWorkingWithData.close()
                                 }
                             }
                             MenuItem {
@@ -166,6 +172,7 @@ ApplicationWindow {
                                     windowToolbar.state = "editing"
                                     currentItem.state = "editing"
                                     isInsertingNew = true
+                                    menuWorkingWithData.close()
                                 }
                                 visible: tablesStack.currentItem.formType === CBApi.FullForm
                             }
@@ -205,6 +212,7 @@ ApplicationWindow {
                                         console.log(component.errorString())
                                         break
                                     }
+                                    menuFilters.close()
                                 }
                             }
                             MenuItem {
@@ -214,6 +222,7 @@ ApplicationWindow {
                                 }
                                 onTriggered: {
                                     tablesStack.currentItem.node.dropFilter()
+                                    menuFilters.close()
                                 }
                             }
                             MenuItem {
@@ -224,6 +233,7 @@ ApplicationWindow {
                                          && tablesStack.currentItem.node.predefinedFiltesList.length > 0
                                 onTriggered: {
                                     menuPredefinedFilters.open()
+                                    menuFilters.close()
                                 }
                             }
                         }
@@ -278,6 +288,7 @@ ApplicationWindow {
                             onTriggered: {
                                 aboutDialog.aboutHtml = CBApi.baseProvider.getAbout()
                                 aboutDialog.open()
+                                menuFilters.close()
                             }
                         }
                         MenuItem {
@@ -285,6 +296,7 @@ ApplicationWindow {
                             onTriggered: {
                                 aboutDialog.aboutHtml = CBApi.baseProvider.getSelectedWay()
                                 aboutDialog.open()
+                                menuFilters.close()
                             }
                         }
                     }
