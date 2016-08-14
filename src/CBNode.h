@@ -107,6 +107,9 @@ public:
     QVariantList listForExport(const QString &path);
 
 
+    QObject* listModel();
+
+
 
 signals:
     void idWasSelected(QString id);
@@ -136,8 +139,6 @@ protected:
     QStringList getPredefinedFiltesList(){
          return predefinedFiltes.keys();
     }
-
-    QObject* listModel();
 
     QString filter;
     QPair<QString,QString> levelFilter;

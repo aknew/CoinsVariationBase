@@ -28,6 +28,8 @@ void CBBaseProviderTester::wrongSubNodes(){
 }
 
 void CBBaseProviderTester::clonningTest(){
+    QAbstractItemModel * listModel = (QAbstractItemModel *)m_current_node->listModel();
+    int recordCount = listModel->rowCount();
     m_current_node->selectItemWithIndex(2);
     QVariantMap default_item = m_current_node->selectedItem();
     m_current_node->cloneItem();
@@ -49,6 +51,10 @@ void CBBaseProviderTester::clonningTest(){
     // check that selected item was not changed after appliing changes
     QVariantMap clonned_item_after_saving = m_current_node->selectedItem();
     QVERIFY(clonned_item["id"]==clonned_item_after_saving["id"]);
+
+    // check that we have recordCount + 1
+
+    QCOMPARE(recordCount+1,listModel->rowCount());
 
 }
 
