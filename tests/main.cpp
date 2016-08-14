@@ -3,7 +3,7 @@
 #include <QDir>
 #include <QTest>
 
-#include "CBBaseProviderTester.h"
+#include "CBBaseProviderTestSet.h"
 #include "CBWordLCSTestSet.h"
 
 
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
     qInfo() << "Base has been prepared, starting tests";
 
-    QTest::qExec(new CBBaseProviderTester, argc, argv);
+    QTest::qExec(new CBBaseProviderTestSet, argc, argv);
     QTest::qExec(new CBWordLCSTestSet, argc, argv);
 
     return 0;

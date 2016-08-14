@@ -9,7 +9,6 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    CBBaseProviderTester.cpp \
     ../src/CBAttachmentsProvider.cpp \
     ../src/CBBaseProvider.cpp \
     ../src/CBImageProvider.cpp \
@@ -21,10 +20,10 @@ SOURCES += main.cpp \
     ../src/CBWordLCS.cpp \
     CBWordLCSTestSet.cpp \
     ../src/CBFieldDifference.cpp \
-    ../src/CBItemDifference.cpp
+    ../src/CBItemDifference.cpp \
+    CBBaseProviderTestSet.cpp
 
 HEADERS += \
-    CBBaseProviderTester.h \
     ../src/CBAttachmentsProvider.h \
     ../src/CBBaseProvider.h \
     ../src/CBImageProvider.h \
@@ -36,4 +35,5 @@ HEADERS += \
     ../src/CBWordLCS.h \
     CBWordLCSTestSet.h \
     ../src/CBFieldDifference.h \
-    ../src/CBItemDifference.h
+    ../src/CBItemDifference.h \
+    CBBaseProviderTestSet.h

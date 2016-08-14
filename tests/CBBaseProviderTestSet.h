@@ -7,16 +7,16 @@ class CBBaseProvider;
 class CBNode;
 
 /**
- * @brief The CBBaseProviderTester class needs to test both CBBaseProvider and CBNode
+ * @brief The CBBaseProviderTestSet class needs to test both CBBaseProvider and CBNode
  * I know that this is not corret in unit tests, but I am considering a bunch of these
  * two classes as a single entity and planing to make CBNode uncreatable not into base provider
  */
 
-class CBBaseProviderTester : public QObject
+class CBBaseProviderTestSet : public QObject
 {
     Q_OBJECT
 public:
-    explicit CBBaseProviderTester(QObject *parent = 0):QObject(parent){}
+    explicit CBBaseProviderTestSet(QObject *parent = 0):QObject(parent){}
 
 public slots:
     void checkOpenedBase();

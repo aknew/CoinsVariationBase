@@ -1,21 +1,21 @@
-#include "CBBaseProviderTester.h"
+#include "CBBaseProviderTestSet.h"
 #include "../src/CBBaseProvider.h"
 #include <QTest>
 
-void CBBaseProviderTester::openningBaseTest(){
+void CBBaseProviderTestSet::openningBaseTest(){
 
     m_baseProvider=new CBBaseProvider();
     this->connect(m_baseProvider,SIGNAL(readyToWork()),this,SLOT(checkOpenedBase()));
     m_baseProvider->startWithPath(  QString("TestBase"));
 }
 
-void CBBaseProviderTester::checkOpenedBase(){
+void CBBaseProviderTestSet::checkOpenedBase(){
     baseWasOpened = true;
 
     m_current_node = m_baseProvider->getStartNode();
 }
 
-void CBBaseProviderTester::wrongSubNodes(){
+void CBBaseProviderTestSet::wrongSubNodes(){
     // try to get node which does not exist
     CBNode *wrongSubNode = m_baseProvider->getNode("Wrong subnode",m_current_node);
     QVERIFY(wrongSubNode == NULL);
@@ -27,7 +27,7 @@ void CBBaseProviderTester::wrongSubNodes(){
     // TODO: add test to check what will happend if I try to get subnode with relation but without selection item on current node
 }
 
-void CBBaseProviderTester::clonningTest(){
+void CBBaseProviderTestSet::clonningTest(){
     QAbstractItemModel * listModel = (QAbstractItemModel *)m_current_node->listModel();
     int recordCount = listModel->rowCount();
     m_current_node->selectItemWithIndex(2);
@@ -58,7 +58,7 @@ void CBBaseProviderTester::clonningTest(){
 
 }
 
-void CBBaseProviderTester::jsonFromNode(){
+void CBBaseProviderTestSet::jsonFromNode(){
 
     // I especially use Varieties because this node contains both listModel and model
     m_current_node->selectItemWithIndex(2);
