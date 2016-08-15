@@ -29,7 +29,8 @@ private:
 
 private slots:
     void openningBaseTest();
-    void wrongSubNodes();    
+    void wrongSubNodes();
+    void selectedItemTest();
     void jsonFromNode();
     void clonningTest();
 };

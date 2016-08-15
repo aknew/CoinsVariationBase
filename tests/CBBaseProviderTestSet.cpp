@@ -70,3 +70,26 @@ void CBBaseProviderTestSet::jsonFromNode(){
     QFAIL("This test is not implementad yet");
 
 }
+
+void CBBaseProviderTestSet::selectedItemTest(){
+    QVariantMap etalon;
+    etalon["avers"]=QVariant("Вензель императора Павла I и императорская корона над ним");
+    etalon["edge"]= QVariant("Шнуровидный");
+    etalon["firstYear"]= QVariant(1797);
+    etalon["id"]= QVariant( "d1452c7b-b80f-4b76-b06a-1aed6de23f84");
+    etalon["issue"]= QVariant("Регулярный общегосударственный");
+    etalon["lastYear"]= QVariant(1801);
+    etalon["metal"]= QVariant("медь");
+    etalon["nominal"]= QVariant("Копейка");
+    etalon["revers"]= QVariant("Надпись в 2 строки \"1| КОПЕЙКА\" под ней черта и год и монетный двор в 2 строки");
+    etalon["weigth"]= QVariant(10.24);
+
+
+    m_current_node->selectItemWithIndex(2);
+
+    QVariantMap map = m_current_node->selectedItem();
+
+    for (auto iter: etalon.keys()){
+        QVERIFY(etalon[iter]==map[iter]);
+    }
+}
