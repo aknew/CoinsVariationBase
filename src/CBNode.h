@@ -60,20 +60,6 @@ public:
     */
     Q_INVOKABLE void cloneItem();
 
-    /**
-      \brief UUID generating flag
-      Reason - usually we use UUID as table primary key, but some table
-      no need to do this. Usually this tables are affiliated like references list
-    */
-    bool usesUUIDs = true;
-
-    bool useFullForm = false;
-    bool useListForm = false;
-
-    bool containsSubnode(const QString &name){
-        return getNextLevelList().contains(name);
-    }
-
     /** \brief return selected item (i.e. sql resord) as variant map
     * is used from qml, in future will be used for exporting record as json
     */
@@ -81,12 +67,6 @@ public:
         return model->selectedItem();
     }
 
-    /**
-     * @brief itemAtIndex
-     * @param index - index of row in listView
-     * @return record as variant map
-     */
-    QVariantMap itemAtIndex(int index);
 
     /** \brief create string which describe selected item
      * usually it is just concatineted listview fields from current node tables
@@ -96,15 +76,6 @@ public:
     Q_INVOKABLE CBItemDifference *recordDifference(int index1, int index2);
 
     Q_INVOKABLE void exportListToFile(const QString &path);
-
-    /**
-     * @brief listForExport generate variant list which will be saved as json
-     * this methods mostly needs for exporting subnodes
-     * @param path - needs to copy attachments
-     * @return
-     */
-    QVariantList listForExport(const QString &path);
-
 
     QObject* listModel();
 
@@ -125,7 +96,7 @@ signals:
      */
     void dataChanged();
 
-protected:
+private:
     /**
      * @brief CBNode Protected constructor. Only CBBaseProvider can create new node, all other should ask it to get node
      * @param obj
@@ -154,6 +125,35 @@ protected:
     }
 
     void applyFilters();
+
+    /**
+     * @brief listForExport generate variant list which will be saved as json
+     * this methods mostly needs for exporting subnodes
+     * @param path - needs to copy attachments
+     * @return
+     */
+    QVariantList listForExport(const QString &path);
+
+    /**
+     * @brief itemAtIndex
+     * @param index - index of row in listView
+     * @return record as variant map
+     */
+    QVariantMap itemAtIndex(int index);
+
+    /**
+      \brief UUID generating flag
+      Reason - usually we use UUID as table primary key, but some table
+      no need to do this. Usually this tables are affiliated like references list
+    */
+    bool usesUUIDs = true;
+
+    bool useFullForm = false;
+    bool useListForm = false;
+
+    bool containsSubnode(const QString &name){
+        return getNextLevelList().contains(name);
+    }
 
 private:
     int findRowWithID(const QString &id);
