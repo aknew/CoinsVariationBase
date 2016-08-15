@@ -64,15 +64,9 @@ void CBBaseProviderTestSet::jsonFromNode(){
     m_current_node->selectItemWithIndex(2);
     CBNode *subNode = m_baseProvider->getNode("Varieties",m_current_node);
 
-    QVariantMap etalon;
-    etalon["year"] = "1797";
-    etalon["mintmark"] = "КМ";
+    subNode->exportListToFile("export");
 
-    QVariantMap map = subNode->itemAtIndex(2);
-
-    for (auto iter: etalon.keys()){
-        QVERIFY(etalon[iter]==map[iter]);
-
-    }
+    //TODO: need write this test after
+    QFAIL("This test is not implementad yet");
 
 }

@@ -350,6 +350,10 @@ CBItemDifference *CBNode::recordDifference(int index1, int index2){
 
 void CBNode::exportListToFile(const QString &path){
 
+    if (!QDir(path).exists()){
+        QDir().mkdir(path);
+    }
+
     // TODO: export can be long and should be async
 
     QFile saveFile(path+"/export.json");
