@@ -34,7 +34,7 @@ QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSi
     }
 
     if (requestedSize.width()>0 && requestedSize.height()>0){
-        result = result.scaled(requestedSize,Qt::KeepAspectRatio);
+        result = result.scaled(requestedSize,Qt::KeepAspectRatio, Qt::SmoothTransformation);
     }
 
     return result;

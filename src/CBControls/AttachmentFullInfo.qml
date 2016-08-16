@@ -234,7 +234,7 @@ Rectangle {
 
         contentItem: Rectangle {
             implicitWidth: 600
-            implicitHeight: GUIStyle.isMobile ? 285 :100
+            implicitHeight: GUIStyle.isMobile ? 285 :120
             LabeledComboBoxInput {
                 id: edtName
                 title: qsTr("Field name:")
