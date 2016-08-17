@@ -22,7 +22,7 @@ function createListForm(node) {
                 "Rectangle {\n" +
                 "   Component.onDestruction: console.log(\""+node.listFormName()+" Destruction Beginning!\")\n"+
                 "   id: mainRect;\n" +
-                "   property var formType: CBApi.ListForm\n" +
+                "   property int formType: CBApi.ListForm\n" +
                 "   property var node;\n"+
                 "   onNodeChanged:{listView.model = node.listModel;}\n" +
                 "   property int firstIndex:-1\n"+
@@ -156,7 +156,7 @@ function createFullForm(node) {
                 "Rectangle {\n" +
                 "   Component.onDestruction: console.log(\""+node.fullFormName()+" Destruction Beginning!\")\n"+
                 "   id: mainRect;\n" +
-                "   property var formType: CBApi.FullForm\n" +
+                "   property int formType: CBApi.FullForm\n" +
                 "   property var node;\n";
 
     var onNodeChangedString = "  onNodeChanged:{\n";
