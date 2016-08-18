@@ -150,7 +150,7 @@ void CBBaseProvider::startWithPath(const QString &path){
 
      for (auto subnodeName : node->getNextLevelList()){
          CBNode *subnode = getNode(subnodeName,node);
-         while(subnode->model->rowCount()){
+         while(subnode->m_listModel->rowCount()){
              subnode->selectItemWithIndex(0);
              subnode->deleteSelectedItem();
          }

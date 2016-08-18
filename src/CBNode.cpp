@@ -22,11 +22,10 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
     tableName=obj.value("name").toString();
 
     //TODO: Need create model only when it used and delete it when we don't use it
-    model=new CBSqlRelationalTableModel(this,db);
-    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    model->setTable(this->tableName);
-    model->applyRoles();
-    _listModel = NULL;
+    m_listModel=new CBSqlRelationalTableModel(this,db);
+    m_listModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    m_listModel->setTable(this->tableName);
+    m_listModel->applyRoles();
 
     QJsonValue json_usesUUIDs = obj.value("usesUUIDs");
     if (!json_usesUUIDs.isUndefined()){
@@ -43,21 +42,10 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
             useListForm = json_useListForm.toBool();
     }
 
-    QJsonValue json_listModel = obj.value("listModel");
-
-    if (!json_listModel.isUndefined()){
-        _listModel=new CBSqlRelationalTableModel(this,db);
-        _listModel->setTable(json_listModel.toString());
-        _listModel->applyRoles();
-    }
-
     QJsonValue json_sortColumn = obj.value("sortColumn");
     if (!json_sortColumn.isUndefined()){
         QString sortColumn = json_sortColumn.toString();
-        this->model->sortByColumn(sortColumn);
-        if (_listModel){
-            _listModel->sortByColumn(sortColumn);
-        }
+        m_listModel->sortByColumn(sortColumn);
     }
 
 
@@ -94,7 +82,7 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
         this->listViewFields = json_listViewFields.toVariant();
     }
     else {
-        this->listViewFields =this->model->fieldList;
+        this->listViewFields =this->m_listModel->fieldList;
     }
 
     QJsonValue json_fullFormFields = obj.value("fullFormFields");
@@ -103,16 +91,7 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
         this->fullFormFields =  json_fullFormFields.toVariant();
     }
     else {
-        this->fullFormFields =this->model->fieldList;
-    }
-}
-
-QObject *CBNode::listModel(){
-    if (_listModel){
-        return _listModel;
-    }
-    else{
-        return model;
+        this->fullFormFields =this->m_listModel->fieldList;
     }
 }
 
@@ -129,7 +108,7 @@ QPair<QString, QString> CBNode::filterForChildNode(const QString& childNodeName)
     if (str==""){
         return QPair<QString, QString>(kWrongString,kWrongString);
     }
-    return QPair<QString, QString>(str,model->selectedItemId());
+    return QPair<QString, QString>(str,m_listModel->selectedItemId());
 }
 
 void CBNode::setLevelFilter(const QPair<QString, QString> &filter){
@@ -166,14 +145,9 @@ void CBNode::applyFilters(){
         }
     }
 
-    if(_listModel){
-        _listModel->setFilter(fullFilterString);
-        _listModel->select();
-    }
-    else{
-        model->setFilter(fullFilterString);
-        model->select();
-    }
+    m_listModel->setFilter(fullFilterString);
+    m_listModel->select();
+
 
 }
 
@@ -205,48 +179,27 @@ QStringList CBNode::listFromQuery(QString queryString){
 
 int CBNode::findRowWithID(const QString &selID)
 {
-    if (_listModel){
-        //HOTFIX: If I use listModel, model will not load records after 256, so I just select only that record that I realy need
-        model->setFilter("id =\""+selID+"\"");
-        model->select();
-        return model->rowCount()==1?0:-1;
-    }else{
-        for (int i = 0; i< model->rowCount(); ++i){
-            QSqlRecord record=model->record(i);
-            QSqlField id=record.field("id");
-            if (id.value().toString() == selID){
-                return i;
-            }
+    for (int i = 0; i< m_listModel->rowCount(); ++i){
+        QSqlRecord record=m_listModel->record(i);
+        QSqlField id=record.field("id");
+        if (id.value().toString() == selID){
+            return i;
         }
-        //XXX: Maybe not best practice, rewrite with exaption?
-        qCritical()<<"There is no record with id "<<selID;
-        return -1;
     }
+    //XXX: Maybe not best practice, rewrite with exaption?
+    qCritical()<<"There is no record with id "<<selID;
+    return -1;
 }
 
 void CBNode::selectItemWithIndex(int index){
-    if (_listModel && !insertingNewRow){
-        _listModel->selectedRow = index;
-        QString selId = _listModel->selectedItemId();
-        int i = findRowWithID(selId);
-        model->selectedRow =i;
-    }
-    else{
-        model->selectedRow = index;
-    }
-    emit idWasSelected(model->selectedItemId());
+    m_listModel->selectedRow = index;
+    emit idWasSelected(m_listModel->selectedItemId());
 
 }
 
 QVariantMap CBNode::itemAtIndex(int index){
 
-    if (_listModel ){
-        QSqlRecord record=_listModel->record(index);
-        QSqlField id=record.field("id");
-        QString itemID = id.value().toString();
-        index = findRowWithID(itemID);
-    }
-    return model->itemForRow(index);
+    return m_listModel->itemForRow(index);
 }
 
 void CBNode::prepareToNewItem(){
@@ -266,46 +219,42 @@ void CBNode::prepareToNewItem(){
         f1.setValue(QVariant(u.toString()));
         record.append(f1);
     }
-    if (!model->insertRecord(-1, record)){
-        qDebug()<<model->lastError();
+    if (!m_listModel->insertRecord(-1, record)){
+        qDebug()<<m_listModel->lastError();
     }
 
-    selectItemWithIndex(model->rowCount()-1);
+    selectItemWithIndex(m_listModel->rowCount()-1);
 }
 
 void CBNode::cloneItem(){
     insertingNewRow = true;
-    QSqlRecord record = model->record(model->selectedRow);
+    QSqlRecord record = m_listModel->record(m_listModel->selectedRow);
     if(usesUUIDs){
         QSqlField f1("id", QVariant::String);
         QUuid u=QUuid::createUuid();
         f1.setValue(QVariant(u.toString()));
         record.append(f1);
     }
-    if (!model->insertRecord(-1, record)){
-        qDebug()<<model->lastError();
+    if (!m_listModel->insertRecord(-1, record)){
+        qDebug()<<m_listModel->lastError();
     }
 
-    selectItemWithIndex(model->rowCount()-1);
+    selectItemWithIndex(m_listModel->rowCount()-1);
 }
 
 void CBNode::applyChanges(QVariantMap changedItem){
-    QString uuid = model->selectedItemId();
-    model->setSelectedItem(changedItem);
-    model->selectedRow = findRowWithID(uuid);
+    QString uuid = m_listModel->selectedItemId();
+    m_listModel->setSelectedItem(changedItem);
+    m_listModel->selectedRow = findRowWithID(uuid);
     if (insertingNewRow){
         insertingNewRow = false;
-    }
-    if (_listModel){
-        _listModel->select();
-        emit dataChanged();
     }
 }
 
 void CBNode::dropChanges(){
     if (insertingNewRow){
        insertingNewRow = false;
-       model->removeCurrentItem();
+       m_listModel->removeCurrentItem();
     }
 }
 
@@ -315,11 +264,7 @@ void CBNode::deleteSelectedItem(){
         emit currentItemWillBeRemoved();
     }
 
-    model->removeCurrentItem();
-    if (_listModel){
-        _listModel->select();
-        emit dataChanged();
-    }
+    m_listModel->removeCurrentItem();
 }
 
 QString CBNode::selectedItemDescription(){
@@ -397,7 +342,7 @@ QVariantList CBNode::listForExport(const QString &path){
         }
     }
 
-    for (int i = 0; i < this->model->rowCount(); ++i){
+    for (int i = 0; i < this->m_listModel->rowCount(); ++i){
         QVariantMap map = itemAtIndex(i);
 
         // FIXME: do "id" and "attributes.json" constant strings

@@ -64,7 +64,7 @@ public:
     * is used from qml, in future will be used for exporting record as json
     */
     QVariantMap selectedItem(){
-        return model->selectedItem();
+        return m_listModel->selectedItem();
     }
 
 
@@ -77,9 +77,12 @@ public:
 
     Q_INVOKABLE void exportListToFile(const QString &path);
 
-    QObject* listModel();
-
-
+    QObject* listModel(){
+        /*HOTFIX: invalid conversion from 'QObject*' to 'CBSqlRelationalTableModel*' [-fpermissive]
+        * andIhave to use QObject* to push listModel to qml
+        */
+        return m_listModel;
+    }
 
 signals:
     void idWasSelected(QString id);
@@ -108,8 +111,8 @@ private:
     bool insertingNewRow = false;
     QSqlDatabase &db;
 
-    CBSqlRelationalTableModel *model;//< real table or view
-    CBSqlRelationalTableModel *_listModel;//< presentation view
+    CBSqlRelationalTableModel *m_listModel;//< presentation view
+
     QMap<QString, QString> childNodes;//< list of nodes where we can go from current
     QMap<QString, QString> predefinedFiltes;//< predefined filters from struct.json
 
