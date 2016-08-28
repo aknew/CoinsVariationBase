@@ -117,7 +117,20 @@ void CBAttachmentsProvider::updateAttributes(QVariantMap newAttributes){
 }
 
 void CBAttachmentsProvider::openAttach(const QString &attachID){
-    QDesktopServices::openUrl(QUrl("file:///"+currentPath()+attachID));
+    QString path = currentPath()+attachID;
+    QFileInfo fileInfo(path);
+    if (fileInfo.isDir()){
+        QDir dir(path);
+        QVector<QString> possibleMainFiles ={"index.htm", "index.html"};
+        for( auto f : possibleMainFiles) {
+            if (dir.exists(f)){
+                path = path + "/" + f;
+                break;
+            }
+        }
+    }
+
+    QDesktopServices::openUrl(QUrl("file:///"+path));
 }
 
 void CBAttachmentsProvider::openFolder(){
