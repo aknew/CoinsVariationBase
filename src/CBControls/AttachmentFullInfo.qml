@@ -243,7 +243,7 @@ Rectangle {
                 anchors.top: parent.top
                 model:[qsTr("source"), qsTr("about")]
             }
-            LabeledTextInput {
+            LabeledLongText {
                 id: edtValue
                 title: qsTr("Field value:")
                 editing: true

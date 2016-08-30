@@ -91,6 +91,7 @@ Rectangle {
                 anchors.left: imgAttach.right
                 anchors.leftMargin: 5
                 anchors.right: editing ? btnRemove.left : parent.right
+                anchors.rightMargin: 5
                 text: {
                     if (modelData.about !== undefined){
                         modelData.about
@@ -104,6 +105,7 @@ Rectangle {
                         }
                     }
                 }
+                wrapMode: Text.Wrap
             }
             MouseArea {
                 anchors.fill: parent
