@@ -10,25 +10,28 @@
 
 void logHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    Q_UNUSED(context)
+
     static QString logName = "CoinsBase" + QDateTime::currentDateTime().toString("yyyy-MM-dd-HH-mm") + ".log";
-    QString txt;
+    QString txt = QString("%1:%2\t%3").arg(context.file)
+            .arg(context.line)
+            .arg(msg);
+
     switch (type) {
     case QtInfoMsg:
-        txt = QString("Info: %1").arg(msg);
+        txt = "Info:\t"+ txt;
         break;
     case QtDebugMsg:
-        txt = QString("Debug: %1").arg(msg);
+        txt = "Debug:\t"+ txt;
         break;
     case QtWarningMsg:
-        txt = QString("Warning: %1").arg(msg);
+        txt = "Warning:\t"+ txt;
     break;
     case QtCriticalMsg:
-        txt = QString("Critical: %1").arg(msg);
+        txt = "Critical:\t"+ txt;
     break;
     case QtFatalMsg:
-        txt = QString("Fatal: %1").arg(msg);
-        abort();
+        txt = "Fatal:\t " + txt;
+        break;
     }
     QFile outFile(logName);
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
@@ -66,7 +69,7 @@ static QObject *cbSettingsObjectSingleton(QQmlEngine *engine, QJSEngine *scriptE
 
 int main(int argc, char *argv[])
 {
-    qSetMessagePattern("%{file}(%{line}): %{message}"); //show line and file in qDebug messages
+    //qSetMessagePattern("%{file}(%{line}): %{message}"); //show line and file in qDebug messages
     qInstallMessageHandler(logHandler);
 
     qmlRegisterSingletonType<CBController>("CB.api", 1, 0, "CBApi", cbApiObjectSingleton);
