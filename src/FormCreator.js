@@ -75,7 +75,6 @@ function createListForm(node) {
                      "            anchors.topMargin: 5\n"+
                      "            anchors.bottom: parent.bottom\n"+
                      "            anchors.bottomMargin: 5\n"+
-                     "            cache: false\n"+
                      "            }\n"+
                      "         Text {\n"+
                      "            id: topLayout;\n"+
