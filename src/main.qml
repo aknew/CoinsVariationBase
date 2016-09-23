@@ -380,8 +380,28 @@ ApplicationWindow {
         if (typeof index !== 'undefined') {
             node.selectItemWithIndex(index)
         }
-        var fullForm = FormCreator.createFullForm(node)
-        pushToStackView(fullForm)
+
+        if (node.useFullForm){
+            var component = createComponentFromURL("file:///" + CBApi.baseProvider.fullFormPath(node))
+            if (typeof component !== 'undefined'){
+                tablesStack.push(component,{"node":node})
+            }
+        }
+        else{
+            var fullForm = FormCreator.createFullForm(node)
+            pushToStackView(fullForm)
+        }
+    }
+
+    function createComponentFromURL(url){
+        var component = Qt.createComponent(url)
+        switch (component.status) {
+        case Component.Ready:
+            return component;
+        case Component.Error:
+            console.log(component.errorString())
+            return;
+        }
     }
 
     function showListForm(nodeName, currentNode) {
