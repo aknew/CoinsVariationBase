@@ -200,9 +200,8 @@ ApplicationWindow {
                                     text: qsTr("Set/edit filters")
                                 }
                                 onTriggered: {
-                                    var component = createComponentFromURL(
-                                                "CBControls/FilterDialog.qml")
-                                    tablesStack.push(component,{"node":tablesStack.currentItem.node})
+                                    createAndPush("CBControls/FilterDialog.qml",
+                                                  {"node":tablesStack.currentItem.node})
                                     menuFilters.close()
                                 }
                             }
@@ -373,10 +372,8 @@ ApplicationWindow {
         }
 
         if (node.useFullForm){
-            var component = createComponentFromURL("file:///" + CBApi.baseProvider.fullFormPath(node))
-            if (typeof component !== 'undefined'){
-                tablesStack.push(component,{"node":node})
-            }
+            createAndPush("file:///" + CBApi.baseProvider.fullFormPath(node),
+                          {"node":node})
         }
         else{
             var fullForm = FormCreator.createFullForm(node)
@@ -384,25 +381,12 @@ ApplicationWindow {
         }
     }
 
-    function createComponentFromURL(url){
-        var component = Qt.createComponent(url)
-        switch (component.status) {
-        case Component.Ready:
-            return component;
-        case Component.Error:
-            console.log(component.errorString())
-            return;
-        }
-    }
-
     function showListForm(nodeName, currentNode) {
         var node = CBApi.baseProvider.getNode(nodeName, currentNode)
 
         if (node.useListForm){
-            var component = createComponentFromURL("file:///" + CBApi.baseProvider.listFormPath(node))
-            if (typeof component !== 'undefined'){
-                tablesStack.push(component,{"node":node})
-            }
+            createAndPush("file:///" + CBApi.baseProvider.listFormPath(node),
+                          {"node":node})
         }
         else{
             var listForm = FormCreator.createListForm(node)
@@ -411,7 +395,11 @@ ApplicationWindow {
     }
 
     function createAndPush(qmlURL,options) {
-        var component = createComponentFromURL(qmlURL);
+        var component = Qt.createComponent(qmlURL)
+        if (component.status === Component.Error){
+            console.log(component.errorString())
+            return;
+        }
         if (typeof options !== 'undefined'){
             tablesStack.push(component,options)
         }
@@ -422,8 +410,7 @@ ApplicationWindow {
 
     function showDifference(node, index1, index2) {
         var diff = node.recordDifference(index1, index2)
-        var component = createComponentFromURL("CBControls/DiffView.qml")
-        tablesStack.push(component,{itemDifference:diff})
+        createAndPush("CBControls/DiffView.qml",{itemDifference:diff})
     }
 
     MessageDialog {
