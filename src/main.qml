@@ -361,9 +361,7 @@ ApplicationWindow {
 
     function providerReadyToWork() {
         title = CBApi.baseProvider.baseTitle
-        var node = CBApi.baseProvider.getStartNode()
-        var listForm = FormCreator.createListForm(node)
-        tablesStack.push(listForm)
+        showListForm()
     }
 
     function showFullForm(node, index) {
@@ -381,8 +379,18 @@ ApplicationWindow {
         }
     }
 
+    /** @brief showListForm - load new node and show its record
+      * @param nodeName - name of node, can be undefined - it meens that we need load start node
+      * @param currentNode - node which is shown now (need's to apply filters during loading process)
+      */
     function showListForm(nodeName, currentNode) {
-        var node = CBApi.baseProvider.getNode(nodeName, currentNode)
+        var node;
+        if (nodeName){
+            node= CBApi.baseProvider.getNode(nodeName, currentNode)
+        }
+        else{
+           node= CBApi.baseProvider.getStartNode()
+        }
 
         if (node.useListForm){
             createAndPush("file:///" + CBApi.baseProvider.listFormPath(node),
