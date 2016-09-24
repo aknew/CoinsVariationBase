@@ -200,18 +200,9 @@ ApplicationWindow {
                                     text: qsTr("Set/edit filters")
                                 }
                                 onTriggered: {
-                                    var component = Qt.createComponent(
+                                    var component = createComponentFromURL(
                                                 "CBControls/FilterDialog.qml")
-                                    switch (component.status) {
-                                    case Component.Ready:
-                                        var form = component.createObject()
-                                        form.node = tablesStack.currentItem.node
-                                        pushToStackView(form)
-                                        break
-                                    case Component.Error:
-                                        console.log(component.errorString())
-                                        break
-                                    }
+                                    tablesStack.push(component,{"node":tablesStack.currentItem.node})
                                     menuFilters.close()
                                 }
                             }
@@ -425,17 +416,8 @@ ApplicationWindow {
 
     function showDifference(node, index1, index2) {
         var diff = node.recordDifference(index1, index2)
-        var component = Qt.createComponent("CBControls/DiffView.qml")
-        switch (component.status) {
-        case Component.Ready:
-            var form = component.createObject()
-            form.itemDifference = diff
-            pushToStackView(form)
-            break
-        case Component.Error:
-            console.log(component.errorString())
-            break
-        }
+        var component = createComponentFromURL("CBControls/DiffView.qml")
+        tablesStack.push(component,{itemDifference:diff})
     }
 
     MessageDialog {
