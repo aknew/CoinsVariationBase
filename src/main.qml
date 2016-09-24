@@ -406,13 +406,20 @@ ApplicationWindow {
 
     function showListForm(nodeName, currentNode) {
         var node = CBApi.baseProvider.getNode(nodeName, currentNode)
-        var listForm = FormCreator.createListForm(node)
 
-        pushToStackView(listForm)
+        if (node.useListForm){
+            var component = createComponentFromURL("file:///" + CBApi.baseProvider.listFormPath(node))
+            if (typeof component !== 'undefined'){
+                tablesStack.push(component,{"node":node})
+            }
+        }
+        else{
+            var listForm = FormCreator.createListForm(node)
+            pushToStackView(listForm)
+        }
     }
 
     function pushToStackView(view) {
-        //tablesStack.push({item: view, destroyOnPop: true})
         tablesStack.push(view)
     }
 
