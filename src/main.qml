@@ -364,7 +364,7 @@ ApplicationWindow {
         title = CBApi.baseProvider.baseTitle
         var node = CBApi.baseProvider.getStartNode()
         var listForm = FormCreator.createListForm(node)
-        pushToStackView(listForm)
+        tablesStack.push(listForm)
     }
 
     function showFullForm(node, index) {
@@ -380,7 +380,7 @@ ApplicationWindow {
         }
         else{
             var fullForm = FormCreator.createFullForm(node)
-            pushToStackView(fullForm)
+            tablesStack.push(fullForm)
         }
     }
 
@@ -406,12 +406,18 @@ ApplicationWindow {
         }
         else{
             var listForm = FormCreator.createListForm(node)
-            pushToStackView(listForm)
+            tablesStack.push(listForm)
         }
     }
 
-    function pushToStackView(view) {
-        tablesStack.push(view)
+    function createAndPush(qmlURL,options) {
+        var component = createComponentFromURL(qmlURL);
+        if (typeof options !== 'undefined'){
+            tablesStack.push(component,options)
+        }
+        else{
+            tablesStack.push(component)
+        }
     }
 
     function showDifference(node, index1, index2) {

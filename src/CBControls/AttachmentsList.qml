@@ -115,19 +115,8 @@ Rectangle {
                         openMenu.file = modelData.file
                         openMenu.open()
                     } else {
-                        var component = Qt.createComponent(
-                                    "AttachmentFullInfo.qml")
-                        switch (component.status) {
-                        case Component.Ready:
-                            var form = component.createObject()
-                            form.model = attachmentsListView.model
-                            form.index = index
-                            mainWindow.pushToStackView(form)
-                            break
-                        case Component.Error:
-                            console.log(component.errorString())
-                            break
-                        }
+                        mainWindow.createAndPush("CBControls/AttachmentFullInfo.qml",
+                                                 {"model":attachmentsListView.model,"index":index})
                     }
                 }
             }

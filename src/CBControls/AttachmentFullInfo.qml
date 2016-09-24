@@ -23,7 +23,14 @@ Rectangle {
     property int index: -1
 
     onIndexChanged: {
-        attachmentInfo = model[index]
+        if (model){
+            attachmentInfo = model[index]
+        }
+    }
+    onModelChanged: {
+        if (index!= -1){
+            attachmentInfo = model[index]
+        }
     }
 
     property var attachmentInfo
