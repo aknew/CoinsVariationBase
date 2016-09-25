@@ -44,33 +44,13 @@ ApplicationWindow {
                 anchors.leftMargin: 5
                 height: parent.height
                 width: parent.height
-                visible: tablesStack.depth > 2
+                visible: tablesStack.depth > 1
                 contentItem: Image {
                     source: "/back"
                     fillMode: Image.Pad
                 }
                 //shortcut: Qt.BackButton
-                onClicked: {
-                    if (tablesStack.depth > 1) {
-                        var currentItem = tablesStack.currentItem
-                        if (currentItem.formType === CBApi.FilterDialog) {
-                            currentItem.applyFilters()
-                        }
-                        if (currentItem.state === "editing") {
-                            goBackDialog.open()
-                        } else {
-                            if (currentItem.formType === CBApi.FullForm
-                                    && currentItem.node.usesUUIDs) {
-                                CBApi.baseProvider.deselectCurrentId()
-                            }
-                            if (currentItem.formType === CBApi.ListForm) {
-                                tablesStack.currentItem.node.dropFilter()
-                            }
-
-                            tablesStack.pop()
-                        }
-                    }
-                }
+                onClicked: goBack()
             }
             RowLayout {
                 visible: tablesStack.currentItem.formType !== CBApi.OpenBaseForm
@@ -91,7 +71,7 @@ ApplicationWindow {
                         id: menuWorkingWithData
                         ColumnLayout {
                             MenuItem {
-                                contentItem:  LabeledIcon {
+                                contentItem: LabeledIcon {
                                     text: qsTr("Record comparation")
                                 }
                                 onTriggered: {
@@ -101,11 +81,12 @@ ApplicationWindow {
                                 visible: tablesStack.currentItem.formType === CBApi.ListForm
                             }
                             MenuItem {
-                                contentItem:  LabeledIcon {
+                                contentItem: LabeledIcon {
                                     text: qsTr("Export to json")
                                 }
                                 onTriggered: {
-                                    tablesStack.currentItem.node.exportListToFile("export")
+                                    tablesStack.currentItem.node.exportListToFile(
+                                                "export")
                                     menuWorkingWithData.close()
                                 }
                                 visible: tablesStack.currentItem.formType === CBApi.ListForm
@@ -200,8 +181,10 @@ ApplicationWindow {
                                     text: qsTr("Set/edit filters")
                                 }
                                 onTriggered: {
-                                    createAndPush("CBControls/FilterDialog.qml",
-                                                  {"node":tablesStack.currentItem.node})
+                                    createAndPush(
+                                                "CBControls/FilterDialog.qml", {
+                                                    node: tablesStack.currentItem.node
+                                                })
                                     menuFilters.close()
                                 }
                             }
@@ -216,7 +199,7 @@ ApplicationWindow {
                                 }
                             }
                             MenuItem {
-                                contentItem:  LabeledIcon {
+                                contentItem: LabeledIcon {
                                     text: qsTr("Predefined filters")
                                 }
                                 visible: tablesStack.currentItem.node != null
@@ -356,7 +339,7 @@ ApplicationWindow {
         // Implements back key navigation
         focus: true
         Keys.onBackPressed: {
-            actionBack.trigger()
+            goBack()
         }
     }
 
@@ -371,56 +354,78 @@ ApplicationWindow {
             node.selectItemWithIndex(index)
         }
 
-        if (node.useFullForm){
-            createAndPush("file:///" + CBApi.baseProvider.fullFormPath(node),
-                          {"node":node})
-        }
-        else{
+        if (node.useFullForm) {
+            createAndPush("file:///" + CBApi.baseProvider.fullFormPath(node), {
+                              node: node
+                          })
+        } else {
             var fullForm = FormCreator.createFullForm(node)
             tablesStack.push(fullForm)
         }
     }
 
     /** @brief showListForm - load new node and show its record
-      * @param nodeName - name of node, can be undefined - it meens that we need load start node
-      * @param currentNode - node which is shown now (need's to apply filters during loading process)
-      */
+          * @param nodeName - name of node, can be undefined - it meens that we need load start node
+                * @param currentNode - node which is shown now (need's to apply filters during loading process)
+                      */
     function showListForm(nodeName, currentNode) {
-        var node;
-        if (nodeName){
-            node= CBApi.baseProvider.getNode(nodeName, currentNode)
-        }
-        else{
-           node= CBApi.baseProvider.getStartNode()
+        var node
+        if (nodeName) {
+            node = CBApi.baseProvider.getNode(nodeName, currentNode)
+        } else {
+            node = CBApi.baseProvider.getStartNode()
         }
 
-        if (node.useListForm){
-            createAndPush("file:///" + CBApi.baseProvider.listFormPath(node),
-                          {"node":node})
-        }
-        else{
+        if (node.useListForm) {
+            createAndPush("file:///" + CBApi.baseProvider.listFormPath(node), {
+                              node: node
+                          })
+        } else {
             var listForm = FormCreator.createListForm(node)
             tablesStack.push(listForm)
         }
     }
 
-    function createAndPush(qmlURL,options) {
+    function createAndPush(qmlURL, options) {
         var component = Qt.createComponent(qmlURL)
-        if (component.status === Component.Error){
+        if (component.status === Component.Error) {
             console.log(component.errorString())
-            return;
+            return
         }
-        if (typeof options !== 'undefined'){
-            tablesStack.push(component,options)
-        }
-        else{
+        if (typeof options !== 'undefined') {
+            tablesStack.push(component, options)
+        } else {
             tablesStack.push(component)
         }
     }
 
     function showDifference(node, index1, index2) {
         var diff = node.recordDifference(index1, index2)
-        createAndPush("CBControls/DiffView.qml",{itemDifference:diff})
+        createAndPush("CBControls/DiffView.qml", {
+                          itemDifference: diff
+                      })
+    }
+
+    function goBack() {
+        if (tablesStack.depth > 1) {
+            var currentItem = tablesStack.currentItem
+            if (currentItem.formType === CBApi.FilterDialog) {
+                currentItem.applyFilters()
+            }
+            if (currentItem.state === "editing") {
+                goBackDialog.open()
+            } else {
+                if (currentItem.formType === CBApi.FullForm
+                        && currentItem.node.usesUUIDs) {
+                    CBApi.baseProvider.deselectCurrentId()
+                }
+                if (currentItem.formType === CBApi.ListForm) {
+                    tablesStack.currentItem.node.dropFilter()
+                }
+
+                tablesStack.pop()
+            }
+        }
     }
 
     MessageDialog {
@@ -431,7 +436,7 @@ ApplicationWindow {
         modality: Qt.WindowModal
         onAccepted: {
             tablesStack.currentItem.node.deleteSelectedItem()
-            actionBack.trigger()
+            goBack()
         }
     }
 
