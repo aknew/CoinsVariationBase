@@ -51,7 +51,7 @@ ApplicationWindow {
                 }
                 //shortcut: Qt.BackButton
                 onClicked: {
-                    if (tablesStack.depth > 2) {
+                    if (tablesStack.depth > 1) {
                         var currentItem = tablesStack.currentItem
                         if (currentItem.formType === CBApi.FilterDialog) {
                             currentItem.applyFilters()
@@ -256,7 +256,10 @@ ApplicationWindow {
                         horizontalAlignment: Image.AlignHCenter
                         verticalAlignment: Image.AlignVCenter
                     }
-                    onClicked: tablesStack.pop(tablesStack.initialItem)
+                    onClicked: {
+                        tablesStack.clear()
+                        createAndPush("CBControls/BasesList.qml")
+                    }
                     //shortcut: "Ctrl+O"
                 }
 
@@ -349,8 +352,6 @@ ApplicationWindow {
         id: tablesStack
         anchors.fill: parent
         objectName: "tablesStack"
-        initialItem: BasesList {
-        }
 
         // Implements back key navigation
         focus: true
@@ -361,6 +362,7 @@ ApplicationWindow {
 
     function providerReadyToWork() {
         title = CBApi.baseProvider.baseTitle
+        tablesStack.clear() // pop BaseList form - it is not need now
         showListForm()
     }
 

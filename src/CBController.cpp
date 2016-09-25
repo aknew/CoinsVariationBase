@@ -18,6 +18,10 @@ void CBController::start(){
 
     basePath= settings->lastBasePath;
 
+    bool needCollect = settings->needCollect;
+
+    this->applicationWindow->setProperty("needCollect", QVariant(needCollect));
+
     if (!basePath.isEmpty()){
         try {
             this->openBase(basePath);
@@ -33,11 +37,6 @@ void CBController::start(){
 void CBController::openBase(QString basePath){
 
     CBUtils::FromQmlFilePath(&basePath);
-    CBSettings *settings = CBSettings::settingsInstance();
-
-    bool needCollect = settings->needCollect;
-
-    this->applicationWindow->setProperty("needCollect", QVariant(needCollect));
 
     if (m_baseProvider) {
         engine->removeImageProvider(QLatin1String("imageProvider"));
