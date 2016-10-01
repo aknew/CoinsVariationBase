@@ -1,6 +1,8 @@
 #include "CBImageProvider.h"
 #include <QFile>
 #include <QFileIconProvider>
+#include <QDir>
+#include <QDebug>
 
 CBImageProvider::CBImageProvider(ImageType type):
     QQuickImageProvider(type)
@@ -22,7 +24,16 @@ QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSi
     _id.replace("%7B","{");
     _id.replace("%7D","}");
     QString fullFilePath = attachmentsProvider->_basePath+_id;
-    QPixmap result= QPixmap(fullFilePath);
+
+    QString cachedImage = attachmentsProvider->_basePath + QString("__cache/%1x%2/").arg(requestedSize.width()).arg(requestedSize.height()) +  _id;
+
+    QPixmap result= QPixmap(cachedImage);
+
+    if (!result.isNull()){
+        return result;
+    }
+
+    result = QPixmap(fullFilePath);
 
     if (result.isNull()){
         QFileIconProvider provider;
@@ -35,6 +46,15 @@ QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSi
 
     if (requestedSize.width()>0 && requestedSize.height()>0){
         result = result.scaled(requestedSize,Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        QString dir = cachedImage.section("/",0,-2);
+        if (!QDir(dir).exists()){
+            QDir().mkpath(dir);
+        }
+        bool flag = result.save(cachedImage);
+        if (!flag){
+            qDebug()<< cachedImage;
+
+        }
     }
 
     return result;
