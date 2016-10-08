@@ -239,10 +239,7 @@ ApplicationWindow {
                         horizontalAlignment: Image.AlignHCenter
                         verticalAlignment: Image.AlignVCenter
                     }
-                    onClicked: {
-                        tablesStack.clear()
-                        createAndPush("CBControls/BasesList.qml")
-                    }
+                    onClicked: openBaseDialog.open()
                     //shortcut: "Ctrl+O"
                 }
 
@@ -425,6 +422,18 @@ ApplicationWindow {
 
                 tablesStack.pop()
             }
+        }
+    }
+
+    MessageDialog {
+        id: openBaseDialog
+        text: qsTr("Do you realy want to stop working with this base?")
+        icon: StandardIcon.Warning
+        standardButtons: StandardButton.Yes | StandardButton.No
+        modality: Qt.WindowModal
+        onYes:{
+            tablesStack.clear()
+            createAndPush("CBControls/BasesList.qml")
         }
     }
 
