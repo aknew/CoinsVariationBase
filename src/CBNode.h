@@ -158,6 +158,8 @@ private:
         return getNextLevelList().contains(name);
     }
 
+    QStringList fullFormFieldsInternal; //! uses when we compare two records
+
 private:
     int findRowWithID(const QString &id);
 };

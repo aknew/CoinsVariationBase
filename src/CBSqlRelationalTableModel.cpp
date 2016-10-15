@@ -7,13 +7,11 @@
 void CBSqlRelationalTableModel::applyRoles()
 {
     roles.clear();
-    QStringList fields;
     for (int i = 0; i < this->columnCount(); i++) {
             QString role=this->headerData(i, Qt::Horizontal).toString();
             roles[Qt::UserRole + i + 1] = QVariant(role).toByteArray();
-            fields.append(role);
+            fieldList.append(role);
     }
-    fieldList=QVariant(fields);
 }
 
 void CBSqlRelationalTableModel::sortByColumn(const QString &columnName, Qt::SortOrder order){

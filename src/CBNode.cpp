@@ -82,16 +82,28 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
         this->listViewFields = json_listViewFields.toVariant();
     }
     else {
-        this->listViewFields =this->m_listModel->fieldList;
+        this->listViewFields =QVariant(this->m_listModel->fieldList);
     }
 
     QJsonValue json_fullFormFields = obj.value("fullFormFields");
 
     if ( json_fullFormFields.isArray()){
         this->fullFormFields =  json_fullFormFields.toVariant();
+        foreach (QJsonValue value1,json_fullFormFields.toArray()) {
+
+            if (value1.isString()){
+                fullFormFieldsInternal.append(value1.toString());
+            }
+            else{
+                QJsonObject obj=value1.toObject();
+                fullFormFieldsInternal.append(obj.value("name").toString());
+            }
+        }
+
     }
     else {
-        this->fullFormFields =this->m_listModel->fieldList;
+        this->fullFormFields =QVariant(this->m_listModel->fieldList);
+        fullFormFieldsInternal = this->m_listModel->fieldList;
     }
 }
 
@@ -290,14 +302,16 @@ CBItemDifference *CBNode::recordDifference(int index1, int index2){
     QList<QObject*> all;
     QList<QObject*> diff;
     for (auto iter: map1.keys()){
-        CBWordLCS wordLCS(map1[iter].toString(),map2[iter].toString());
-        CBFieldDifference *fd = new CBFieldDifference(difference); // TODO: Need check: possible memory leak?
-        fd->_name = iter;
-        fd->_highlightedFirst = wordLCS.getHighlitedFirst();
-        fd->_highlightedSecond = wordLCS.getHighlitedSecond();
-        all.append(fd);
-        if (!(wordLCS.getDifferenceFirst() == "" && wordLCS.getDifferenceSecond() == "")){
-            diff.append(fd);
+        if (fullFormFieldsInternal.contains(iter)){
+            CBWordLCS wordLCS(map1[iter].toString(),map2[iter].toString());
+            CBFieldDifference *fd = new CBFieldDifference(difference); // TODO: Need check: possible memory leak?
+            fd->_name = iter;
+            fd->_highlightedFirst = wordLCS.getHighlitedFirst();
+            fd->_highlightedSecond = wordLCS.getHighlitedSecond();
+            all.append(fd);
+            if (!(wordLCS.getDifferenceFirst() == "" && wordLCS.getDifferenceSecond() == "")){
+                diff.append(fd);
+            }
         }
     }
 
