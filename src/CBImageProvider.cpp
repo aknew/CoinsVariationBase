@@ -40,7 +40,11 @@ QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSi
         QIcon icon = provider.icon(fullFilePath);
         result = icon.pixmap(90,90);
         if (result.isNull()){
-            result=QPixmap("://no_image.png");
+            cachedImage = attachmentsProvider->_basePath + QString("__cache/%1x%2/").arg(requestedSize.width()).arg(requestedSize.height()) +"no_image.png";
+            result= QPixmap(cachedImage);
+            if (result.isNull()){
+                result=QPixmap("://no_image.png");
+            }
         }
     }
 
