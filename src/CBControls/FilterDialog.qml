@@ -2,60 +2,75 @@ import QtQuick 2.5
 import QtQuick.Controls 2.0
 import CB.api 1.0
 
-import "." // QTBUG-34418, singletons require explicit import to load qmldir file
+import "."
 
+// QTBUG-34418, singletons require explicit import to load qmldir file
 Item {
     id: root
     property var node
     onNodeChanged: {
 
-        translatedFields.clear();
-        var fieldList = node.listViewFields;
+        translatedFields.clear()
+        var fieldList = node.listViewFields
         for (var i = 0; i < fieldList.length; ++i) {
             var field = fieldList[i]
-            translatedFields.append({text:qsTr(field)})
+            translatedFields.append({
+                                        text: qsTr(field)
+                                    })
         }
 
-        if (node.filterList){
-            filterList = node.filterList;
+        if (node.filterList) {
+            filterList = node.filterList
         }
     }
 
     property int formType: CBApi.FilterDialog
-    property var filterList: ListModel { }
+    property var filterList: ListModel {
+    }
 
-    ListModel{
+    ListModel {
         id: realtions
-        ListElement{ text:qsTr("is equal")}
-        ListElement{ text:qsTr("contains")}
-        ListElement{ text:qsTr("not equal")}
-        ListElement{ text:qsTr("not contains")}
+        ListElement {
+            text: qsTr("is equal")
+        }
+        ListElement {
+            text: qsTr("contains")
+        }
+        ListElement {
+            text: qsTr("not equal")
+        }
+        ListElement {
+            text: qsTr("not contains")
+        }
     }
 
     ListView {
-        ScrollBar.vertical: ScrollBar { }
+        ScrollBar.vertical: ScrollBar {
+        }
         id: listView
         model: filterList
         anchors.top: parent.top
-        anchors.bottom:bar.bottom
+        anchors.bottom: bar.bottom
         width: parent.width
-        delegate: Item{
-            height:100
+        delegate: Item {
+            height: 100
             width: parent.width
-            BackgroundRect{}
-            MouseArea{
+            BackgroundRect {
+            }
+            MouseArea {
                 anchors.fill: parent
-                onClicked:{
-                    editRowDialog.field = field;
+                onClicked: {
+                    editRowDialog.field = field
                     editRowDialog.filter = filter
                     editRowDialog.relation = relation
-                    editRowDialog.index = index;
+                    editRowDialog.index = index
                     editRowDialog.open()
                 }
             }
 
             Text {
-                text: qsTr(node.listViewFields[field]) + " <b>" + realtions.get(relation).text + "</b> " +filter
+                text: qsTr(node.listViewFields[field]) + " <b>" + realtions.get(
+                          relation).text + "</b> " + filter
                 wrapMode: Text.Wrap
                 anchors.left: parent.left
                 anchors.leftMargin: 5
@@ -68,7 +83,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
-                contentItem: Image{
+                contentItem: Image {
                     source: "/delete"
                     fillMode: Image.Pad
                 }
@@ -77,7 +92,6 @@ Item {
                 }
             }
         }
-
     }
     Rectangle {
         id: bar
@@ -86,7 +100,7 @@ Item {
         anchors.bottom: parent.bottom
         Button {
             id: btnAddField
-            contentItem: Image{
+            contentItem: Image {
                 source: "/add"
             }
             anchors.left: parent.left
@@ -99,7 +113,7 @@ Item {
                 editRowDialog.field = 0
                 editRowDialog.filter = ""
                 editRowDialog.relation = 1
-                editRowDialog.index = -1;
+                editRowDialog.index = -1
                 editRowDialog.open()
             }
         }
@@ -114,57 +128,57 @@ Item {
 
         contentItem: Rectangle {
             implicitWidth: 600
-            implicitHeight: GUIStyle.isMobile ? 315 :200
-            Column{
-                anchors.top:parent.top
+            implicitHeight: GUIStyle.isMobile ? 315 : 200
+            Column {
+                anchors.top: parent.top
                 anchors.topMargin: 5
-                anchors.bottom:btnApply.top
+                anchors.bottom: btnApply.top
                 anchors.bottomMargin: 5
-                width:parent.width
+                width: parent.width
                 spacing: 5
-                Item{
-                   width: parent.width
-                   height: edtField.height
-                   Label{
-                      id: lblField
-                      text: qsTr("Field:")
-                      font.bold: true
-                      anchors.left: parent.left
-                      anchors.leftMargin: 5
-                      height: parent.height
-                      verticalAlignment : Text.AlignVCenter
-                   }
-                   ComboBox{
-                       id: edtField
-                       anchors.left: lblField.right
-                       anchors.leftMargin: 5
-                       anchors.right: parent.right
-                       anchors.rightMargin: 5
-                       model: ListModel{
-                           id: translatedFields
-                       }
-                   }
+                Item {
+                    width: parent.width
+                    height: edtField.height
+                    Label {
+                        id: lblField
+                        text: qsTr("Field:")
+                        font.bold: true
+                        anchors.left: parent.left
+                        anchors.leftMargin: 5
+                        height: parent.height
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    ComboBox {
+                        id: edtField
+                        anchors.left: lblField.right
+                        anchors.leftMargin: 5
+                        anchors.right: parent.right
+                        anchors.rightMargin: 5
+                        model: ListModel {
+                            id: translatedFields
+                        }
+                    }
                 }
-                Item{
-                   width: parent.width
-                   height: edtRelation.height
-                   Label{
-                      id: lblRelation
-                      text: qsTr("Relation:")
-                      font.bold: true
-                      anchors.left: parent.left
-                      anchors.leftMargin: 5
-                      height: parent.height
-                      verticalAlignment : Text.AlignVCenter
-                   }
-                   ComboBox{
-                       id: edtRelation
-                       model: realtions
-                       anchors.left: lblRelation.right
-                       anchors.leftMargin: 5
-                       anchors.right: parent.right
-                       anchors.rightMargin: 5
-                   }
+                Item {
+                    width: parent.width
+                    height: edtRelation.height
+                    Label {
+                        id: lblRelation
+                        text: qsTr("Relation:")
+                        font.bold: true
+                        anchors.left: parent.left
+                        anchors.leftMargin: 5
+                        height: parent.height
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    ComboBox {
+                        id: edtRelation
+                        model: realtions
+                        anchors.left: lblRelation.right
+                        anchors.leftMargin: 5
+                        anchors.right: parent.right
+                        anchors.rightMargin: 5
+                    }
                 }
                 LabeledTextInput {
                     id: edtFilter
@@ -209,10 +223,9 @@ Item {
         }
     }
 
-
     function applyFilters() {
         node.dropFilter()
-        node.filterList = filterList;
+        node.filterList = filterList
         var conditions = []
         for (var i = 0; i < filterList.count; ++i) {
             var filter = filterList.get(i)

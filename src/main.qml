@@ -53,7 +53,8 @@ ApplicationWindow {
                 onClicked: goBack()
             }
             RowLayout {
-                visible: tablesStack.currentItem&&tablesStack.currentItem.formType !== CBApi.OpenBaseForm
+                visible: tablesStack.currentItem
+                         && tablesStack.currentItem.formType !== CBApi.OpenBaseForm
                 height: parent.height
                 anchors.right: parent.right
                 anchors.rightMargin: 5
@@ -78,7 +79,8 @@ ApplicationWindow {
                                     tablesStack.currentItem.compareMode = true
                                     menuWorkingWithData.close()
                                 }
-                                visible: tablesStack.currentItem&&tablesStack.currentItem.formType === CBApi.ListForm
+                                visible: tablesStack.currentItem
+                                         && tablesStack.currentItem.formType === CBApi.ListForm
                             }
                             MenuItem {
                                 contentItem: LabeledIcon {
@@ -89,7 +91,8 @@ ApplicationWindow {
                                                 "export")
                                     menuWorkingWithData.close()
                                 }
-                                visible: tablesStack.currentItem&&tablesStack.currentItem.formType === CBApi.ListForm
+                                visible: tablesStack.currentItem
+                                         && tablesStack.currentItem.formType === CBApi.ListForm
                             }
                             MenuItem {
                                 //shortcut: "Ctrl+E"
@@ -102,9 +105,10 @@ ApplicationWindow {
                                     tablesStack.currentItem.state = "editing"
                                     menuWorkingWithData.close()
                                 }
-                                visible: tablesStack.currentItem &&
-                                         (tablesStack.currentItem.formType === CBApi.FullForm
-                                         || tablesStack.currentItem.formType === CBApi.AttachForm)
+                                visible: tablesStack.currentItem
+                                         && (tablesStack.currentItem.formType === CBApi.FullForm
+                                             || tablesStack.currentItem.formType
+                                             === CBApi.AttachForm)
                             }
                             MenuItem {
 
@@ -126,12 +130,13 @@ ApplicationWindow {
                                     isInsertingNew = true
                                     menuWorkingWithData.close()
                                 }
-                                visible: tablesStack.currentItem&&
-                                         (tablesStack.currentItem.formType === CBApi.ListForm
-                                         || tablesStack.currentItem.formType === CBApi.FullForm)
+                                visible: tablesStack.currentItem
+                                         && (tablesStack.currentItem.formType === CBApi.ListForm
+                                             || tablesStack.currentItem.formType === CBApi.FullForm)
                             }
                             MenuItem {
-                                visible: tablesStack.currentItem&&tablesStack.currentItem.formType === CBApi.FullForm
+                                visible: tablesStack.currentItem
+                                         && tablesStack.currentItem.formType === CBApi.FullForm
 
                                 contentItem: LabeledIcon {
                                     iconSource: "/delete"
@@ -157,7 +162,8 @@ ApplicationWindow {
                                     isInsertingNew = true
                                     menuWorkingWithData.close()
                                 }
-                                visible: tablesStack.currentItem&&tablesStack.currentItem.formType === CBApi.FullForm
+                                visible: tablesStack.currentItem
+                                         && tablesStack.currentItem.formType === CBApi.FullForm
                             }
                         }
                     }
@@ -171,7 +177,8 @@ ApplicationWindow {
                         horizontalAlignment: Image.AlignHCenter
                         verticalAlignment: Image.AlignVCenter
                     }
-                    visible: tablesStack.currentItem&&tablesStack.currentItem.formType === CBApi.ListForm
+                    visible: tablesStack.currentItem
+                             && tablesStack.currentItem.formType === CBApi.ListForm
                     onClicked: menuFilters.open()
 
                     Menu {
@@ -217,7 +224,7 @@ ApplicationWindow {
                     Menu {
                         id: menuPredefinedFilters
                         Instantiator {
-                            model:  tablesStack.currentItem.node ? tablesStack.currentItem.node.predefinedFiltesList : null
+                            model: tablesStack.currentItem.node ? tablesStack.currentItem.node.predefinedFiltesList : null
 
                             MenuItem {
                                 text: modelData
@@ -365,9 +372,9 @@ ApplicationWindow {
     }
 
     /** @brief showListForm - load new node and show its record
-          * @param nodeName - name of node, can be undefined - it meens that we need load start node
-                * @param currentNode - node which is shown now (need's to apply filters during loading process)
-                      */
+                  * @param nodeName - name of node, can be undefined - it meens that we need load start node
+                                                * @param currentNode - node which is shown now (need's to apply filters during loading process)
+                                                                                                    */
     function showListForm(nodeName, currentNode) {
         var node
         if (nodeName) {
@@ -434,7 +441,7 @@ ApplicationWindow {
         icon: StandardIcon.Warning
         standardButtons: StandardButton.Yes | StandardButton.No
         modality: Qt.WindowModal
-        onYes:{
+        onYes: {
             tablesStack.clear()
             createAndPush("CBControls/BasesList.qml")
         }

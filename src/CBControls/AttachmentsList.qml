@@ -1,8 +1,9 @@
 import QtQuick 2.5
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls 2.0
-import "." // QTBUG-34418, singletons require explicit import to load qmldir file
+import "."
 
+// QTBUG-34418, singletons require explicit import to load qmldir file
 import CB.api 1.0
 
 Rectangle {
@@ -16,7 +17,7 @@ Rectangle {
         anchors.top: parent.top
         Button {
             id: btnAddFile
-            contentItem: Image{
+            contentItem: Image {
                 source: "/add"
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
@@ -30,14 +31,14 @@ Rectangle {
             width: parent.height - 10
             visible: !editing
             onClicked: {
-                attachDialog.selectFolder = false;
-                attachDialog.selectMultiple = true;
+                attachDialog.selectFolder = false
+                attachDialog.selectMultiple = true
                 attachDialog.open()
             }
         }
         Button {
             id: btnAddFolder
-            contentItem: Image{
+            contentItem: Image {
                 source: "/add_folder"
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
@@ -51,13 +52,14 @@ Rectangle {
             width: parent.height - 10
             visible: !editing
             onClicked: {
-                attachDialog.selectFolder = true;
+                attachDialog.selectFolder = true
                 attachDialog.open()
             }
         }
     }
     ListView {
-        ScrollBar.vertical: ScrollBar { }
+        ScrollBar.vertical: ScrollBar {
+        }
         id: attachmentsListView
         clip: true
         width: parent.width
@@ -78,8 +80,8 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.leftMargin: 5
-                height: parent.height-10
-                width: height*2
+                height: parent.height - 10
+                width: height * 2
                 sourceSize.height: height
                 sourceSize.width: width
                 source: "image://imageProvider/" + currentID + "/" + modelData.file
@@ -93,14 +95,12 @@ Rectangle {
                 anchors.right: editing ? btnRemove.left : parent.right
                 anchors.rightMargin: 5
                 text: {
-                    if (modelData.about !== undefined){
+                    if (modelData.about !== undefined) {
                         modelData.about
-                    }
-                    else{
-                        if (modelData[qsTr("about")]!== undefined){
-                           modelData[qsTr("about")]
-                        }
-                        else{
+                    } else {
+                        if (modelData[qsTr("about")] !== undefined) {
+                            modelData[qsTr("about")]
+                        } else {
                             modelData.file
                         }
                     }
@@ -115,14 +115,17 @@ Rectangle {
                         openMenu.file = modelData.file
                         openMenu.open()
                     } else {
-                        mainWindow.createAndPush("CBControls/AttachmentFullInfo.qml",
-                                                 {"model":attachmentsListView.model,"index":index})
+                        mainWindow.createAndPush(
+                                    "CBControls/AttachmentFullInfo.qml", {
+                                        model: attachmentsListView.model,
+                                        index: index
+                                    })
                     }
                 }
             }
             Button {
                 id: btnRemove
-                contentItem: Image{
+                contentItem: Image {
                     source: "/delete"
                     fillMode: Image.Pad
                 }
@@ -156,8 +159,9 @@ Rectangle {
         title: qsTr("Choose a file to load as attach")
         folder: CBSettings.attachSearchPath
         onAccepted: {
-            for (var i =0; i< fileUrls.length; ++i){
-                CBApi.baseProvider.attachmentsProvider.insertNewAttach(fileUrls[i])
+            for (var i = 0; i < fileUrls.length; ++i) {
+                CBApi.baseProvider.attachmentsProvider.insertNewAttach(
+                            fileUrls[i])
             }
         }
     }

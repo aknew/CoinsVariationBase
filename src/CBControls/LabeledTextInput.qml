@@ -21,7 +21,7 @@ FocusScope {
         anchors.left: parent.left
         anchors.leftMargin: 5
         height: parent.height
-        verticalAlignment : Text.AlignVCenter
+        verticalAlignment: Text.AlignVCenter
     }
     TextField {
         id: input
@@ -30,7 +30,7 @@ FocusScope {
         anchors.right: parent.right
         anchors.rightMargin: 5
         readOnly: true
-        MouseArea{
+        MouseArea {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             height: parent.height
@@ -39,11 +39,11 @@ FocusScope {
             onClicked: {
                 Qt.openUrlExternally(input.text)
             }
-            Image{
+            Image {
                 source: "/right"
                 anchors.centerIn: parent
-                height: parent.height/2
-                width: parent.width/2
+                height: parent.height / 2
+                width: parent.width / 2
             }
         }
     }

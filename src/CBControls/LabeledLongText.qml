@@ -29,6 +29,6 @@ FocusScope {
         anchors.right: parent.right
         anchors.rightMargin: 5
         readOnly: true
-        wrapMode:TextEdit.Wrap
+        wrapMode: TextEdit.Wrap
     }
 }

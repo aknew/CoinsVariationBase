@@ -3,8 +3,9 @@ import QtQuick.Controls 2.0
 import QtQuick.Dialogs 1.2
 
 import CB.api 1.0
-import "." // QTBUG-34418, singletons require explicit import to load qmldir file
+import "."
 
+// QTBUG-34418, singletons require explicit import to load qmldir file
 Rectangle {
 
     id: attachmentRootRect
@@ -23,12 +24,12 @@ Rectangle {
     property int index: -1
 
     onIndexChanged: {
-        if (model){
+        if (model) {
             attachmentInfo = model[index]
         }
     }
     onModelChanged: {
-        if (index!= -1){
+        if (index != -1) {
             attachmentInfo = model[index]
         }
     }
@@ -80,43 +81,44 @@ Rectangle {
         id: listModel
     }
 
-    MouseArea{
+    MouseArea {
         height: parent.height
-        width:64
+        width: 64
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: 5
-        visible:!editing && index>0
+        visible: !editing && index > 0
         onClicked: {
-            index = index -1
+            index = index - 1
         }
         Image {
-            width:64
+            width: 64
             source: "/previous"
             anchors.centerIn: parent
         }
     }
-    MouseArea{
+    MouseArea {
         height: parent.height
-        width:64
+        width: 64
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: 5
-        visible:!editing && index<model.length-1
+        visible: !editing && index < model.length - 1
         onClicked: {
             index = index + 1
         }
         Image {
-            width:64
+            width: 64
             source: "/next"
             anchors.centerIn: parent
         }
     }
 
     Flickable {
-        ScrollBar.vertical: ScrollBar { }
+        ScrollBar.vertical: ScrollBar {
+        }
         clip: true
-        width: parent.width-64*2
+        width: parent.width - 64 * 2
         x: 64
         height: editing ? parent.height - bottomBar.height : parent.height
         contentHeight: attachImage.height + attachImage.y
@@ -148,7 +150,7 @@ Rectangle {
                 }
                 Button {
                     id: btnRemove
-                    contentItem: Image{
+                    contentItem: Image {
                         source: "/delete"
                         fillMode: Image.Pad
                         horizontalAlignment: Image.AlignHCenter
@@ -195,7 +197,7 @@ Rectangle {
         height: GUIStyle.barHeight
         Button {
             id: btnAddField
-            contentItem: Image{
+            contentItem: Image {
                 source: "/add"
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
@@ -241,14 +243,14 @@ Rectangle {
 
         contentItem: Rectangle {
             implicitWidth: 600
-            implicitHeight: GUIStyle.isMobile ? 285 :120
+            implicitHeight: GUIStyle.isMobile ? 285 : 120
             LabeledComboBoxInput {
                 id: edtName
                 title: qsTr("Field name:")
                 editing: true
                 anchors.topMargin: 5
                 anchors.top: parent.top
-                model:[qsTr("source"), qsTr("about")]
+                model: [qsTr("source"), qsTr("about")]
             }
             LabeledLongText {
                 id: edtValue
