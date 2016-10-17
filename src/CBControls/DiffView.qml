@@ -1,8 +1,118 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.0
 
-Rectangle {
+Page {
+    header:ToolBar{
+        ToolButton {
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            height: parent.height
+            width: parent.height
+            visible: tablesStack.depth > 1
+            contentItem: Image {
+                source: "/merge"
+                fillMode: Image.Pad
+            }
+            onClicked: {
+                mergedMap = {}
+                diff1 = ""
+                diff2 = ""
+                index = 0
+                mergeNext()
+            }
+        }
+    }
 
+    property string diff1: ""
+    property string diff2: ""
+    property var mergedMap
+    property int index:0
+
+    function mergeNext(){
+        if (index < itemDifference.allFieldsModel.length) {
+            var fd = itemDifference.allFieldsModel[index]
+            ++index
+            if (fd.isEqual){
+                mergedMap[fd.name]=fd.highlightedFirst;
+                mergeNext()
+            }
+            else{
+                rowMergeDialog.name = fd.name;
+                rowMergeDialog.record1 = fd.highlightedFirst;
+                rowMergeDialog.record2 = fd.highlightedSecond;
+                rowMergeDialog.open();
+
+            }
+
+        }
+        else{
+            rowMergeDialog.close()
+            node.mergeRecords(-1, -1, mergedMap, diff1, diff2);
+        }
+    }
+
+    Popup {
+        id: rowMergeDialog
+        property string name
+        onNameChanged: {
+            title.text = qsTr("Merged field: ") + qsTr(name)
+        }
+
+        property string record1
+        onRecord1Changed: {
+            edtRecord1.text = qsTr("Record 1: ")+ record1
+        }
+
+        property string record2
+        onRecord2Changed: {
+            edtRecord2.text = qsTr("Record 2: ")+ record2
+        }
+
+        contentItem: Rectangle {
+            implicitWidth: 600
+            implicitHeight: 400
+            Column {
+                anchors.top: parent.top
+                anchors.topMargin: 5
+                anchors.bottom: btnApply.top
+                anchors.bottomMargin: 5
+                width: parent.width
+                spacing: 5
+                Label {
+                    id: title
+                    font.bold: true
+                    verticalAlignment: Text.AlignVCenter
+                }
+                Label {
+                    id: edtRecord1
+                }
+                Label {
+                    id: edtRecord2
+                }
+                LabeledTextInput {
+                    id: edtResult
+                    title: qsTr("Merge result:")
+                    editing: true
+                }
+            }
+
+            Button {
+                id: btnApply
+                width: (parent.width - 15) / 2
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 5
+                text: qsTr("Apply")
+                onClicked: {
+                    mergedMap[rowMergeDialog.name] = edtResult.value
+                    mergeNext()
+                }
+            }
+        }
+    }
+
+    property var node
     property var itemDifference
     onItemDifferenceChanged: {
         if (typeof (itemDifference) != "undefined") {

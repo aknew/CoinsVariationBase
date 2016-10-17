@@ -308,16 +308,23 @@ CBItemDifference *CBNode::recordDifference(int index1, int index2){
             fd->_name = iter;
             fd->_highlightedFirst = wordLCS.getHighlitedFirst();
             fd->_highlightedSecond = wordLCS.getHighlitedSecond();
-            all.append(fd);
             if (!(wordLCS.getDifferenceFirst() == "" && wordLCS.getDifferenceSecond() == "")){
                 diff.append(fd);
             }
+            else{
+                fd->_isEqual = true;
+            }
+            all.append(fd);
         }
     }
 
     difference->diffFieldsModel = diff;
     difference->allFieldsModel = all;
     return difference;
+}
+
+void CBNode::mergeRecords(int index1, int index2, QVariantMap mergedItem, QString diff1, QString diff2){
+    qDebug()<<mergedItem;
 }
 
 void CBNode::exportListToFile(const QString &path){

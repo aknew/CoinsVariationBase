@@ -409,7 +409,8 @@ ApplicationWindow {
     function showDifference(node, index1, index2) {
         var diff = node.recordDifference(index1, index2)
         createAndPush("CBControls/DiffView.qml", {
-                          itemDifference: diff
+                          itemDifference: diff,
+                          node:node
                       })
     }
 
