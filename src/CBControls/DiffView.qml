@@ -40,6 +40,7 @@ Page {
                 rowMergeDialog.name = fd.name;
                 rowMergeDialog.record1 = fd.highlightedFirst;
                 rowMergeDialog.record2 = fd.highlightedSecond;
+                rowMergeDialog.result = fd.commonPart;
                 rowMergeDialog.open();
 
             }
@@ -67,6 +68,8 @@ Page {
         onRecord2Changed: {
             edtRecord2.text = qsTr("Record 2: ")+ record2
         }
+
+        property alias result:edtResult.value
 
         contentItem: Rectangle {
             implicitWidth: 600

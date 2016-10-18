@@ -308,11 +308,12 @@ CBItemDifference *CBNode::recordDifference(int index1, int index2){
             fd->_name = iter;
             fd->_highlightedFirst = wordLCS.getHighlitedFirst();
             fd->_highlightedSecond = wordLCS.getHighlitedSecond();
-            if (!(wordLCS.getDifferenceFirst() == "" && wordLCS.getDifferenceSecond() == "")){
+            fd->_differenceFirst = wordLCS.getDifferenceFirst();
+            fd->_differenceSecond = wordLCS.getDifferenceSecond();
+            fd->_isEqual =(fd->_differenceFirst == "" &&  fd->_differenceSecond == "");
+            fd->_commonPart = wordLCS.commonPart();
+            if (!fd->_isEqual){
                 diff.append(fd);
-            }
-            else{
-                fd->_isEqual = true;
             }
             all.append(fd);
         }

@@ -17,6 +17,9 @@ public:
     QString getHighlitedSecond();
     QString getDifferenceFirst();
     QString getDifferenceSecond();
+    QString commonPart(){
+        return commonList.join(" ");
+    }
 
 private:
     QStringList firstList;
