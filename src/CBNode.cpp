@@ -324,7 +324,7 @@ CBItemDifference *CBNode::recordDifference(int index1, int index2){
     return difference;
 }
 
-void CBNode::mergeRecords(int index1, int index2, QVariantMap mergedItem, QString diff1, QString diff2){
+void CBNode::mergeRecords(int index1, int index2, QVariantMap mergedItem, QString diff){
     qDebug()<<mergedItem;
 }
 

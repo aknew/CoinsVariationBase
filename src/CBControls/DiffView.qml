@@ -42,13 +42,17 @@ Page {
                 rowMergeDialog.record2 = fd.highlightedSecond;
                 rowMergeDialog.result = fd.commonPart;
                 rowMergeDialog.open();
+                diff1 += qsTr(fd.name) +": " + fd.differenceFirst +";";
+                diff2 += qsTr(fd.name) +": " + fd.differenceSecond +";";
 
             }
 
         }
         else{
             rowMergeDialog.close()
-            node.mergeRecords(-1, -1, mergedMap, diff1, diff2);
+            diffDialog.diff1 = diff1;
+            diffDialog.diff2 = diff2;
+            diffDialog.open()
         }
     }
 
@@ -110,6 +114,60 @@ Page {
                 onClicked: {
                     mergedMap[rowMergeDialog.name] = edtResult.value
                     mergeNext()
+                }
+            }
+        }
+    }
+
+    Popup {
+        id: diffDialog
+        property string diff1
+        onDiff1Changed: {
+            edtDiff1.text = qsTr("Diff 1: ")+ diff1
+        }
+
+        property string diff2
+        onDiff2Changed: {
+            edtDiff2.text = qsTr("Diff 2: ")+ diff2
+            edtResultDiff.value = diff2
+        }
+
+        property alias result:edtResult.value
+
+        contentItem: Rectangle {
+            implicitWidth: 600
+            implicitHeight: 400
+            Column {
+                anchors.top: parent.top
+                anchors.topMargin: 5
+                anchors.bottom: btnApplyDiff.top
+                anchors.bottomMargin: 5
+                width: parent.width
+                spacing: 5
+                Label {
+                    id: edtDiff1
+                }
+                Label {
+                    id: edtDiff2
+                }
+                LabeledTextInput {
+                    id: edtResultDiff
+                    title: qsTr("Result diff:")
+                    editing: true
+                }
+            }
+
+            Button {
+                id: btnApplyDiff
+                width: (parent.width - 15) / 2
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 5
+                text: qsTr("Apply")
+                onClicked: {
+                    diffDialog.close()
+                    node.mergeRecords(-1, -1, mergedMap, edtResultDiff.value);
                 }
             }
         }
