@@ -16,10 +16,9 @@ CBAttachmentsProvider::CBAttachmentsProvider(const QString &basePath, QObject *p
 }
 
 
-void CBAttachmentsProvider::selectID(const QString &newID){
-    _selectedID = new QString(newID);
-
-    if (QDir(pathForId()).exists()){
+QVariantList CBAttachmentsProvider::attributesForId(const QString &recId)
+{
+    if (QDir(pathForId(recId)).exists()){
         QString filename=attributePath();
          QFile file(filename);
          if (!file.open(QIODevice::ReadOnly)){
@@ -33,11 +32,17 @@ void CBAttachmentsProvider::selectID(const QString &newID){
          if (sd.isNull()){
             qWarning("Wrong file attribute json format");
          }
-         attributes = sd.array().toVariantList();
+         return sd.array().toVariantList();
     }
     else{
-        attributes = QVariantList();
+        return QVariantList();
     }
+}
+
+void CBAttachmentsProvider::selectID(const QString &newID){
+    _selectedID = new QString(newID);
+
+    attributes = attributesForId();
     emit attributesChanged();
 }
 

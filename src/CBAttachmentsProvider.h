@@ -61,6 +61,7 @@ private:
         return _basePath+recId + "/";
     }
 
+    QVariantList attributesForId(const QString &recId = "");
 };
 
 #endif // CBNOTESPROVIDER_H
