@@ -19,7 +19,7 @@ CBAttachmentsProvider::CBAttachmentsProvider(const QString &basePath, QObject *p
 void CBAttachmentsProvider::selectID(const QString &newID){
     _selectedID = new QString(newID);
 
-    if (QDir(currentPath()).exists()){
+    if (QDir(pathForId()).exists()){
         QString filename=attributePath();
          QFile file(filename);
          if (!file.open(QIODevice::ReadOnly)){
@@ -44,7 +44,7 @@ void CBAttachmentsProvider::selectID(const QString &newID){
 QVariantMap CBAttachmentsProvider::insertNewAttach(QString notePath){
     CBUtils::FromQmlFilePath(&notePath);
     // TODO: add checking that file was realy copied and that name is unique
-    QString dirPath = currentPath();
+    QString dirPath = pathForId();
     if (!QDir(dirPath).exists()){
         QDir().mkdir(dirPath);
     }
@@ -80,7 +80,7 @@ void CBAttachmentsProvider::deleteAttach(const QString& noteID){
         qWarning()<<"Can't find attributes for "<< noteID;
     }
     else{
-        QFile::remove(currentPath()+"/"+noteID);
+        QFile::remove(pathForId()+"/"+noteID);
         attributes.removeAt(index);
         saveAttributes();
         emit attributesChanged();
@@ -117,7 +117,7 @@ void CBAttachmentsProvider::updateAttributes(QVariantMap newAttributes){
 }
 
 void CBAttachmentsProvider::openAttach(const QString &attachID){
-    QString path = currentPath()+attachID;
+    QString path = pathForId()+attachID;
     QFileInfo fileInfo(path);
     if (fileInfo.isDir()){
         QDir dir(path);
@@ -139,7 +139,7 @@ void CBAttachmentsProvider::openFolder(){
 
 void CBAttachmentsProvider::setMain(const QString &attachID){
     // TODO: add checking that file Main.jpg doesn't exist and this is realy jpeg
-    QFile::rename(currentPath()+attachID,currentPath()+"Main.jpg");
+    QFile::rename(pathForId()+attachID,pathForId()+"Main.jpg");
     QVariant fileName = QVariant(attachID);
     for (int i = 0; i<attributes.size(); ++i){
         QVariantMap map = attributes.at(i).toMap();
@@ -154,8 +154,13 @@ void CBAttachmentsProvider::setMain(const QString &attachID){
 }
 
 void CBAttachmentsProvider::removeSelectedIdAttaches(){
-    QDir dir(currentPath());
+    QDir dir(pathForId());
     if (!dir.removeRecursively()){
-        qWarning() << "Can't remove folder at " << currentPath();
+        qWarning() << "Can't remove folder at " << pathForId();
     }
+}
+
+
+void CBAttachmentsProvider::mergeAttachments(const QString &sourceID, const QString &destID,const QString &diff){
+
 }

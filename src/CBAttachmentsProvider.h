@@ -40,19 +40,25 @@ public:
     void removeSelectedIdAttaches();
     QString _basePath; ///< root path of Attachments
 
+    void mergeAttachments(const QString &sourceID, const QString &destID, const QString &diff);
+
 signals:
     void attributesChanged();
 
 private:
     QString *_selectedID = NULL;
-    inline QString attributePath(){
-        return currentPath()+ "attributes.json";
+    inline QString attributePath(const QString &recId = ""){
+        return pathForId(recId)+ "attributes.json";
     }
 
     QVariantList attributes;///< List of attachments for selected id with attributes, json array
     void saveAttributes(); ///<saves json with note's attributes to file into record folder
-    inline QString currentPath(){
-        return _basePath+*_selectedID + "/";
+
+    inline QString pathForId(QString recId=""){
+        if (recId == ""){
+            recId= *_selectedID;
+        }
+        return _basePath+recId + "/";
     }
 
 };
