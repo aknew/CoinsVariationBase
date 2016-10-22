@@ -324,8 +324,11 @@ CBItemDifference *CBNode::recordDifference(int index1, int index2){
     return difference;
 }
 
-void CBNode::mergeRecords(int index1, int index2, QVariantMap mergedItem, QString diff){
-    qDebug()<<mergedItem;
+void CBNode::mergeRecords(QString src, QString dst, QVariantMap mergedItem, QString diff){
+    //qDebug()<<mergedItem;
+    CBBaseProvider *bp = qobject_cast<CBBaseProvider *>(parent());
+    bp->attachmentsProvider->mergeAttachments(src, dst, diff);
+
 }
 
 void CBNode::exportListToFile(const QString &path){
