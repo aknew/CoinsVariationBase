@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     CBWordLCSTestSet.cpp \
     ../src/CBFieldDifference.cpp \
     ../src/CBItemDifference.cpp \
-    CBBaseProviderTestSet.cpp
+    CBBaseProviderTestSet.cpp \
+    CBAttachmentProviderTestSet.cpp
 
 HEADERS += \
     ../src/CBAttachmentsProvider.h \
@@ -36,4 +37,5 @@ HEADERS += \
     CBWordLCSTestSet.h \
     ../src/CBFieldDifference.h \
     ../src/CBItemDifference.h \
-    CBBaseProviderTestSet.h
+    CBBaseProviderTestSet.h \
+    CBAttachmentProviderTestSet.h

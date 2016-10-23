@@ -5,6 +5,7 @@
 
 #include "CBBaseProviderTestSet.h"
 #include "CBWordLCSTestSet.h"
+#include "CBAttachmentProviderTestSet.h"
 
 
 int main(int argc, char *argv[])
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
 
     QTest::qExec(new CBBaseProviderTestSet, argc, argv);
     QTest::qExec(new CBWordLCSTestSet, argc, argv);
+    QTest::qExec(new CBAttachmentProviderTestSet, argc, argv);
 
     return 0;
 }
