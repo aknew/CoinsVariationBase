@@ -74,8 +74,12 @@ bool CBUtils::copyRecursively(const QString &srcFilePath,
                 return false;
         }
     } else {
-        if (!QFile::copy(srcFilePath, tgtFilePath))
+        if (!QFile::copy(srcFilePath, tgtFilePath)){
+            //qDebug() << QFile::error();
+            qDebug() << srcFilePath;
+            qDebug() << tgtFilePath;
             return false;
+        }
     }
     return true;
 }

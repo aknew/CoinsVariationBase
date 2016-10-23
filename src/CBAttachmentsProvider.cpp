@@ -7,19 +7,23 @@
 #include <QDebug>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QUuid>
 
 #include "CBUtils.h"
 
 CBAttachmentsProvider::CBAttachmentsProvider(const QString &basePath, QObject *parent) : QObject(parent)
 {
     _basePath = basePath + "attachments/";
+    if (!QDir(_basePath).exists()){
+        QDir().mkdir(_basePath);
+    }
 }
 
 
 QVariantList CBAttachmentsProvider::attributesForId(const QString &recId)
 {
     if (QDir(pathForId(recId)).exists()){
-        QString filename=attributePath();
+        QString filename=attributePath(recId);
          QFile file(filename);
          if (!file.open(QIODevice::ReadOnly)){
              qWarning("Cannot open attribute json");
@@ -166,6 +170,56 @@ void CBAttachmentsProvider::removeSelectedIdAttaches(){
 }
 
 
-void CBAttachmentsProvider::mergeAttachments(const QString &sourceID, const QString &destID,const QString &diff){
+void CBAttachmentsProvider::mergeAttachments(const QString &srcId, const QString &dstID,const QString &diff){
+    QString srcPath = pathForId(srcId);
+    QDir srcDir(srcPath);
+    if (!srcDir.exists() ){
+        // there is no attachments in source
+        return;
+    }
+    QString dstPath = pathForId(dstID);
+    QDir dstDir(dstPath);
+    if (!dstDir.exists() ){
+        // just rename srcDir
+        srcDir.rename(srcId,dstID);
+        return;
+    }
 
+    QVariantList dstAttributes = attributesForId(dstID);
+    QStringList dstFiles;
+    for (int i = 0; i<dstAttributes.size(); ++i){
+        QVariantMap map = dstAttributes.at(i).toMap();
+        dstFiles.append(map["file"].toString());
+    }
+
+    QVariantList srcAttributes = attributesForId(srcId);
+    foreach (QVariant v, srcAttributes) {
+        QVariantMap map = v.toMap();
+        QString fileName = map["file"].toString();
+        QString filePath = srcPath+fileName;
+        if (dstFiles.contains(fileName)){
+            QFileInfo fileInfo(filePath);
+            QUuid u=QUuid::createUuid();
+            fileName =u.toString() +"."+fileInfo.completeSuffix();
+            map["file"] = QVariant(fileName);
+        }
+        map["description"] = diff;
+        QString copyTo = dstPath+fileName;
+        bool flag = CBUtils::copyRecursively(filePath,copyTo);
+        if (!flag){
+            return;
+        }
+        dstAttributes.append(map);
+    }
+    QFile saveFile(attributePath(dstID));
+    if (!saveFile.open(QIODevice::WriteOnly)) {
+            qWarning("Couldn't open save file.");
+    }
+    QJsonDocument saveDoc(QJsonArray::fromVariantList(dstAttributes));
+    saveFile.write(saveDoc.toJson());
+    saveFile.close();
+    bool flag = srcDir.removeRecursively();
+    if (!flag){
+        qWarning()<<"can't remove dir "<<srcPath;
+    }
 }

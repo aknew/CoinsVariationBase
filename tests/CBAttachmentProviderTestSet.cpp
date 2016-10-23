@@ -44,5 +44,5 @@ void CBAttachmentProviderTestSet::mergeAttachTest(){
     dir = QDir (rootPath +"/attachments/" + attach1);
 
     QVERIFY(dir.exists());
-    QVERIFY(dir.count()==3);
+    QVERIFY(dir.count()==5); // 2 jpeg + attach.json + . + ..
 }
