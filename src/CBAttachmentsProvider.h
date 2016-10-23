@@ -40,7 +40,13 @@ public:
     void removeSelectedIdAttaches();
     QString _basePath; ///< root path of Attachments
 
-    void mergeAttachments(const QString &sourceID, const QString &destID, const QString &diff);
+    /**
+     * @brief mergeAttachments merge attachments of 2 records
+     * @param srcId - source record id, all attach,ents from it will be moved to destination record, it's folder will remove
+     * @param dstID - destination record id
+     * @param diff - short message which will be added to all attachments from source as comment
+     */
+    void mergeAttachments(const QString &srcId, const QString &dstID,const QString &diff);
 
 signals:
     void attributesChanged();
