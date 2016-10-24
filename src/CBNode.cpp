@@ -348,6 +348,10 @@ void CBNode::mergeRecords(QString src, QString dst, QVariantMap mergedItem, QStr
         }
     }
 
+    m_listModel->selectedRow = findRowWithID(dst);
+    applyChanges(mergedItem);
+    m_listModel->selectedRow = findRowWithID(src);
+    deleteSelectedItem();
 }
 
 void CBNode::exportListToFile(const QString &path){

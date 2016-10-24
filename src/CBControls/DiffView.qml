@@ -168,6 +168,7 @@ Page {
                 onClicked: {
                     diffDialog.close()
                     node.mergeRecords(itemDifference.id2, itemDifference.id1, mergedMap, edtResultDiff.value);
+                    mainWindow.goBack();
                 }
             }
         }
