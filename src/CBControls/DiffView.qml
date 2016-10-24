@@ -167,7 +167,7 @@ Page {
                 text: qsTr("Apply")
                 onClicked: {
                     diffDialog.close()
-                    node.mergeRecords(itemDifference.id1, itemDifference.id2, mergedMap, edtResultDiff.value);
+                    node.mergeRecords(itemDifference.id2, itemDifference.id1, mergedMap, edtResultDiff.value);
                 }
             }
         }

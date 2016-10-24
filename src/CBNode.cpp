@@ -329,6 +329,25 @@ void CBNode::mergeRecords(QString src, QString dst, QVariantMap mergedItem, QStr
     CBBaseProvider *bp = qobject_cast<CBBaseProvider *>(parent());
     bp->attachmentsProvider->mergeAttachments(src, dst, diff);
 
+    for (auto key : childNodes.keys()){
+        // FIXME: if it is unique constraint in table nothing will apply
+        QString str=childNodes.value(key);
+        if (str!=""){ // Some subnodes are not based on current (for example SourceList), usualy it is separate entityes which was add as childNode to have only one enterance point
+            QString q = "update %1 set comment = :COMMENT, %2 = :NEWID where %2 = :OLDID";
+            q = q.arg(key).arg(str);
+            qDebug()<<q;
+            QSqlQuery query = QSqlQuery(db);
+            query.prepare(q);
+            query.bindValue(":COMMENT",diff);
+            query.bindValue(":NEWID",dst);
+            query.bindValue(":OLDID",src);
+            bool flag = query.exec();
+            if (!flag){
+                qWarning()<< query.lastError();
+            }
+        }
+    }
+
 }
 
 void CBNode::exportListToFile(const QString &path){
