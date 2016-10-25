@@ -10,6 +10,18 @@ Page {
             width: parent.height
             visible: tablesStack.depth > 1
             contentItem: Image {
+                source: "/back"
+                fillMode: Image.Pad
+            }
+            //shortcut: Qt.BackButton
+            onClicked: mainWindow.goBack()
+        }
+        ToolButton {
+            anchors.right: parent.right
+            anchors.rightMargin: 5
+            height: parent.height
+            width: parent.height
+            contentItem: Image {
                 source: "/merge"
                 fillMode: Image.Pad
             }
