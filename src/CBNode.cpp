@@ -330,7 +330,7 @@ bool CBNode::mergeRecords(QString src, QString dst, QVariantMap mergedItem, QStr
         // FIXME: if it is unique constraint in table nothing will apply, but another query canbe already applied. Need add transactions
         QString str=childNodes.value(key);
         if (str!=""){ // Some subnodes are not based on current (for example SourceList), usualy it is separate entityes which was add as childNode to have only one enterance point
-            QString q = "update %1 set comment = :COMMENT||';'||comment, %2 = :NEWID where %2 = :OLDID";
+            QString q = "update %1 set comment =  ifnull(:COMMENT||';'||comment,:COMMENT), %2 = :NEWID where %2 = :OLDID";
             q = q.arg(key).arg(str);
             qDebug()<<q;
             QSqlQuery query = QSqlQuery(db);
