@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.0
+import QtQuick.Dialogs 1.2
 
 Page {
     header:ToolBar{
@@ -179,11 +180,21 @@ Page {
                 text: qsTr("Apply")
                 onClicked: {
                     diffDialog.close()
-                    node.mergeRecords(itemDifference.id2, itemDifference.id1, mergedMap, edtResultDiff.value);
-                    mainWindow.goBack();
+                    var flag = node.mergeRecords(itemDifference.id2, itemDifference.id1, mergedMap, edtResultDiff.value);
+                    if (flag){
+                        mainWindow.goBack();
+                    }
+                    else {
+                        dlgMergeError.open()
+                    }
                 }
             }
         }
+    }
+
+    MessageDialog{
+        id:dlgMergeError
+        text: qsTr("Record merging finishes with errors, see log for details")
     }
 
     property var node

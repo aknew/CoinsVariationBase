@@ -75,7 +75,7 @@ public:
 
     Q_INVOKABLE CBItemDifference *recordDifference(int index1, int index2);
 
-    Q_INVOKABLE void mergeRecords(QString src, QString dst, QVariantMap mergedItem, QString diff);
+    Q_INVOKABLE bool mergeRecords(QString src, QString dst, QVariantMap mergedItem, QString diff);
 
     Q_INVOKABLE void exportListToFile(const QString &path);
 
