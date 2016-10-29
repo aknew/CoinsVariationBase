@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Dialogs 1.2
 
 Page {
+    id:diffView
     header:ToolBar{
         ToolButton {
             anchors.left: parent.left
@@ -71,14 +72,14 @@ Page {
         property var fieldDifference
         onFieldDifferenceChanged:{
             title.text = qsTr("Merged field: ") + qsTr(fieldDifference.name)
-            edtRecord1.text = qsTr("Record 1: ")+ fieldDifference.highlightedFirst
-            edtRecord2.text = qsTr("Record 2: ")+ fieldDifference.highlightedSecond
+            edtRecord1.text = "<b>" + qsTr("Record 1:")+" </b>" +  fieldDifference.highlightedFirst
+            edtRecord2.text = "<b>" + qsTr("Record 2:")+" </b>" +  fieldDifference.highlightedSecond
             edtResult.value = fieldDifference.commonPart
         }
 
         contentItem: Rectangle {
-            implicitWidth: 600
-            implicitHeight: 400
+            implicitWidth: diffView.width
+            implicitHeight: diffView.height
             Column {
                 anchors.top: parent.top
                 anchors.topMargin: 5
@@ -92,12 +93,16 @@ Page {
                     verticalAlignment: Text.AlignVCenter
                 }
                 Label {
+                    width: parent.width
                     id: edtRecord1
+                    wrapMode: Text.Wrap
                 }
                 Label {
+                    width: parent.width
                     id: edtRecord2
+                    wrapMode: Text.Wrap
                 }
-                LabeledTextInput {
+                LabeledLongText {
                     id: edtResult
                     title: qsTr("Merge result:")
                     editing: true
@@ -107,8 +112,7 @@ Page {
             Button {
                 id: btnApply
                 width: (parent.width - 15) / 2
-                anchors.left: parent.left
-                anchors.leftMargin: 5
+                anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 5
                 text: qsTr("Apply")
@@ -124,20 +128,20 @@ Page {
         id: diffDialog
         property string diff1
         onDiff1Changed: {
-            edtDiff1.text = qsTr("Diff 1: ")+ diff1
+            edtDiff1.text = "<b>" + qsTr("Record 1:")+" </b>" +  diff1
         }
 
         property string diff2
         onDiff2Changed: {
-            edtDiff2.text = qsTr("Diff 2: ")+ diff2
+            edtDiff2.text = "<b>" + qsTr("Record 2:")+" </b>" +  diff2
             edtResultDiff.value = diff2
         }
 
         property alias result:edtResult.value
 
-        contentItem: Rectangle {
-            implicitWidth: 600
-            implicitHeight: 400
+        contentItem: Rectangle {            
+            implicitWidth: diffView.width
+            implicitHeight: diffView.height
             Column {
                 anchors.top: parent.top
                 anchors.topMargin: 5
@@ -146,12 +150,17 @@ Page {
                 width: parent.width
                 spacing: 5
                 Label {
+                    text:qsTr("Difference description")
+                    font.bold: true
+
+                }
+                Label {
                     id: edtDiff1
                 }
                 Label {
                     id: edtDiff2
                 }
-                LabeledTextInput {
+                LabeledLongText {
                     id: edtResultDiff
                     title: qsTr("Result diff:")
                     editing: true
@@ -161,8 +170,7 @@ Page {
             Button {
                 id: btnApplyDiff
                 width: (parent.width - 15) / 2
-                anchors.left: parent.left
-                anchors.leftMargin: 5
+                anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 5
                 text: qsTr("Apply")

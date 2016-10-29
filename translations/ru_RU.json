@@ -44,5 +44,11 @@
     "Show all fields":"Показывать все поля",
     "Show different fields":"Показывать отличающиеся поля",
     "Predefined filters":"Предопределенные фильтры",
-    "You are at start level, nothing have been selected yet":"Вы на стартовом уровне, пока ничего не выбрано"
+    "You are at start level, nothing have been selected yet":"Вы на стартовом уровне, пока ничего не выбрано",
+    "Merged field: ":"Сливаемое поле: ",
+    "Record 1:":"Запись 1:",
+    "Record 2:":"Запись 2:",
+    "Merge result:":"Результат слияния:",
+    "Result diff:":"Итоговая разница:",
+    "Difference description":"Описание разницы записей"
 }
