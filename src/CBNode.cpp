@@ -372,7 +372,7 @@ void CBNode::exportListToFile(const QString &path){
 
     // TODO: export can be long and should be async
 
-    QFile saveFile(path+"/export.json");
+    QFile saveFile(path+"/list.json");
 
     if (!saveFile.open(QIODevice::WriteOnly)) {
             qWarning("Couldn't open translation file to right.");

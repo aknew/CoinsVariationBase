@@ -88,7 +88,7 @@ ApplicationWindow {
                                 }
                                 onTriggered: {
                                     tablesStack.currentItem.node.exportListToFile(
-                                                "export")
+                                                "data")
                                     menuWorkingWithData.close()
                                 }
                                 visible: tablesStack.currentItem
