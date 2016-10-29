@@ -14,6 +14,8 @@ class CBFieldDifference : public QObject
     Q_PROPERTY(QString highlightedSecond MEMBER _highlightedSecond CONSTANT)
     Q_PROPERTY(QString differenceFirst MEMBER _differenceFirst CONSTANT)
     Q_PROPERTY(QString differenceSecond MEMBER _differenceSecond CONSTANT)
+    Q_PROPERTY(QString originalFirst MEMBER _originalFirst CONSTANT)
+    Q_PROPERTY(QString originalSecond MEMBER _originalSecond CONSTANT)
     Q_PROPERTY(QString commonPart MEMBER _commonPart CONSTANT)
     Q_PROPERTY(bool isEqual MEMBER _isEqual CONSTANT)
 public:
@@ -21,6 +23,8 @@ public:
     QString _name;
     QString _highlightedFirst;
     QString _highlightedSecond;
+    QString _originalFirst;
+    QString _originalSecond;
     QString _differenceFirst;
     QString _differenceSecond;
     QString _commonPart;

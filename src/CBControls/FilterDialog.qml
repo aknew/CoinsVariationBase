@@ -5,7 +5,36 @@ import CB.api 1.0
 import "."
 
 // QTBUG-34418, singletons require explicit import to load qmldir file
-Item {
+Page {
+    header:ToolBar{
+        ToolButton {
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            height: parent.height
+            width: parent.height
+            visible: tablesStack.depth > 1
+            contentItem: Image {
+                source: "/apply"
+                fillMode: Image.Pad
+            }
+            //shortcut: Qt.BackButton
+            onClicked: {
+                applyFilters()
+                mainWindow.goBack()
+            }
+        }
+        ToolButton {
+            anchors.right: parent.right
+            anchors.rightMargin: 5
+            height: parent.height
+            width: parent.height
+            contentItem: Image {
+                source: "/undo"
+                fillMode: Image.Pad
+            }
+            onClicked: mainWindow.goBack()
+        }
+    }
     id: root
     property var node
     onNodeChanged: {

@@ -1,10 +1,11 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.0
 import QtQuick.Dialogs 1.2
+import QtQuick.Layouts 1.1
 
 Page {
-    id:diffView
-    header:ToolBar{
+    id: diffView
+    header: ToolBar {
         ToolButton {
             anchors.left: parent.left
             anchors.leftMargin: 5
@@ -28,7 +29,9 @@ Page {
                 fillMode: Image.Pad
             }
             onClicked: {
-                mergedMap = {}
+                mergedMap = {
+
+                }
                 diff1 = ""
                 diff2 = ""
                 index = 0
@@ -40,29 +43,25 @@ Page {
     property string diff1: ""
     property string diff2: ""
     property var mergedMap
-    property int index:0
+    property int index: 0
 
-    function mergeNext(){
+    function mergeNext() {
         if (index < itemDifference.allFieldsModel.length) {
             var fd = itemDifference.allFieldsModel[index]
             ++index
-            if (fd.isEqual){
-                mergedMap[fd.name]=fd.highlightedFirst;
+            if (fd.isEqual) {
+                mergedMap[fd.name] = fd.highlightedFirst
                 mergeNext()
+            } else {
+                rowMergeDialog.fieldDifference = fd
+                rowMergeDialog.open()
+                diff1 += qsTr(fd.name) + ": " + fd.differenceFirst + ";"
+                diff2 += qsTr(fd.name) + ": " + fd.differenceSecond + ";"
             }
-            else{
-                rowMergeDialog.fieldDifference = fd;
-                rowMergeDialog.open();
-                diff1 += qsTr(fd.name) +": " + fd.differenceFirst +";";
-                diff2 += qsTr(fd.name) +": " + fd.differenceSecond +";";
-
-            }
-
-        }
-        else{
+        } else {
             rowMergeDialog.close()
-            diffDialog.diff1 = diff1;
-            diffDialog.diff2 = diff2;
+            diffDialog.diff1 = diff1
+            diffDialog.diff2 = diff2
             diffDialog.open()
         }
     }
@@ -70,17 +69,19 @@ Page {
     Popup {
         id: rowMergeDialog
         property var fieldDifference
-        onFieldDifferenceChanged:{
+        onFieldDifferenceChanged: {
             title.text = qsTr("Merged field: ") + qsTr(fieldDifference.name)
-            edtRecord1.text = "<b>" + qsTr("Record 1:")+" </b>" +  fieldDifference.highlightedFirst
-            edtRecord2.text = "<b>" + qsTr("Record 2:")+" </b>" +  fieldDifference.highlightedSecond
+            edtRecord1.text = "<b>" + qsTr(
+                        "Record 1:") + " </b>" + fieldDifference.highlightedFirst
+            edtRecord2.text = "<b>" + qsTr(
+                        "Record 2:") + " </b>" + fieldDifference.highlightedSecond
             edtResult.value = fieldDifference.commonPart
         }
 
         contentItem: Rectangle {
             implicitWidth: diffView.width
             implicitHeight: diffView.height
-            Column {
+            ColumnLayout {
                 anchors.top: parent.top
                 anchors.topMargin: 5
                 anchors.bottom: btnApply.top
@@ -92,15 +93,34 @@ Page {
                     font.bold: true
                     verticalAlignment: Text.AlignVCenter
                 }
-                Label {
+                RowLayout {
+                    height: edtRecord1.height
                     width: parent.width
-                    id: edtRecord1
-                    wrapMode: Text.Wrap
+                    Label {
+                        width: parent.width
+                        id: edtRecord1
+                        wrapMode: Text.Wrap
+                    }
+                    Button {
+                        text: qsTr("Use as result")
+                        onClicked: {
+                            edtResult.value = rowMergeDialog.fieldDifference.originalFirst
+                        }
+                    }
                 }
-                Label {
-                    width: parent.width
-                    id: edtRecord2
-                    wrapMode: Text.Wrap
+                RowLayout {
+                    height: edtRecord1.height
+                    Label {
+                        width: parent.width
+                        id: edtRecord2
+                        wrapMode: Text.Wrap
+                    }
+                    Button {
+                        text: qsTr("Use as result")
+                        onClicked: {
+                            edtResult.value = rowMergeDialog.fieldDifference.originalSecond
+                        }
+                    }
                 }
                 LabeledLongText {
                     id: edtResult
@@ -128,18 +148,18 @@ Page {
         id: diffDialog
         property string diff1
         onDiff1Changed: {
-            edtDiff1.text = "<b>" + qsTr("Record 1:")+" </b>" +  diff1
+            edtDiff1.text = "<b>" + qsTr("Record 1:") + " </b>" + diff1
         }
 
         property string diff2
         onDiff2Changed: {
-            edtDiff2.text = "<b>" + qsTr("Record 2:")+" </b>" +  diff2
+            edtDiff2.text = "<b>" + qsTr("Record 2:") + " </b>" + diff2
             edtResultDiff.value = diff2
         }
 
-        property alias result:edtResult.value
+        property alias result: edtResult.value
 
-        contentItem: Rectangle {            
+        contentItem: Rectangle {
             implicitWidth: diffView.width
             implicitHeight: diffView.height
             Column {
@@ -150,9 +170,8 @@ Page {
                 width: parent.width
                 spacing: 5
                 Label {
-                    text:qsTr("Difference description")
+                    text: qsTr("Difference description")
                     font.bold: true
-
                 }
                 Label {
                     id: edtDiff1
@@ -176,11 +195,12 @@ Page {
                 text: qsTr("Apply")
                 onClicked: {
                     diffDialog.close()
-                    var flag = node.mergeRecords(itemDifference.id2, itemDifference.id1, mergedMap, edtResultDiff.value);
-                    if (flag){
-                        mainWindow.goBack();
-                    }
-                    else {
+                    var flag = node.mergeRecords(itemDifference.id2,
+                                                 itemDifference.id1, mergedMap,
+                                                 edtResultDiff.value)
+                    if (flag) {
+                        mainWindow.goBack()
+                    } else {
                         dlgMergeError.open()
                     }
                 }
@@ -188,8 +208,8 @@ Page {
         }
     }
 
-    MessageDialog{
-        id:dlgMergeError
+    MessageDialog {
+        id: dlgMergeError
         text: qsTr("Record merging finishes with errors, see log for details")
     }
 

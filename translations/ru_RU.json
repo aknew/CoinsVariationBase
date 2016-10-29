@@ -50,5 +50,6 @@
     "Record 2:":"Запись 2:",
     "Merge result:":"Результат слияния:",
     "Result diff:":"Итоговая разница:",
-    "Difference description":"Описание разницы записей"
+    "Difference description":"Описание разницы записей",
+    "Use as result":"Использовать как результат"
 }

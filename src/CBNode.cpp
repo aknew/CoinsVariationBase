@@ -303,6 +303,12 @@ CBItemDifference *CBNode::recordDifference(int index1, int index2){
     QList<QObject*> diff;
     for (auto iter: map1.keys()){
         if (fullFormFieldsInternal.contains(iter)){
+            /*
+             * FIXME: it seems, that it would be better if CBWordLCS will return CBFieldDifference
+             * object, but I have some problems with copiing constructor QObject inheriter and using
+             * plain C struct into QML. Actually, they aren't very difficult problem, but I prefer
+             * not to spent time to them now
+             */
             CBWordLCS wordLCS(map1[iter].toString(),map2[iter].toString());
             CBFieldDifference *fd = new CBFieldDifference(difference); // TODO: Need check: possible memory leak?
             fd->_name = iter;
@@ -312,6 +318,8 @@ CBItemDifference *CBNode::recordDifference(int index1, int index2){
             fd->_differenceSecond = wordLCS.getDifferenceSecond();
             fd->_isEqual =(fd->_differenceFirst == "" &&  fd->_differenceSecond == "");
             fd->_commonPart = wordLCS.commonPart();
+            fd->_originalFirst = map1[iter].toString();
+            fd->_originalSecond = map2[iter].toString();
             if (!fd->_isEqual){
                 diff.append(fd);
             }
@@ -434,6 +442,7 @@ QVariantList CBNode::listForExport(const QString &path){
         }
         vl.append(map);
     }
+    qDebug()<<vl.count()<< " prepared for export for table " << this->tableName;
     return vl;
 }
 
