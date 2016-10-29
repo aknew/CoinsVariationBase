@@ -50,10 +50,7 @@ Page {
                 mergeNext()
             }
             else{
-                rowMergeDialog.name = fd.name;
-                rowMergeDialog.record1 = fd.highlightedFirst;
-                rowMergeDialog.record2 = fd.highlightedSecond;
-                rowMergeDialog.result = fd.commonPart;
+                rowMergeDialog.fieldDifference = fd;
                 rowMergeDialog.open();
                 diff1 += qsTr(fd.name) +": " + fd.differenceFirst +";";
                 diff2 += qsTr(fd.name) +": " + fd.differenceSecond +";";
@@ -71,22 +68,13 @@ Page {
 
     Popup {
         id: rowMergeDialog
-        property string name
-        onNameChanged: {
-            title.text = qsTr("Merged field: ") + qsTr(name)
+        property var fieldDifference
+        onFieldDifferenceChanged:{
+            title.text = qsTr("Merged field: ") + qsTr(fieldDifference.name)
+            edtRecord1.text = qsTr("Record 1: ")+ fieldDifference.highlightedFirst
+            edtRecord2.text = qsTr("Record 2: ")+ fieldDifference.highlightedSecond
+            edtResult.value = fieldDifference.commonPart
         }
-
-        property string record1
-        onRecord1Changed: {
-            edtRecord1.text = qsTr("Record 1: ")+ record1
-        }
-
-        property string record2
-        onRecord2Changed: {
-            edtRecord2.text = qsTr("Record 2: ")+ record2
-        }
-
-        property alias result:edtResult.value
 
         contentItem: Rectangle {
             implicitWidth: 600
