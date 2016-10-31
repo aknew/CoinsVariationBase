@@ -130,6 +130,7 @@ void CBNode::setLevelFilter(const QPair<QString, QString> &filter){
 
 void CBNode::addFilter(const QString &filterString){
     filter = filterString;
+    qDebug() << "filter string: " << filterString;
     applyFilters();
 }
 

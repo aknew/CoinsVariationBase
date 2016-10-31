@@ -21,14 +21,21 @@ FocusScope {
         anchors.right: parent.right
         anchors.rightMargin: 5
     }
-    TextArea {
-        id: input
+    Rectangle {
+
+        border.color: "gray"
+        radius: 1
         anchors.top: titleLabel.bottom
         anchors.left: parent.left
         anchors.leftMargin: 5
         anchors.right: parent.right
         anchors.rightMargin: 5
-        readOnly: true
-        wrapMode: TextEdit.Wrap
+        height: input.height
+        TextArea {
+            width: parent.width
+            id: input
+            readOnly: true
+            wrapMode: TextEdit.Wrap
+        }
     }
 }
