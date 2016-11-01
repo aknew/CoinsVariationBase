@@ -109,6 +109,7 @@ Rectangle {
             }
             MouseArea {
                 anchors.fill: parent
+                enabled: !editing
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                 onClicked: {
                     if (mouse.button === Qt.RightButton) {
