@@ -436,6 +436,11 @@ ApplicationWindow {
         }
     }
 
+    function openBaseList(){
+        // Iad this function because I use it from C++ in rare cases (mostly on first run) and it is very easy to forget about it
+        createAndPush("CBControls/BasesList.qml")
+    }
+
     MessageDialog {
         id: openBaseDialog
         text: qsTr("Do you realy want to stop working with this base?")
@@ -444,7 +449,7 @@ ApplicationWindow {
         modality: Qt.WindowModal
         onYes: {
             tablesStack.clear()
-            createAndPush("CBControls/BasesList.qml")
+            openBaseList()
         }
     }
 

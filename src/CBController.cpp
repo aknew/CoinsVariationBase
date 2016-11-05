@@ -32,6 +32,12 @@ void CBController::start(){
                                       );
         }
     }
+    else{
+        //call createAndPush("CBControls/BasesList.qml")
+        QMetaObject::invokeMethod(this->applicationWindow,
+                                  "openBaseList"
+                                  );
+    }
 }
 
 void CBController::openBase(QString basePath){
