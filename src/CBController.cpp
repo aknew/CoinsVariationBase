@@ -81,3 +81,8 @@ void CBController::saveForm(const QString& qmlString, const QString& formName){
     }
     CBUtils::SaveStringToFile(qmlString,formRoot + formName);
 }
+
+QString CBController::getAbout(){
+    QString about = tr("Build date: ") +QString(__DATE__) +" " + QString(__TIME__);
+    return about;
+}

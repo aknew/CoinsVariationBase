@@ -1,10 +1,11 @@
 {
-    "About": "О программе",
+    "About app": "О программе",
     "About base": "О базе",
     "Add new": "Добавить новую запись",
     "Apply": "Применить",
     "Back": "Назад",
     "Base open error": "Ошибка при открытии базы",
+    "Build date: ":"Дата сборки: ",
     "Cancel":"Отмена",
     "Cancel": "Отмена",
     "Choose a base's folder": "Выберите папку базы",

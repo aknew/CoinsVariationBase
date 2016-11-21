@@ -28,6 +28,7 @@ public:
     Q_INVOKABLE void openRecentBase(QString baseName); ///< try to open recent base by name, its path will be got from settings
 
     Q_INVOKABLE void saveForm(const QString& qmlString, const QString& formName);
+    Q_INVOKABLE QString getAbout();
 
     enum FormType{
         ListForm,

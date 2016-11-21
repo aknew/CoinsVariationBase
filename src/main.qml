@@ -267,6 +267,14 @@ ApplicationWindow {
                     Menu {
                         id: menuHelp
                         MenuItem {
+                            text: qsTr("About app")
+                            onTriggered: {
+                                aboutDialog.aboutHtml = CBApi.getAbout()
+                                aboutDialog.open()
+                                menuFilters.close()
+                            }
+                        }
+                        MenuItem {
                             text: qsTr("About base")
                             onTriggered: {
                                 aboutDialog.aboutHtml = CBApi.baseProvider.getAbout()
