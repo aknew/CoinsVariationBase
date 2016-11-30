@@ -50,37 +50,44 @@ Page {
         var str = node.filter;
         var list = str.split(" and ")
         var pattern = /"?([A-Za-z]{1,})"?\s(=|like|not\slike)\s"?([^"]{1,})"?/
+        var patternNE = /not\s"?([A-Za-z]{1,})"?\s=\s"?([^"]{1,})"?/
         for ( i = 0; i < list.length ; i++) {
-            var result = list[i].match(pattern)
+            var result = list[i].match(patternNE)
             if (result){
-                var relation;
-                // TODO: remove magic numbers
-                switch (result[2]) {
-                case "=":
-                    relation = 0;
-                    break
-                case "like":
-                    relation = 1;
-                    result[3] = result[3].replace(/^%/,"");
-                    result[3] = result[3].replace(/%$/,"");
-                    break
-                case 2:
-                    // TODO: need implement this case
-                    condition += " = \"" + filter.filter + "\""
-                    condition = "not " + condition
-                    break
-                case "not like":
-                    relation = 3;
-                    result[3] = result[3].replace(/^%/,"");
-                    result[3] = result[3].replace(/%$/,"");
-                    break
-                }
                 var val = {
                     field: fieldList.indexOf(result[1]),
-                    relation: relation,
-                    filter: result[3]
+                    relation: 2,
+                    filter: result[2]
                 }
                 filterList.append(val)
+            }
+            else{
+                result = list[i].match(pattern)
+                if (result){
+                    var relation;
+                    // TODO: remove magic numbers
+                    switch (result[2]) {
+                    case "=":
+                        relation = 0;
+                        break
+                    case "like":
+                        relation = 1;
+                        result[3] = result[3].replace(/^%/,"");
+                        result[3] = result[3].replace(/%$/,"");
+                        break
+                    case "not like":
+                        relation = 3;
+                        result[3] = result[3].replace(/^%/,"");
+                        result[3] = result[3].replace(/%$/,"");
+                        break
+                    }
+                    val = {
+                        field: fieldList.indexOf(result[1]),
+                        relation: relation,
+                        filter: result[3]
+                    }
+                    filterList.append(val)
+                }
             }
         }
     }
