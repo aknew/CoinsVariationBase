@@ -292,7 +292,6 @@ Page {
     }
 
     function applyFilters() {
-        node.dropFilter()
         var conditions = []
         for (var i = 0; i < filterList.count; ++i) {
             var filter = filterList.get(i)
