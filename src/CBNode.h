@@ -23,11 +23,9 @@ class CBNode : public QObject
     Q_PROPERTY(bool usesUUIDs MEMBER usesUUIDs CONSTANT)
     Q_PROPERTY(bool useFullForm MEMBER useFullForm CONSTANT)
     Q_PROPERTY(bool useListForm MEMBER useListForm CONSTANT)
-    Q_PROPERTY(QObject* filterList MEMBER filterList)
+    Q_PROPERTY(QString filter READ getFilter WRITE setFilter)
 
 public:
-
-    QObject *filterList = NULL; //< Uses for save listModel between filter dialog showing
     QString tableName;
 
     Q_INVOKABLE QString listFormName(); //< name of list form qml file for saving and loading
@@ -42,7 +40,8 @@ public:
     QPair<QString,QString> filterForChildNode(const QString& childNodeName);
 
     void setLevelFilter(const QPair<QString,QString> &filter); //< filtering only record related to previous level
-    Q_INVOKABLE void addFilter(const QString &filterString); //< add any other filters, uses for selection from related record
+    QString getFilter();
+    Q_INVOKABLE void setFilter(const QString &filterString); //< add any other filters, uses for selection from related record
     Q_INVOKABLE void dropFilter(); //< drop all filters excapt level
 
     Q_INVOKABLE QStringList listFromQuery(QString query);

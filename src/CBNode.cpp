@@ -128,14 +128,18 @@ void CBNode::setLevelFilter(const QPair<QString, QString> &filter){
     applyFilters();
 }
 
-void CBNode::addFilter(const QString &filterString){
+QString CBNode::getFilter(){
+    return filter;
+}
+
+void CBNode::setFilter(const QString &filterString){
     filter = filterString;
     qDebug() << "filter string: " << filterString;
     applyFilters();
 }
 
 void CBNode::dropFilter(){
-    filterList = NULL;
+    // TODO: use setFilter instead
     filter = "";
     applyFilters();
 }
@@ -448,7 +452,7 @@ QVariantList CBNode::listForExport(const QString &path){
 }
 
 void CBNode::applyPredefinedFilter(const QString &f){
-    filterList = NULL;
+    // TODO: use setFilter instead
     filter = predefinedFiltes[f];
     applyFilters();
 }

@@ -47,9 +47,39 @@ Page {
                                         text: qsTr(field)
                                     })
         }
-
-        if (node.filterList) {
-            filterList = node.filterList
+        var str = node.filter;
+        var list = str.split(" and ")
+        var pattern = /"?([A-Za-z]{1,})"?\s(=|like|not\slike)\s"?([^"]{1,})"?/
+        for ( i = 0; i < list.length ; i++) {
+            var result = list[i].match(pattern)
+            console.log(result);
+            if (result){
+                var relation;
+                // TODO: remove magic numbers
+                switch (result[2]) {
+                case "=":
+                    relation = 0;
+                    break
+                case "like":
+                    relation = 1;
+                    // TODO: remove %
+                    break
+                case 2:
+                    // TODO: need implement this case
+                    condition += " = \"" + filter.filter + "\""
+                    condition = "not " + condition
+                    break
+                case "not like":
+                    relation = 3;
+                    break
+                }
+                var val = {
+                    field: fieldList.indexOf(result[1]),
+                    relation: relation,
+                    filter: result[3]
+                }
+                filterList.append(val)
+            }
         }
     }
 
@@ -254,7 +284,6 @@ Page {
 
     function applyFilters() {
         node.dropFilter()
-        node.filterList = filterList
         var conditions = []
         for (var i = 0; i < filterList.count; ++i) {
             var filter = filterList.get(i)
@@ -277,6 +306,6 @@ Page {
             }
             conditions.push(condition)
         }
-        node.addFilter(conditions.join(" and "))
+        node.filter = conditions.join(" and ");
     }
 }
