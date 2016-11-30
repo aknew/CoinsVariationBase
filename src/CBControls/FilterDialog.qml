@@ -52,7 +52,6 @@ Page {
         var pattern = /"?([A-Za-z]{1,})"?\s(=|like|not\slike)\s"?([^"]{1,})"?/
         for ( i = 0; i < list.length ; i++) {
             var result = list[i].match(pattern)
-            console.log(result);
             if (result){
                 var relation;
                 // TODO: remove magic numbers
@@ -62,7 +61,8 @@ Page {
                     break
                 case "like":
                     relation = 1;
-                    // TODO: remove %
+                    result[3] = result[3].replace(/^%/,"");
+                    result[3] = result[3].replace(/%$/,"");
                     break
                 case 2:
                     // TODO: need implement this case
@@ -71,6 +71,8 @@ Page {
                     break
                 case "not like":
                     relation = 3;
+                    result[3] = result[3].replace(/^%/,"");
+                    result[3] = result[3].replace(/%$/,"");
                     break
                 }
                 var val = {
@@ -301,7 +303,7 @@ Page {
                 condition = "not " + condition
                 break
             case 3:
-                condition += "not like \"%" + filter.filter + "%\""
+                condition += " not like \"%" + filter.filter + "%\""
                 break
             }
             conditions.push(condition)
