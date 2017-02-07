@@ -1,5 +1,9 @@
-My current goal is supporting only two system: Win 8.1 64 bit and Android 5.x, so all notes about other system mean that i tried to run app on it ones or twice, maybe fix some crashes, but they don't mean that application works well on it
+My current goal is supporting system which I actually works on. What I rewally try:
+Win 8.1 64 bit and Android 5.x + Qt 5.5-5.7
+macOS Sierra and iOS 10 + Qt 5.8
 
 Known issues:
 
 I don't know why, but I can't run this project on iOs Simulator with Qt Creator. Solution: create Xcode project with ~/Qt/5.5/ios/bin/qmake -spec macx-xcode CoinsBases.pro
+
+Add UIFileSharingEnabled with value YES to generated info.plist to share files via iTunes. I actually don't want to add all generated files to git, but docs (https://wiki.qt.io/Support_for_iOS) says that I can't do it via pro file

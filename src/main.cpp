@@ -1,5 +1,5 @@
 #include <QtQml>
-#include <QtWidgets/QApplication>
+#include <QGuiApplication>
 #include <iostream>
 
 #include "CBController.h"
@@ -69,8 +69,12 @@ static QObject *cbSettingsObjectSingleton(QQmlEngine *engine, QJSEngine *scriptE
 
 int main(int argc, char *argv[])
 {
-    //qSetMessagePattern("%{file}(%{line}): %{message}"); //show line and file in qDebug messages
+#if defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
+    // I don't need log message on iOS and android
+    qSetMessagePattern("%{file}(%{line}): %{message}"); //show line and file in qDebug messages
+#else
     qInstallMessageHandler(logHandler);
+#endif
 
     qmlRegisterSingletonType<CBController>("CB.api", 1, 0, "CBApi", cbApiObjectSingleton);
     qmlRegisterSingletonType<CBSettings>("CB.api", 1, 0, "CBSettings", cbSettingsObjectSingleton);
@@ -80,7 +84,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<CBFieldDifference>("CB.api", 1, 0, "CBFieldDifference");
     qmlRegisterUncreatableType<CBItemDifference>("CB.api", 1, 0, "CBItemDifference", "The object of this class should be obtained from CBNode recordDifference() method");
 
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
     // load translator
 
@@ -117,7 +121,7 @@ int main(int argc, char *argv[])
     cvbAPI->applicationWindow = window;
     cvbAPI->engine = &engine;
 
-    QObject::connect(&app,&QApplication::aboutToQuit,cvbAPI,&CBController::appWillTerminate);
+    QObject::connect(&app,&QGuiApplication::aboutToQuit,cvbAPI,&CBController::appWillTerminate);
 
     cvbAPI->start();
 
