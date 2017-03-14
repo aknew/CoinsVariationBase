@@ -16,12 +16,21 @@ CBTranslator::CBTranslator(QObject *parent) :
 bool CBTranslator::load(const QString &filename, const QString &directory, const QString &search_delimiters, const QString &suffix){
     Q_UNUSED(search_delimiters);
     Q_UNUSED(suffix);
-    QString fullFilename = directory + filename;
+    Q_UNUSED(filename);
+
+    QString locale = QLocale::system().name();
+    QString fullFilename = directory + locale + ".json";
+    if (!QFile::exists(fullFilename)){
+        const QString default_lang = "ru_RU";
+        qDebug() << "There is no translation for language " << locale <<", try to open default one - "<<default_lang;
+        fullFilename = directory + default_lang + ".json";
+    }
 
     QFile file(fullFilename);
     if (!file.open(QIODevice::ReadOnly)){
-        qDebug() << "Cannot open translation";
+        qDebug() << "Cannot open translation from path " << fullFilename;
         return false;
+
     }
     QString jsonData = file.readAll();
     file.close();

@@ -89,13 +89,11 @@ int main(int argc, char *argv[])
     // load translator
 
     QString locale = QLocale::system().name();
-    QString filename = ":/"+locale+".json";
     static CBTranslator translator;
     translator.m_needCollect = true;
-    if( translator.load(filename, "") ){
+    if( translator.load("", ":/") ){
         app.installTranslator(&translator);
-    } else
-        qDebug() << "Translation file not loaded:" << filename << "  dir:"<< ".";
+    }
 
     // Init GUI
     QQmlApplicationEngine engine;

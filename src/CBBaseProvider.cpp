@@ -78,14 +78,12 @@ void CBBaseProvider::startWithPath(const QString &path){
 
      // load translator for specific base termins (mostly fieldnames)
 
-     QString locale = QLocale::system().name();
-     filename = QString("languages/") + locale+".json";
+
 
      translator.m_needCollect = settings->needCollect;
-     if( translator.load(filename, rootPath) ){
+     if( translator.load("", rootPath + "languages/") ){
          QApplication::instance()->installTranslator(&translator);
-     } else
-         qDebug() << "Translation file not loaded:" << filename << "  dir:"<<rootPath;
+     }
 
      // Creating dirs if not exists
 
