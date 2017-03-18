@@ -36,9 +36,12 @@ QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSi
     result = QPixmap(fullFilePath);
 
     if (result.isNull()){
-        QFileIconProvider provider;
-        QIcon icon = provider.icon(fullFilePath);
-        result = icon.pixmap(90,90);
+        QFile file(fullFilePath);
+        if(file.exists()){
+            QFileIconProvider provider;
+            QIcon icon = provider.icon(fullFilePath);
+            result = icon.pixmap(90,90);
+        }
         if (result.isNull()){
             cachedImage = attachmentsProvider->_basePath + QString("__cache/%1x%2/").arg(requestedSize.width()).arg(requestedSize.height()) +"no_image.png";
             result= QPixmap(cachedImage);
