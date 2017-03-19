@@ -7,6 +7,7 @@ function createListForm(node) {
                 "import CBControls 1.0;\n" +
                 "import QtQuick.Controls 2.0\n\n"+
                 "Rectangle {\n" +
+                "   StackView.onRemoved: destroy() // Will be destroyed sometime after this call." +
                 "   Component.onDestruction: console.log(\""+node.listFormName()+" Destruction Beginning!\")\n"+
                 "   id: mainRect;\n" +
                 "   property int formType: CBApi.ListForm\n" +
@@ -126,6 +127,7 @@ function createFullForm(node) {
                 "import CBControls 1.0;\n" +
                 "import QtQuick.Controls 2.0\n\n"+
                 "Rectangle {\n" +
+                "   StackView.onRemoved: destroy() // Will be destroyed sometime after this call." +
                 "   Component.onDestruction: console.log(\""+node.fullFormName()+" Destruction Beginning!\")\n"+
                 "   id: mainRect;\n" +
                 "   property int formType: CBApi.FullForm\n" +
