@@ -18,7 +18,7 @@ ApplicationWindow {
     width: 1000
     property bool isInsertingNew: false
 
-    header: ToolBar {
+    ToolBar {
         // TODO: make shortcuts workable
         id: windowToolbar
         height: GUIStyle.barHeight
@@ -355,6 +355,14 @@ ApplicationWindow {
         focus: true
         Keys.onBackPressed: {
             goBack()
+        }
+        onCurrentItemChanged: {
+           if (tablesStack.currentItem.header){
+                header = tablesStack.currentItem.header
+            }
+            else{
+                header = windowToolbar;
+            }
         }
     }
 
