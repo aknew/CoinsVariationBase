@@ -27,7 +27,11 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent),
 #if defined(Q_OS_WIN32) || defined(Q_OS_MAC) || defined(Q_OS_IOS)
         QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
         if (!paths.empty()){
+#if defined(Q_OS_IOS)
+            settings.setValue(kDefaultPath,"file:///"+paths.at(0));
+#else
             settings.setValue(kDefaultPath,"file:///"+paths.at(0)+"/Bases/");
+#endif
         }
         paths = QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
         if (!paths.empty()){
