@@ -510,6 +510,7 @@ ApplicationWindow {
             implicitHeight: mainWindow.height - 100
             implicitWidth: mainWindow.width - 100
             Keys.onBackPressed: aboutDialog.close()
+
             Flickable {
                 clip: true
                 anchors.fill: parent
@@ -520,6 +521,16 @@ ApplicationWindow {
                     wrapMode: Text.Wrap
                     onLinkActivated: Qt.openUrlExternally(link)
                 }
+            }
+
+            Button{
+                // close button
+                width: 50
+                height: 50
+                anchors.right: parent.right
+                anchors.top: parent.top
+                text: "x"
+                onClicked: aboutDialog.close()
             }
         }
     }
