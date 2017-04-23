@@ -10,8 +10,8 @@
 
 void logHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-
-    static QString logName = "CoinsBase" + QDateTime::currentDateTime().toString("yyyy-MM-dd-HH-mm") + ".log";
+    static QStringList paths = QStandardPaths::standardLocations(QStandardPaths::TempLocation);
+    static QString logName = paths.at(0) + "CoinsBase" + QDateTime::currentDateTime().toString("yyyy-MM-dd-HH-mm") + ".log";
     QString txt = QString("%1:%2\t%3").arg(context.file)
             .arg(context.line)
             .arg(msg);
@@ -69,12 +69,9 @@ static QObject *cbSettingsObjectSingleton(QQmlEngine *engine, QJSEngine *scriptE
 
 int main(int argc, char *argv[])
 {
-#if defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
-    // I don't need log message on iOS and android
     qSetMessagePattern("%{file}(%{line}): %{message}"); //show line and file in qDebug messages
-#else
-    qInstallMessageHandler(logHandler);
-#endif
+
+    // qInstallMessageHandler(logHandler); // uncomment this string if you want log data to file
 
     qmlRegisterSingletonType<CBController>("CB.api", 1, 0, "CBApi", cbApiObjectSingleton);
     qmlRegisterSingletonType<CBSettings>("CB.api", 1, 0, "CBSettings", cbSettingsObjectSingleton);
