@@ -15,27 +15,33 @@ const QString kIsFirstRan = "isFirstRan"; ///< hack to init settings if we ran a
 const QString kDefaultPath = "defaultPath"; ///< default path where will be file dialog when we want to open new base
 const QString kAttachSearchPath = "attachSearchPath"; ///< default path where we try to find attach
 
-CBSettings::CBSettings(QObject *parent) : QObject(parent),
-    settings("settings.ini",QSettings::IniFormat)
+CBSettings::CBSettings(QObject *parent) : QObject(parent)
 {
-    settings.setIniCodec("windows-1251");
+#if defined(Q_OS_WIN) || defined(Q_OS_IOS)
+    // HOTFIX: ios recreate app bundle on each run from Xcode.
+    // TODO: need rewrite iOS logic about bases - use only names and add path each running
+    settings = new QSettings("settings.ini",QSettings::IniFormat, this);
+    settings->setIniCodec("windows-1251");
+#else
+    settings = new QSettings("io.github.aknew","CoinsBases",this);
+#endif
 
-    if (settings.value(kIsFirstRan,true).toBool()){
+    if (settings->value(kIsFirstRan,true).toBool()){
         // we have never use settings before,let's init them
-        settings.setValue(kIsFirstRan,false);
-        settings.setValue(kNeedCollect,true);
+        settings->setValue(kIsFirstRan,false);
+        settings->setValue(kNeedCollect,true);
 #if defined(Q_OS_WIN32) || defined(Q_OS_MAC) || defined(Q_OS_IOS)
         QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
         if (!paths.empty()){
 #if defined(Q_OS_IOS)
-            settings.setValue(kDefaultPath,"file:///"+paths.at(0));
+            settings->setValue(kDefaultPath,"file:///"+paths.at(0));
 #else
-            settings.setValue(kDefaultPath,"file:///"+paths.at(0)+"/Bases/");
+            settings->setValue(kDefaultPath,"file:///"+paths.at(0)+"/Bases/");
 #endif
         }
         paths = QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
         if (!paths.empty()){
-            settings.setValue(kAttachSearchPath,"file:///"+paths.at(0)+"/");
+            settings->setValue(kAttachSearchPath,"file:///"+paths.at(0)+"/");
         }
 #endif
 
@@ -44,8 +50,8 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent),
         QAndroidJniObject mediaDir = QAndroidJniObject::callStaticObjectMethod("android/os/Environment", "getExternalStorageDirectory", "()Ljava/io/File;");
         QAndroidJniObject mediaPath = mediaDir.callObjectMethod( "getAbsolutePath", "()Ljava/lang/String;" );
         QString dataAbsPath = "file://" + mediaPath.toString();
-        settings.setValue(kDefaultPath,dataAbsPath +"/Bases/");
-        settings.setValue(kAttachSearchPath,dataAbsPath+"/Downloads/");
+        settings->setValue(kDefaultPath,dataAbsPath +"/Bases/");
+        settings->setValue(kAttachSearchPath,dataAbsPath+"/Downloads/");
         QAndroidJniEnvironment env;
         if (env->ExceptionCheck()) {
                 // Handle exception here.
@@ -54,35 +60,35 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent),
 #endif
     }
 
-    lastBasePath = settings.value(kLastBasePath,"").toString();
-    needCollect = settings.value(kNeedCollect,false).toBool();
-    m_defaultPath = settings.value(kDefaultPath,"").toString();
-    m_attachSearchPath = settings.value(kAttachSearchPath,"").toString();
+    lastBasePath = settings->value(kLastBasePath,"").toString();
+    needCollect = settings->value(kNeedCollect,false).toBool();
+    m_defaultPath = settings->value(kDefaultPath,"").toString();
+    m_attachSearchPath = settings->value(kAttachSearchPath,"").toString();
 
-    int size = settings.beginReadArray(kRecent);
+    int size = settings->beginReadArray(kRecent);
     for (int i = 0; i < size; ++i) {
-        settings.setArrayIndex(i);
-        QString name = settings.value(kBaseName).toString();
-        QString path = settings.value(kBasePath).toString();
+        settings->setArrayIndex(i);
+        QString name = settings->value(kBaseName).toString();
+        QString path = settings->value(kBasePath).toString();
         recentBasesMap[name] = path;
     }
-    settings.endArray();
+    settings->endArray();
     emit recentBasesChanged();
 
 }
 
 void CBSettings::saveSetting(){
-    settings.setValue(kLastBasePath,QVariant(lastBasePath));
+    settings->setValue(kLastBasePath,QVariant(lastBasePath));
 
-    settings.beginWriteArray(kRecent);
+    settings->beginWriteArray(kRecent);
     int i = 0;
     for (auto base = recentBasesMap.begin(); base!= recentBasesMap.end(); ++base){
-        settings.setArrayIndex(i);
-        settings.setValue(kBaseName, base.key());
-        settings.setValue(kBasePath, base.value());
+        settings->setArrayIndex(i);
+        settings->setValue(kBaseName, base.key());
+        settings->setValue(kBasePath, base.value());
         ++i;
     }
-    settings.endArray();
+    settings->endArray();
 }
 
 

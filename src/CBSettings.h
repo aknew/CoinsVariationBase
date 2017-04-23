@@ -42,7 +42,7 @@ signals:
 private:
     //TODO: need add operator= and copyed constructor
     explicit CBSettings(QObject *parent = 0);
-    QSettings settings;
+    QSettings *settings;
     QMap<QString, QString> recentBasesMap;
 };
 
