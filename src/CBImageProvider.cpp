@@ -37,11 +37,19 @@ QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSi
 
     if (result.isNull()){
         QFile file(fullFilePath);
+#if !defined(Q_OS_IOS)
+        /* HOTFIX:
+         iOs crashes here with message
+         global/qglobal.cpp(3070): ASSERT: "!"No style available without QApplication!"" in file kernel/qapplication.cpp, line 1064
+         Maybe there is better solution that not run this code in iOS, but right now I haven't enough time to search it for so minor feature
+         */
         if(file.exists()){
+            qDebug()<< id;
             QFileIconProvider provider;
             QIcon icon = provider.icon(fullFilePath);
             result = icon.pixmap(90,90);
         }
+#endif
         if (result.isNull()){
             cachedImage = attachmentsProvider->_basePath + QString("__cache/%1x%2/").arg(requestedSize.width()).arg(requestedSize.height()) +"no_image.png";
             result= QPixmap(cachedImage);
