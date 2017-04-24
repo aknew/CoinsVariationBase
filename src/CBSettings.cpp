@@ -1,5 +1,6 @@
 #include "CBSettings.h"
 #include <QStandardPaths>
+#include <QDebug>
 
 #ifdef  Q_OS_ANDROID
 #include <QtAndroidExtras/QAndroidJniObject>
@@ -17,7 +18,7 @@ const QString kAttachSearchPath = "attachSearchPath"; ///< default path where we
 
 CBSettings::CBSettings(QObject *parent) : QObject(parent)
 {
-#if defined(Q_OS_WIN) || defined(Q_OS_IOS)
+#if defined(Q_OS_WIN)
     // HOTFIX: ios recreate app bundle on each run from Xcode.
     // TODO: need rewrite iOS logic about bases - use only names and add path each running
     settings = new QSettings("settings.ini",QSettings::IniFormat, this);
@@ -30,14 +31,12 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent)
         // we have never use settings before,let's init them
         settings->setValue(kIsFirstRan,false);
         settings->setValue(kNeedCollect,true);
-#if defined(Q_OS_WIN32) || defined(Q_OS_MAC) || defined(Q_OS_IOS)
+        
+        
+#if defined(Q_OS_WIN32) || defined(Q_OS_MAC)
         QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
         if (!paths.empty()){
-#if defined(Q_OS_IOS)
-            settings->setValue(kDefaultPath,"file:///"+paths.at(0));
-#else
             settings->setValue(kDefaultPath,"file:///"+paths.at(0)+"/Bases/");
-#endif
         }
         paths = QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
         if (!paths.empty()){
@@ -63,6 +62,16 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent)
     lastBasePath = settings->value(kLastBasePath,"").toString();
     needCollect = settings->value(kNeedCollect,false).toBool();
     m_defaultPath = settings->value(kDefaultPath,"").toString();
+    
+#if defined(Q_OS_IOS)
+    
+    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+    m_defaultPath = "file://"+paths.at(0) +"/";
+    iOSDocPath = paths.at(0);
+    lastBasePath = iOSDocPath + lastBasePath;
+    
+#endif
+    
     m_attachSearchPath = settings->value(kAttachSearchPath,"").toString();
 
     int size = settings->beginReadArray(kRecent);
@@ -78,6 +87,11 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent)
 }
 
 void CBSettings::saveSetting(){
+    
+#ifdef Q_OS_IOS
+    //FIXME: need move lastBasePath to property and do all this add/remove actions in setter and getter
+    lastBasePath.replace(iOSDocPath, "");
+#endif
     settings->setValue(kLastBasePath,QVariant(lastBasePath));
 
     settings->beginWriteArray(kRecent);
@@ -92,9 +106,13 @@ void CBSettings::saveSetting(){
 }
 
 
-void CBSettings::addRecentBase(const QString &name,const QString &path){
+void CBSettings::addRecentBase(const QString &name, QString path){
 
     QString existsPath = recentBasesMap[name];
+    
+#ifdef Q_OS_IOS
+    path.replace(iOSDocPath, "");
+#endif
 
     if (existsPath == path){
         //already exists
@@ -119,7 +137,11 @@ QStringList CBSettings::recentBases(){
 }
 
 QString CBSettings::recentPathByName(const QString &name){
-    return recentBasesMap.contains(name)?recentBasesMap[name]:"";
+    QString path = recentBasesMap.contains(name)?recentBasesMap[name]:"";
+#ifdef Q_OS_IOS
+    path = iOSDocPath + path;
+#endif
+    return path;
 }
 
 void CBSettings::removeRecentWithName(const QString &name){

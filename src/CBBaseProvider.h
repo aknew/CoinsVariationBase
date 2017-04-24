@@ -23,7 +23,7 @@ public:
     explicit CBBaseProvider(QObject *parent = 0):QObject(parent){}
     ~CBBaseProvider();
 
-    void startWithPath(const QString &path);//< start base interaction with path
+    bool startWithPath(const QString &path);//< start base interaction with path
 
     Q_INVOKABLE CBNode* getNode(const QString &name, CBNode * currentNode = NULL); //< returns node by name with preparing it (filtering by froeighn keys) and puting it to stack
     Q_INVOKABLE CBNode* getStartNode(){

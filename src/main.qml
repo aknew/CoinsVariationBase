@@ -453,7 +453,7 @@ ApplicationWindow {
     }
 
     function openBaseList(){
-        // Iad this function because I use it from C++ in rare cases (mostly on first run) and it is very easy to forget about it
+        // I add this function because I use it from C++ in rare cases (mostly on first run) and it is very easy to forget about it
         createAndPush("CBControls/BasesList.qml")
     }
 

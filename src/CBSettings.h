@@ -19,7 +19,7 @@ public:
     QString lastBasePath;
     bool needCollect;
 
-    void addRecentBase(const QString &name,const QString &path);
+    void addRecentBase(const QString &name, QString path);
     QStringList recentBases();
     QString m_defaultPath;
     QString m_attachSearchPath = "";
@@ -44,6 +44,8 @@ private:
     explicit CBSettings(QObject *parent = 0);
     QSettings *settings;
     QMap<QString, QString> recentBasesMap;
+    
+    QString iOSDocPath;//< needs to crop bases' pathes, reason: Document path in iOS is placed in app bundle and change after each install/update, it corrupts absolutly pathes which are saved in settings
 };
 
 #endif // CBSETTINGS_H

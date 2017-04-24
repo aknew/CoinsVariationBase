@@ -51,7 +51,13 @@ void CBController::openBase(QString basePath){
 
     m_baseProvider=new CBBaseProvider();
     this->connect(m_baseProvider,SIGNAL(readyToWork()),this,SLOT(providerReadyToWork()));
-    m_baseProvider->startWithPath(basePath);
+    bool success = m_baseProvider->startWithPath(basePath);
+    if (!success){
+        //call createAndPush("CBControls/BasesList.qml")
+        QMetaObject::invokeMethod(this->applicationWindow,
+                                  "openBaseList"
+                                  );
+    }
 }
 
 void CBController::providerReadyToWork(){
