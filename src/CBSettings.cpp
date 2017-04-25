@@ -68,8 +68,9 @@ CBSettings::CBSettings(QObject *parent) : QObject(parent)
     QStringList paths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
     m_defaultPath = "file://"+paths.at(0) +"/";
     iOSDocPath = paths.at(0);
-    lastBasePath = iOSDocPath + lastBasePath;
-    
+    if (!lastBasePath.isEmpty()){
+        lastBasePath = iOSDocPath + lastBasePath;
+    }
 #endif
     
     m_attachSearchPath = settings->value(kAttachSearchPath,"").toString();
@@ -139,7 +140,9 @@ QStringList CBSettings::recentBases(){
 QString CBSettings::recentPathByName(const QString &name){
     QString path = recentBasesMap.contains(name)?recentBasesMap[name]:"";
 #ifdef Q_OS_IOS
-    path = iOSDocPath + path;
+    if (!path.isEmpty()){
+        path = iOSDocPath + path;
+    }
 #endif
     return path;
 }
