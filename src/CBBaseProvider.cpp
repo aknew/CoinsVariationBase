@@ -147,7 +147,7 @@ bool CBBaseProvider::startWithPath(const QString &path){
 
      CBNode* node = qobject_cast<CBNode*>(sender());
 
-     for (auto subnodeName : node->getNextLevelList()){
+     for (auto subnodeName : node->_nextLevelList){
          CBNode *subnode = getNode(subnodeName,node);
          while(subnode->m_listModel->rowCount()){
              subnode->selectItemWithIndex(0);

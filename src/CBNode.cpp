@@ -50,21 +50,26 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
 
 
     QJsonArray json_childNodes = obj.value("childNode").toArray();
-    foreach (QJsonValue value1,json_childNodes) {        
+    foreach (QJsonValue value1,json_childNodes) {
+        QString name;
         if (value1.isString()){
+            name = value1.toString();
             this->childNodes.insert(
-                        value1.toString(),
+                        name,
                         "parentId"
                         );
         }
         else{
 
             QJsonObject obj=value1.toObject();
+            name = obj.value("name").toString();
             this->childNodes.insert(
-                    obj.value("name").toString(),
+                    name,
                     obj.value("relation").toString()
                     );
         }
+
+        _nextLevelList.append(name);
     }
 
     QJsonArray json_filters = obj.value("filters").toArray();

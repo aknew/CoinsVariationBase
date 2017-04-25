@@ -16,7 +16,7 @@ class CBNode : public QObject
     Q_PROPERTY(QVariant fullFormFields MEMBER fullFormFields CONSTANT)
     Q_PROPERTY(QVariant listViewFields MEMBER listViewFields CONSTANT)
     Q_PROPERTY(QString tableName MEMBER tableName CONSTANT)
-    Q_PROPERTY(QStringList nextLevelList READ getNextLevelList CONSTANT)
+    Q_PROPERTY(QStringList nextLevelList MEMBER _nextLevelList)
     Q_PROPERTY(QStringList predefinedFiltesList READ getPredefinedFiltesList CONSTANT)
     Q_PROPERTY(QVariantMap selectedItem READ selectedItem)
     Q_PROPERTY(QObject* listModel READ listModel NOTIFY dataChanged)
@@ -124,9 +124,7 @@ private:
     QString filter;
     QPair<QString,QString> levelFilter;
 
-    QStringList getNextLevelList(){
-        return childNodes.keys();
-    }
+    QStringList _nextLevelList;
 
     void applyFilters();
 
@@ -156,7 +154,7 @@ private:
     bool useListForm = false;
 
     bool containsSubnode(const QString &name){
-        return getNextLevelList().contains(name);
+        return _nextLevelList.contains(name);
     }
 
     QStringList fullFormFieldsInternal; //! uses when we compare two records
