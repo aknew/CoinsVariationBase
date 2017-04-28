@@ -92,6 +92,8 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
 
     QJsonValue json_fullFormFields = obj.value("fullFormFields");
 
+
+
     if ( json_fullFormFields.isArray()){
         this->fullFormFields =  json_fullFormFields.toVariant();
         foreach (QJsonValue value1,json_fullFormFields.toArray()) {
@@ -107,8 +109,16 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
 
     }
     else {
-        this->fullFormFields =QVariant(this->m_listModel->fieldList);
         fullFormFieldsInternal = this->m_listModel->fieldList;
+
+        json_fullFormFields = obj.value("fullFormExceptedFields");
+        if (json_fullFormFields.isArray()){
+            foreach (QJsonValue value1,json_fullFormFields.toArray()) {
+                fullFormFieldsInternal.removeAll(value1.toString());
+            }
+        }
+
+        this->fullFormFields =QVariant(fullFormFieldsInternal);
     }
 }
 
