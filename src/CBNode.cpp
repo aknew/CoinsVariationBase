@@ -32,6 +32,11 @@ CBNode::CBNode(const QJsonObject &obj, QSqlDatabase &db, QObject *parent) : QObj
         usesUUIDs = json_usesUUIDs.toBool();
     }
 
+    QJsonValue json_editable = obj.value("editable");
+    if (!json_editable.isUndefined()){
+        editable = json_editable.toBool();
+    }
+
     QJsonValue json_useFullForm = obj.value("useFullForm");
     if (!json_useFullForm.isUndefined()){
             useFullForm = json_useFullForm.toBool();

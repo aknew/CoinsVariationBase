@@ -24,6 +24,7 @@ class CBNode : public QObject
     Q_PROPERTY(bool useFullForm MEMBER useFullForm CONSTANT)
     Q_PROPERTY(bool useListForm MEMBER useListForm CONSTANT)
     Q_PROPERTY(QString filter READ getFilter WRITE setFilter)
+    Q_PROPERTY(bool editable MEMBER editable CONSTANT) //<< needs to show/hide editing menu
 
 public:
     QString tableName;
@@ -152,6 +153,8 @@ private:
 
     bool useFullForm = false;
     bool useListForm = false;
+
+    bool editable = true;
 
     bool containsSubnode(const QString &name){
         return _nextLevelList.contains(name);

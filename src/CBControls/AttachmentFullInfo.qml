@@ -11,6 +11,7 @@ Rectangle {
     id: attachmentRootRect
 
     property bool editing: false
+    property bool editable: true
     property int formType: CBApi.AttachForm
     states: State {
         name: "editing"

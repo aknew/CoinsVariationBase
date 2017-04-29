@@ -12,9 +12,10 @@ function createListForm(node) {
                 "   id: mainRect;\n" +
                 "   property int formType: CBApi.ListForm\n" +
                 "   property var node;\n"+
-                "   onNodeChanged:{listView.model = node.listModel;}\n" +
+                "   onNodeChanged:{listView.model = node.listModel; editable = node.editable;}\n" +
                 "   property int firstIndex:-1\n"+
-                "   property bool compareMode: false\n"
+                "   property bool compareMode: false\n" +
+                "   property bool editable: true\n"
 
     qmlString+= "   ListView {\n" +
                 "       ScrollBar.vertical: ScrollBar { }\n"+
@@ -131,9 +132,11 @@ function createFullForm(node) {
                 "   Component.onDestruction: console.log(\""+node.fullFormName()+" Destruction Beginning!\")\n"+
                 "   id: mainRect;\n" +
                 "   property int formType: CBApi.FullForm\n" +
-                "   property var node;\n";
+                "   property var node;\n" +
+                "   property bool editable: true\n"
 
-    var onNodeChangedString = "  onNodeChanged:{\n";
+    var onNodeChangedString = "  onNodeChanged:{\n" +
+                              "          editable = node.editable\n"
 
     qmlString += "   Flickable {\n"+
                  "       ScrollBar.vertical: ScrollBar { }\n"+

@@ -108,7 +108,7 @@ ApplicationWindow {
                                 visible: tablesStack.currentItem
                                          && (tablesStack.currentItem.formType === CBApi.FullForm
                                              || tablesStack.currentItem.formType
-                                             === CBApi.AttachForm)
+                                             === CBApi.AttachForm) && tablesStack.currentItem.editable
                             }
                             MenuItem {
 
@@ -133,10 +133,12 @@ ApplicationWindow {
                                 visible: tablesStack.currentItem
                                          && (tablesStack.currentItem.formType === CBApi.ListForm
                                              || tablesStack.currentItem.formType === CBApi.FullForm)
+                                         && tablesStack.currentItem.editable
                             }
                             MenuItem {
                                 visible: tablesStack.currentItem
                                          && tablesStack.currentItem.formType === CBApi.FullForm
+                                         && tablesStack.currentItem.editable
 
                                 contentItem: LabeledIcon {
                                     iconSource: "/delete"
@@ -164,6 +166,7 @@ ApplicationWindow {
                                 }
                                 visible: tablesStack.currentItem
                                          && tablesStack.currentItem.formType === CBApi.FullForm
+                                         && tablesStack.currentItem.editable
                             }
                         }
                     }
