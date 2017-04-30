@@ -2,6 +2,8 @@ function createListForm(node) {
 
     var qmlString
 
+    // I don't use property alias editable: node editable because node is undefined on qml object creation
+
     qmlString = "import QtQuick 2.5;\n" +
                 "import CB.api 1.0;\n" +
                 "import CBControls 1.0;\n" +
@@ -135,6 +137,7 @@ function createFullForm(node) {
                 "   property var node;\n" +
                 "   property bool editable: true\n"
 
+    // I don't use property alias editable: node editable because node is undefined on qml object creation
     var onNodeChangedString = "  onNodeChanged:{\n" +
                               "          editable = node.editable\n"
 
