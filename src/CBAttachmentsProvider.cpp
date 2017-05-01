@@ -11,6 +11,12 @@
 
 #include "CBUtils.h"
 
+#ifdef Q_OS_IOS
+
+#include "iOSHelper.h"
+
+#endif
+
 CBAttachmentsProvider::CBAttachmentsProvider(const QString &basePath, QObject *parent) : QObject(parent)
 {
     _basePath = basePath + "attachments/";
@@ -127,6 +133,12 @@ void CBAttachmentsProvider::updateAttributes(QVariantMap newAttributes){
 
 void CBAttachmentsProvider::openAttach(const QString &attachID){
     QString path = pathForId()+attachID;
+    
+    
+#ifdef Q_OS_IOS
+    iosLaunchFile(path);
+    return;
+#endif
     QFileInfo fileInfo(path);
     if (fileInfo.isDir()){
         QDir dir(path);

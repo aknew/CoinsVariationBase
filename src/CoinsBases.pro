@@ -57,4 +57,15 @@ HEADERS += \
     CBFieldDifference.h \
     CBItemDifference.h
 
+ios{
+  HEADERS += \
+       iOSspecific/iOSHelper.h \
+       iOSspecific/DocViewController.h
+
+  SOURCES += \
+       iOSspecific/iOSHelper.mm \
+       iOSspecific/DocViewController.m
+
+}
+
 CONFIG += c++11
