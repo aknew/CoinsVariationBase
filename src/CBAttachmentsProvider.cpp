@@ -133,12 +133,6 @@ void CBAttachmentsProvider::updateAttributes(QVariantMap newAttributes){
 
 void CBAttachmentsProvider::openAttach(const QString &attachID){
     QString path = pathForId()+attachID;
-    
-    
-#ifdef Q_OS_IOS
-    iosLaunchFile(path);
-    return;
-#endif
     QFileInfo fileInfo(path);
     if (fileInfo.isDir()){
         QDir dir(path);
@@ -150,6 +144,12 @@ void CBAttachmentsProvider::openAttach(const QString &attachID){
             }
         }
     }
+    
+#ifdef Q_OS_IOS
+    iosLaunchFile(path);
+    return;
+#endif
+
 
     QDesktopServices::openUrl(QUrl("file:///"+path));
 }
