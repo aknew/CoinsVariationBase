@@ -37,7 +37,7 @@ QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSi
 
     if (result.isNull()){
         QFile file(fullFilePath);
-#if !defined(Q_OS_IOS)
+#if !defined(Q_OS_IOS) && !defined(Q_OS_ANDROID)
         /* HOTFIX:
          iOs crashes here with message
          global/qglobal.cpp(3070): ASSERT: "!"No style available without QApplication!"" in file kernel/qapplication.cpp, line 1064

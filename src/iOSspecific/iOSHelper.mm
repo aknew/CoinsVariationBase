@@ -16,7 +16,7 @@
 bool iosLaunchFile(QString strFilePath)
 {
     NSString* url = strFilePath.toNSString();
-    NSLog(url);
+    NSLog(@"%@",url);
     NSURL* fileURL = [NSURL fileURLWithPath:url];
     static DocViewController* mtv = nil;
     if(mtv!=nil)
