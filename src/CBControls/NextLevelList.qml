@@ -15,9 +15,7 @@ Rectangle {
         id: listView1
         delegate: nextLevelDelegate
         width: parent.width
-        height: Math.min(
-                    contentHeight,
-                    GUIStyle.isMobile ? 200 : 120) // i.e. nextLevelDelegate.height *3
+        height:  contentHeight
         interactive: false
     }
     Component {
