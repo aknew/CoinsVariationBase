@@ -18,8 +18,11 @@ public:
     QString getDifferenceFirst();
     QString getDifferenceSecond();
     QString commonPart(){
-        return commonList.join(" ");
+        return commonList.join(joinSeparator);
     }
+
+    QRegExp separator = QRegExp(" ");
+    QString joinSeparator = " ";
 
 private:
     QStringList firstList;

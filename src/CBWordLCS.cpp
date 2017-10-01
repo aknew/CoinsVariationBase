@@ -4,8 +4,8 @@
 CBWordLCS::CBWordLCS(const QString &first, const QString &second)
 {
     // I use word as atomic elements
-    firstList = first.split(" ");
-    secondList = second.split(" ");
+    firstList = first.split(separator);
+    secondList = second.split(separator);
     _m = firstList.length();
     _n = secondList.length();
     LCSTable = new int[(_m + 1) * (_n + 1)];
@@ -28,7 +28,7 @@ CBWordLCS::CBWordLCS(const QString &first, const QString &second)
     }
     backtrackOne(_m,_n);
 
-    //qDebug()<< commonList.join(" ");
+    //qDebug()<< commonList.join(joinSeparator);
 }
 
 
@@ -116,5 +116,24 @@ QString CBWordLCS::generateString(const QStringList &list, bool generateDiff){
             result.push_back(*iter);
         }
     }
-    return result.join(" ");
+
+    QStringList resultFinal;
+
+   // joining kStartDifference/kEndDifference with next/previous word to prevent extra separators after join
+   auto iter = result.begin();
+   while ( iter != result.end()){
+       if (*iter == kEndDifference){
+           resultFinal.last().append(kEndDifference);
+       }
+       else if (*iter == kStartDifference){
+           ++iter;
+           resultFinal.push_back(kStartDifference + *iter);
+       }
+       else{
+           resultFinal.push_back(*iter);
+       }
+       ++iter;
+   }
+
+    return resultFinal.join(joinSeparator);
 }
