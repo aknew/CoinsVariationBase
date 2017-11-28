@@ -70,7 +70,7 @@ Rectangle {
 
             property string currentID: CBApi.baseProvider.attachmentsProvider.currentId
             width: parent.width
-            height: 100
+            height: 190
             BackgroundRect {
             }
 
