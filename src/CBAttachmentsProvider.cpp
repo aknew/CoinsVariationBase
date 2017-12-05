@@ -42,7 +42,9 @@ QVariantList CBAttachmentsProvider::attributesForId(const QString &recId)
          if (sd.isNull()){
             qWarning("Wrong file attribute json format");
          }
-         return sd.array().toVariantList();
+         QJsonObject object = sd.object();
+         mainImage = object.value("main").toString();
+         return object.value("files").toArray().toVariantList();
     }
     else{
         return QVariantList();

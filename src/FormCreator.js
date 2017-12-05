@@ -54,7 +54,7 @@ function createListForm(node) {
     if (node.usesUUIDs){
         qmlString += "        Image {\n"+
                      "            id: image\n"+
-                     "            source: \"image://imageProvider/\" + id + \"/Main.jpg\"\n"+
+                     "            source: \"image://imageProvider/\" + id + \"/main.thumbnail.jpg\"\n"+
                      "            height: parent.height-10\n"+
                      "            width: height*2\n"+
                      "            sourceSize.height: height\n"+

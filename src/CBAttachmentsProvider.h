@@ -39,6 +39,7 @@ public:
 
     void removeSelectedIdAttaches();
     QString _basePath; ///< root path of Attachments
+    QString mainImage;
 
     /**
      * @brief mergeAttachments merge attachments of 2 records
