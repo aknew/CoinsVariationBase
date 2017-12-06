@@ -84,7 +84,7 @@ Rectangle {
                 width: height * 2
                 sourceSize.height: height
                 sourceSize.width: width
-                source: "image://imageProvider/" + currentID + "/" + modelData.file
+                source: "image://imageProvider/" + currentID + "/thumbnail." + modelData.file
                 fillMode: Image.PreserveAspectFit
             }
             Text {

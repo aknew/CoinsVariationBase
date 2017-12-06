@@ -8,6 +8,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QUuid>
+#include <QPixmap>
 
 #include "CBUtils.h"
 
@@ -16,6 +17,9 @@
 #include "iOSHelper.h"
 
 #endif
+
+static const QString kMainThumb   = "/main.thumbnail.jpg";
+static const QString kThumbPrefix = "/thumbnail.";
 
 CBAttachmentsProvider::CBAttachmentsProvider(const QString &basePath, QObject *parent) : QObject(parent)
 {
@@ -28,6 +32,8 @@ CBAttachmentsProvider::CBAttachmentsProvider(const QString &basePath, QObject *p
 
 QVariantList CBAttachmentsProvider::attributesForId(const QString &recId)
 {
+    // FIXME: need rewrite this method, at least it is not good idea to change some field in the method with signature "readAnotherField"
+    mainImage = "";
     if (QDir(pathForId(recId)).exists()){
         QString filename=attributePath(recId);
          QFile file(filename);
@@ -67,13 +73,26 @@ QVariantMap CBAttachmentsProvider::insertNewAttach(QString notePath){
     }
     QFileInfo fileInfo(notePath);
     QString fileName = fileInfo.fileName();
-    if(fileInfo.completeSuffix().toLower() == "jpg" && !QFileInfo(dirPath+ "/Main.jpg").exists()){
-        fileName = "Main.jpg";
+    if(fileInfo.completeSuffix().toLower() == "jpg" && mainImage == ""){
+        mainImage = fileName;
     }
 
     bool flag = CBUtils::copyRecursively(notePath,dirPath+"/"+fileName);
     if (!flag){
         qDebug() << "Attach wasn't copy";
+    }
+
+
+    QPixmap thumbnail(notePath);
+    if (!thumbnail.isNull()){
+        QString cachedImage = dirPath + kThumbPrefix + fileName;
+        QSize size(360,180);
+        thumbnail = thumbnail.scaled(size,Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        thumbnail.save(cachedImage);
+
+        if (mainImage == fileName){
+            thumbnail.save(dirPath + kMainThumb);
+        }
     }
 
     QVariantMap newNote;
@@ -109,7 +128,12 @@ void CBAttachmentsProvider::saveAttributes(){
     if (!saveFile.open(QIODevice::WriteOnly)) {
             qWarning("Couldn't open save file.");
     }
-    QJsonDocument saveDoc(QJsonArray::fromVariantList(attributes));
+    QJsonArray::fromVariantList(attributes);
+    QVariantMap map;
+    // FIXME: use constant instead magic string
+    map["main"] = mainImage;
+    map["files"] = attributes;
+    QJsonDocument saveDoc(QJsonObject::fromVariantMap(map));
     saveFile.write(saveDoc.toJson());
 }
 
@@ -161,17 +185,11 @@ void CBAttachmentsProvider::openFolder(){
 }
 
 void CBAttachmentsProvider::setMain(const QString &attachID){
-    // TODO: add checking that file Main.jpg doesn't exist and this is realy jpeg
-    QFile::rename(pathForId()+attachID,pathForId()+"Main.jpg");
-    QVariant fileName = QVariant(attachID);
-    for (int i = 0; i<attributes.size(); ++i){
-        QVariantMap map = attributes.at(i).toMap();
-        if (map["file"] == fileName){
-            map["file"] = QVariant("Main.jpg");
-            attributes.replace(i, map);
-            break;
-        }
-    }
+    mainImage = attachID;
+    QString srcFilePath = pathForId() + kThumbPrefix + attachID;
+    QString tgtFilePath = pathForId() + kMainThumb;
+    QFile::remove(tgtFilePath);
+    QFile::copy(srcFilePath, tgtFilePath);
     saveAttributes();
     emit attributesChanged();
 }
@@ -185,6 +203,8 @@ void CBAttachmentsProvider::removeSelectedIdAttaches(){
 
 
 void CBAttachmentsProvider::mergeAttachments(const QString &srcId, const QString &dstID,const QString &diff){
+
+    // FIXME: need chack and rewrite - now it doesn't work properly with main image and possibly with image saving
     QString srcPath = pathForId(srcId);
     QDir srcDir(srcPath);
     if (!srcDir.exists() ){
