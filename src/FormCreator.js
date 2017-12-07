@@ -31,7 +31,7 @@ function createListForm(node) {
     qmlString += "      Item {\n"+
                  "          id: delegateItem;\n"+
                  "          width: listView.width;\n"+
-                 "          height: 190\n";
+                 "          height: Math.max(190 ,topLayout.height+10);\n";
 
     qmlString += "          BackgroundRect{selected:(index===mainRect.firstIndex)}\n";
     qmlString += "          MouseArea {anchors.fill: parent\n"+
@@ -55,7 +55,7 @@ function createListForm(node) {
         qmlString += "        Image {\n"+
                      "            id: image\n"+
                      "            source: \"image://imageProvider/\" + id + \"/main.thumbnail.jpg\"\n"+
-                     "            height: parent.height-10\n"+
+                     "            height: 180\n"+
                      "            width: height*2\n"+
                      "            sourceSize.height: height\n"+
                      "            sourceSize.width: width\n"+
