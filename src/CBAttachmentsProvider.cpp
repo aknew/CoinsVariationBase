@@ -192,6 +192,7 @@ void CBAttachmentsProvider::setMain(const QString &attachID){
     QFile::copy(srcFilePath, tgtFilePath);
     saveAttributes();
     emit attributesChanged();
+    emit mainImageChanged();
 }
 
 void CBAttachmentsProvider::removeSelectedIdAttaches(){

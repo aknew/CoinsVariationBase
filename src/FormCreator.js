@@ -165,7 +165,7 @@ function createFullForm(node) {
                      "                                         }\n"+
                      "                            }\n" +
                      "            }\n";
-        onNodeChangedString +="        image.source =  \"image://imageProvider/\"+node.selectedItem.id + \"/Main.jpg\"\n";
+        onNodeChangedString +="        image.source =  \"image://imageProvider/\"+node.selectedItem.id + \"/\"+CBApi.baseProvider.attachmentsProvider.mainImage\n";
     }
 
     var collectDataString = "    function collectData() {"+

@@ -9,6 +9,7 @@ class CBAttachmentsProvider : public QObject
     Q_OBJECT
     Q_PROPERTY(QVariantList attributes MEMBER attributes NOTIFY attributesChanged())
     Q_PROPERTY(QString currentId READ getCurrentID() NOTIFY attributesChanged())
+    Q_PROPERTY(QString mainImage MEMBER mainImage NOTIFY mainImageChanged())
 
 public:
     explicit CBAttachmentsProvider(const QString &basePath, QObject *parent = 0);
@@ -51,6 +52,7 @@ public:
 
 signals:
     void attributesChanged();
+    void mainImageChanged();
 
 private:
     QString *_selectedID = NULL;
