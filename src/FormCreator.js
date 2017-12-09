@@ -161,7 +161,7 @@ function createFullForm(node) {
                      "                  MouseArea {\n"+
                      "                             anchors.fill: parent\n"+
                      "                             onClicked: {\n"+
-                     "                                         CBApi.baseProvider.attachmentsProvider.openAttach(\"Main.jpg\")\n"+
+                     "                                         CBApi.baseProvider.attachmentsProvider.openAttach(CBApi.baseProvider.attachmentsProvider.mainImage)\n"+
                      "                                         }\n"+
                      "                            }\n" +
                      "            }\n";
