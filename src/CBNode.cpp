@@ -6,9 +6,7 @@
 #include <QDebug>
 
 #include "CBBaseProvider.h"
-#include "CBFieldDifference.h"
 #include "CBItemDifference.h"
-#include "CBWordLCS.h"
 #include "CBUtils.h"
 
 const QString kWrongString = "*wrongString*"; //< marker that some string wasn't filled
@@ -319,41 +317,7 @@ QString CBNode::selectedItemDescription(){
 CBItemDifference *CBNode::recordDifference(int index1, int index2){
     QVariantMap map1 = itemAtIndex(index1);
     QVariantMap map2 = itemAtIndex(index2);
-
-    CBItemDifference *difference = new CBItemDifference(this);
-    difference->id1 = map1["id"].toString();
-    difference->id2 = map2["id"].toString();
-
-    QList<QObject*> all;
-    QList<QObject*> diff;
-    for (auto iter: map1.keys()){
-        if (fullFormFieldsInternal.contains(iter)){
-            /*
-             * FIXME: it seems, that it would be better if CBWordLCS will return CBFieldDifference
-             * object, but I have some problems with copiing constructor QObject inheriter and using
-             * plain C struct into QML. Actually, they aren't very difficult problem, but I prefer
-             * not to spent time to them now
-             */
-            CBWordLCS wordLCS(map1[iter].toString(),map2[iter].toString());
-            CBFieldDifference *fd = new CBFieldDifference(difference); // TODO: Need check: possible memory leak?
-            fd->_name = iter;
-            fd->_highlightedFirst = wordLCS.getHighlitedFirst();
-            fd->_highlightedSecond = wordLCS.getHighlitedSecond();
-            fd->_differenceFirst = wordLCS.getDifferenceFirst();
-            fd->_differenceSecond = wordLCS.getDifferenceSecond();
-            fd->_isEqual =(fd->_differenceFirst == "" &&  fd->_differenceSecond == "");
-            fd->_commonPart = wordLCS.commonPart();
-            fd->_originalFirst = map1[iter].toString();
-            fd->_originalSecond = map2[iter].toString();
-            if (!fd->_isEqual){
-                diff.append(fd);
-            }
-            all.append(fd);
-        }
-    }
-
-    difference->diffFieldsModel = diff;
-    difference->allFieldsModel = all;
+    CBItemDifference *difference = new CBItemDifference(map1, map2, fullFormFieldsInternal, this);
     return difference;
 }
 
