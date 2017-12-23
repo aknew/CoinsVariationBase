@@ -218,8 +218,8 @@ Page {
     onItemDifferenceChanged: {
         if (typeof (itemDifference) != "undefined") {
             listView.model = itemDifference.diffFieldsModel
-            image1.source = "image://imageProvider/" + itemDifference.id1 + "/Main.jpg"
-            image2.source = "image://imageProvider/" + itemDifference.id2 + "/Main.jpg"
+            image1.source = "image://imageProvider/" + itemDifference.id1 + "/main.thumbnail.jpg"
+            image2.source = "image://imageProvider/" + itemDifference.id2 + "/main.thumbnail.jpg"
         }
     }
 
