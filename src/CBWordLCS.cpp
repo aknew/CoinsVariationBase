@@ -1,11 +1,12 @@
 #include "CBWordLCS.h"
 #include <QDebug>
 
-CBWordLCS::CBWordLCS(const QString &first, const QString &second)
+CBWordLCS::CBWordLCS(const QString &first, const QString &second, const QRegExp &separator, const QString &joinSeparator)
 {
-    // I use word as atomic elements
     firstList = first.split(separator);
     secondList = second.split(separator);
+    _joinSeparator = joinSeparator;
+
     _m = firstList.length();
     _n = secondList.length();
     LCSTable = new int[(_m + 1) * (_n + 1)];
@@ -135,5 +136,5 @@ QString CBWordLCS::generateString(const QStringList &list, bool generateDiff){
        ++iter;
    }
 
-    return resultFinal.join(joinSeparator);
+    return resultFinal.join(_joinSeparator);
 }

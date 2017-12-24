@@ -22,7 +22,7 @@ public:
     QString id1; /// first item identifier, needs to show images, also will be used to merging items
     QString id2; /// second item identifier, needs to show images, also will be used to merging items
 
-    void recalculateDifferences();
+    Q_INVOKABLE void recalculateDifferences(const QString &separator, const QString &joinSeparator);
 
 private:
     QVariantMap _first; /// first item fields list

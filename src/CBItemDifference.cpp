@@ -11,12 +11,11 @@ CBItemDifference::CBItemDifference(const QVariantMap &first, const QVariantMap &
     id1 = _first["id"].toString();
     id2 = _second["id"].toString();
 
-    this->recalculateDifferences();
+    this->recalculateDifferences(" "," ");
 
 }
 
-void CBItemDifference::recalculateDifferences(){
-
+void CBItemDifference::recalculateDifferences(const QString &separator,const QString &joinSeparator){
     QList<QObject*> all;
     QList<QObject*> diff;
     for (auto iter: _first.keys()){
@@ -27,7 +26,7 @@ void CBItemDifference::recalculateDifferences(){
              * plain C struct into QML. Actually, they aren't very difficult problem, but I prefer
              * not to spent time to them now
              */
-            CBWordLCS wordLCS(_first[iter].toString(),_second[iter].toString());
+            CBWordLCS wordLCS(_first[iter].toString(),_second[iter].toString(),QRegExp(separator),joinSeparator);
             CBFieldDifference *fd = new CBFieldDifference(this); // TODO: Need check: possible memory leak?
             fd->_name = iter;
             fd->_highlightedFirst = wordLCS.getHighlitedFirst();

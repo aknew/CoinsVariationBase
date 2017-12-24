@@ -12,19 +12,18 @@
 class CBWordLCS
 {
 public:
-    CBWordLCS(const QString &first, const QString &second);
+    CBWordLCS(const QString &first, const QString &second, const QRegExp &separator, const QString &joinSeparator);
     QString getHighlitedFirst();
     QString getHighlitedSecond();
     QString getDifferenceFirst();
     QString getDifferenceSecond();
     QString commonPart(){
-        return commonList.join(joinSeparator);
+        return commonList.join(_joinSeparator);
     }
 
-    QRegExp separator = QRegExp(" ");
-    QString joinSeparator = " ";
-
 private:
+
+    QString _joinSeparator;
     QStringList firstList;
     QStringList secondList;
 

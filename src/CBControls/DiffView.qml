@@ -20,6 +20,17 @@ Page {
             onClicked: mainWindow.goBack()
         }
         ToolButton {
+            anchors.right: mergeButton.left
+            anchors.rightMargin: 5
+            height: parent.height
+            width: parent.height
+            contentItem: Text{
+                text: '⚙'
+            }
+            onClicked:{settingsPopup.open()}
+        }
+        ToolButton {
+            id: mergeButton
             anchors.right: parent.right
             anchors.rightMargin: 5
             height: parent.height
@@ -63,6 +74,33 @@ Page {
             diffDialog.diff1 = diff1
             diffDialog.diff2 = diff2
             diffDialog.open()
+        }
+    }
+
+    Popup{
+        id: settingsPopup
+        contentItem: ColumnLayout{
+            width:250
+            LabeledTextInput {
+                id: separator
+                title: qsTr("Separator:")
+                value:" "
+                editing: true
+            }
+            LabeledTextInput {
+                id: joinSeparator
+                title: qsTr("Join with:")
+                value:" "
+                editing: true
+            }
+            Button{
+                text: qsTr("Apply")
+                onClicked: {
+                    itemDifference.recalculateDifferences(separator.value,joinSeparator.value);
+                    listView.model = itemDifference.diffFieldsModel;
+                    settingsPopup.close();
+                }
+            }
         }
     }
 
