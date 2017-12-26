@@ -50,6 +50,9 @@ public:
      */
     void mergeAttachments(const QString &srcId, const QString &dstID,const QString &diff);
 
+    static const QString kMainThumb;
+    static const QString kThumbPrefix;
+
 signals:
     void attributesChanged();
     void mainImageChanged();

@@ -7,6 +7,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "CBAttachmentsProvider.h"
+
 void CBUtils::FromQmlFilePath(QString *str){
 
     // HOTFIX: QFile won't open places like /D:/
@@ -74,6 +76,12 @@ bool CBUtils::copyRecursively(const QString &srcFilePath,
                 return false;
         }
     } else {
+        // drop thumbnail images
+        QString fileName = "/" + QFileInfo(srcFilePath).fileName();
+        qDebug() << CBAttachmentsProvider::kMainThumb;
+        if (fileName == CBAttachmentsProvider::kMainThumb || fileName.startsWith(CBAttachmentsProvider::kThumbPrefix)){
+            return true;
+        }
         if (!QFile::copy(srcFilePath, tgtFilePath)){
             //qDebug() << QFile::error();
             qDebug() << srcFilePath;

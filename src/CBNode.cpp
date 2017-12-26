@@ -392,7 +392,7 @@ QVariantList CBNode::listForExport(const QString &path){
     for (int i = 0; i < this->m_listModel->rowCount(); ++i){
         QVariantMap map = itemAtIndex(i);
 
-        // FIXME: do "id" and "attributes.json" constant strings
+        // FIXME: do "id" and "attributes.json" constant strings, also need move all actions with attachment into attachment provider
         QString id = map.contains("id")?map["id"].toString():"";
 
         // add attachments if they are exist
@@ -412,7 +412,7 @@ QVariantList CBNode::listForExport(const QString &path){
                qWarning("Wrong file attribute json format");
             }
 
-            map["attachments"] = sd.array().toVariantList();
+            map["attachments"] = sd.object().toVariantMap();
 
             CBUtils::copyRecursively(recordAttachPath,path+"/"+id);
             QFile::remove(path+"/"+id+"/"+ "attributes.json"); // remove attributes,json - it merget with main json

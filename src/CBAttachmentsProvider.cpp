@@ -18,8 +18,8 @@
 
 #endif
 
-static const QString kMainThumb   = "/main.thumbnail.jpg";
-static const QString kThumbPrefix = "/thumbnail.";
+const QString CBAttachmentsProvider::kMainThumb   = "/main.thumbnail.jpg";
+const QString CBAttachmentsProvider::kThumbPrefix = "/thumbnail.";
 
 CBAttachmentsProvider::CBAttachmentsProvider(const QString &basePath, QObject *parent) : QObject(parent)
 {
