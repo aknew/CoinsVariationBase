@@ -17,26 +17,9 @@
         <file>CBControls/qmldir</file>
         <file>FormCreator.js</file>
         <file alias="ru_RU.json">../translations/ru_RU.json</file>
-        <file alias="apply">../resources/apply.png</file>
-        <file alias="add">../resources/add.png</file>
-        <file alias="undo">../resources/undo.png</file>
-        <file alias="back">../resources/back.png</file>
-        <file alias="edit">../resources/edit.png</file>
-        <file alias="delete">../resources/delete.png</file>
         <file alias="no_image.png">../resources/no_image.png</file>
         <file alias="add_database.png">../resources/add_database.png</file>
         <file alias="database.png">../resources/database.png</file>
-        <file alias="next">../resources/next-128.png</file>
-        <file alias="previous">../resources/previous-128.png</file>
-        <file alias="right">../resources/right.png</file>
-        <file alias="calendar">../resources/calendar.png</file>
-        <file alias="add_folder">../resources/add_folder.png</file>
-        <file alias="clone">../resources/clone.png</file>
-        <file alias="filter">../resources/filter.png</file>
-        <file alias="help">../resources/help.png</file>
-        <file alias="open">../resources/open.png</file>
-        <file alias="work_with_data">../resources/work_with_data.png</file>
-        <file alias="merge">../resources/merge.png</file>
         <file>CBControls/ToolbarContextItem.qml</file>
     </qresource>
 </RCC>

@@ -39,8 +39,10 @@ FocusScope {
             onClicked: {
                 Qt.openUrlExternally(input.text)
             }
-            Image {
-                source: "/right"
+            Text {
+                text: "→"
+                font.pointSize: 18
+                verticalAlignment: Text.AlignVCenter
                 anchors.centerIn: parent
                 height: parent.height / 2
                 width: parent.width / 2

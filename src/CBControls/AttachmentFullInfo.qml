@@ -92,10 +92,11 @@ Rectangle {
         onClicked: {
             index = index - 1
         }
-        Image {
-            width: 64
-            source: "/previous"
-            anchors.centerIn: parent
+        Text {
+            text:"〈"
+            font.pointSize: 36
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
         }
     }
     MouseArea {
@@ -108,10 +109,11 @@ Rectangle {
         onClicked: {
             index = index + 1
         }
-        Image {
-            width: 64
-            source: "/next"
-            anchors.centerIn: parent
+        Text {
+            text:"〉"
+            font.pointSize: 36
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 
@@ -151,11 +153,8 @@ Rectangle {
                 }
                 Button {
                     id: btnRemove
-                    contentItem: Image {
-                        source: "/delete"
-                        fillMode: Image.Pad
-                        horizontalAlignment: Image.AlignHCenter
-                        verticalAlignment: Image.AlignVCenter
+                    contentItem: ToolbarContextItem{
+                        text: '✘'
                     }
                     visible: editing
                     anchors.right: parent.right
@@ -198,11 +197,8 @@ Rectangle {
         height: GUIStyle.barHeight
         Button {
             id: btnAddField
-            contentItem: Image {
-                source: "/add"
-                fillMode: Image.Pad
-                horizontalAlignment: Image.AlignHCenter
-                verticalAlignment: Image.AlignVCenter
+            contentItem: ToolbarContextItem{
+                text: '➕'
             }
             anchors.left: parent.left
             anchors.leftMargin: 5

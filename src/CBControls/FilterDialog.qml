@@ -149,9 +149,8 @@ Page {
                 anchors.right: parent.right
                 anchors.rightMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
-                contentItem: Image {
-                    source: "/delete"
-                    fillMode: Image.Pad
+                contentItem: ToolbarContextItem{
+                    text: '✘'
                 }
                 onClicked: {
                     filterList.remove(index)
@@ -166,8 +165,8 @@ Page {
         anchors.bottom: parent.bottom
         Button {
             id: btnAddField
-            contentItem: Image {
-                source: "/add"
+            contentItem: ToolbarContextItem{
+                text: '➕'
             }
             anchors.left: parent.left
             anchors.leftMargin: 5

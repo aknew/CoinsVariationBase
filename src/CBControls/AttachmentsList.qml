@@ -17,11 +17,8 @@ Rectangle {
         anchors.top: parent.top
         Button {
             id: btnAddFile
-            contentItem: Image {
-                source: "/add"
-                fillMode: Image.Pad
-                horizontalAlignment: Image.AlignHCenter
-                verticalAlignment: Image.AlignVCenter
+            contentItem: ToolbarContextItem{
+                text: '➕'
             }
             anchors.left: parent.left
             anchors.leftMargin: 5
@@ -38,11 +35,8 @@ Rectangle {
         }
         Button {
             id: btnAddFolder
-            contentItem: Image {
-                source: "/add_folder"
-                fillMode: Image.Pad
-                horizontalAlignment: Image.AlignHCenter
-                verticalAlignment: Image.AlignVCenter
+            contentItem: ToolbarContextItem{
+                text: '📂'
             }
             anchors.left: btnAddFile.right
             anchors.leftMargin: 5
@@ -126,9 +120,8 @@ Rectangle {
             }
             Button {
                 id: btnRemove
-                contentItem: Image {
-                    source: "/delete"
-                    fillMode: Image.Pad
+                contentItem: ToolbarContextItem{
+                    text: '✘'
                 }
                 visible: editing
                 anchors.right: parent.right

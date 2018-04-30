@@ -34,9 +34,9 @@ FocusScope {
                 dialog.selectedDate = d
                 dialog.open()
             }
-            Image{
+            Text{
                 visible: editing
-                source: "/calendar"
+                text: "📅"
                 anchors.centerIn: parent
                 height: parent.height/2
                 width: parent.width/2
