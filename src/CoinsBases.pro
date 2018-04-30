@@ -37,7 +37,8 @@ DISTFILES += \
     CBControls/BasesList.qml \
     CBControls/GUIStyle.qml \
     CBControls/DiffView.qml \
-    CBControls/LabeledIcon.qml
+    CBControls/LabeledIcon.qml \
+    CBControls/ToolbarContextItem.qml
 
 RESOURCES += \
     resources.qrc

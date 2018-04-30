@@ -13,9 +13,8 @@ Page {
             height: parent.height
             width: parent.height
             visible: tablesStack.depth > 1
-            contentItem: Image {
-                source: "/apply"
-                fillMode: Image.Pad
+            contentItem: ToolbarContextItem{
+                text: '✔'
             }
             //shortcut: Qt.BackButton
             onClicked: {
@@ -28,9 +27,8 @@ Page {
             anchors.rightMargin: 5
             height: parent.height
             width: parent.height
-            contentItem: Image {
-                source: "/undo"
-                fillMode: Image.Pad
+            contentItem: ToolbarContextItem{
+                text: '↻'
             }
             onClicked: mainWindow.goBack()
         }

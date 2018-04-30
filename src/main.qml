@@ -21,7 +21,6 @@ ApplicationWindow {
     ToolBar {
         // TODO: make shortcuts workable
         id: windowToolbar
-        height: GUIStyle.barHeight
 
         states: [
             State {
@@ -45,9 +44,8 @@ ApplicationWindow {
                 height: parent.height
                 width: parent.height
                 visible: tablesStack.depth > 1
-                contentItem: Image {
-                    source: "/back"
-                    fillMode: Image.Pad
+                contentItem: ToolbarContextItem{
+                    text: '⬅'
                 }
                 //shortcut: Qt.BackButton
                 onClicked: goBack()
@@ -61,11 +59,8 @@ ApplicationWindow {
                 ToolButton {
                     height: parent.height
                     width: parent.height
-                    contentItem: Image {
-                        source: "/work_with_data"
-                        fillMode: Image.Pad
-                        horizontalAlignment: Image.AlignHCenter
-                        verticalAlignment: Image.AlignVCenter
+                    contentItem: ToolbarContextItem{
+                        text: '🗂'
                     }
                     onClicked: menuWorkingWithData.open()
                     Menu {
@@ -97,7 +92,6 @@ ApplicationWindow {
                             MenuItem {
                                 //shortcut: "Ctrl+E"
                                 contentItem: LabeledIcon {
-                                    iconSource: "/edit"
                                     text: qsTr("Edit record")
                                 }
                                 onTriggered: {
@@ -113,7 +107,6 @@ ApplicationWindow {
                             MenuItem {
 
                                 contentItem: LabeledIcon {
-                                    iconSource: "/add"
                                     text: qsTr("Add new")
                                 }
                                 //shortcut: "Ctrl+N"
@@ -141,7 +134,6 @@ ApplicationWindow {
                                          && tablesStack.currentItem.editable
 
                                 contentItem: LabeledIcon {
-                                    iconSource: "/delete"
                                     text: qsTr("Delete")
                                 }
                                 onTriggered: {
@@ -151,7 +143,6 @@ ApplicationWindow {
                             }
                             MenuItem {
                                 contentItem: LabeledIcon {
-                                    iconSource: "/clone"
                                     text: qsTr("Clone")
                                 }
                                 onTriggered: {
@@ -174,11 +165,8 @@ ApplicationWindow {
                 ToolButton {
                     height: parent.height
                     width: parent.height
-                    contentItem: Image {
-                        source: "/filter"
-                        fillMode: Image.Pad
-                        horizontalAlignment: Image.AlignHCenter
-                        verticalAlignment: Image.AlignVCenter
+                    contentItem: ToolbarContextItem{
+                        text: '🔎'
                     }
                     visible: tablesStack.currentItem
                              && tablesStack.currentItem.formType === CBApi.ListForm
@@ -189,7 +177,6 @@ ApplicationWindow {
                         ColumnLayout {
                             MenuItem {
                                 contentItem: LabeledIcon {
-                                    iconSource: "/edit"
                                     text: qsTr("Set/edit filters")
                                 }
                                 onTriggered: {
@@ -202,7 +189,6 @@ ApplicationWindow {
                             }
                             MenuItem {
                                 contentItem: LabeledIcon {
-                                    iconSource: "/delete"
                                     text: qsTr("Drop filters")
                                 }
                                 onTriggered: {
@@ -246,11 +232,8 @@ ApplicationWindow {
                 ToolButton {
                     height: parent.height
                     width: parent.height
-                    contentItem: Image {
-                        source: "/open"
-                        fillMode: Image.Pad
-                        horizontalAlignment: Image.AlignHCenter
-                        verticalAlignment: Image.AlignVCenter
+                    contentItem: ToolbarContextItem{
+                        text: '🗄'
                     }
                     onClicked: openBaseDialog.open()
                     //shortcut: "Ctrl+O"
@@ -259,11 +242,8 @@ ApplicationWindow {
                 ToolButton {
                     height: parent.height
                     width: parent.height
-                    contentItem: Image {
-                        source: "/help"
-                        fillMode: Image.Pad
-                        horizontalAlignment: Image.AlignHCenter
-                        verticalAlignment: Image.AlignVCenter
+                    contentItem: ToolbarContextItem{
+                        text: '❓'
                     }
                     onClicked: menuHelp.open()
 
@@ -307,13 +287,9 @@ ApplicationWindow {
                 width: parent.height
                 anchors.left: parent.left
                 anchors.leftMargin: 5
-                contentItem: Image {
-                    source: "/apply"
-                    fillMode: Image.Pad
-                    horizontalAlignment: Image.AlignHCenter
-                    verticalAlignment: Image.AlignVCenter
+                contentItem: ToolbarContextItem{
+                    text: '✔'
                 }
-
                 //            shortcut: "Ctrl+S"
                 onClicked: {
                     windowToolbar.state = ""
@@ -326,11 +302,8 @@ ApplicationWindow {
                 width: parent.height
                 anchors.right: parent.right
                 anchors.rightMargin: 5
-                contentItem: Image {
-                    source: "/undo"
-                    fillMode: Image.Pad
-                    horizontalAlignment: Image.AlignHCenter
-                    verticalAlignment: Image.AlignVCenter
+                contentItem: ToolbarContextItem{
+                    text: '↻'
                 }
                 onClicked: {
                     windowToolbar.state = ""

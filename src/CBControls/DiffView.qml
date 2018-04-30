@@ -12,9 +12,8 @@ Page {
             height: parent.height
             width: parent.height
             visible: tablesStack.depth > 1
-            contentItem: Image {
-                source: "/back"
-                fillMode: Image.Pad
+            contentItem: ToolbarContextItem{
+                text: '⬅'
             }
             //shortcut: Qt.BackButton
             onClicked: mainWindow.goBack()
@@ -24,7 +23,7 @@ Page {
             anchors.rightMargin: 5
             height: parent.height
             width: parent.height
-            contentItem: Text{
+            contentItem: ToolbarContextItem{
                 text: '⚙'
             }
             onClicked:{settingsPopup.open()}
@@ -35,9 +34,8 @@ Page {
             anchors.rightMargin: 5
             height: parent.height
             width: parent.height
-            contentItem: Image {
-                source: "/merge"
-                fillMode: Image.Pad
+            contentItem: ToolbarContextItem{
+                text: '🔗'
             }
             onClicked: {
                 mergedMap = {
