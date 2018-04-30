@@ -67,7 +67,7 @@ ApplicationWindow {
                         id: menuWorkingWithData
                         ColumnLayout {
                             MenuItem {
-                                contentItem: LabeledIcon {
+                                contentItem: StyledMenuItem {
                                     text: qsTr("Record comparation")
                                 }
                                 onTriggered: {
@@ -78,7 +78,7 @@ ApplicationWindow {
                                          && tablesStack.currentItem.formType === CBApi.ListForm
                             }
                             MenuItem {
-                                contentItem: LabeledIcon {
+                                contentItem: StyledMenuItem {
                                     text: qsTr("Export to json")
                                 }
                                 onTriggered: {
@@ -91,7 +91,7 @@ ApplicationWindow {
                             }
                             MenuItem {
                                 //shortcut: "Ctrl+E"
-                                contentItem: LabeledIcon {
+                                contentItem: StyledMenuItem {
                                     text: qsTr("Edit record")
                                 }
                                 onTriggered: {
@@ -106,7 +106,7 @@ ApplicationWindow {
                             }
                             MenuItem {
 
-                                contentItem: LabeledIcon {
+                                contentItem: StyledMenuItem {
                                     text: qsTr("Add new")
                                 }
                                 //shortcut: "Ctrl+N"
@@ -133,7 +133,7 @@ ApplicationWindow {
                                          && tablesStack.currentItem.formType === CBApi.FullForm
                                          && tablesStack.currentItem.editable
 
-                                contentItem: LabeledIcon {
+                                contentItem: StyledMenuItem {
                                     text: qsTr("Delete")
                                 }
                                 onTriggered: {
@@ -142,7 +142,7 @@ ApplicationWindow {
                                 }
                             }
                             MenuItem {
-                                contentItem: LabeledIcon {
+                                contentItem: StyledMenuItem {
                                     text: qsTr("Clone")
                                 }
                                 onTriggered: {
@@ -176,7 +176,7 @@ ApplicationWindow {
                         id: menuFilters
                         ColumnLayout {
                             MenuItem {
-                                contentItem: LabeledIcon {
+                                contentItem: StyledMenuItem {
                                     text: qsTr("Set/edit filters")
                                 }
                                 onTriggered: {
@@ -188,7 +188,7 @@ ApplicationWindow {
                                 }
                             }
                             MenuItem {
-                                contentItem: LabeledIcon {
+                                contentItem: StyledMenuItem {
                                     text: qsTr("Drop filters")
                                 }
                                 onTriggered: {
@@ -197,7 +197,7 @@ ApplicationWindow {
                                 }
                             }
                             MenuItem {
-                                contentItem: LabeledIcon {
+                                contentItem: StyledMenuItem {
                                     text: qsTr("Predefined filters")
                                 }
                                 visible: tablesStack.currentItem

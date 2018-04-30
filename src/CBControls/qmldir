@@ -12,5 +12,5 @@ AttachmentFullInfo 1.0 AttachmentFullInfo.qml
 BasesList 1.0 BasesList.qml
 singleton GUIStyle 1.0 GUIStyle.qml
 DiffView 1.0 DiffView.qml
-LabeledIcon 1.0 LabeledIcon.qml
+StyledMenuItem 1.0 StyledMenuItem.qml
 ToolbarContextItem 1.0 ToolbarContextItem.qml

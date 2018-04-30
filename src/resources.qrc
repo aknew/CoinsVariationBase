@@ -5,7 +5,7 @@
         <file>CBControls/LabeledComboBoxInput.qml</file>
         <file>CBControls/LabeledTextInput.qml</file>
         <file>CBControls/NextLevelList.qml</file>
-        <file>CBControls/LabeledIcon.qml</file>
+        <file>CBControls/StyledMenuItem.qml</file>
         <file>CBControls/FilterDialog.qml</file>
         <file>CBControls/LabeledDateInput.qml</file>
         <file>CBControls/AttachmentsList.qml</file>
