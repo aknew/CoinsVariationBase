@@ -9,6 +9,8 @@
 #include <QUrl>
 #include <QUuid>
 #include <QPixmap>
+#include <QClipboard>
+#include <QApplication>
 
 #include "CBUtils.h"
 
@@ -73,6 +75,7 @@ QVariantMap CBAttachmentsProvider::insertNewAttach(QString notePath){
     }
     QFileInfo fileInfo(notePath);
     QString fileName = fileInfo.fileName();
+    // FIXME: need check is image not by extantion and store it for using in coping menu (copyAttach)
     if(fileInfo.completeSuffix().toLower() == "jpg" && mainImage == ""){
         mainImage = fileName;
     }
@@ -176,7 +179,6 @@ void CBAttachmentsProvider::openAttach(const QString &attachID){
     return;
 #endif
 
-
     QDesktopServices::openUrl(QUrl("file:///"+path));
 }
 
@@ -193,6 +195,15 @@ void CBAttachmentsProvider::setMain(const QString &attachID){
     saveAttributes();
     emit attributesChanged();
     emit mainImageChanged();
+}
+
+void  CBAttachmentsProvider::copyAttach(const QString& noteID){
+    QString path = pathForId()+noteID;
+    QPixmap pixmap = QPixmap(path);
+    if (!pixmap.isNull()){
+        QClipboard *clipboard = QApplication::clipboard();
+        clipboard->setPixmap(pixmap);
+    }
 }
 
 void CBAttachmentsProvider::removeSelectedIdAttaches(){

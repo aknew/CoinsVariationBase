@@ -305,5 +305,11 @@ Rectangle {
                 CBApi.baseProvider.attachmentsProvider.openFolder()
             }
         }
+        MenuItem {
+            text: qsTr("Copy")
+            onTriggered: {
+                CBApi.baseProvider.attachmentsProvider.copyAttach(attachmentInfo.file)
+            }
+        }
     }
 }

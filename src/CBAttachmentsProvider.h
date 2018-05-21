@@ -33,6 +33,8 @@ public:
     Q_INVOKABLE void setMain(const QString &attachID);
     Q_INVOKABLE void openFolder();///< open attachment's folder
     Q_INVOKABLE void deleteAttach(const QString& noteID); ///< delete attach and it's attributes
+    Q_INVOKABLE void copyAttach(const QString& noteID); ///< copy attach to clipboard as image
+
 
     QString getCurrentID(){
         return *_selectedID;
