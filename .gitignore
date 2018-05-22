@@ -11,3 +11,5 @@ importResult*
 docs/doxygen/*
 IndividualCoinsDataBase*
 **Thumbs.db
+XcodeBuild/**
+**.DS_Store
