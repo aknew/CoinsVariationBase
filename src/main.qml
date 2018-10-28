@@ -60,7 +60,7 @@ ApplicationWindow {
                     height: parent.height
                     width: parent.height
                     contentItem: ToolbarContextItem{
-                        text: '🗂'
+                        text: GUIStyle.isWindows ? qsTr('Records') : '🗂'
                     }
                     onClicked: menuWorkingWithData.open()
                     Menu {
@@ -233,7 +233,7 @@ ApplicationWindow {
                     height: parent.height
                     width: parent.height
                     contentItem: ToolbarContextItem{
-                        text: '🗄'
+                        text: GUIStyle.isWindows ? qsTr('Another DB') : '🗄'
                     }
                     onClicked: openBaseDialog.open()
                     //shortcut: "Ctrl+O"

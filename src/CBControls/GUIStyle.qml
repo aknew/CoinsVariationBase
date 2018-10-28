@@ -6,4 +6,5 @@ QtObject {
     property bool isMobile: Qt.platform.os == "android"
                             || Qt.platform.os == "ios"
     property int barHeight: isMobile ? 100 : 50
+    property bool isWindows: Qt.platform.os == "windows"
 }
