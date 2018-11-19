@@ -7,3 +7,12 @@ Known issues:
 I don't know why, but I can't run this project on iOs Simulator with Qt Creator. Solution: create Xcode project with ~/Qt/5.5/ios/bin/qmake -spec macx-xcode CoinsBases.pro
 
 Add UIFileSharingEnabled with value YES to generated info.plist to share files via iTunes. I actually don't want to add all generated files to git, but docs (https://wiki.qt.io/Support_for_iOS) says that I can't do it via pro file
+
+
+Building for Win XP:
+qt 5.7 needs
+collect dlls with
+build-CoinsBases-Desktop_Qt_5_7_1_MinGW_32bit2-Release\release>windeployqt --compiler-runtime --no-translations CoinsBases.exe 
+copy Qt,  QtQML, QtQuick and QtQuick2 from C:\Qt\5.7\mingw53_32\qml and  Qt5QuickTemplates2.dll Qt5QuickControls2.dll
+
+comment StackView.onRemoved: destroy()  in FormCreator.js (it will causes memory leek, but it is known qt bug that was fixed in qt5.8, see https://stackoverflow.com/questions/39063235/qtquick-controls-2-stackview-and-destroyonpop )
