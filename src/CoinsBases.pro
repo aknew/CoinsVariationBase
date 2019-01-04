@@ -70,3 +70,5 @@ ios{
 }
 
 CONFIG += c++11
+
+DEFINES += GIT_CURRENT_SHA1="\\\"$(shell git rev-parse HEAD)\\\""

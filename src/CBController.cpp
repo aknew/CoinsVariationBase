@@ -89,6 +89,19 @@ void CBController::saveForm(const QString& qmlString, const QString& formName){
 }
 
 QString CBController::getAbout(){
-    QString about = tr("Build date: ") +QString(__DATE__) +" " + QString(__TIME__);
+    QString about = "<html><body>";
+
+    about += tr("Build date: ") +QString(__DATE__) +" " + QString(__TIME__)+"<br/>";
+    about += QString("Git commit: %1").arg(GIT_CURRENT_SHA1)+"<br/>";
+    const char *qt_version = qVersion();
+    about += "Qt version: " + QString(qt_version) + "<br/>";
+    about += tr("If you have some question, you can write to ") + "<a href=\"mailto:kazansky85@gmail.com\">kazansky85@gmail.com</a>";
+
+    about += "</body></html>";
     return about;
+}
+
+bool CBController::StackViewOnRemoved(){
+    const char *qt_version = qVersion();
+    return QString(qt_version).startsWith("5.7");
 }

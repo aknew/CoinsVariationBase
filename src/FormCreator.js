@@ -8,9 +8,14 @@ function createListForm(node) {
                 "import CB.api 1.0;\n" +
                 "import CBControls 1.0;\n" +
                 "import QtQuick.Controls 2.0\n\n"+
-                "Rectangle {\n" +
-                "   StackView.onRemoved: destroy() // Will be destroyed sometime after this call." +
-                "   Component.onDestruction: console.log(\""+node.listFormName()+" Destruction Beginning!\")\n"+
+                "Rectangle {\n"
+
+    if (CBApi.StackViewOnRemoved) {
+        console.log("add StackView.onRemoved: destroy()")
+        qmlString += "   StackView.onRemoved: destroy() // Will be destroyed sometime after this call."
+    }
+
+    qmlString += "   Component.onDestruction: console.log(\""+node.listFormName()+" Destruction Beginning!\")\n"+
                 "   id: mainRect;\n" +
                 "   property int formType: CBApi.ListForm\n" +
                 "   property var node;\n"+
@@ -129,9 +134,13 @@ function createFullForm(node) {
                 "import CB.api 1.0;\n" +
                 "import CBControls 1.0;\n" +
                 "import QtQuick.Controls 2.0\n\n"+
-                "Rectangle {\n" +
-                "   StackView.onRemoved: destroy() // Will be destroyed sometime after this call." +
-                "   Component.onDestruction: console.log(\""+node.fullFormName()+" Destruction Beginning!\")\n"+
+                "Rectangle {\n"
+
+    if (CBApi.StackViewOnRemoved) {
+        qmlString += "   StackView.onRemoved: destroy() // Will be destroyed sometime after this call."
+    }
+
+    qmlString +="   Component.onDestruction: console.log(\""+node.fullFormName()+" Destruction Beginning!\")\n"+
                 "   id: mainRect;\n" +
                 "   property int formType: CBApi.FullForm\n" +
                 "   property var node;\n" +
