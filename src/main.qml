@@ -510,4 +510,20 @@ ApplicationWindow {
             }
         }
     }
+
+    function openBaseAlert() {
+        messageDialog.open()
+    }
+
+    MessageDialog {
+        id: messageDialog
+        title: qsTr("Base opening error")
+        text: qsTr("Something wrong during opening base. This path will removed from saved.")
+        icon: StandardIcon.Warning
+        standardButtons: StandardButton.Ok
+        modality: Qt.WindowModal
+        onAccepted: {
+            messageDialog.close()
+        }
+    }
 }

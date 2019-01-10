@@ -151,5 +151,16 @@ void CBSettings::removeRecentWithName(const QString &name){
     recentBasesMap.remove(name);
     saveSetting();
     emit recentBasesChanged();
+}
 
+void CBSettings::removeRecentByPath(QString path){
+#ifdef Q_OS_IOS
+    path.replace(iOSDocPath, "");
+#endif
+    for (auto key:recentBasesMap.keys()) {
+        if (recentBasesMap[key]==path){
+            removeRecentWithName(key);
+            break;
+        }
+    }
 }

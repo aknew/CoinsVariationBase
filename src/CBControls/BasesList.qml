@@ -76,24 +76,8 @@ GridView {
         }
     }
 
-    MessageDialog {
-        id: messageDialog
-        title: qsTr("Base open error")
-        text: qsTr("Something wrong during opening base. Would you like to open another?")
-        icon: StandardIcon.Warning
-        standardButtons: StandardButton.Ok | StandardButton.Cancel
-        modality: Qt.WindowModal
-        onAccepted: {
-            openBase()
-        }
-    }
-
     function openBase() {
         openBaseDialog.open()
-    }
-
-    function openBaseAlert() {
-        messageDialog.open()
     }
 
     Menu {

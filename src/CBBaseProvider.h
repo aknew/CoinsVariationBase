@@ -23,6 +23,8 @@ public:
     explicit CBBaseProvider(QObject *parent = 0):QObject(parent){}
     ~CBBaseProvider();
 
+    static bool baseExistsAtPath(const QString &path); //< check path for containing files which is needed for open base
+
     bool startWithPath(const QString &path);//< start base interaction with path
 
     Q_INVOKABLE CBNode* getNode(const QString &name, CBNode * currentNode = NULL); //< returns node by name with preparing it (filtering by froeighn keys) and puting it to stack

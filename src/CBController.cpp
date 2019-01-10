@@ -15,7 +15,6 @@ void CBController::start(){
     QString basePath;
     CBSettings *settings =  CBSettings::settingsInstance();
 
-
     basePath= settings->lastBasePath;
 
     bool needCollect = settings->needCollect;
@@ -23,21 +22,18 @@ void CBController::start(){
     this->applicationWindow->setProperty("needCollect", QVariant(needCollect));
 
     if (!basePath.isEmpty()){
-        try {
+        bool canOpenBase = CBBaseProvider::baseExistsAtPath(basePath);
+        if (canOpenBase) {
             this->openBase(basePath);
-        }
-        catch (...) {
-            QMetaObject::invokeMethod(this->applicationWindow,
-                                      "openBaseAlert"
-                                      );
+            return;
+        } else {
+            settings->removeRecentByPath(basePath);
         }
     }
-    else{
-        //call createAndPush("CBControls/BasesList.qml")
-        QMetaObject::invokeMethod(this->applicationWindow,
-                                  "openBaseList"
-                                  );
-    }
+    //call createAndPush("CBControls/BasesList.qml")
+    QMetaObject::invokeMethod(this->applicationWindow,
+                              "openBaseList"
+                              );
 }
 
 void CBController::openBase(QString basePath){
@@ -55,8 +51,10 @@ void CBController::openBase(QString basePath){
     if (!success){
         //call createAndPush("CBControls/BasesList.qml")
         QMetaObject::invokeMethod(this->applicationWindow,
-                                  "openBaseList"
+                                  "openBaseAlert"
                                   );
+        CBSettings *settings =  CBSettings::settingsInstance();
+        settings->removeRecentByPath(basePath);
     }
 }
 

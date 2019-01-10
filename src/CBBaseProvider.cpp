@@ -7,6 +7,20 @@
 
 const QString kFormDir = "forms/";
 
+bool CBBaseProvider::baseExistsAtPath(const QString &path){
+
+    QString rootPath = path;
+
+    if (rootPath.lastIndexOf("/")!=rootPath.length()-1){
+        rootPath += "/";
+    }
+
+    QString basePath = rootPath + "base.sqlite";
+    QString structPath = rootPath+"struct.json";
+
+    return QFile::exists(basePath) && QFile::exists(structPath);
+}
+
 bool CBBaseProvider::startWithPath(const QString &path){
 
     rootPath = path;
