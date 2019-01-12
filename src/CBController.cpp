@@ -12,7 +12,6 @@ CBController::CBController(QObject *parent) : QObject(parent)
 
 
 void CBController::start(){
-    stackViewOnRemoved();
     QString basePath;
     CBSettings *settings =  CBSettings::settingsInstance();
 
@@ -40,6 +39,11 @@ void CBController::start(){
 void CBController::openBase(QString basePath){
 
     CBUtils::FromQmlFilePath(&basePath);
+
+    // HOTFIX: temporary solution for WinXp - it can't select folder via FileDialog, so I just select some file into folder
+    if (!CBBaseProvider::baseExistsAtPath(basePath)){
+        basePath = QFileInfo(basePath).path();
+    }
 
     if (m_baseProvider) {
         engine->removeImageProvider(QLatin1String("imageProvider"));
@@ -101,7 +105,6 @@ QString CBController::getAbout(){
 }
 
 bool CBController::stackViewOnRemoved(){
-    const char *qt_version = qVersion();
-    qDebug()<<"qt_version "<<qt_version<<" "<<QString(qt_version).startsWith("5.7");
+    const char *qt_version = qVersion();;
     return !QString(qt_version).startsWith("5.7");
 }
