@@ -12,6 +12,7 @@ CBController::CBController(QObject *parent) : QObject(parent)
 
 
 void CBController::start(){
+    stackViewOnRemoved();
     QString basePath;
     CBSettings *settings =  CBSettings::settingsInstance();
 
@@ -99,7 +100,8 @@ QString CBController::getAbout(){
     return about;
 }
 
-bool CBController::StackViewOnRemoved(){
+bool CBController::stackViewOnRemoved(){
     const char *qt_version = qVersion();
-    return QString(qt_version).startsWith("5.7");
+    qDebug()<<"qt_version "<<qt_version<<" "<<QString(qt_version).startsWith("5.7");
+    return !QString(qt_version).startsWith("5.7");
 }

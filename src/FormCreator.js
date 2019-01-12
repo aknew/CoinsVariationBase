@@ -10,7 +10,7 @@ function createListForm(node) {
                 "import QtQuick.Controls 2.0\n\n"+
                 "Rectangle {\n"
 
-    if (CBApi.StackViewOnRemoved) {
+    if (CBApi.stackViewOnRemoved()) {
         console.log("add StackView.onRemoved: destroy()")
         qmlString += "   StackView.onRemoved: destroy() // Will be destroyed sometime after this call."
     }

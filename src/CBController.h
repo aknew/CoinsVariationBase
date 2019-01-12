@@ -30,7 +30,7 @@ public:
     Q_INVOKABLE void saveForm(const QString& qmlString, const QString& formName);
     Q_INVOKABLE QString getAbout();
     // HOTFIX: Using Qt.createQmlObject with StackView will cause memory leek in qt 5.7. It is known qt bug that was fixed (by adding signal) in qt5.8, see https://stackoverflow.com/questions/39063235/qtquick-controls-2-stackview-and-destroyonpop
-    Q_INVOKABLE bool StackViewOnRemoved();
+    Q_INVOKABLE bool stackViewOnRemoved();
 
     enum FormType{
         ListForm,
