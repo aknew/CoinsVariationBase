@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 
 FocusScope {
     id: container
@@ -33,6 +34,7 @@ FocusScope {
         text: ""
         //font.pixelSize: 32
         font.bold: true
+        color: "black"
         anchors.left: parent.left
         anchors.leftMargin: 5
         height: parent.height
@@ -47,5 +49,8 @@ FocusScope {
         editable: true
         enabled: false
         //readOnly: true
+        style: ComboBoxStyle {
+            textColor: "black"
+        }
     }
 }
