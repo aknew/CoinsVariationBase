@@ -1,6 +1,7 @@
 My current goal is supporting system which I actually works on. What I rewally try:
-Win 8.1 64 bit and Android 5.x + Qt 5.5-5.7
-macOS Sierra and iOS 10 + Qt 5.8
+macOS Mojave + qt 5.12/5.13
+iOS 12 + qt 5.11 
+I cannot use qt 5.12 for iOS because it doesn't contains Controls 1 and Dialogs (see https://forum.qt.io/topic/98309/qt-5-12-0-qml-ios-qtquick-dialogs-qtquick-dialogs-private-is-not-installed) and qt 5.11 for macOS (it doesn't work with mojave +)& Alterantive way https://doc.qt.io/qt-5/qml-qt-labs-platform-filedialog.html#details doesn't workable for android
 
 Known issues:
 
