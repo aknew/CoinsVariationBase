@@ -5,4 +5,6 @@ If someone plans to look throw sources, he should remember that this project is 
 
 I have found and reported [few Qt' bugs](https://bugreports.qt.io/browse/QTCREATORBUG-15742?jql=reporter%20%3D%20aknew85) while making this application, also [qml and QSqlTableModel example](https://wiki.qt.io/QML_and_QSqlTableModel) had been modified according to [my question](https://stackoverflow.com/questions/14613824/qsqltablemodel-inheritor-and-qtableview)
 
-[![](https://img.youtube.com/vi/gtKsirSclCg/0.jpg)](https://www.youtube.com/watch?v=gtKsirSclCg)
+<iframe id="ytplayer" type="text/html" width="640" height="360"
+  src="https://www.youtube.com/embed//gtKsirSclCg"
+  frameborder="0"></iframe>

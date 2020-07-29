@@ -5,4 +5,6 @@
 Пока делал это приложение, нашел и описал [несколько багов в Qt](https://bugreports.qt.io/browse/QTCREATORBUG-15742?jql=reporter%20%3D%20aknew85), а пример работы [qml c QSqlTableModel](https://wiki.qt.io/QML_and_QSqlTableModel) был обновлен по результатам [моего вопроса на stackoverflow](https://stackoverflow.com/questions/14613824/qsqltablemodel-inheritor-and-qtableview)
 
 Пример работы приложения:
-[![](https://img.youtube.com/vi/gtKsirSclCg/0.jpg)](https://www.youtube.com/watch?v=gtKsirSclCg)
+<iframe id="ytplayer" type="text/html" width="640" height="360"
+  src="https://www.youtube.com/embed//gtKsirSclCg"
+  frameborder="0"></iframe>
