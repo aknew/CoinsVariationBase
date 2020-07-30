@@ -364,7 +364,7 @@ void CBNode::exportListToFile(const QString &path){
     QFile saveFile(path+"/list.json");
 
     if (!saveFile.open(QIODevice::WriteOnly)) {
-            qWarning("Couldn't open translation file to right.");
+            qWarning("Couldn't open translation file to write.");
     }
 
     QJsonDocument saveDoc(QJsonArray::fromVariantList(listForExport(path)));

@@ -47,7 +47,7 @@ void CBUtils::collectTranslation(const QString &original){
     }
     QVariantMap strings1 =sd.object().toVariantMap();
     if (!saveFile.open(QIODevice::WriteOnly)) {
-            qWarning("Couldn't open translation file to right.");
+            qWarning("Couldn't open translation file to write.");
     }
     strings1[original] = QVariant(original);
     QJsonDocument saveDoc(QJsonObject::fromVariantMap(strings1));
