@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import QtQuick.Dialogs 1.2
+import Qt.labs.platform 1.1
 import QtQuick.Controls 2.0
 import "."
 
@@ -138,8 +138,7 @@ Rectangle {
     MessageDialog {
         id: deleteDialog
         text: qsTr("Do you realy want to delete this attach?")
-        icon: StandardIcon.Warning
-        standardButtons: StandardButton.Ok | StandardButton.Cancel
+        buttons: StandardButton.Ok | StandardButton.Cancel
         property string attachID: ""
         modality: Qt.WindowModal
         onAccepted: {

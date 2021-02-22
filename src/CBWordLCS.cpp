@@ -1,7 +1,7 @@
 #include "CBWordLCS.h"
 #include <QDebug>
 
-CBWordLCS::CBWordLCS(const QString &first, const QString &second, const QRegExp &separator, const QString &joinSeparator)
+CBWordLCS::CBWordLCS(const QString &first, const QString &second, const QRegularExpression &separator, const QString &joinSeparator)
 {
     firstList = first.split(separator);
     secondList = second.split(separator);

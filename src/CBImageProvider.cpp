@@ -45,7 +45,8 @@ QPixmap CBImageProvider::requestPixmap(const QString& id, QSize* size, const QSi
         if(file.exists()){
             qDebug()<< id;
             QFileIconProvider provider;
-            QIcon icon = provider.icon(fullFilePath);
+            QFileInfo fileInfo = QFileInfo(fullFilePath);
+            QIcon icon = provider.icon(fileInfo);
             result = icon.pixmap(90,90);
         }
 #endif

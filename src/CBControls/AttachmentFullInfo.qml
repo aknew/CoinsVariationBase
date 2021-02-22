@@ -1,6 +1,6 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls
+import Qt.labs.platform 1.1
 
 import CB.api 1.0
 import "."
@@ -224,8 +224,7 @@ Rectangle {
     MessageDialog {
         id: deleteRowDialog
         text: qsTr("Do you realy want to delete this field?")
-        icon: StandardIcon.Warning
-        standardButtons: StandardButton.Ok | StandardButton.Cancel
+        buttons: StandardButton.Ok | StandardButton.Cancel
         property int index: -1
         modality: Qt.WindowModal
         onAccepted: {
@@ -233,7 +232,7 @@ Rectangle {
         }
     }
 
-    Dialog {
+    Popup {
         id: editRowDialog
         title: qsTr("Select value for field: ")
         property int index: -1

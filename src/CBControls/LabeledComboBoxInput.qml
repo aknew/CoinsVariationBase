@@ -1,6 +1,5 @@
 import QtQuick 2.5
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls
 
 FocusScope {
     id: container
@@ -48,8 +47,5 @@ FocusScope {
         editable: true
         enabled: false
         //readOnly: true
-        style: ComboBoxStyle {
-            textColor: "black"
-        }
     }
 }

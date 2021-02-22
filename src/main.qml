@@ -2,7 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import QtQml 2.2
-import QtQuick.Dialogs 1.2
+import Qt.labs.platform 1.1
 
 import CB.api 1.0
 import "FormCreator.js" as FormCreator
@@ -67,9 +67,7 @@ ApplicationWindow {
                         id: menuWorkingWithData
                         ColumnLayout {
                             MenuItem {
-                                contentItem: StyledMenuItem {
-                                    text: qsTr("Record comparation")
-                                }
+                                text: qsTr("Record comparation")
                                 onTriggered: {
                                     tablesStack.currentItem.compareMode = true
                                     menuWorkingWithData.close()
@@ -78,9 +76,7 @@ ApplicationWindow {
                                          && tablesStack.currentItem.formType === CBApi.ListForm
                             }
                             MenuItem {
-                                contentItem: StyledMenuItem {
-                                    text: qsTr("Export to json")
-                                }
+                                text: qsTr("Export to json")
                                 onTriggered: {
                                     tablesStack.currentItem.node.exportListToFile(
                                                 "data")
@@ -91,9 +87,7 @@ ApplicationWindow {
                             }
                             MenuItem {
                                 //shortcut: "Ctrl+E"
-                                contentItem: StyledMenuItem {
-                                    text: qsTr("Edit record")
-                                }
+                                text: qsTr("Edit record")
                                 onTriggered: {
                                     windowToolbar.state = "editing"
                                     tablesStack.currentItem.state = "editing"
@@ -105,10 +99,7 @@ ApplicationWindow {
                                              === CBApi.AttachForm) && tablesStack.currentItem.editable
                             }
                             MenuItem {
-
-                                contentItem: StyledMenuItem {
-                                    text: qsTr("Add new")
-                                }
+                                text: qsTr("Add new")
                                 //shortcut: "Ctrl+N"
                                 onTriggered: {
                                     tablesStack.currentItem.node.prepareToNewItem()
@@ -133,18 +124,14 @@ ApplicationWindow {
                                          && tablesStack.currentItem.formType === CBApi.FullForm
                                          && tablesStack.currentItem.editable
 
-                                contentItem: StyledMenuItem {
-                                    text: qsTr("Delete")
-                                }
+                                text: qsTr("Delete")
                                 onTriggered: {
                                     deleteRowDialog.open()
                                     menuWorkingWithData.close()
                                 }
                             }
                             MenuItem {
-                                contentItem: StyledMenuItem {
-                                    text: qsTr("Clone")
-                                }
+                                text: qsTr("Clone")
                                 onTriggered: {
                                     var currentItem = tablesStack.currentItem
                                     currentItem.node.cloneItem()
@@ -176,9 +163,7 @@ ApplicationWindow {
                         id: menuFilters
                         ColumnLayout {
                             MenuItem {
-                                contentItem: StyledMenuItem {
-                                    text: qsTr("Set/edit filters")
-                                }
+                                text: qsTr("Set/edit filters")
                                 onTriggered: {
                                     createAndPush(
                                                 "CBControls/FilterDialog.qml", {
@@ -188,18 +173,14 @@ ApplicationWindow {
                                 }
                             }
                             MenuItem {
-                                contentItem: StyledMenuItem {
-                                    text: qsTr("Drop filters")
-                                }
+                                text: qsTr("Drop filters")
                                 onTriggered: {
                                     tablesStack.currentItem.node.dropFilter()
                                     menuFilters.close()
                                 }
                             }
                             MenuItem {
-                                contentItem: StyledMenuItem {
-                                    text: qsTr("Predefined filters")
-                                }
+                                text: qsTr("Predefined filters")
                                 visible: tablesStack.currentItem
                                          && tablesStack.currentItem.node !== null
                                          && tablesStack.currentItem.node.predefinedFiltesList.length > 0
@@ -436,10 +417,9 @@ ApplicationWindow {
     MessageDialog {
         id: openBaseDialog
         text: qsTr("Do you realy want to stop working with this base?")
-        icon: StandardIcon.Warning
-        standardButtons: StandardButton.Yes | StandardButton.No
+        buttons: StandardButton.Ok | StandardButton.Cancel
         modality: Qt.WindowModal
-        onYes: {
+        onAccepted: {
             tablesStack.clear()
             openBaseList()
         }
@@ -448,8 +428,7 @@ ApplicationWindow {
     MessageDialog {
         id: deleteRowDialog
         text: qsTr("Do you realy want to delete this row?")
-        icon: StandardIcon.Warning
-        standardButtons: StandardButton.Ok | StandardButton.Cancel
+        buttons: StandardButton.Ok | StandardButton.Cancel
         modality: Qt.WindowModal
         onAccepted: {
             tablesStack.currentItem.node.deleteSelectedItem()
@@ -460,8 +439,7 @@ ApplicationWindow {
     MessageDialog {
         id: goBackDialog
         text: qsTr("Do you realy want to go back and drop all changes?")
-        icon: StandardIcon.Warning
-        standardButtons: StandardButton.Ok | StandardButton.Cancel
+        buttons: StandardButton.Ok | StandardButton.Cancel
         modality: Qt.WindowModal
         onAccepted: {
             windowToolbar.state = ""
@@ -478,7 +456,7 @@ ApplicationWindow {
         }
     }
 
-    Dialog {
+    Popup {
         id: aboutDialog
         property alias aboutHtml: aboutView.text
         contentItem: Rectangle {
@@ -519,8 +497,7 @@ ApplicationWindow {
         id: messageDialog
         title: qsTr("Base opening error")
         text: qsTr("Something wrong during opening base. This path will removed from saved.")
-        icon: StandardIcon.Warning
-        standardButtons: StandardButton.Ok
+        buttons: StandardButton.Ok
         modality: Qt.WindowModal
         onAccepted: {
             messageDialog.close()

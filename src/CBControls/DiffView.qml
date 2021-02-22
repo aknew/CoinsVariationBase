@@ -1,6 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.0
-import QtQuick.Dialogs 1.2
+import Qt.labs.platform 1.1
 import QtQuick.Layouts 1.1
 
 Page {
@@ -247,6 +247,7 @@ Page {
     MessageDialog {
         id: dlgMergeError
         text: qsTr("Record merging finishes with errors, see log for details")
+        buttons: StandardButton.Ok
     }
 
     property var node

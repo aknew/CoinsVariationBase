@@ -1,6 +1,7 @@
 #include "CBItemDifference.h"
 #include "CBFieldDifference.h"
 #include "CBWordLCS.h"
+#include <QRegularExpression>
 
 CBItemDifference::CBItemDifference(const QVariantMap &first, const QVariantMap &second, const QStringList &comparingFieldsList, QObject *parent) : QObject(parent)
 {
@@ -26,7 +27,7 @@ void CBItemDifference::recalculateDifferences(const QString &separator,const QSt
              * plain C struct into QML. Actually, they aren't very difficult problem, but I prefer
              * not to spent time to them now
              */
-            CBWordLCS wordLCS(_first[iter].toString(),_second[iter].toString(),QRegExp(separator),joinSeparator);
+            CBWordLCS wordLCS(_first[iter].toString(),_second[iter].toString(), QRegularExpression(separator),joinSeparator);
             CBFieldDifference *fd = new CBFieldDifference(this); // TODO: Need check: possible memory leak?
             fd->_name = iter;
             fd->_highlightedFirst = wordLCS.getHighlitedFirst();

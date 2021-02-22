@@ -36,7 +36,7 @@ void logHandler(QtMsgType type, const QMessageLogContext &context, const QString
     QFile outFile(logName);
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
-    ts << txt << endl;
+    ts << txt << Qt::endl;
     if (type == QtInfoMsg){
         std::cout << txt.toStdString() << std::endl;
     }

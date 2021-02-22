@@ -12,7 +12,7 @@
 class CBWordLCS
 {
 public:
-    CBWordLCS(const QString &first, const QString &second, const QRegExp &separator, const QString &joinSeparator);
+    CBWordLCS(const QString &first, const QString &second, const QRegularExpression &separator, const QString &joinSeparator);
     QString getHighlitedFirst();
     QString getHighlitedSecond();
     QString getDifferenceFirst();

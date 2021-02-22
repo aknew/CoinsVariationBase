@@ -1,6 +1,6 @@
 import QtQuick 2.5
-import QtQuick.Dialogs 1.2
-import QtQuick.Controls 1.4
+import Qt.labs.platform 1.1
+import QtQuick.Controls
 
 FocusScope {
     id: container
@@ -44,7 +44,7 @@ FocusScope {
         }
     }
 
-    Dialog {
+    Popup {
         id: dialog
         title: qsTr("Select date: ")
         property alias selectedDate: calendar.selectedDate
