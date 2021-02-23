@@ -65,88 +65,87 @@ ApplicationWindow {
                     onClicked: menuWorkingWithData.open()
                     Menu {
                         id: menuWorkingWithData
-                        ColumnLayout {
-                            MenuItem {
-                                text: qsTr("Record comparation")
-                                onTriggered: {
-                                    tablesStack.currentItem.compareMode = true
-                                    menuWorkingWithData.close()
-                                }
-                                visible: tablesStack.currentItem
-                                         && tablesStack.currentItem.formType === CBApi.ListForm
+                        MenuItem {
+                            text: qsTr("Record comparation")
+                            onTriggered: {
+                                tablesStack.currentItem.compareMode = true
+                                menuWorkingWithData.close()
                             }
-                            MenuItem {
-                                text: qsTr("Export to json")
-                                onTriggered: {
-                                    tablesStack.currentItem.node.exportListToFile(
-                                                "data")
-                                    menuWorkingWithData.close()
-                                }
-                                visible: tablesStack.currentItem
-                                         && tablesStack.currentItem.formType === CBApi.ListForm
+                            visible: tablesStack.currentItem
+                                     && tablesStack.currentItem.formType === CBApi.ListForm
+                        }
+                        MenuItem {
+                            text: qsTr("Export to json")
+                            onTriggered: {
+                                tablesStack.currentItem.node.exportListToFile(
+                                            "data")
+                                menuWorkingWithData.close()
                             }
-                            MenuItem {
-                                //shortcut: "Ctrl+E"
-                                text: qsTr("Edit record")
-                                onTriggered: {
-                                    windowToolbar.state = "editing"
-                                    tablesStack.currentItem.state = "editing"
-                                    menuWorkingWithData.close()
-                                }
-                                visible: tablesStack.currentItem
-                                         && (tablesStack.currentItem.formType === CBApi.FullForm
-                                             || tablesStack.currentItem.formType
-                                             === CBApi.AttachForm) && tablesStack.currentItem.editable
+                            visible: tablesStack.currentItem
+                                     && tablesStack.currentItem.formType === CBApi.ListForm
+                        }
+                        MenuItem {
+                            //shortcut: "Ctrl+E"
+                            text: qsTr("Edit record")
+                            onTriggered: {
+                                windowToolbar.state = "editing"
+                                tablesStack.currentItem.state = "editing"
+                                menuWorkingWithData.close()
                             }
-                            MenuItem {
-                                text: qsTr("Add new")
-                                //shortcut: "Ctrl+N"
-                                onTriggered: {
-                                    tablesStack.currentItem.node.prepareToNewItem()
-                                    if (tablesStack.currentItem.formType === CBApi.ListForm) {
-                                        showFullForm(tablesStack.currentItem.node)
-                                    } else {
-                                        //HOTFIX: to update data after dropping
-                                        tablesStack.currentItem.node = tablesStack.currentItem.node
-                                    }
-                                    windowToolbar.state = "editing"
-                                    tablesStack.currentItem.state = "editing"
-                                    isInsertingNew = true
-                                    menuWorkingWithData.close()
+                            visible: tablesStack.currentItem
+                                     && (tablesStack.currentItem.formType === CBApi.FullForm
+                                         || tablesStack.currentItem.formType
+                                         === CBApi.AttachForm) && tablesStack.currentItem.editable
+                        }
+                        MenuItem {
+                            text: qsTr("Add new")
+                            //shortcut: "Ctrl+N"
+                            onTriggered: {
+                                tablesStack.currentItem.node.prepareToNewItem()
+                                if (tablesStack.currentItem.formType === CBApi.ListForm) {
+                                    showFullForm(tablesStack.currentItem.node)
+                                } else {
+                                    //HOTFIX: to update data after dropping
+                                    tablesStack.currentItem.node = tablesStack.currentItem.node
                                 }
-                                visible: tablesStack.currentItem
-                                         && (tablesStack.currentItem.formType === CBApi.ListForm
-                                             || tablesStack.currentItem.formType === CBApi.FullForm)
-                                         && tablesStack.currentItem.editable
+                                windowToolbar.state = "editing"
+                                tablesStack.currentItem.state = "editing"
+                                isInsertingNew = true
+                                menuWorkingWithData.close()
                             }
-                            MenuItem {
-                                visible: tablesStack.currentItem
-                                         && tablesStack.currentItem.formType === CBApi.FullForm
-                                         && tablesStack.currentItem.editable
+                            visible: tablesStack.currentItem
+                                     && (tablesStack.currentItem.formType === CBApi.ListForm
+                                         || tablesStack.currentItem.formType === CBApi.FullForm)
+                                     && tablesStack.currentItem.editable
+                        }
+                        MenuItem {
+                            visible: tablesStack.currentItem
+                                     && tablesStack.currentItem.formType === CBApi.FullForm
+                                     && tablesStack.currentItem.editable
 
-                                text: qsTr("Delete")
-                                onTriggered: {
-                                    deleteRowDialog.open()
-                                    menuWorkingWithData.close()
-                                }
-                            }
-                            MenuItem {
-                                text: qsTr("Clone")
-                                onTriggered: {
-                                    var currentItem = tablesStack.currentItem
-                                    currentItem.node.cloneItem()
-                                    //HOTFIX: to update data after clonning
-                                    currentItem.node = currentItem.node
-                                    windowToolbar.state = "editing"
-                                    currentItem.state = "editing"
-                                    isInsertingNew = true
-                                    menuWorkingWithData.close()
-                                }
-                                visible: tablesStack.currentItem
-                                         && tablesStack.currentItem.formType === CBApi.FullForm
-                                         && tablesStack.currentItem.editable
+                            text: qsTr("Delete")
+                            onTriggered: {
+                                deleteRowDialog.open()
+                                menuWorkingWithData.close()
                             }
                         }
+                        MenuItem {
+                            text: qsTr("Clone")
+                            onTriggered: {
+                                var currentItem = tablesStack.currentItem
+                                currentItem.node.cloneItem()
+                                //HOTFIX: to update data after clonning
+                                currentItem.node = currentItem.node
+                                windowToolbar.state = "editing"
+                                currentItem.state = "editing"
+                                isInsertingNew = true
+                                menuWorkingWithData.close()
+                            }
+                            visible: tablesStack.currentItem
+                                     && tablesStack.currentItem.formType === CBApi.FullForm
+                                     && tablesStack.currentItem.editable
+                        }
+
                     }
                 }
                 ToolButton {
@@ -161,34 +160,33 @@ ApplicationWindow {
 
                     Menu {
                         id: menuFilters
-                        ColumnLayout {
-                            MenuItem {
-                                text: qsTr("Set/edit filters")
-                                onTriggered: {
-                                    createAndPush(
-                                                "CBControls/FilterDialog.qml", {
-                                                    node: tablesStack.currentItem.node
-                                                })
-                                    menuFilters.close()
-                                }
+                        MenuItem {
+                            text: qsTr("Set/edit filters")
+                            onTriggered: {
+                                createAndPush(
+                                            "CBControls/FilterDialog.qml", {
+                                                node: tablesStack.currentItem.node
+                                            })
+                                menuFilters.close()
                             }
-                            MenuItem {
-                                text: qsTr("Drop filters")
-                                onTriggered: {
-                                    tablesStack.currentItem.node.dropFilter()
-                                    menuFilters.close()
-                                }
+                        }
+                        MenuItem {
+                            text: qsTr("Drop filters")
+                            onTriggered: {
+                                tablesStack.currentItem.node.dropFilter()
+                                menuFilters.close()
                             }
-                            MenuItem {
-                                text: qsTr("Predefined filters")
-                                visible: tablesStack.currentItem
-                                         && tablesStack.currentItem.node !== null
-                                         && tablesStack.currentItem.node.predefinedFiltesList.length > 0
-                                onTriggered: {
-                                    menuPredefinedFilters.open()
-                                    menuFilters.close()
-                                }
+                        }
+                        MenuItem {
+                            text: qsTr("Predefined filters")
+                            visible: tablesStack.currentItem
+                                     && tablesStack.currentItem.node !== null
+                                     && tablesStack.currentItem.node.predefinedFiltesList.length > 0
+                            onTriggered: {
+                                menuPredefinedFilters.open()
+                                menuFilters.close()
                             }
+
                         }
                     }
                     Menu {
@@ -314,7 +312,7 @@ ApplicationWindow {
             goBack()
         }
         onCurrentItemChanged: {
-           if (tablesStack.currentItem.header){
+            if (tablesStack.currentItem.header){
                 header = tablesStack.currentItem.header
             }
             else{
