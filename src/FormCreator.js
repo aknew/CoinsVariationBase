@@ -7,7 +7,7 @@ function createListForm(node) {
     qmlString = "import QtQuick 2.5;\n" +
                 "import CB.api 1.0;\n" +
                 "import CBControls 1.0;\n" +
-                "import QtQuick.Controls 2.0\n\n"+
+                "import QtQuick.Controls \n\n"+
                 "Rectangle {\n"
 
     if (CBApi.stackViewOnRemoved()) {
@@ -133,7 +133,7 @@ function createFullForm(node) {
     qmlString = "import QtQuick 2.5;\n" +
                 "import CB.api 1.0;\n" +
                 "import CBControls 1.0;\n" +
-                "import QtQuick.Controls 2.0\n\n"+
+                "import QtQuick.Controls\n\n"+
                 "Rectangle {\n"
 
     if (CBApi.StackViewOnRemoved) {
